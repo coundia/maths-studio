@@ -1,0 +1,758 @@
+export interface CourseStep {
+  stepNumber: number;
+  title: string;
+  rule: string;
+  latex: string;
+  explanation: string;
+  teacherTip?: string;
+  highlightText?: string;
+}
+
+export interface CourseDemo {
+  id: string;
+  title: string;
+  badge: string;
+  defaultLatex: string;
+  ruleSummary: string;
+  teacherGoal: string;
+  steps: CourseStep[];
+  interactiveType:
+    | 'algebra-arrows'
+    | 'pythagore-svg'
+    | 'droite-milieux-svg'
+    | 'distance-svg'
+    | 'inequations-numberline'
+    | 'vector-chasles'
+    | 'linear-function'
+    | 'rationals-fraction'
+    | 'cosinus-svg'
+    | 'pyramide-3d'
+    | 'equations-steps'
+    | 'powers-steps'
+    | 'stats-chart'
+    | 'revision-quiz';
+  demoParams?: Record<string, any>;
+  exercises?: {
+    question: string;
+    answerLatex: string;
+    hint: string;
+  }[];
+}
+
+export interface CourseChapter {
+  id: string;
+  title: string;
+  shortTitle: string;
+  category: 'Activités numériques' | 'Activités géométriques' | 'Synthèse & Révision';
+  icon: string;
+  description: string;
+  demos: CourseDemo[];
+}
+
+export const SENEGAL_COURSES_4E: CourseChapter[] = [
+  {
+    id: 'pythagore',
+    title: 'Triangle rectangle : Théorème de Pythagore - 4e',
+    shortTitle: 'Théorème de Pythagore',
+    category: 'Activités géométriques',
+    icon: 'Triangle',
+    description: "Calculer la longueur de l'hypoténuse ou d'un côté de l'angle droit, et démontrer qu'un triangle est rectangle.",
+    demos: [
+      {
+        id: 'pythagore-direct',
+        title: "Théorème direct : Calcul de l'hypoténuse BC",
+        badge: 'Propriété fondamentale',
+        defaultLatex: 'BC^2 = AB^2 + AC^2',
+        ruleSummary: "Dans un triangle rectangle, le carré de l'hypoténuse est égal à la somme des carrés des deux autres côtés.",
+        teacherGoal: "Montrer aux élèves que l'aire du grand carré vaut la somme des aires des deux petits carrés.",
+        interactiveType: 'pythagore-svg',
+        demoParams: { ab: 3, ac: 4, bc: 5, unit: 'cm' },
+        steps: [
+          {
+            stepNumber: 1,
+            title: '1. Identification du triangle rectangle',
+            rule: 'Hypoténuse = plus grand côté opposé à l\'angle droit',
+            latex: 'ABC \\text{ est rectangle en } A \\implies [BC] \\text{ est l\'hypoténuse}',
+            explanation: 'Dans le triangle ABC rectangle en A, l\'hypoténuse est le côté en face de l\'angle droit : c\'est BC.',
+            teacherTip: 'Rappeler aux élèves de toujours nommer d\'abord le sommet où se trouve l\'angle droit.',
+          },
+          {
+            stepNumber: 2,
+            title: '2. Énoncé de la formule de Pythagore',
+            rule: 'Égalité de Pythagore',
+            latex: 'BC^2 = AB^2 + AC^2',
+            explanation: 'On écrit l\'égalité littérale avant de remplacer par les valeurs numériques.',
+            teacherTip: 'Exiger l\'écriture de la formule avec les lettres avant les chiffres.',
+          },
+          {
+            stepNumber: 3,
+            title: '3. Remplacement des valeurs numériques',
+            rule: 'Calcul des carrés : AB = 3 cm et AC = 4 cm',
+            latex: 'BC^2 = 3^2 + 4^2 = 9 + 16',
+            explanation: '3 au carré fait 9 (aire du premier carré) et 4 au carré fait 16 (aire du second carré).',
+            teacherTip: 'Vérifier que les élèves ne confondent pas 3² avec 3×2.',
+          },
+          {
+            stepNumber: 4,
+            title: '4. Somme et racine carrée',
+            rule: 'BC = \\sqrt{25}',
+            latex: 'BC^2 = 25 \\implies BC = \\sqrt{25} = 5\\text{ cm}',
+            explanation: 'La somme fait 25. Le nombre positif dont le carré est 25 est 5 cm. Donc BC = 5 cm.',
+            teacherTip: 'Faire remarquer que BC = 5 est bien supérieur à 3 et 4.',
+          },
+        ],
+        exercises: [
+          { question: "Dans un triangle MNP rectangle en M, avec MN = 6 cm et MP = 8 cm, calculer NP.", answerLatex: "NP = \\sqrt{6^2 + 8^2} = \\sqrt{36+64} = \\sqrt{100} = 10\\text{ cm}", hint: "NP² = MN² + MP²" },
+          { question: "Un triangle rectangle a pour côtés de l'angle droit 5 cm et 12 cm. Quelle est l'hypoténuse ?", answerLatex: "\\sqrt{5^2 + 12^2} = \\sqrt{25 + 144} = \\sqrt{169} = 13\\text{ cm}", hint: "5² + 12² = 25 + 144 = 169" },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'droite-milieux',
+    title: 'Théorèmes de la droite des milieux - 4e',
+    shortTitle: 'Droite des milieux',
+    category: 'Activités géométriques',
+    icon: 'Split',
+    description: "Propriétés du segment joignant les milieux de deux côtés d'un triangle : parallélisme et longueur moitié.",
+    demos: [
+      {
+        id: 'milieux-direct',
+        title: '1er Théorème : Milieux de deux côtés',
+        badge: 'Théorème direct',
+        defaultLatex: '(IJ) \\parallel (BC) \\quad \\text{et} \\quad IJ = \\frac{1}{2} BC',
+        ruleSummary: "Dans un triangle, si une droite passe par les milieux de deux côtés, alors elle est parallèle au troisième côté et sa longueur est égale à la moitié du troisième côté.",
+        teacherGoal: "Démontrer visuellement le parallélisme et le rapport 1/2 entre le segment [IJ] et la base [BC].",
+        interactiveType: 'droite-milieux-svg',
+        demoParams: { bcLength: 8, ijLength: 4 },
+        steps: [
+          {
+            stepNumber: 1,
+            title: '1. Données du problème',
+            rule: 'Hypothèses : I milieu de [AB] et J milieu de [AC]',
+            latex: 'I \\in [AB], AI = IB \\quad \\text{et} \\quad J \\in [AC], AJ = JC',
+            explanation: 'On trace le triangle ABC et on place exactement le milieu I de [AB] et le milieu J de [AC].',
+            teacherTip: 'Insister sur le codage des longueurs égales sur la figure au tableau.',
+          },
+          {
+            stepNumber: 2,
+            title: '2. Application du premier théorème',
+            rule: 'Propriété de parallélisme',
+            latex: '(IJ) \\parallel (BC)',
+            explanation: 'La droite qui relie les deux milieux est automatiquement parallèle au troisième côté (BC).',
+            teacherTip: 'Montrer avec la règle que les deux droites ont la même inclinaison.',
+          },
+          {
+            stepNumber: 3,
+            title: '3. Calcul de la longueur du segment',
+            rule: 'Propriété métrique : IJ = BC / 2',
+            latex: 'IJ = \\frac{BC}{2} = \\frac{8\\text{ cm}}{2} = 4\\text{ cm}',
+            explanation: 'Le segment [IJ] mesure exactement la moitié de la base [BC]. Si BC = 8 cm, alors IJ = 4 cm.',
+            teacherTip: 'Poser la question inverse : si IJ = 5 cm, combien mesure BC ? (Réponse : 10 cm).',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'distance',
+    title: 'Distance - 4e',
+    shortTitle: 'Distance d\'un point à une droite',
+    category: 'Activités géométriques',
+    icon: 'Ruler',
+    description: "Distance d'un point à une droite (perpendiculaire), tangence à un cercle, propriétés de la bissectrice.",
+    demos: [
+      {
+        id: 'distance-point-droite',
+        title: 'Plus court chemin : la perpendiculaire',
+        badge: 'Projection orthogonale',
+        defaultLatex: 'd(A, (D)) = AH \\quad \\text{avec } (AH) \\perp (D)',
+        ruleSummary: "La distance d'un point A à une droite (D) est la longueur du segment [AH], où H est le pied de la perpendiculaire menée de A à (D). Pour tout autre point M de (D), on a AM > AH.",
+        teacherGoal: "Montrer que le triangle AHM est rectangle en H, donc son hypoténuse AM est toujours plus grande que AH.",
+        interactiveType: 'distance-svg',
+        demoParams: { ah: 4, hm: 3, am: 5 },
+        steps: [
+          {
+            stepNumber: 1,
+            title: '1. Tracé de la perpendiculaire',
+            rule: 'Pied de la perpendiculaire H',
+            latex: '(AH) \\perp (D) \\quad \\text{avec } H \\in (D)',
+            explanation: 'On abaisse la perpendiculaire à la droite (D) passant par le point A. Elle coupe (D) au point H.',
+            teacherTip: 'Rappeler l\'utilisation de l\'équerre pour placer le point H.',
+          },
+          {
+            stepNumber: 2,
+            title: '2. Choix d\'un point quelconque M',
+            rule: 'Triangle AHM rectangle en H',
+            latex: 'M \\in (D), M \\ne H \\implies \\Delta AHM \\text{ rectangle en } H',
+            explanation: 'Si on prend n\'importe quel autre point M sur la droite (D), le triangle AHM est rectangle en H.',
+            teacherTip: 'Faire observer aux élèves quel est le plus grand côté dans ce triangle rectangle.',
+          },
+          {
+            stepNumber: 3,
+            title: '3. Démonstration du plus court chemin',
+            rule: 'Hypoténuse AM > côté AH',
+            latex: 'AM^2 = AH^2 + HM^2 \\implies AM > AH',
+            explanation: 'Dans le triangle rectangle AHM, l\'hypoténuse est [AM]. Donc AM est strictement supérieur à AH. La distance minimale est AH.',
+            teacherTip: 'Conclure : d(A, (D)) = AH.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'calcul-algebrique',
+    title: 'Calcul Algébrique - 4e',
+    shortTitle: 'Calcul Algébrique',
+    category: 'Activités numériques',
+    icon: 'Hash',
+    description: "Développement par double distributivité, factorisation, réduction de termes semblables et identités remarquables.",
+    demos: [
+      {
+        id: 'double-distributivite',
+        title: 'Double distributivité : (x + 1)(x + 2) et (x + 1)(x - 2)',
+        badge: 'Règle des 4 flèches',
+        defaultLatex: '(x+1)(x+2) = x^2 + 3x + 2',
+        ruleSummary: "Pour développer (a + b)(c + d), on multiplie chaque terme du premier facteur par chaque terme du second facteur : a×c + a×d + b×c + b×d.",
+        teacherGoal: "Animer les flèches de multiplication et la fusion des termes de même nature.",
+        interactiveType: 'algebra-arrows',
+        demoParams: { expr: '(x+1)(x+2)' },
+        steps: [
+          {
+            stepNumber: 1,
+            title: '1. Expression de départ',
+            rule: 'Forme factorisée : produit de deux binômes',
+            latex: '(x + 1)(x + 2)',
+            explanation: 'On identifie les deux parenthèses à multiplier.',
+          },
+          {
+            stepNumber: 2,
+            title: '2. Les 4 multiplications distribuées',
+            rule: 'Double distributivité',
+            latex: '= x \\times x + x \\times 2 + 1 \\times x + 1 \\times 2',
+            explanation: 'Chaque terme de gauche est multiplié avec chaque terme de droite.',
+          },
+          {
+            stepNumber: 3,
+            title: '3. Calcul des produits élémentaires',
+            rule: 'Calcul des puissances et coefficients',
+            latex: '= x^2 + 2x + 1x + 2',
+            explanation: 'On effectue les multiplications individuelles.',
+          },
+          {
+            stepNumber: 4,
+            title: '4. Regroupement et réduction des termes en x',
+            rule: 'Termes semblables : 2x + 1x = 3x',
+            latex: '= x^2 + \\mathbf{3x} + 2',
+            explanation: 'On additionne les coefficients des termes de même degré.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'inequations',
+    title: 'Inéquations et système d\'inéquations à une inconnue - 4e',
+    shortTitle: 'Inéquations dans Q',
+    category: 'Activités numériques',
+    icon: 'SlidersHorizontal',
+    description: "Résolution des inéquations du premier degré, changement de sens lors de la division par un nombre négatif, représentation sur droite graduée.",
+    demos: [
+      {
+        id: 'inequation-negatif',
+        title: 'Résolution : -2x + 4 ≤ 10 (Changement de sens crucial !)',
+        badge: 'Règle d\'or du signe',
+        defaultLatex: '-2x + 4 \\le 10 \\iff x \\ge -3',
+        ruleSummary: "Lorsqu'on multiplie ou divise les deux membres d'une inéquation par un nombre strictement négatif, on doit impérativement CHANGER le sens de l'inégalité (≤ devient ≥).",
+        teacherGoal: "Sensibiliser les élèves à l'erreur classique du changement de signe et afficher l'ensemble des solutions sur une droite graduée animée.",
+        interactiveType: 'inequations-numberline',
+        demoParams: { threshold: -3, sign: '>=', closedBracket: true },
+        steps: [
+          {
+            stepNumber: 1,
+            title: '1. Inéquation de départ',
+            rule: 'Isoler les termes en x',
+            latex: '-2x + 4 \\le 10',
+            explanation: 'On veut trouver tous les nombres x qui rendent l\'inégalité vraie.',
+            teacherTip: 'Demander : "Que doit-on faire du +4 ? Le passer à droite en soustrayant 4."',
+          },
+          {
+            stepNumber: 2,
+            title: '2. Soustraction du terme constant',
+            rule: 'Transposition : +4 devient -4 à droite',
+            latex: '-2x \\le 10 - 4 \\iff -2x \\le 6',
+            explanation: 'On soustrait 4 des deux côtés. Le sens de l\'inégalité ne change pas.',
+          },
+          {
+            stepNumber: 3,
+            title: '3. Division par un nombre NÉGATIF (-2)',
+            rule: 'ATTENTION : Inversion du sens de l\'inégalité !',
+            latex: 'x \\ge \\frac{6}{-2} \\iff x \\ge -3',
+            explanation: 'On divise par -2 (qui est négatif), donc le symbole ≤ se transforme en ≥ !',
+            teacherTip: 'Mettre cette étape en évidence au tableau en rouge vif !',
+          },
+          {
+            stepNumber: 4,
+            title: '4. Représentation sur la droite graduée',
+            rule: 'Intervalle S = [-3 ; +∞[',
+            latex: 'S = \\{ x \\in \\mathbb{Q} \\mid x \\ge -3 \\} = [-3 ; +\\infty[',
+            explanation: 'On colorie tous les points situés à droite de -3. Le crochet en -3 est fermé et tourné vers la droite car l\'inégalité est large (≥).',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'translation-vecteur',
+    title: 'Translation et vecteur - 4e',
+    shortTitle: 'Translation & Vecteurs',
+    category: 'Activités géométriques',
+    icon: 'MoveRight',
+    description: "Notion de vecteur (direction, sens, norme), translation d'une figure, relation de Chasles et règle du parallélogramme.",
+    demos: [
+      {
+        id: 'vecteur-chasles',
+        title: 'Relation de Chasles : AB + BC = AC',
+        badge: 'Addition de vecteurs',
+        defaultLatex: '\\vec{AB} + \\vec{BC} = \\vec{AC}',
+        ruleSummary: "Pour tous points A, B et C du plan, le déplacement de A vers B suivi du déplacement de B vers C équivaut au déplacement direct de A vers C : vec(AB) + vec(BC) = vec(AC).",
+        teacherGoal: "Montrer le chemin : partir de Dakar (A) vers Thiès (B), puis de Thiès (B) vers Saint-Louis (C), cela revient au déplacement direct Dakar -> Saint-Louis.",
+        interactiveType: 'vector-chasles',
+        demoParams: {},
+        steps: [
+          {
+            stepNumber: 1,
+            title: '1. Premier vecteur : départ de A vers B',
+            rule: 'Vecteur u = vec(AB)',
+            latex: '\\vec{AB} : \\text{direction (AB), sens de A vers B, norme } AB',
+            explanation: 'On effectue le premier glissement du point A jusqu\'au point B.',
+          },
+          {
+            stepNumber: 2,
+            title: '2. Deuxième vecteur : départ de B vers C',
+            rule: 'L\'extrémité du 1er est l\'origine du 2e',
+            latex: '\\vec{BC} : \\text{sens de B vers C}',
+            explanation: 'Depuis le point B, on enchaîne immédiatement le second déplacement vers C.',
+          },
+          {
+            stepNumber: 3,
+            title: '3. Résultat : La relation de Chasles',
+            rule: 'Vecteur somme direct',
+            latex: '\\vec{AB} + \\vec{BC} = \\vec{AC}',
+            explanation: 'Le point d\'arrivée final est C. Le vecteur somme relie directement le point de départ A au point d\'arrivée C.',
+            teacherTip: 'Faire retenir l\'astuce mnémotechnique : la lettre intermédiaire B "disparaît".',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'application-lineaire',
+    title: 'Application linéaire - 4e',
+    shortTitle: 'Application linéaire',
+    category: 'Activités numériques',
+    icon: 'TrendingUp',
+    description: "Modélisation de la proportionnalité : formule f(x) = ax, coefficient directeur a, calcul d'images et d'antécédents, droite passant par l'origine.",
+    demos: [
+      {
+        id: 'lineaire-demo',
+        title: 'Exemple concret : Prix des mangues f(x) = 500x',
+        badge: 'Proportionnalité pure',
+        defaultLatex: 'f(x) = 500x',
+        ruleSummary: "Une application linéaire est une fonction définie par f(x) = ax, où a est un nombre rationnel fixé appelé coefficient de l'application. Sa représentation graphique est une droite qui passe impérativement par l'origine O(0,0).",
+        teacherGoal: "Lier la formule algébrique au tableau de proportionnalité et à la droite passant par (0,0).",
+        interactiveType: 'linear-function',
+        demoParams: { a: 500, unitX: 'kg', unitY: 'FCFA' },
+        steps: [
+          {
+            stepNumber: 1,
+            title: '1. Définition de l\'application linéaire',
+            rule: 'Forme générale : f(x) = a · x',
+            latex: 'f(x) = 500x \\quad (a = 500)',
+            explanation: 'Si 1 kg de mangues coûte 500 FCFA, alors le prix de x kilogrammes est donné par f(x) = 500 × x.',
+          },
+          {
+            stepNumber: 2,
+            title: '2. Calcul d\'une image : f(3)',
+            rule: 'Image du nombre 3 par f',
+            latex: 'f(3) = 500 \\times 3 = 1\\,500\\text{ FCFA}',
+            explanation: 'Pour 3 kg de mangues, on paie 1 500 FCFA. On dit que 1 500 est l\'image de 3 par f.',
+          },
+          {
+            stepNumber: 3,
+            title: '3. Recherche d\'un antécédent',
+            rule: 'Résolution de 500x = 2 500',
+            latex: '500x = 2\\,500 \\implies x = \\frac{2\\,500}{500} = 5\\text{ kg}',
+            explanation: 'Avec 2 500 FCFA, on peut acheter 5 kg de mangues. 5 est l\'antécédent de 2 500.',
+          },
+          {
+            stepNumber: 4,
+            title: '4. Représentation graphique',
+            rule: 'Droite passant par l\'origine O(0,0)',
+            latex: '(D) : y = 500x \\quad \\text{passe par } O(0,0) \\text{ et } A(1 ; 500)',
+            explanation: 'La droite passe par O(0,0). Deux points suffisent pour la tracer.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'nombres-rationnels-operations',
+    title: 'Ensemble des nombres rationnels : Présentation et Opérations - 4e',
+    shortTitle: 'Opérations sur les rationnels',
+    category: 'Activités numériques',
+    icon: 'Percent',
+    description: "Définition de Q, fractions irréductibles, addition et soustraction au même dénominateur, multiplication et division.",
+    demos: [
+      {
+        id: 'rationnels-addition',
+        title: 'Addition de fractions : 3/4 + 2/5 (Même dénominateur)',
+        badge: 'Calcul fractionnaire',
+        defaultLatex: '\\frac{3}{4} + \\frac{2}{5} = \\frac{23}{20}',
+        ruleSummary: "Pour additionner deux nombres rationnels de dénominateurs différents, on cherche le plus petit dénominateur commun, on met les deux fractions au même dénominateur, puis on additionne les numérateurs.",
+        teacherGoal: "Décomposer l'étape de mise au même dénominateur qui bloque souvent les élèves.",
+        interactiveType: 'rationals-fraction',
+        demoParams: { a: 3, b: 4, c: 2, d: 5 },
+        steps: [
+          {
+            stepNumber: 1,
+            title: '1. Fractions à additionner',
+            rule: 'Dénominateurs différents : 4 et 5',
+            latex: '\\frac{3}{4} + \\frac{2}{5}',
+            explanation: 'On ne peut pas additionner directement car les dénominateurs sont différents.',
+          },
+          {
+            stepNumber: 2,
+            title: '2. Recherche du dénominateur commun',
+            rule: 'PPCM(4, 5) = 4 × 5 = 20',
+            latex: '\\text{Dénominateur commun} = 4 \\times 5 = 20',
+            explanation: 'Le plus petit multiple commun à 4 et 5 est 20.',
+          },
+          {
+            stepNumber: 3,
+            title: '3. Mise au même dénominateur',
+            rule: 'Multiplication en haut et en bas',
+            latex: '= \\frac{3 \\times 5}{4 \\times 5} + \\frac{2 \\times 4}{5 \\times 4} = \\frac{15}{20} + \\frac{8}{20}',
+            explanation: 'On multiplie 3/4 par 5/5 pour obtenir 15/20, et 2/5 par 4/4 pour obtenir 8/20.',
+          },
+          {
+            stepNumber: 4,
+            title: '4. Addition des numérateurs',
+            rule: 'Conservation du dénominateur commun',
+            latex: '= \\frac{15 + 8}{20} = \\frac{23}{20}',
+            explanation: '15 + 8 = 23. La fraction 23/20 est irréductible car 23 est premier.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'cosinus',
+    title: 'Le cosinus d\'un angle aigu - 4e',
+    shortTitle: 'Cosinus d\'un angle aigu',
+    category: 'Activités géométriques',
+    icon: 'Compass',
+    description: "Définition trigonométrique dans le triangle rectangle : cos = adjacent / hypoténuse, calcul d'angles et de longueurs.",
+    demos: [
+      {
+        id: 'cosinus-demo',
+        title: 'Calcul de la longueur du côté adjacent AC',
+        badge: 'Trigonométrie 4e',
+        defaultLatex: '\\cos(\\hat{B}) = \\frac{\\text{Côté adjacent}}{\\text{Hypoténuse}} = \\frac{BA}{BC}',
+        ruleSummary: "Dans un triangle rectangle, le cosinus d'un angle aigu est égal au quotient de la longueur du côté adjacent par la longueur de l'hypoténuse. La valeur du cosinus est toujours comprise entre 0 et 1.",
+        teacherGoal: "Apprendre à nommer correctement le côté adjacent et l'hypoténuse.",
+        interactiveType: 'cosinus-svg',
+        demoParams: { angleDeg: 60, hypotenuse: 10, adjacent: 5 },
+        steps: [
+          {
+            stepNumber: 1,
+            title: '1. Triangle ABC rectangle en A',
+            rule: 'Angle aigu à étudier : B̂',
+            latex: '\\Delta ABC \\text{ rectangle en } A, \\quad \\hat{B} = 60^\\circ, \\quad BC = 10\\text{ cm}',
+            explanation: 'L\'hypoténuse est le côté [BC]. Le côté adjacent à l\'angle B̂ est le côté [AB].',
+          },
+          {
+            stepNumber: 2,
+            title: '2. Formule du cosinus',
+            rule: 'cos(B̂) = AB / BC',
+            latex: '\\cos(\\hat{B}) = \\frac{AB}{BC}',
+            explanation: 'On écrit la relation trigonométrique littérale.',
+          },
+          {
+            stepNumber: 3,
+            title: '3. Remplacement des données',
+            rule: 'cos(60°) = 0,5',
+            latex: '\\cos(60^\\circ) = \\frac{AB}{10} \\implies 0{,}5 = \\frac{AB}{10}',
+            explanation: 'Avec la calculatrice ou les angles remarquables : cos(60°) = 1/2 = 0,5.',
+          },
+          {
+            stepNumber: 4,
+            title: '4. Calcul de la longueur AB',
+            rule: 'AB = 10 × cos(60°)',
+            latex: 'AB = 10 \\times 0{,}5 = 5\\text{ cm}',
+            explanation: 'Le côté adjacent AB mesure exactement 5 cm.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'pyramides',
+    title: 'Les pyramides - 4e',
+    shortTitle: 'Les Pyramides',
+    category: 'Activités géométriques',
+    icon: 'Pyramid',
+    description: "Pyramides régulières, sommet, hauteur, apothème, patron déplié et calcul du volume V = (1/3) × Aire de base × h.",
+    demos: [
+      {
+        id: 'pyramide-volume',
+        title: 'Calcul du volume d\'une pyramide à base carrée',
+        badge: 'Géométrie dans l\'espace',
+        defaultLatex: 'V = \\frac{1}{3} \\times \\mathcal{B} \\times h',
+        ruleSummary: "Le volume V d'une pyramide est égal au tiers du produit de l'aire de sa base B par sa hauteur h.",
+        teacherGoal: "Visualiser la différence entre le cube/prisme et le tiers correspondant à la pyramide.",
+        interactiveType: 'pyramide-3d',
+        demoParams: { baseSide: 6, height: 10 },
+        steps: [
+          {
+            stepNumber: 1,
+            title: '1. Données de la pyramide',
+            rule: 'Base carrée de côté c = 6 cm, Hauteur h = 10 cm',
+            latex: 'c = 6\\text{ cm}, \\quad h = 10\\text{ cm}',
+            explanation: 'La base est un carré ABCD de côté 6 cm. La hauteur issue du sommet S mesure 10 cm.',
+          },
+          {
+            stepNumber: 2,
+            title: '2. Aire de la base carrée B',
+            rule: 'Aire = côté × côté',
+            latex: '\\mathcal{B} = c^2 = 6^2 = 36\\text{ cm}^2',
+            explanation: 'L\'aire de la base carrée est de 36 cm².',
+          },
+          {
+            stepNumber: 3,
+            title: '3. Formule du volume',
+            rule: 'V = (1/3) × B × h',
+            latex: 'V = \\frac{1}{3} \\times 36 \\times 10',
+            explanation: 'On applique la formule du tiers du prisme.',
+          },
+          {
+            stepNumber: 4,
+            title: '4. Calcul final',
+            rule: 'Simplification : 36 / 3 = 12',
+            latex: 'V = 12 \\times 10 = 120\\text{ cm}^3',
+            explanation: 'Le volume de la pyramide est de 120 cm³.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'equations-q',
+    title: 'Équations à une inconnue dans Q - 4e',
+    shortTitle: 'Équations dans Q',
+    category: 'Activités numériques',
+    icon: 'Equal',
+    description: "Résolution des équations du premier degré ax + b = cx + d, transfert de membre avec changement de signe, produit en croix.",
+    demos: [
+      {
+        id: 'equation-transfert',
+        title: 'Résolution pas-à-pas : 3x - 5 = x + 7',
+        badge: 'Principe de la balance',
+        defaultLatex: '3x - 5 = x + 7 \\iff x = 6',
+        ruleSummary: "Pour résoudre ax + b = cx + d, on regroupe tous les termes contenant x dans un membre et les termes constants dans l'autre, en changeant le signe de chaque terme déplacé.",
+        teacherGoal: "Animer le glissement des termes de gauche à droite avec inversion de signe (+ devient -, - devient +).",
+        interactiveType: 'equations-steps',
+        demoParams: { a: 3, b: -5, c: 1, d: 7, sol: 6 },
+        steps: [
+          {
+            stepNumber: 1,
+            title: '1. Équation initiale',
+            rule: 'ax + b = cx + d',
+            latex: '3x - 5 = x + 7',
+            explanation: 'On identifie les termes avec x (3x et x) et les termes constants (-5 et 7).',
+          },
+          {
+            stepNumber: 2,
+            title: '2. Regroupement des x à gauche',
+            rule: 'Le terme +x passe à gauche et devient -x',
+            latex: '3x - x - 5 = 7',
+            explanation: 'On soustrait x des deux membres de l\'égalité.',
+          },
+          {
+            stepNumber: 3,
+            title: '3. Regroupement des constantes à droite',
+            rule: 'Le terme -5 passe à droite et devient +5',
+            latex: '3x - x = 7 + 5',
+            explanation: 'On ajoute 5 aux deux membres.',
+          },
+          {
+            stepNumber: 4,
+            title: '4. Réduction des deux membres',
+            rule: '2x = 12',
+            latex: '2x = 12',
+            explanation: '3x - 1x = 2x et 7 + 5 = 12.',
+          },
+          {
+            stepNumber: 5,
+            title: '5. Division par le coefficient de x',
+            rule: 'x = 12 / 2',
+            latex: 'x = \\frac{12}{2} = 6 \\implies S = \\{ 6 \\}',
+            explanation: 'On divise par 2. La solution unique dans Q est x = 6.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'nombres-rationnels-puissances',
+    title: 'Nombres rationnels - 4e',
+    shortTitle: 'Nombres rationnels & Puissances',
+    category: 'Activités numériques',
+    icon: 'Binary',
+    description: "Puissances d'un nombre rationnel à exposant entier positif et négatif, règles de calcul a^n × a^m = a^(n+m), écriture scientifique.",
+    demos: [
+      {
+        id: 'puissances-regles',
+        title: 'Règles fondamentales : 10^3 × 10^4 et a^n / a^m',
+        badge: 'Calcul d\'exposants',
+        defaultLatex: 'a^n \\times a^m = a^{n+m}',
+        ruleSummary: "Pour multiplier deux puissances d'un même nombre, on additionne les exposants. Pour diviser, on soustrait les exposants. Pour élever une puissance à une autre, on multiplie les exposants.",
+        teacherGoal: "Donner aux élèves les automatismes de calcul sur les exposants.",
+        interactiveType: 'powers-steps',
+        demoParams: {},
+        steps: [
+          {
+            stepNumber: 1,
+            title: '1. Produit de puissances de même base',
+            rule: 'a^n × a^m = a^(n+m)',
+            latex: '2^3 \\times 2^4 = 2^{3 + 4} = 2^7 = 128',
+            explanation: 'On conserve la base 2 et on additionne les exposants : 3 + 4 = 7.',
+          },
+          {
+            stepNumber: 2,
+            title: '2. Quotient de puissances',
+            rule: 'a^n / a^m = a^(n - m)',
+            latex: '\\frac{5^6}{5^2} = 5^{6 - 2} = 5^4 = 625',
+            explanation: 'On soustrait l\'exposant du dénominateur de celui du numérateur : 6 - 2 = 4.',
+          },
+          {
+            stepNumber: 3,
+            title: '3. Puissance d\'une puissance',
+            rule: '(a^n)^m = a^(n × m)',
+            latex: '(10^2)^3 = 10^{2 \\times 3} = 10^6 = 1\\,000\\,000',
+            explanation: 'On multiplie les deux exposants entre eux : 2 × 3 = 6.',
+          },
+          {
+            stepNumber: 4,
+            title: '4. Exposant négatif',
+            rule: 'a^(-n) = 1 / a^n',
+            latex: '4^{-2} = \\frac{1}{4^2} = \\frac{1}{16} = 0{,}0625',
+            explanation: 'Un exposant négatif indique l\'inverse de la puissance positive.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'statistique',
+    title: 'Statistique - 4e',
+    shortTitle: 'Statistiques & Moyenne',
+    category: 'Activités numériques',
+    icon: 'BarChart2',
+    description: "Séries statistiques, tableaux d'effectifs et de fréquences, calcul de la moyenne pondérée, diagramme en bâtons et circulaire.",
+    demos: [
+      {
+        id: 'stats-notes',
+        title: 'Notes d\'un devoir de maths en 4e : Calcul de la moyenne',
+        badge: 'Moyenne pondérée',
+        defaultLatex: '\\bar{x} = \\frac{\\sum n_i x_i}{N}',
+        ruleSummary: "La moyenne pondérée est égale à la somme des produits de chaque valeur par son effectif correspondant, divisée par l'effectif total de la classe.",
+        teacherGoal: "Montrer le calcul colonne par colonne et la somme totale.",
+        interactiveType: 'stats-chart',
+        demoParams: {
+          data: [
+            { note: 8, effectif: 4 },
+            { note: 10, effectif: 8 },
+            { note: 12, effectif: 10 },
+            { note: 15, effectif: 6 },
+            { note: 18, effectif: 2 },
+          ],
+        },
+        steps: [
+          {
+            stepNumber: 1,
+            title: '1. Tableau des notes et effectifs',
+            rule: 'Effectif total N',
+            latex: 'N = 4 + 8 + 10 + 6 + 2 = 30\\text{ élèves}',
+            explanation: 'La classe compte 30 élèves au total.',
+          },
+          {
+            stepNumber: 2,
+            title: '2. Calcul des produits (note × effectif)',
+            rule: 'Produit pondéré',
+            latex: '(8 \\times 4) + (10 \\times 8) + (12 \\times 10) + (15 \\times 6) + (18 \\times 2)',
+            explanation: '= 32 + 80 + 120 + 90 + 36 = 358 points au total.',
+          },
+          {
+            stepNumber: 3,
+            title: '3. Division par l\'effectif total',
+            rule: 'Moyenne x̄ = Total / N',
+            latex: '\\bar{x} = \\frac{358}{30} \\approx 11{,}93 / 20',
+            explanation: 'La moyenne générale de la classe de 4e à ce devoir est de 11,93 sur 20.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'revision',
+    title: 'Révision - 4e',
+    shortTitle: 'Révision & Quiz BFEM',
+    category: 'Synthèse & Révision',
+    icon: 'GraduationCap',
+    description: "Révision générale transversale pour la classe de 4e (exercices types, synthèse des formules clés et quiz interactif en direct avec les élèves).",
+    demos: [
+      {
+        id: 'revision-quiz',
+        title: 'Quiz de révision en direct pour la classe (Questions / Réponses animées)',
+        badge: 'Évaluation formative',
+        defaultLatex: '\\text{Révision générale 4e Sénégal}',
+        ruleSummary: "Sélection d'exercices clés couvrant le calcul algébrique, le théorème de Pythagore, les équations et les propriétés de la droite des milieux.",
+        teacherGoal: "Le professeur pose la question à la classe, attend les propositions des élèves, puis clique sur 'Révéler la solution animée'.",
+        interactiveType: 'revision-quiz',
+        demoParams: {},
+        steps: [
+          {
+            stepNumber: 1,
+            title: 'Question 1 : Double distributivité',
+            rule: 'Développer (2x + 3)(x - 4)',
+            latex: '(2x + 3)(x - 4) = 2x^2 - 8x + 3x - 12 = 2x^2 - 5x - 12',
+            explanation: 'Attention au signe : 2x × (-4) = -8x et 3 × (-4) = -12. Réduction : -8x + 3x = -5x.',
+            teacherTip: 'Demander d\'abord à un élève au tableau de donner le résultat de -8x + 3x.',
+          },
+          {
+            stepNumber: 2,
+            title: 'Question 2 : Triangle rectangle',
+            rule: 'Soit RST rectangle en S, RS = 6 cm, ST = 8 cm. Calculer RT.',
+            latex: 'RT^2 = RS^2 + ST^2 = 36 + 64 = 100 \\implies RT = 10\\text{ cm}',
+            explanation: 'Application directe du théorème de Pythagore.',
+          },
+          {
+            stepNumber: 3,
+            title: 'Question 3 : Inéquation piégeuse',
+            rule: 'Résoudre -3x < 15',
+            latex: 'x > \\frac{15}{-3} \\implies x > -5 \\quad (S = ]-5 ; +\\infty[)',
+            explanation: 'On divise par -3 qui est négatif, le sens s\'inverse donc strictement : < devient >.',
+          },
+          {
+            stepNumber: 4,
+            title: 'Question 4 : Droite des milieux',
+            rule: 'Dans un triangle ABC, si BC = 14 cm, quelle est la longueur du segment des milieux [IJ] ?',
+            latex: 'IJ = \\frac{BC}{2} = \\frac{14}{2} = 7\\text{ cm}',
+            explanation: 'D\'après le 1er théorème de la droite des milieux, IJ mesure la moitié de BC.',
+          },
+        ],
+      },
+    ],
+  },
+];

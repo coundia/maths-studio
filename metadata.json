@@ -1,0 +1,6 @@
+{
+  "name": "Math3D Studio",
+  "description": "Cours et démos interactives animées de Mathématiques pour la classe de 4ème (Programme Sénégal) : Pythagore, droite des milieux, calcul algébrique, inéquations, etc.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
