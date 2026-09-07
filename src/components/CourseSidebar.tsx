@@ -74,7 +74,7 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
       {/* Sidebar Container */}
       <aside
         id="senegal-courses-sidebar"
-        className={`fixed md:static top-0 bottom-0 left-0 z-50 w-80 sm:w-88 md:w-76 lg:w-84 shrink-0 bg-white dark:bg-slate-900 border-r border-neutral-200 dark:border-slate-800 flex flex-col transition-all duration-300 ease-in-out ${
+        className={`fixed md:static top-0 bottom-0 left-0 z-50 w-80 sm:w-88 md:w-76 lg:w-84 shrink-0 bg-white/70 dark:bg-[#0B1120]/70 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-800/80 flex flex-col transition-all duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full md:hidden'
         }`}
       >
@@ -197,10 +197,10 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
                     onCloseMobile();
                   }
                 }}
-                className={`w-full text-left p-2.5 rounded-xl transition-all border group flex items-start space-x-2.5 ${
+                className={`w-full text-left p-2.5 rounded-2xl transition-all border group flex items-start space-x-2.5 hover:scale-[1.01] active:scale-95 ${
                   isActive
-                    ? 'bg-white border-2 border-black border-l-4 border-l-red-600 text-black shadow-md dark:bg-emerald-950 dark:border-emerald-500 dark:border-l-emerald-400 dark:text-white'
-                    : 'bg-white hover:bg-neutral-100 border-neutral-200 text-neutral-800 dark:bg-slate-950/30 dark:hover:bg-slate-800/60 dark:border-slate-800/80 dark:text-slate-300'
+                    ? 'bg-gradient-to-r from-emerald-50/80 to-transparent border-l-4 border-l-emerald-500 border-t-slate-200 border-r-slate-200 border-b-slate-200 text-slate-900 shadow-md shadow-emerald-500/10 dark:from-emerald-900/30 dark:border-t-slate-800/80 dark:border-r-slate-800/80 dark:border-b-slate-800/80 dark:text-white'
+                    : 'bg-white/50 hover:bg-white/80 border-slate-200/50 text-slate-700 dark:bg-slate-900/30 dark:hover:bg-slate-800/60 dark:border-slate-800/50 dark:text-slate-300 shadow-xs'
                 }`}
               >
                 {/* Index badge */}

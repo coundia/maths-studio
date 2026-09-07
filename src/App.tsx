@@ -115,7 +115,10 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-black dark:bg-slate-950 dark:text-slate-100 flex flex-col selection:bg-red-600 selection:text-white transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white transition-colors duration-200 relative z-0">
+      {/* Decorative Glow */}
+      <div className="absolute top-0 inset-x-0 h-96 bg-gradient-to-b from-indigo-500/10 via-emerald-500/5 to-transparent dark:from-indigo-500/10 dark:via-emerald-500/5 pointer-events-none -z-10" />
+
       {/* Top Header */}
       <Header
         onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
@@ -182,8 +185,8 @@ export default function App() {
           {/* TAB 2: CUSTOM ALGEBRAIC SOLVER (Calcul Libre) */}
           {activeTab === 'algebra-sandbox' && (
             <div className="flex flex-col space-y-4">
-              <div className="bg-white dark:bg-slate-900/80 border border-neutral-300 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs transition-colors">
-                <div className="flex items-center justify-between mb-3">
+              <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl border border-slate-200 dark:border-slate-800/80 rounded-3xl p-5 sm:p-6 shadow-xl shadow-slate-200/40 dark:shadow-none transition-all">
+                <div className="flex items-center justify-between mb-4">
                   <div>
                     <h2 className="text-lg sm:text-xl font-bold text-black dark:text-white flex items-center gap-2">
                       <span>Calcul Algébrique Libre : Développer & Factoriser</span>

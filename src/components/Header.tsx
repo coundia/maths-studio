@@ -52,7 +52,7 @@ export const Header: React.FC<HeaderProps> = ({
   });
 
   return (
-    <header className="w-full border-b border-neutral-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-2.5 sm:px-6 py-2 sticky top-0 z-40 transition-colors duration-200">
+    <header className="w-full border-b border-slate-200/50 dark:border-slate-800/80 bg-white/70 dark:bg-[#0B1120]/70 backdrop-blur-xl px-2.5 sm:px-6 py-3 sticky top-0 z-40 transition-colors duration-200 shadow-sm shadow-slate-200/20 dark:shadow-none">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
         {/* Left: Hamburger + Brand */}
         <div className="flex items-center space-x-2">
@@ -74,15 +74,15 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Logo & Title */}
           <div className="flex items-center space-x-2">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-white text-black border-2 border-black dark:bg-gradient-to-tr dark:from-amber-500 dark:to-emerald-500 p-0.5 shadow-sm shrink-0 flex items-center justify-center">
-              <div className="w-full h-full bg-white dark:bg-slate-950 rounded-[10px] flex items-center justify-center text-black dark:text-amber-300 font-extrabold text-[11px] sm:text-xs font-mono">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-emerald-500 p-[2px] shadow-lg shadow-emerald-500/20 shrink-0 flex items-center justify-center">
+              <div className="w-full h-full bg-white dark:bg-slate-950 rounded-[10px] flex items-center justify-center text-slate-800 dark:text-emerald-400 font-extrabold text-[11px] sm:text-xs font-mono">
                 {selectedGrade === 'all' ? '3e/4e' : selectedGrade}
               </div>
             </div>
             <div className="hidden min-[380px]:block">
               <div className="flex items-center space-x-1.5">
-                <h1 className="font-extrabold text-black dark:text-white text-xs sm:text-base tracking-tight leading-tight">
-                  Maths <span className="text-red-600 dark:text-emerald-400">Sénégal</span>
+                <h1 className="font-extrabold text-slate-900 dark:text-white text-xs sm:text-base tracking-tight leading-tight">
+                  Maths <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-indigo-500">Sénégal</span>
                 </h1>
                 <span className="hidden md:inline-block text-[10px] font-bold px-1.5 py-0.5 bg-neutral-100 text-black border border-neutral-300 dark:bg-amber-500/10 dark:text-amber-300 dark:border-amber-500/30 rounded-full">
                   {selectedGrade === '3e' ? '3ème BFEM' : selectedGrade === '4e' ? '4ème' : '3e & 4e'}
@@ -97,10 +97,10 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="tab-courses-btn"
             onClick={() => onSelectTab('courses')}
-            className={`flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-3 py-1.5 rounded-lg transition-all font-semibold min-h-[34px] ${
+            className={`flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-4 py-1.5 rounded-lg transition-all font-semibold min-h-[34px] hover:scale-105 active:scale-95 ${
               activeTab === 'courses'
-                ? 'bg-white text-black border-2 border-black dark:bg-emerald-600 dark:text-white shadow-xs font-bold'
-                : 'text-neutral-700 hover:text-black dark:text-slate-400 dark:hover:text-slate-200'
+                ? 'bg-white text-slate-900 shadow-md border border-slate-200 dark:bg-emerald-600 dark:border-emerald-500 dark:text-white'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/50 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/50'
             }`}
           >
             <BookOpen className="w-3.5 h-3.5" />
@@ -113,10 +113,10 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="tab-algebra-btn"
             onClick={() => onSelectTab('algebra-sandbox')}
-            className={`flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-3 py-1.5 rounded-lg transition-all font-semibold min-h-[34px] ${
+            className={`flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-4 py-1.5 rounded-lg transition-all font-semibold min-h-[34px] hover:scale-105 active:scale-95 ${
               activeTab === 'algebra-sandbox'
-                ? 'bg-white text-black border-2 border-red-600 dark:bg-indigo-600 dark:text-white shadow-xs font-bold'
-                : 'text-neutral-700 hover:text-black dark:text-slate-400 dark:hover:text-slate-200'
+                ? 'bg-white text-slate-900 shadow-md border border-slate-200 dark:bg-indigo-600 dark:border-indigo-500 dark:text-white'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/50 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/50'
             }`}
           >
             <Hash className="w-3.5 h-3.5 text-red-600 dark:text-amber-400" />
