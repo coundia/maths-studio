@@ -274,7 +274,7 @@ export const DevelopmentEngine: React.FC<DevelopmentEngineProps> = ({
               Étape {currentStage} / {totalStages}
             </span>
           </div>
-          <h3 className="text-base sm:text-lg font-bold text-white mt-1">
+          <h3 className="text-base sm:text-lg font-bold text-black dark:text-white mt-1">
             Développement Pas à Pas : Déplacement Animé & Zéro Disparition
           </h3>
           <p className="text-xs text-slate-400">
@@ -314,10 +314,10 @@ export const DevelopmentEngine: React.FC<DevelopmentEngineProps> = ({
           {/* Play/Pause */}
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className={`min-h-[36px] px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all shadow-md shrink-0 ${
+            className={`min-h-[36px] px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all shadow-xs shrink-0 ${
               isPlaying
-                ? 'bg-amber-600 hover:bg-amber-500 text-white'
-                : 'bg-red-600 hover:bg-red-500 text-white shadow-red-600/30'
+                ? 'bg-white hover:bg-neutral-100 text-black border-2 border-black font-bold dark:bg-amber-600 dark:hover:bg-amber-500 dark:text-white'
+                : 'bg-white hover:bg-neutral-100 text-black border-2 border-black font-bold dark:bg-red-600 dark:hover:bg-red-500 dark:text-white'
             }`}
           >
             {isPlaying ? (
@@ -807,10 +807,10 @@ export const DevelopmentEngine: React.FC<DevelopmentEngineProps> = ({
             setIsPlaying(false);
           }}
           disabled={currentStage === totalStages}
-          className={`flex-1 flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl font-medium text-xs sm:text-sm transition-all shadow-md ${
+          className={`flex-1 flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl font-medium text-xs sm:text-sm transition-all shadow-xs ${
             currentStage === totalStages
-              ? 'bg-emerald-700/60 text-emerald-200 border border-emerald-600/50'
-              : 'bg-red-600 hover:bg-red-500 text-white shadow-red-600/30'
+              ? 'bg-white text-black border-2 border-black font-bold dark:bg-emerald-700/60 dark:text-emerald-200 border border-neutral-300 dark:border-emerald-600/50'
+              : 'bg-white hover:bg-neutral-100 text-black border-2 border-black font-bold dark:bg-red-600 dark:hover:bg-red-500 dark:text-white'
           }`}
         >
           <span>{currentStage === totalStages ? 'Développement achevé' : 'Étape suivante'}</span>

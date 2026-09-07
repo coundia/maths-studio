@@ -5,7 +5,10 @@ import { CalculAlgebriqueCourse } from './CalculAlgebriqueCourse';
 import { GeometryVisualizers3e } from './GeometryVisualizers3e';
 import { VideoLessonPlayer } from './VideoLessonPlayer';
 import { StudentExercisesSection } from './StudentExercisesSection';
+import { QuickQuiz } from './QuickQuiz';
 import { getExercisesForChapter } from '../data/getCourseExercises';
+import { CoursePrerequisitesDrawer } from './CoursePrerequisitesDrawer';
+import { getChapterPrerequisites } from '../data/coursePrerequisites';
 import {
   Play,
   Pause,
@@ -21,24 +24,29 @@ import {
   CheckCircle2,
   Tv,
   Zap,
+  BookOpenCheck,
 } from 'lucide-react';
 
 interface InteractiveLessonViewerProps {
   chapter: CourseChapter;
   onOpenAlgebraSolver?: (expr: string) => void;
+  onSelectChapter?: (chapterId: string) => void;
 }
 
 export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = ({
   chapter,
   onOpenAlgebraSolver,
+  onSelectChapter,
 }) => {
   const currentDemo: CourseDemo = chapter.demos[0];
   const exercises = getExercisesForChapter(chapter.id, currentDemo);
+  const prerequisites = getChapterPrerequisites(chapter);
   const [currentStepIdx, setCurrentStepIdx] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [speed, setSpeed] = useState<number>(1);
   const [hideSolutionForClass, setHideSolutionForClass] = useState<boolean>(false);
   const [isProjectorMode, setIsProjectorMode] = useState<boolean>(false);
+  const [isPrerequisitesOpen, setIsPrerequisitesOpen] = useState<boolean>(false);
 
   // Dynamic state for interactive demos
   const [pythagoreSides, setPythagoreSides] = useState<{ ab: number; ac: number }>({
@@ -55,6 +63,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
     setCurrentStepIdx(0);
     setIsPlaying(false);
     setHideSolutionForClass(false);
+    setIsPrerequisitesOpen(false);
   }, [chapter.id]);
 
   // Autoplay loop
@@ -85,7 +94,37 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
 
   // Dedicated complete course for Calcul Algébrique 4e
   if (chapter.id === 'calcul-algebrique') {
-    return <CalculAlgebriqueCourse onOpenAlgebraSolver={onOpenAlgebraSolver} />;
+    return (
+      <>
+        <CalculAlgebriqueCourse
+          onOpenAlgebraSolver={onOpenAlgebraSolver}
+          onOpenPrerequisites={() => setIsPrerequisitesOpen(true)}
+        />
+
+        {/* Floating Quick-Access Right Drawer Trigger */}
+        <button
+          onClick={() => setIsPrerequisitesOpen(true)}
+          className="fixed right-0 top-1/2 -translate-y-1/2 z-30 flex items-center px-2 py-3 rounded-l-2xl shadow-xl border-y border-l bg-white text-black hover:bg-neutral-50 border-neutral-300 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-slate-800 transition-all group"
+          title="Ouvrir les prérequis du cours (Rappels de 5e)"
+          aria-label="Ouvrir les prérequis"
+        >
+          <div className="flex flex-col items-center space-y-1">
+            <BookOpenCheck className="w-4 h-4 text-red-600 dark:text-amber-400 group-hover:scale-110 transition-transform" />
+            <span className="text-[10px] font-bold [writing-mode:vertical-rl] rotate-180 uppercase tracking-wider py-0.5">
+              Prérequis ({prerequisites.length})
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-red-600 dark:bg-amber-400 animate-pulse" />
+          </div>
+        </button>
+
+        <CoursePrerequisitesDrawer
+          isOpen={isPrerequisitesOpen}
+          onClose={() => setIsPrerequisitesOpen(false)}
+          chapter={chapter}
+          onNavigateToChapter={onSelectChapter}
+        />
+      </>
+    );
   }
 
   return (
@@ -114,10 +153,10 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                 {currentDemo.badge}
               </span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-white mt-1.5 flex items-center gap-2">
+            <h1 className="text-xl sm:text-2xl font-bold text-black dark:text-white mt-1.5 flex items-center gap-2">
               {chapter.title}
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-3xl">
+            <p className="text-xs sm:text-sm text-neutral-600 dark:text-slate-300 mt-1 max-w-3xl">
               {chapter.description}
             </p>
           </div>
@@ -125,12 +164,21 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
           {/* Teacher Quick Tools */}
           <div className="flex items-center flex-wrap gap-2">
             <button
+              onClick={() => setIsPrerequisitesOpen(true)}
+              title="Consulter les prérequis et rappels pour ce cours"
+              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border border-red-600/50 hover:border-red-600 bg-white hover:bg-neutral-100 text-black shadow-xs dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-amber-300 dark:border-amber-500/40"
+            >
+              <BookOpenCheck className="w-3.5 h-3.5 text-red-600 dark:text-amber-400" />
+              <span>Prérequis ({prerequisites.length})</span>
+            </button>
+
+            <button
               onClick={() => setHideSolutionForClass(!hideSolutionForClass)}
               title="Masquer la solution pour interroger les élèves"
-              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all border ${
+              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border ${
                 hideSolutionForClass
-                  ? 'bg-amber-500/20 border-amber-500 text-amber-300'
-                  : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700'
+                  ? 'bg-white border-2 border-black text-black font-bold shadow-xs dark:bg-amber-500/20 dark:border-amber-500 dark:text-amber-300'
+                  : 'bg-white hover:bg-neutral-100 text-neutral-800 border-neutral-300 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-300 dark:border-slate-700'
               }`}
             >
               {hideSolutionForClass ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
@@ -140,10 +188,10 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
             <button
               onClick={() => setIsProjectorMode(!isProjectorMode)}
               title="Mode grand écran / Vidéoprojecteur"
-              className={`flex items-center space-x-1 px-3 py-1.5 rounded-xl text-xs font-medium transition-all border ${
+              className={`flex items-center space-x-1 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border ${
                 isProjectorMode
-                  ? 'bg-indigo-600 border-indigo-400 text-white'
-                  : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700'
+                  ? 'bg-white border-2 border-black text-black font-bold shadow-xs dark:bg-indigo-600 dark:border-indigo-400 dark:text-white'
+                  : 'bg-white hover:bg-neutral-100 text-neutral-800 border-neutral-300 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-300 dark:border-slate-700'
               }`}
             >
               <Tv className="w-3.5 h-3.5" />
@@ -153,11 +201,25 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
         </div>
 
         {/* Rule / Objective Summary */}
-        <div className="mt-3.5 p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/20 flex items-start space-x-3">
-          <Lightbulb className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-          <div className="flex-1 text-xs sm:text-sm text-emerald-200">
-            <span className="font-bold text-white">Règle à retenir : </span>
-            {currentDemo.ruleSummary}
+        <div className="mt-3.5 p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-950 dark:bg-emerald-950/30 dark:border-emerald-500/20 dark:text-emerald-200 flex flex-col space-y-2">
+          <div className="flex items-start space-x-3">
+            <Lightbulb className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+            <div className="flex-1 text-xs sm:text-sm text-emerald-950 dark:text-emerald-200">
+              <span className="font-bold text-emerald-800 dark:text-white">Règle à retenir : </span>
+              <span className="text-emerald-900 dark:text-emerald-200 font-medium">{currentDemo.ruleSummary}</span>
+            </div>
+          </div>
+          <div className="pt-2 border-t border-emerald-300 dark:border-emerald-500/20 flex items-center justify-between text-xs flex-wrap gap-2">
+            <span className="text-emerald-800/80 dark:text-slate-300">
+              Des doutes sur les notions préalables ?
+            </span>
+            <button
+              onClick={() => setIsPrerequisitesOpen(true)}
+              className="text-emerald-700 hover:text-emerald-800 dark:text-amber-400 font-bold hover:underline flex items-center gap-1.5"
+            >
+              <BookOpenCheck className="w-3.5 h-3.5" />
+              <span>Ouvrir les prérequis indispensables ({prerequisites.length})</span>
+            </button>
           </div>
         </div>
       </div>
@@ -753,8 +815,8 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                     <span className="text-xs text-emerald-300 font-bold mb-1">
                       Addition sur le même dénominateur (20) :
                     </span>
-                    <div className="text-base font-mono font-extrabold text-white">
-                      15/20 + 8/20 = <span className="text-emerald-400 text-lg">23/20</span>
+                    <div className="text-base font-mono font-extrabold text-black dark:text-white">
+                      15/20 + 8/20 = <span className="text-emerald-600 dark:text-emerald-400 text-lg">23/20</span>
                     </div>
                   </div>
                 )}
@@ -985,10 +1047,10 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                   <div className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2">
                     {currentStep.rule}
                   </div>
-                  <div className="my-3 text-lg sm:text-2xl font-mono font-bold text-white">
+                  <div className="my-3 text-lg sm:text-2xl font-mono font-bold text-black dark:text-white">
                     <MathView latex={currentStep.latex} display={true} />
                   </div>
-                  <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-neutral-700 dark:text-slate-300 mt-2 leading-relaxed">
                     {currentStep.explanation}
                   </p>
                 </div>
@@ -1048,15 +1110,15 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
 
             {/* Speed Selector */}
             <div className="flex items-center space-x-1 text-xs">
-              <span className="text-slate-400 mr-1 text-[11px]">Vitesse :</span>
+              <span className="text-neutral-500 dark:text-slate-400 mr-1 text-[11px]">Vitesse :</span>
               {[0.75, 1, 1.5].map((s) => (
                 <button
                   key={s}
                   onClick={() => setSpeed(s)}
-                  className={`px-2 py-0.5 rounded-lg font-mono text-[11px] transition-colors ${
+                  className={`px-2 py-0.5 rounded-lg font-mono text-[11px] transition-colors border ${
                     speed === s
-                      ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 font-bold'
-                      : 'bg-slate-800/80 text-slate-400 hover:text-slate-200'
+                      ? 'bg-white text-black border-2 border-black font-bold shadow-xs dark:bg-emerald-600/30 dark:text-emerald-300 dark:border-emerald-500/40'
+                      : 'bg-white text-neutral-700 hover:bg-neutral-100 border-neutral-300 dark:bg-slate-800/80 dark:text-slate-400 dark:hover:text-slate-200 dark:border-transparent'
                   }`}
                 >
                   {s}x
@@ -1067,19 +1129,21 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
         </div>
 
         {/* Right Column: Step-by-Step Derivation Board (5 cols) */}
-        <div className="lg:col-span-5 flex flex-col bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-            <h2 className="text-sm font-bold text-slate-200 flex items-center gap-1.5">
+        <div className="lg:col-span-5 flex flex-col bg-white border border-neutral-300 dark:bg-slate-900/90 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
+          <div className="flex items-center justify-between pb-3 border-b border-neutral-200 dark:border-slate-800">
+            <h2 className="text-sm font-bold text-black dark:text-slate-200 flex items-center gap-1.5">
               <span>Déroulé du cours au tableau</span>
             </h2>
-            <span className="text-[11px] font-mono text-slate-400">Progression</span>
+            <span className="text-[11px] font-mono text-neutral-500 dark:text-slate-400">Progression</span>
           </div>
 
           {/* Stepper list */}
-          <div className="flex-1 overflow-y-auto space-y-2.5 py-3 pr-1 scrollbar-thin scrollbar-thumb-slate-700">
+          <div className="flex-1 overflow-y-auto space-y-2.5 py-3 pr-1 scrollbar-thin scrollbar-thumb-neutral-300 dark:scrollbar-thumb-slate-700">
             {currentDemo.steps.map((step, idx) => {
               const isActive = idx === currentStepIdx;
               const isPast = idx < currentStepIdx;
+
+              const isGreen = idx % 2 === 0;
 
               return (
                 <div
@@ -1087,21 +1151,31 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                   onClick={() => setCurrentStepIdx(idx)}
                   className={`p-3 rounded-xl border transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-emerald-950/40 border-emerald-500 text-slate-100 shadow-md ring-1 ring-emerald-500/30'
+                      ? isGreen
+                        ? 'bg-emerald-50 text-emerald-950 border-2 border-emerald-600 shadow-md ring-2 ring-emerald-500/20 dark:bg-emerald-950/70 dark:border-emerald-500 dark:text-slate-100 dark:ring-emerald-500/40'
+                        : 'bg-sky-50 text-sky-950 border-2 border-sky-600 shadow-md ring-2 ring-sky-500/20 dark:bg-indigo-950/70 dark:border-indigo-500 dark:text-slate-100 dark:ring-indigo-500/40'
                       : isPast
-                      ? 'bg-slate-950/40 border-slate-800 text-slate-400 hover:border-slate-700'
-                      : 'bg-slate-950/20 border-slate-900 text-slate-500 opacity-60'
+                      ? 'bg-white border-neutral-200 text-neutral-700 hover:bg-neutral-50 dark:bg-slate-950/40 dark:border-slate-800 dark:text-slate-400 dark:hover:border-slate-700'
+                      : 'bg-white border-neutral-200 text-neutral-400 hover:bg-neutral-50 dark:bg-slate-950/20 dark:border-slate-900 dark:text-slate-500 opacity-60'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-bold text-slate-200">{step.title}</span>
+                    <span className={`text-xs font-bold ${
+                      isActive 
+                        ? isGreen ? 'text-emerald-900 dark:text-emerald-300' : 'text-sky-900 dark:text-sky-300'
+                        : 'text-neutral-900 dark:text-slate-200'
+                    }`}>
+                      {step.title}
+                    </span>
                     <span
                       className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
                         isActive
-                          ? 'bg-emerald-500/20 text-emerald-300 font-bold'
+                          ? isGreen
+                            ? 'bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold dark:bg-emerald-500/30 dark:text-emerald-300 dark:border-transparent'
+                            : 'bg-sky-100 text-sky-800 border border-sky-300 font-bold dark:bg-sky-500/30 dark:text-sky-300 dark:border-transparent'
                           : isPast
-                          ? 'bg-slate-800 text-slate-400'
-                          : 'bg-slate-900 text-slate-600'
+                          ? 'bg-neutral-100 text-neutral-800 dark:bg-slate-800 dark:text-slate-400'
+                          : 'bg-neutral-100 text-neutral-600 dark:bg-slate-900 dark:text-slate-600'
                       }`}
                     >
                       Étape {idx + 1}
@@ -1109,9 +1183,15 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                   </div>
 
                   {/* Math Formula line */}
-                  <div className="my-1.5 py-1 px-2 rounded-lg bg-slate-950/70 text-emerald-300 font-mono text-xs overflow-x-auto">
+                  <div className={`my-1.5 py-1 px-2 rounded-lg font-mono text-xs overflow-x-auto ${
+                    isActive
+                      ? isGreen
+                        ? 'bg-white text-emerald-950 border border-emerald-300 shadow-xs dark:bg-slate-950/70 dark:text-emerald-300 dark:border-slate-800'
+                        : 'bg-white text-sky-950 border border-sky-300 shadow-xs dark:bg-slate-950/70 dark:text-sky-300 dark:border-slate-800'
+                      : 'bg-neutral-50 text-neutral-800 border border-neutral-200 dark:bg-slate-950/70 dark:text-emerald-300 dark:border-slate-800'
+                  }`}>
                     {hideSolutionForClass && isActive && idx === totalSteps - 1 ? (
-                      <span className="text-amber-400 font-semibold italic">
+                      <span className="text-amber-500 dark:text-amber-400 font-semibold italic">
                         [Réponse masquée pour la classe — cliquez pour révéler]
                       </span>
                     ) : (
@@ -1119,12 +1199,24 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                     )}
                   </div>
 
-                  <p className="text-xs text-slate-300 leading-normal">{step.explanation}</p>
+                  <p className={`text-xs leading-normal ${
+                    isActive 
+                      ? isGreen ? 'text-emerald-950 font-medium dark:text-slate-100' : 'text-sky-950 font-medium dark:text-slate-100' 
+                      : 'text-neutral-600 dark:text-slate-300'
+                  }`}>
+                    {step.explanation}
+                  </p>
 
                   {/* Teacher pedagogical tip */}
                   {step.teacherTip && (
-                    <div className="mt-2 pt-2 border-t border-slate-800/80 flex items-start space-x-1.5 text-[11px] text-amber-300/90 bg-amber-950/20 p-1.5 rounded-lg">
-                      <HelpCircle className="w-3.5 h-3.5 shrink-0 text-amber-400 mt-0.5" />
+                    <div className={`mt-2 pt-2 border-t flex items-start space-x-1.5 text-[11px] p-1.5 rounded-lg ${
+                      isActive
+                        ? isGreen
+                          ? 'border-emerald-200 bg-emerald-100/70 text-emerald-950 dark:border-slate-800/80 dark:text-amber-300/90 dark:bg-amber-950/20'
+                          : 'border-sky-200 bg-sky-100/70 text-sky-950 dark:border-slate-800/80 dark:text-amber-300/90 dark:bg-amber-950/20'
+                        : 'border-neutral-200 bg-neutral-100 text-neutral-800 dark:border-slate-800/80 dark:text-amber-300/90 dark:bg-amber-950/20'
+                    }`}>
+                      <HelpCircle className="w-3.5 h-3.5 shrink-0 text-amber-500 dark:text-amber-400 mt-0.5" />
                       <div>
                         <span className="font-bold">Conseil pour les élèves : </span>
                         {step.teacherTip}
@@ -1151,6 +1243,20 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
         </div>
       </div>
 
+      {/* Quiz Rapide à la fin de la leçon interactive pour tester les acquis des élèves de 3e et 4e */}
+      {currentDemo.interactiveType !== 'video-lesson' && (
+        <QuickQuiz
+          chapter={chapter}
+          demo={currentDemo}
+          onScrollToExercises={() => {
+            const el = document.getElementById('student-exercises-section');
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+        />
+      )}
+
       {/* 3 Graded Exercises (Facile, Moyen, Difficile) for the Student */}
       {currentDemo.interactiveType !== 'video-lesson' && (
         <StudentExercisesSection
@@ -1159,6 +1265,30 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
           exercises={exercises}
         />
       )}
+
+      {/* Floating Quick-Access Right Drawer Trigger */}
+      <button
+        onClick={() => setIsPrerequisitesOpen(true)}
+        className="fixed right-0 top-1/2 -translate-y-1/2 z-30 flex items-center px-2 py-3 rounded-l-2xl shadow-xl border-y border-l bg-white text-black hover:bg-neutral-50 border-neutral-300 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-slate-800 transition-all group"
+        title="Ouvrir les prérequis du cours (Rappels)"
+        aria-label="Ouvrir les prérequis"
+      >
+        <div className="flex flex-col items-center space-y-1">
+          <BookOpenCheck className="w-4 h-4 text-red-600 dark:text-amber-400 group-hover:scale-110 transition-transform" />
+          <span className="text-[10px] font-bold [writing-mode:vertical-rl] rotate-180 uppercase tracking-wider py-0.5">
+            Prérequis ({prerequisites.length})
+          </span>
+          <span className="w-1.5 h-1.5 rounded-full bg-red-600 dark:bg-amber-400 animate-pulse" />
+        </div>
+      </button>
+
+      {/* Course Prerequisites Right Drawer */}
+      <CoursePrerequisitesDrawer
+        isOpen={isPrerequisitesOpen}
+        onClose={() => setIsPrerequisitesOpen(false)}
+        chapter={chapter}
+        onNavigateToChapter={onSelectChapter}
+      />
     </div>
   );
 };

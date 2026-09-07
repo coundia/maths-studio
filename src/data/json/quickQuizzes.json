@@ -1,0 +1,684 @@
+{
+  "pythagore": {
+    "chapterId": "pythagore",
+    "chapterTitle": "Théorème de Pythagore - 4e",
+    "gradeLevel": "4e",
+    "badge": "Quiz Rapide 4e",
+    "questions": [
+      {
+        "id": "pyth-q1",
+        "question": "Dans un triangle RST rectangle en S, quelle est l'égalité de Pythagore correcte ?",
+        "questionLatex": "\\text{Triangle } RST \\text{ rectangle en } S",
+        "options": [
+          {
+            "text": "RT² = RS² + ST²",
+            "latex": "RT^2 = RS^2 + ST^2",
+            "isCorrect": true,
+            "feedback": "Parfait ! Le sommet de l'angle droit est S, donc l'hypoténuse en face est [RT]."
+          },
+          {
+            "text": "RS² = RT² + ST²",
+            "latex": "RS^2 = RT^2 + ST^2",
+            "isCorrect": false,
+            "feedback": "Faux : RS n'est pas l'hypoténuse, mais l'un des côtés de l'angle droit."
+          },
+          {
+            "text": "ST² = RS² + RT²",
+            "latex": "ST^2 = RS^2 + RT^2",
+            "isCorrect": false,
+            "feedback": "Faux : le côté en face de l'angle droit en S est RT."
+          }
+        ],
+        "explanation": "L'hypoténuse est toujours le côté opposé à l'angle droit. Si le triangle est rectangle en S, l'hypoténuse est RT, d'où RT² = RS² + ST².",
+        "ruleReminder": "Dans un triangle rectangle, le carré de l'hypoténuse est égal à la somme des carrés des côtés de l'angle droit."
+      },
+      {
+        "id": "pyth-q2",
+        "question": "Si un triangle a pour côtés 6 cm, 8 cm et 10 cm, est-il rectangle ?",
+        "questionLatex": "6\\text{ cm}, \\; 8\\text{ cm}, \\; 10\\text{ cm}",
+        "options": [
+          {
+            "text": "Oui, car 6² + 8² = 36 + 64 = 100 = 10²",
+            "latex": "6^2 + 8^2 = 10^2",
+            "isCorrect": true,
+            "feedback": "Excellent ! La réciproque du théorème de Pythagore s'applique exactement."
+          },
+          {
+            "text": "Non, car 6 + 8 ≠ 10",
+            "latex": "6 + 8 \\neq 10",
+            "isCorrect": false,
+            "feedback": "Attention au piège : on compare la somme des carrés, jamais la simple somme des longueurs !"
+          },
+          {
+            "text": "On ne peut pas savoir sans équerre",
+            "isCorrect": false,
+            "feedback": "Faux : la réciproque de Pythagore permet de le prouver par le calcul pur."
+          }
+        ],
+        "explanation": "10² = 100 et 6² + 8² = 36 + 64 = 100. Comme 10² = 6² + 8², le triangle est rectangle d'après la réciproque de Pythagore.",
+        "ruleReminder": "Pour tester si un triangle est rectangle, on calcule séparément le carré du plus grand côté et la somme des carrés des deux autres."
+      },
+      {
+        "id": "pyth-q3",
+        "question": "Soit ABC rectangle en A avec BC = 13 cm et AB = 5 cm. Combien mesure AC ?",
+        "questionLatex": "BC = 13\\text{ cm}, \\; AB = 5\\text{ cm} \\implies AC = \\, ?",
+        "options": [
+          {
+            "text": "12 cm",
+            "latex": "AC = 12\\text{ cm}",
+            "isCorrect": true,
+            "feedback": "Bravo ! AC² = 13² - 5² = 169 - 25 = 144, et √144 = 12 cm."
+          },
+          {
+            "text": "8 cm",
+            "latex": "AC = 8\\text{ cm}",
+            "isCorrect": false,
+            "feedback": "Attention : on ne fait pas 13 - 5 = 8 ! Il faut soustraire les carrés."
+          },
+          {
+            "text": "18 cm",
+            "latex": "AC = 18\\text{ cm}",
+            "isCorrect": false,
+            "feedback": "Impossible : un côté de l'angle droit ne peut pas être plus long que l'hypoténuse (13 cm)."
+          }
+        ],
+        "explanation": "Pour trouver un côté de l'angle droit, on soustrait : AC² = BC² - AB² = 169 - 25 = 144, d'où AC = 12 cm.",
+        "ruleReminder": "Pour calculer un côté de l'angle droit : Côté² = Hypoténuse² - AutreCôté²."
+      }
+    ]
+  },
+  "droite-milieux": {
+    "chapterId": "droite-milieux",
+    "chapterTitle": "Droite des milieux - 4e",
+    "gradeLevel": "4e",
+    "badge": "Quiz Rapide 4e",
+    "questions": [
+      {
+        "id": "milieux-q1",
+        "question": "Dans un triangle ABC, si I est le milieu de [AB] et J le milieu de [AC], quelle est la longueur de [IJ] sachant que BC = 16 cm ?",
+        "questionLatex": "BC = 16\\text{ cm} \\implies IJ = \\, ?",
+        "options": [
+          {
+            "text": "8 cm",
+            "latex": "IJ = 8\\text{ cm}",
+            "isCorrect": true,
+            "feedback": "Bravo ! Le théorème de la droite des milieux indique IJ = BC / 2 = 16 / 2 = 8 cm."
+          },
+          {
+            "text": "16 cm",
+            "latex": "IJ = 16\\text{ cm}",
+            "isCorrect": false,
+            "feedback": "Faux : le segment des milieux mesure la moitié du côté opposé."
+          },
+          {
+            "text": "32 cm",
+            "latex": "IJ = 32\\text{ cm}",
+            "isCorrect": false,
+            "feedback": "Erreur d'opération : il faut diviser par 2, pas multiplier !"
+          }
+        ],
+        "explanation": "D'après le 1er théorème de la droite des milieux : la droite passant par les milieux de deux côtés est parallèle au 3e côté et sa longueur en vaut la moitié.",
+        "ruleReminder": "IJ = 1/2 × BC et (IJ) // (BC)."
+      },
+      {
+        "id": "milieux-q2",
+        "question": "Si une droite passe par le milieu d'un côté d'un triangle et est parallèle à un 2e côté, que fait-elle du 3e côté ?",
+        "options": [
+          {
+            "text": "Elle coupe le 3e côté obligatoirement en son milieu",
+            "isCorrect": true,
+            "feedback": "Correct ! C'est l'énoncé exact du second théorème de la droite des milieux."
+          },
+          {
+            "text": "Elle coupe le 3e côté à son tiers",
+            "isCorrect": false,
+            "feedback": "Faux : elle coupe précisément au milieu."
+          },
+          {
+            "text": "Elle ne coupe pas le 3e côté",
+            "isCorrect": false,
+            "feedback": "Faux : les côtés sécants d'un triangle se coupent obligatoirement."
+          }
+        ],
+        "explanation": "C'est une propriété clé pour démontrer qu'un point est un milieu dans les exercices de géométrie de 4e.",
+        "ruleReminder": "Théorème 2 : Droite issue d'un milieu + parallèle à un côté => coupe le 3e côté en son milieu."
+      }
+    ]
+  },
+  "racine-carree-3e": {
+    "chapterId": "racine-carree-3e",
+    "chapterTitle": "Racine carrée - 3e (BFEM)",
+    "gradeLevel": "3e",
+    "badge": "Quiz Rapide 3e",
+    "questions": [
+      {
+        "id": "rac-q1",
+        "question": "Parmi ces égalités sur les racines carrées (avec a > 0 et b > 0), laquelle est FAUSSE ?",
+        "options": [
+          {
+            "text": "√(a + b) = √a + √b",
+            "latex": "\\sqrt{a + b} = \\sqrt{a} + \\sqrt{b}",
+            "isCorrect": true,
+            "feedback": "Exact ! C'est le piège numéro 1 au BFEM : √(a+b) n'est JAMAIS égal à √a + √b !"
+          },
+          {
+            "text": "√(a × b) = √a × √b",
+            "latex": "\\sqrt{a \\times b} = \\sqrt{a} \\times \\sqrt{b}",
+            "isCorrect": false,
+            "feedback": "Cette formule est VRAIE pour tous réels positifs."
+          },
+          {
+            "text": "√(a / b) = √a / √b",
+            "latex": "\\sqrt{\\frac{a}{b}} = \\frac{\\sqrt{a}}{\\sqrt{b}}",
+            "isCorrect": false,
+            "feedback": "Cette formule est également VRAIE pour b > 0."
+          }
+        ],
+        "explanation": "Contre-exemple classique : √(9 + 16) = √25 = 5, alors que √9 + √16 = 3 + 4 = 7. Comme 5 ≠ 7, la racine d'une somme n'est pas la somme des racines.",
+        "ruleReminder": "La racine carrée se distribue sur la multiplication et la division, mais JAMAIS sur l'addition ni la soustraction."
+      },
+      {
+        "id": "rac-q2",
+        "question": "Quelle est la forme simplifiée de √72 sous la forme a√b avec b le plus petit possible ?",
+        "questionLatex": "\\sqrt{72} = a\\sqrt{b} \\implies a\\sqrt{b} = \\, ?",
+        "options": [
+          {
+            "text": "6√2",
+            "latex": "6\\sqrt{2}",
+            "isCorrect": true,
+            "feedback": "Excellent ! 72 = 36 × 2 et √36 = 6, donc √72 = 6√2."
+          },
+          {
+            "text": "2√18",
+            "latex": "2\\sqrt{18}",
+            "isCorrect": false,
+            "feedback": "Incomplet : 18 contient encore le carré parfait 9 (18 = 9 × 2), donc b n'est pas minimal."
+          },
+          {
+            "text": "3√8",
+            "latex": "3\\sqrt{8}",
+            "isCorrect": false,
+            "feedback": "Incomplet : 8 = 4 × 2, on peut encore extraire √4 = 2."
+          }
+        ],
+        "explanation": "Pour simplifier √72, on cherche le plus grand carré parfait divisant 72, qui est 36 : √72 = √(36 × 2) = 6√2.",
+        "ruleReminder": "Toujours factoriser par le plus grand carré parfait possible (4, 9, 16, 25, 36, 49, 64, 81, 100...)."
+      },
+      {
+        "id": "rac-q3",
+        "question": "Pour supprimer le radical au dénominateur de 6 / √3, quel résultat obtient-on ?",
+        "questionLatex": "\\frac{6}{\\sqrt{3}} = \\, ?",
+        "options": [
+          {
+            "text": "2√3",
+            "latex": "2\\sqrt{3}",
+            "isCorrect": true,
+            "feedback": "Bravo ! On multiplie numérateur et dénominateur par √3 : (6√3)/3 = 2√3."
+          },
+          {
+            "text": "6√3",
+            "latex": "6\\sqrt{3}",
+            "isCorrect": false,
+            "feedback": "Attention : au dénominateur, √3 × √3 = 3, il faut diviser 6 par 3."
+          },
+          {
+            "text": "3√2",
+            "latex": "3\\sqrt{2}",
+            "isCorrect": false,
+            "feedback": "Erreur sur le radical restant sous la racine."
+          }
+        ],
+        "explanation": "(6 × √3) / (√3 × √3) = (6√3) / 3 = 2√3. C'est la technique du quotient sans radical au dénominateur exigée au BFEM.",
+        "ruleReminder": "Pour rendre rationnel un dénominateur en √a, on multiplie en haut et en bas par √a."
+      }
+    ]
+  },
+  "thales-3e": {
+    "chapterId": "thales-3e",
+    "chapterTitle": "Théorème de Thalès - 3e (BFEM)",
+    "gradeLevel": "3e",
+    "badge": "Quiz Rapide 3e",
+    "questions": [
+      {
+        "id": "thales-q1",
+        "question": "Dans une configuration de Thalès avec (BC) // (DE), quelle égalité de rapports est correcte ?",
+        "questionLatex": "(BC) \\parallel (DE) \\implies \\frac{AD}{AB} = \\, ?",
+        "options": [
+          {
+            "text": "AE / AC = DE / BC",
+            "latex": "\\frac{AE}{AC} = \\frac{DE}{BC}",
+            "isCorrect": true,
+            "feedback": "Bravo ! AD/AB = AE/AC = DE/BC (petits côtés sur grands côtés correspondants)."
+          },
+          {
+            "text": "AC / AE = BC / DE",
+            "latex": "\\frac{AC}{AE} = \\frac{BC}{DE}",
+            "isCorrect": false,
+            "feedback": "Attention à la cohérence : on ne peut pas inverser les numérateurs et dénominateurs."
+          },
+          {
+            "text": "AE / AB = DE / AC",
+            "latex": "\\frac{AE}{AB} = \\frac{DE}{AC}",
+            "isCorrect": false,
+            "feedback": "Faux : les côtés doivent appartenir aux mêmes droites sécantes."
+          }
+        ],
+        "explanation": "Les trois quotients de Thalès relient les longueurs du petit triangle à celles du grand triangle : AD/AB = AE/AC = DE/BC.",
+        "ruleReminder": "Bien vérifier que chaque rapport associe les segments situés sur la même droite sécante."
+      },
+      {
+        "id": "thales-q2",
+        "question": "Quelle condition supplémentaire est INDISPENSABLE pour appliquer la réciproque de Thalès ?",
+        "options": [
+          {
+            "text": "Les points doivent être alignés dans le même ordre sur les deux sécantes",
+            "isCorrect": true,
+            "feedback": "Parfait ! L'égalité des rapports seule ne suffit pas sans l'alignement dans le même ordre."
+          },
+          {
+            "text": "Le triangle doit obligatoirement avoir un angle droit",
+            "isCorrect": false,
+            "feedback": "Faux : Thalès s'applique à tous les triangles, pas seulement rectangles."
+          },
+          {
+            "text": "Les droites doivent être perpendiculaires",
+            "isCorrect": false,
+            "feedback": "Faux : c'est le parallélisme qu'on cherche à démontrer."
+          }
+        ],
+        "explanation": "La réciproque du théorème de Thalès nécessite : 1) L'égalité des deux rapports, et 2) L'alignement des points dans le même ordre.",
+        "ruleReminder": "Toujours préciser : 'Les points A, M, B d'une part et A, N, C d'autre part sont alignés dans le même ordre'."
+      }
+    ]
+  },
+  "angle-inscrit-3e": {
+    "chapterId": "angle-inscrit-3e",
+    "chapterTitle": "Angles inscrits & Angle au centre - 3e",
+    "gradeLevel": "3e",
+    "badge": "Quiz Rapide 3e",
+    "questions": [
+      {
+        "id": "ang-q1",
+        "question": "Dans un cercle, si un angle au centre AÔB mesure 80°, combien mesure un angle inscrit AMB interceptant le même arc ?",
+        "questionLatex": "\\widehat{AOB} = 80^\\circ \\implies \\widehat{AMB} = \\, ?",
+        "options": [
+          {
+            "text": "40°",
+            "latex": "40^\\circ",
+            "isCorrect": true,
+            "feedback": "Exactement ! L'angle inscrit mesure la moitié de l'angle au centre associé."
+          },
+          {
+            "text": "160°",
+            "latex": "160^\\circ",
+            "isCorrect": false,
+            "feedback": "Attention : l'angle inscrit est plus petit que l'angle au centre, il faut diviser par 2 !"
+          },
+          {
+            "text": "80°",
+            "latex": "80^\\circ",
+            "isCorrect": false,
+            "feedback": "Faux : ils ne sont égaux que s'ils sont tous deux inscrits interceptant le même arc."
+          }
+        ],
+        "explanation": "Théorème fondamental : la mesure d'un angle inscrit est égale à la moitié de celle de l'angle au centre qui intercepte le même arc : 80° / 2 = 40°.",
+        "ruleReminder": "Angle inscrit = 1/2 × Angle au centre interceptant le même arc."
+      },
+      {
+        "id": "ang-q2",
+        "question": "Deux angles inscrits dans un même cercle interceptant le même arc sont-ils de même mesure ?",
+        "options": [
+          {
+            "text": "Oui, ils ont toujours exactement la même mesure",
+            "isCorrect": true,
+            "feedback": "Bravo ! C'est le théorème des angles inscrits interceptant le même arc."
+          },
+          {
+            "text": "Non, cela dépend de la position du sommet sur le cercle",
+            "isCorrect": false,
+            "feedback": "Faux : tant qu'ils interceptent le même arc, leur mesure reste rigoureusement constante."
+          },
+          {
+            "text": "Uniquement si le cercle a un rayon de 5 cm",
+            "isCorrect": false,
+            "feedback": "Faux : cette propriété est universelle pour tout cercle."
+          }
+        ],
+        "explanation": "Deux angles inscrits qui interceptent le même arc de cercle ont la même mesure car ils valent tous deux la moitié du même angle au centre.",
+        "ruleReminder": "Deux angles inscrits interceptant le même arc sont égaux."
+      }
+    ]
+  },
+  "trigonometrie-3e": {
+    "chapterId": "trigonometrie-3e",
+    "chapterTitle": "Trigonométrie - 3e (BFEM)",
+    "gradeLevel": "3e",
+    "badge": "Quiz Rapide 3e",
+    "questions": [
+      {
+        "id": "trigo-q1",
+        "question": "Dans un triangle rectangle, quelle relation lie le sinus et le cosinus d'un angle aigu x ?",
+        "questionLatex": "\\forall x \\in \\; ]0^\\circ, 90^\\circ[",
+        "options": [
+          {
+            "text": "cos²(x) + sin²(x) = 1",
+            "latex": "\\cos^2(x) + \\sin^2(x) = 1",
+            "isCorrect": true,
+            "feedback": "Parfait ! C'est la relation fondamentale de la trigonométrie issue de Pythagore."
+          },
+          {
+            "text": "cos(x) + sin(x) = 1",
+            "latex": "\\cos(x) + \\sin(x) = 1",
+            "isCorrect": false,
+            "feedback": "Faux : ce sont les carrés qui s'additionnent pour donner 1 !"
+          },
+          {
+            "text": "cos(x) × sin(x) = 1",
+            "latex": "\\cos(x) \\times \\sin(x) = 1",
+            "isCorrect": false,
+            "feedback": "Faux : le produit n'est pas égal à 1."
+          }
+        ],
+        "explanation": "D'après le théorème de Pythagore appliqué au cercle trigonométrique, on a toujours cos²(x) + sin²(x) = 1.",
+        "ruleReminder": "Formule clé : cos²(x) + sin²(x) = 1 et tan(x) = sin(x) / cos(x)."
+      },
+      {
+        "id": "trigo-q2",
+        "question": "Le cosinus ou le sinus d'un angle aigu peut-il être égal à 1,4 ?",
+        "options": [
+          {
+            "text": "Non, ils sont strictement compris entre 0 et 1",
+            "latex": "0 < \\cos(x) < 1 \\quad \\text{et} \\quad 0 < \\sin(x) < 1",
+            "isCorrect": true,
+            "feedback": "Très bien ! Car l'hypoténuse est le côté le plus long du triangle rectangle."
+          },
+          {
+            "text": "Oui, pour les angles supérieurs à 45°",
+            "isCorrect": false,
+            "feedback": "Faux : un cosinus ou sinus ne dépasse jamais 1."
+          },
+          {
+            "text": "Oui, si le triangle est très grand",
+            "isCorrect": false,
+            "feedback": "Faux : le rapport trigonométrique ne dépend pas des dimensions, seulement de l'angle."
+          }
+        ],
+        "explanation": "Comme le côté adjacent et le côté opposé sont strictement inférieurs à l'hypoténuse, le quotient est toujours < 1.",
+        "ruleReminder": "Pour tout angle aigu d'un triangle rectangle : 0 < cos(x) < 1 et 0 < sin(x) < 1."
+      }
+    ]
+  },
+  "rationnels": {
+    "chapterId": "rationnels",
+    "chapterTitle": "Nombres rationnels & Fractions - 4e",
+    "gradeLevel": "4e",
+    "badge": "Quiz Rapide 4e",
+    "questions": [
+      {
+        "id": "rat-q1",
+        "question": "Pour calculer 2/5 + 1/3, que doit-on faire en premier ?",
+        "questionLatex": "\\frac{2}{5} + \\frac{1}{3} = \\, ?",
+        "options": [
+          {
+            "text": "Réduire au même dénominateur (15)",
+            "latex": "\\frac{6}{15} + \\frac{5}{15} = \\frac{11}{15}",
+            "isCorrect": true,
+            "feedback": "Exactement ! Les dénominateurs 5 et 3 sont différents, le dénominateur commun est 15."
+          },
+          {
+            "text": "Additionner directement les numérateurs et les dénominateurs : (2+1)/(5+3)",
+            "latex": "\\frac{2+1}{5+3} = \\frac{3}{8}",
+            "isCorrect": false,
+            "feedback": "Grosse erreur classique ! On n'additionne JAMAIS les dénominateurs entre eux."
+          },
+          {
+            "text": "Multiplier les deux fractions",
+            "isCorrect": false,
+            "feedback": "Faux : c'est une addition, pas une multiplication."
+          }
+        ],
+        "explanation": "2/5 = (2×3)/(5×3) = 6/15 et 1/3 = (1×5)/(3×5) = 5/15. On obtient 6/15 + 5/15 = 11/15.",
+        "ruleReminder": "Même dénominateur obligatoire avant toute addition ou soustraction de fractions."
+      },
+      {
+        "id": "rat-q2",
+        "question": "Comment effectue-t-on la division de deux fractions (a/b) ÷ (c/d) ?",
+        "questionLatex": "\\frac{a}{b} \\div \\frac{c}{d} = \\, ?",
+        "options": [
+          {
+            "text": "On multiplie par l'inverse de la seconde fraction : (a/b) × (d/c)",
+            "latex": "\\frac{a}{b} \\times \\frac{d}{c}",
+            "isCorrect": true,
+            "feedback": "Bravo ! Diviser par une fraction revient à multiplier par son inverse."
+          },
+          {
+            "text": "On inverse les deux fractions : (b/a) × (d/c)",
+            "isCorrect": false,
+            "feedback": "Faux : on ne touche jamais à la première fraction, on n'inverse que la seconde."
+          },
+          {
+            "text": "On divise les numérateurs entre eux et les dénominateurs entre eux",
+            "isCorrect": false,
+            "feedback": "Faux : la règle opératoire est la multiplication par l'inverse."
+          }
+        ],
+        "explanation": "Diviser par c/d revient à multiplier par d/c.",
+        "ruleReminder": "Règle : (a/b) ÷ (c/d) = (a/b) × (d/c) = (ad) / (bc)."
+      }
+    ]
+  },
+  "puissances": {
+    "chapterId": "puissances",
+    "chapterTitle": "Puissances de 10 & Relatifs - 4e",
+    "gradeLevel": "4e",
+    "badge": "Quiz Rapide 4e",
+    "questions": [
+      {
+        "id": "puis-q1",
+        "question": "Combien vaut le produit 10³ × 10⁴ ?",
+        "questionLatex": "10^3 \\times 10^4 = \\, ?",
+        "options": [
+          {
+            "text": "10⁷",
+            "latex": "10^{3+4} = 10^7",
+            "isCorrect": true,
+            "feedback": "Bravo ! On additionne les exposants lors d'un produit : 3 + 4 = 7."
+          },
+          {
+            "text": "10¹²",
+            "latex": "10^{3 \\times 4} = 10^{12}",
+            "isCorrect": false,
+            "feedback": "Piège classique : on additionne les exposants, on ne les multiplie pas !"
+          },
+          {
+            "text": "100⁷",
+            "isCorrect": false,
+            "feedback": "Faux : la base reste 10, elle ne devient pas 100."
+          }
+        ],
+        "explanation": "Règle des puissances : a^n × a^m = a^(n+m). Ici 10³ × 10⁴ = 10^(3+4) = 10⁷ = 10 000 000.",
+        "ruleReminder": "Produit de puissances : a^n × a^m = a^(n+m). Puissance de puissance : (a^n)^m = a^(n×m)."
+      },
+      {
+        "id": "puis-q2",
+        "question": "Quelle est l'écriture scientifique du nombre 45 000 ?",
+        "questionLatex": "45\\,000 = \\, ?",
+        "options": [
+          {
+            "text": "4,5 × 10⁴",
+            "latex": "4{,}5 \\times 10^4",
+            "isCorrect": true,
+            "feedback": "Exact ! Un seul chiffre non nul avant la virgule (4,5) compris entre 1 et 10."
+          },
+          {
+            "text": "45 × 10³",
+            "latex": "45 \\times 10^3",
+            "isCorrect": false,
+            "feedback": "Faux : 45 n'est pas strictement inférieur à 10, ce n'est pas une notation scientifique valide."
+          },
+          {
+            "text": "0,45 × 10⁵",
+            "latex": "0{,}45 \\times 10^5",
+            "isCorrect": false,
+            "feedback": "Faux : le premier chiffre avant la virgule ne peut pas être 0."
+          }
+        ],
+        "explanation": "La notation scientifique est de la forme a × 10^p avec 1 ≤ a < 10. Ici a = 4,5 et p = 4.",
+        "ruleReminder": "Notation scientifique : a × 10^n avec 1 ≤ a < 10 et n un entier relatif."
+      }
+    ]
+  },
+  "equations-4e": {
+    "chapterId": "equations-4e",
+    "chapterTitle": "Équations du 1er degré - 4e",
+    "gradeLevel": "4e",
+    "badge": "Quiz Rapide 4e",
+    "questions": [
+      {
+        "id": "eq-q1",
+        "question": "Quelle est la solution de l'équation 3x - 7 = 11 ?",
+        "questionLatex": "3x - 7 = 11 \\implies x = \\, ?",
+        "options": [
+          {
+            "text": "x = 6",
+            "latex": "x = 6",
+            "isCorrect": true,
+            "feedback": "Excellent ! 3x = 11 + 7 = 18, donc x = 18 / 3 = 6."
+          },
+          {
+            "text": "x = 4/3",
+            "latex": "x = \\frac{4}{3}",
+            "isCorrect": false,
+            "feedback": "Attention : quand on passe -7 de l'autre côté, il devient +7, pas -7."
+          },
+          {
+            "text": "x = 18",
+            "latex": "x = 18",
+            "isCorrect": false,
+            "feedback": "N'oubliez pas de diviser par le coefficient 3 devant le x !"
+          }
+        ],
+        "explanation": "3x - 7 = 11 <=> 3x = 18 <=> x = 6. On vérifie : 3×6 - 7 = 18 - 7 = 11.",
+        "ruleReminder": "On isole d'abord les termes en x d'un côté et les constantes de l'autre en changeant de signe."
+      },
+      {
+        "id": "eq-q2",
+        "question": "Que se passe-t-il pour le sens d'une inéquation si on divise ses deux membres par un nombre strictement négatif ?",
+        "questionLatex": "-2x < 6 \\implies x \\, ? \\, -3",
+        "options": [
+          {
+            "text": "Le sens de l'inégalité s'inverse obligatoirement : < devient >",
+            "latex": "x > -3",
+            "isCorrect": true,
+            "feedback": "Parfait ! C'est la règle d'or des inéquations au collège."
+          },
+          {
+            "text": "Le sens de l'inégalité ne change jamais",
+            "isCorrect": false,
+            "feedback": "Faux : multiplier ou diviser par un nombre négatif inverse TOUJOURS le sens."
+          },
+          {
+            "text": "Le symbole devient un signe égal =",
+            "isCorrect": false,
+            "feedback": "Faux : une inéquation reste une inéquation."
+          }
+        ],
+        "explanation": "Si -2x < 6, en divisant par -2 (négatif), le sens s'inverse : x > -3.",
+        "ruleReminder": "Multiplier ou diviser par un nombre négatif change le sens de l'inégalité."
+      }
+    ]
+  },
+  "systemes-equations-3e": {
+    "chapterId": "systemes-equations-3e",
+    "chapterTitle": "Systèmes de 2 équations - 3e (BFEM)",
+    "gradeLevel": "3e",
+    "badge": "Quiz Rapide 3e",
+    "questions": [
+      {
+        "id": "sys-q1",
+        "question": "Le couple (x = 2, y = 3) est-il solution du système : x + y = 5 et 2x - y = 1 ?",
+        "questionLatex": "\\begin{cases} x + y = 5 \\\\ 2x - y = 1 \\end{cases}",
+        "options": [
+          {
+            "text": "Oui, car il vérifie les deux équations simultanément",
+            "isCorrect": true,
+            "feedback": "Bravo ! 2 + 3 = 5 et 2(2) - 3 = 4 - 3 = 1. Les 2 équations sont vérifiées !"
+          },
+          {
+            "text": "Non, car il ne vérifie que la première",
+            "isCorrect": false,
+            "feedback": "Faux : calculez 2×2 - 3 = 4 - 3 = 1, la deuxième est également vérifiée."
+          },
+          {
+            "text": "Un système n'a jamais de solution entière",
+            "isCorrect": false,
+            "feedback": "Faux : les solutions peuvent parfaitement être entières."
+          }
+        ],
+        "explanation": "Un couple est solution d'un système s'il satisfait TOUTES les équations du système à la fois.",
+        "ruleReminder": "Toujours tester le couple trouvé dans les DEUX équations de départ."
+      }
+    ]
+  },
+  "calcul-algebrique": {
+    "chapterId": "calcul-algebrique",
+    "chapterTitle": "Calcul algébrique & Identités remarquables - 3e/4e",
+    "gradeLevel": "3e",
+    "badge": "Quiz Rapide 3e/4e",
+    "questions": [
+      {
+        "id": "alg-q1",
+        "question": "Quel est le développement correct de (a + b)² ?",
+        "questionLatex": "(a + b)^2 = \\, ?",
+        "options": [
+          {
+            "text": "a² + 2ab + b²",
+            "latex": "a^2 + 2ab + b^2",
+            "isCorrect": true,
+            "feedback": "Parfait ! Ne jamais oublier le double produit 2ab."
+          },
+          {
+            "text": "a² + b²",
+            "latex": "a^2 + b^2",
+            "isCorrect": false,
+            "feedback": "Attention au piège le plus fréquent : il manque le double produit 2ab !"
+          },
+          {
+            "text": "a² + ab + b²",
+            "latex": "a^2 + ab + b^2",
+            "isCorrect": false,
+            "feedback": "Faux : le terme du milieu est 2ab (deux fois le produit)."
+          }
+        ],
+        "explanation": "(a + b)² = (a + b)(a + b) = a² + ab + ba + b² = a² + 2ab + b².",
+        "ruleReminder": "(a + b)² = a² + 2ab + b² ; (a - b)² = a² - 2ab + b² ; (a - b)(a + b) = a² - b²."
+      },
+      {
+        "id": "alg-q2",
+        "question": "Quelle est la forme factorisée de x² - 25 ?",
+        "questionLatex": "x^2 - 25 = \\, ?",
+        "options": [
+          {
+            "text": "(x - 5)(x + 5)",
+            "latex": "(x - 5)(x + 5)",
+            "isCorrect": true,
+            "feedback": "Exact ! C'est la 3e identité remarquable a² - b² = (a - b)(a + b) avec a = x et b = 5."
+          },
+          {
+            "text": "(x - 5)²",
+            "latex": "(x - 5)^2",
+            "isCorrect": false,
+            "feedback": "Faux : (x - 5)² = x² - 10x + 25, ce qui n'est pas x² - 25."
+          },
+          {
+            "text": "(x - 25)(x + 1)",
+            "isCorrect": false,
+            "feedback": "Faux : 25 est le carré de 5."
+          }
+        ],
+        "explanation": "25 = 5². On reconnaît a² - b² = (a - b)(a + b) avec a = x et b = 5, d'où (x - 5)(x + 5).",
+        "ruleReminder": "Pour factoriser une différence de deux carrés : a² - b² = (a - b)(a + b)."
+      }
+    ]
+  }
+}

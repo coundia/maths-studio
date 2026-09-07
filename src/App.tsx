@@ -25,15 +25,15 @@ export default function App() {
   const [activeChapterId, setActiveChapterId] = useState<string>('racine-carree-3e');
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
-      return window.innerWidth >= 1024;
+      return window.innerWidth >= 768;
     }
-    return false;
+    return true;
   });
 
   // Responsive sidebar handling on resize
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 768) {
         setIsSidebarOpen(true);
       }
     };
@@ -115,7 +115,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-slate-950">
+    <div className="min-h-screen bg-white text-black dark:bg-slate-950 dark:text-slate-100 flex flex-col selection:bg-red-600 selection:text-white transition-colors duration-200">
       {/* Top Header */}
       <Header
         onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
@@ -151,19 +151,19 @@ export default function App() {
         <main className="flex-1 overflow-y-auto p-2 sm:p-4 lg:p-6 flex flex-col space-y-4 max-w-full min-w-0">
           {/* Teacher Classroom Mode Banner */}
           {isClassroomMode && (
-            <div className="px-4 py-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-xs text-emerald-200 flex flex-wrap items-center justify-between gap-2 shadow-sm">
+            <div className="px-4 py-2.5 rounded-xl bg-neutral-50 dark:bg-emerald-950/40 border border-neutral-300 border-l-4 border-l-red-600 dark:border-emerald-500/30 dark:border-l text-xs text-neutral-900 dark:text-emerald-200 flex flex-wrap items-center justify-between gap-2 shadow-xs transition-colors">
               <div className="flex items-center space-x-2">
-                <GraduationCap className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span className="font-bold text-white">Espace Démo Professeur :</span>
+                <GraduationCap className="w-4 h-4 text-red-600 dark:text-emerald-400 shrink-0" />
+                <span className="font-bold text-black dark:text-white">Espace Démo Professeur :</span>
                 <span>
                   Programme officiel de Mathématiques Collège Sénégal (3ème BFEM & 4ème) — fiches, vidéos et démos interactives heuristiques.
                 </span>
               </div>
               <div className="flex items-center space-x-2 text-[11px]">
-                <span className="bg-amber-500/20 text-amber-300 font-mono px-2 py-0.5 rounded border border-amber-500/30 font-bold">
+                <span className="bg-neutral-100 text-black dark:bg-amber-500/20 dark:text-amber-300 font-mono px-2 py-0.5 rounded border border-neutral-300 dark:border-amber-500/30 font-bold">
                   {currentChapter.gradeLevel === '3e' || currentChapter.id.endsWith('-3e') ? '3ème BFEM' : '4ème'}
                 </span>
-                <span className="bg-emerald-500/20 text-emerald-300 font-mono px-2 py-0.5 rounded border border-emerald-500/30">
+                <span className="bg-neutral-100 text-black dark:bg-emerald-500/20 dark:text-emerald-300 font-mono px-2 py-0.5 rounded border border-neutral-300 dark:border-emerald-500/30">
                   {currentChapter.shortTitle}
                 </span>
               </div>
@@ -175,25 +175,26 @@ export default function App() {
             <InteractiveLessonViewer
               chapter={currentChapter}
               onOpenAlgebraSolver={handleOpenAlgebraWithExpr}
+              onSelectChapter={(id) => setActiveChapterId(id)}
             />
           )}
 
           {/* TAB 2: CUSTOM ALGEBRAIC SOLVER (Calcul Libre) */}
           {activeTab === 'algebra-sandbox' && (
             <div className="flex flex-col space-y-4">
-              <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg">
+              <div className="bg-white dark:bg-slate-900/80 border border-neutral-300 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs transition-colors">
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <h2 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                    <h2 className="text-lg sm:text-xl font-bold text-black dark:text-white flex items-center gap-2">
                       <span>Calcul Algébrique Libre : Développer & Factoriser</span>
                     </h2>
-                    <p className="text-xs text-slate-400 mt-0.5">
+                    <p className="text-xs text-neutral-600 dark:text-slate-400 mt-0.5">
                       Saisissez n'importe quelle expression ou choisissez un exemple ci-dessous.
                     </p>
                   </div>
                   <button
                     onClick={() => setActiveTab('courses')}
-                    className="text-xs text-emerald-400 hover:text-emerald-300 font-semibold underline"
+                    className="text-xs text-red-600 dark:text-emerald-400 hover:underline font-semibold"
                   >
                     Retour aux cours
                   </button>

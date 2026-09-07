@@ -218,6 +218,90 @@
             "explanation": "On additionne les coefficients des termes de même degré."
           }
         ]
+      },
+      {
+        "id": "regle-signes-z",
+        "title": "Règles de calcul dans Z : Moins × Moins = Plus et suppression de parenthèses",
+        "badge": "Règle des signes dans Z",
+        "defaultLatex": "(-a) \\times (-b) = +ab \\quad \\text{et} \\quad -(-b) = +b",
+        "ruleSummary": "Dans Z, le produit de deux nombres de même signe est positif : (-) × (-) = (+) et (+) × (+) = (+). Le produit de deux nombres de signes contraires est négatif : (-) × (+) = (-).",
+        "teacherGoal": "Expliquer pourquoi 'Moins par Moins donne Plus' et éviter les erreurs de signes lors du développement.",
+        "interactiveType": "algebra-arrows",
+        "demoParams": {
+          "expr": "(-3)*(-4)"
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Règle fondamentale du produit de deux négatifs",
+            "rule": "Moins × Moins = Plus",
+            "latex": "(-3) \\times (-4) = +12",
+            "explanation": "Les deux facteurs ont le même signe (négatif), leur produit est donc strictement positif (+12)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Soustraction dans Z : soustraire un négatif",
+            "rule": "Soustraire un nombre revient à ajouter son opposé : a - (-b) = a + b",
+            "latex": "7 - (-5) = 7 + 5 = 12",
+            "explanation": "Le signe 'moins' devant une parenthèse négative se transforme en addition."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Produit de plusieurs facteurs négatifs",
+            "rule": "Nombre de facteurs négatifs : PAIR => (+), IMPAIR => (-)",
+            "latex": "(-2) \\times (-3) \\times (-5) = -30 \\quad \\text{car 3 facteurs négatifs (impair)}",
+            "explanation": "(-2) × (-3) = +6, puis (+6) × (-5) = -30. Compter les signes '-' permet de connaître le signe immédiatement !"
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Application au développement avec parenthèse précédée de '-'",
+            "rule": "-(3x - 5) = -3x + 5",
+            "latex": "4x - (3x - 5) = 4x - 3x + 5 = x + 5",
+            "explanation": "Le signe '-' devant la parenthèse inverse le signe de chaque terme intérieur : +3x devient -3x et -5 devient +5."
+          }
+        ]
+      },
+      {
+        "id": "calcul-puissances-algebriques",
+        "title": "Calculs de puissances : Règles, exposants négatifs et piège (-x)² vs -x²",
+        "badge": "Puissances & Monômes",
+        "defaultLatex": "a^m \\times a^n = a^{m+n}, \\quad (a^m)^n = a^{m \\times n}, \\quad a^{-n} = \\frac{1}{a^n}",
+        "ruleSummary": "Pour multiplier deux puissances d'une même base, on additionne les exposants. Pour un nombre négatif : (-a)^pair est positif, (-a)^impair est négatif, et ne jamais confondre (-3)² = +9 avec -3² = -9.",
+        "teacherGoal": "Maîtriser les propriétés fondamentales des puissances en calcul littéral et numérique.",
+        "interactiveType": "algebra-arrows",
+        "demoParams": {
+          "expr": "(2x^3)^2"
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Produit de deux puissances de même base",
+            "rule": "a^m × a^n = a^(m+n)",
+            "latex": "x^3 \\times x^4 = x^{3+4} = x^7 \\quad \\text{et} \\quad 2^3 \\times 2^2 = 2^5 = 32",
+            "explanation": "On conserve la même base et on additionne les exposants (attention : on ne multiplie pas les exposants !)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Puissance d'une puissance et puissance d'un produit",
+            "rule": "(a^m)^n = a^(m×n) et (ab)^n = a^n × b^n",
+            "latex": "(2x^3)^2 = 2^2 \\times (x^3)^2 = 4x^{3 \\times 2} = 4x^6",
+            "explanation": "L'exposant 2 s'applique au coefficient 2 (qui donne 4) ET à la variable x³ (qui donne x⁶)."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Le piège classique : (-3)² vs -3² et exposant pair/impair",
+            "rule": "(-a)^n avec parenthèses vs -a^n sans parenthèses",
+            "latex": "(-3)^2 = (-3) \\times (-3) = +9, \\quad \\text{alors que } -3^2 = -(3 \\times 3) = -9",
+            "explanation": "Dans (-3)², le carré s'applique à tout le nombre négatif (-3). Dans -3², le carré s'applique uniquement à 3 puis on applique le signe '-'."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Exposants négatifs et division de puissances",
+            "rule": "a^m / a^n = a^(m-n) et a^(-n) = 1 / a^n",
+            "latex": "\\frac{x^7}{x^3} = x^{7-3} = x^4, \\quad 2^{-3} = \\frac{1}{2^3} = \\frac{1}{8} = 0,125",
+            "explanation": "Un exposant négatif ne signifie pas un nombre négatif, mais l'inverse de la puissance positive."
+          }
+        ]
       }
     ]
   },

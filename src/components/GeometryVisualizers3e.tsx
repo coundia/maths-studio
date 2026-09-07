@@ -202,7 +202,7 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
         {/* Ratio Formula Card */}
         <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center text-xs font-mono">
           <span className="text-emerald-400 font-bold">Égalité fondamentale des 3 rapports :</span>
-          <div className="my-1 text-sm sm:text-base font-extrabold text-white">
+          <div className="my-1 text-sm sm:text-base font-extrabold text-black dark:text-white">
             <span className="text-emerald-300">AM / AB</span> ={' '}
             <span className="text-sky-300">AN / AC</span> ={' '}
             <span className="text-amber-300">MN / BC</span>
@@ -306,7 +306,7 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
 
         {/* Dynamic Inscribed Angle Formula Card */}
         <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center text-xs font-mono">
-          <div className="text-sm font-bold text-white flex items-center justify-center gap-2">
+          <div className="text-sm font-bold text-black dark:text-white flex items-center justify-center gap-2">
             <span className="text-emerald-400">AMB (inscrit) = 40°</span>
             <span className="text-slate-400">=</span>
             <span className="text-red-400">AOB (centre) / 2 = 80° / 2</span>
@@ -598,7 +598,7 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
           <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
             Extraction du plus grand carré parfait
           </span>
-          <div className="text-2xl font-bold font-mono text-white">
+          <div className="text-2xl font-bold font-mono text-black dark:text-white">
             <MathView latex="\sqrt{72} = \sqrt{36 \times 2} = \sqrt{36} \times \sqrt{2} = 6\sqrt{2}" display={true} />
           </div>
           <div className="grid grid-cols-4 gap-2 pt-2 border-t border-slate-900 text-xs">
@@ -620,7 +620,7 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
           <span className="text-xs font-bold text-sky-400 uppercase tracking-wider">
             Point d'intersection des deux droites
           </span>
-          <div className="text-lg sm:text-xl font-bold font-mono text-white">
+          <div className="text-lg sm:text-xl font-bold font-mono text-black dark:text-white">
             <MathView latex="M(x \,;\, y) = (3 \,;\, 2)" display={true} />
           </div>
           <p className="text-xs text-slate-300">
@@ -672,7 +672,7 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
       <div className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2">
         {currentStep.rule}
       </div>
-      <div className="my-3 text-lg sm:text-2xl font-mono font-bold text-white">
+      <div className="my-3 text-lg sm:text-2xl font-mono font-bold text-black dark:text-white">
         <MathView latex={currentStep.latex} display={true} />
       </div>
       <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">

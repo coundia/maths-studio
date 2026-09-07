@@ -46,11 +46,11 @@ export const VideoLessonPlayer: React.FC<VideoLessonPlayerProps> = ({
             onClick={() => setActiveTab('video')}
             className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
               activeTab === 'video'
-                ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
-                : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                ? 'bg-black text-white dark:bg-red-600 shadow-xs'
+                : 'bg-white text-black border border-neutral-300 dark:bg-slate-800 dark:text-slate-300 dark:border-transparent hover:bg-neutral-100 dark:hover:bg-slate-700'
             }`}
           >
-            <Play className="w-3.5 h-3.5 fill-current" />
+            <Play className="w-3.5 h-3.5 fill-current text-red-600 dark:text-white" />
             <span>Vidéo de cours</span>
           </button>
 
@@ -58,8 +58,8 @@ export const VideoLessonPlayer: React.FC<VideoLessonPlayerProps> = ({
             onClick={() => setActiveTab('summary')}
             className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
               activeTab === 'summary'
-                ? 'bg-emerald-600 text-slate-950 font-bold shadow-md shadow-emerald-600/30'
-                : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                ? 'bg-black text-white dark:bg-emerald-600 dark:text-slate-950 font-bold shadow-xs'
+                : 'bg-white text-black border border-neutral-300 dark:bg-slate-800 dark:text-slate-300 dark:border-transparent hover:bg-neutral-100 dark:hover:bg-slate-700'
             }`}
           >
             <ListOrdered className="w-3.5 h-3.5" />
@@ -70,8 +70,8 @@ export const VideoLessonPlayer: React.FC<VideoLessonPlayerProps> = ({
             onClick={() => setActiveTab('exercises')}
             className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
               activeTab === 'exercises'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                ? 'bg-black text-white dark:bg-indigo-600 dark:text-white shadow-xs'
+                : 'bg-white text-black border border-neutral-300 dark:bg-slate-800 dark:text-slate-300 dark:border-transparent hover:bg-neutral-100 dark:hover:bg-slate-700'
             }`}
           >
             <BookOpen className="w-3.5 h-3.5" />
