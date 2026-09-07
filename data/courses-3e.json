@@ -1,0 +1,1232 @@
+[
+  {
+    "id": "racine-carree-3e",
+    "title": "Racine carrée - 3e",
+    "shortTitle": "Racine carrée",
+    "gradeLevel": "3e",
+    "category": "Activités numériques",
+    "icon": "Radical",
+    "description": "Définition, propriétés de calcul sur les radicaux, simplification sous la forme a√b et suppression des radicaux au dénominateur.",
+    "demos": [
+      {
+        "id": "racine-carree-simplification",
+        "title": "Simplification et opérations sur les racines carrées",
+        "badge": "Propriété clé BFEM",
+        "defaultLatex": "\\sqrt{a \\times b} = \\sqrt{a} \\times \\sqrt{b} \\quad (a \\ge 0, b \\ge 0)",
+        "ruleSummary": "Pour tous réels positifs a et b, √(a × b) = √a × √b et √(a/b) = √a / √b (avec b > 0). Attention : √(a + b) ≠ √a + √b !",
+        "teacherGoal": "Faire décomposer les nombres sous la racine en produit d'un carré parfait (4, 9, 16, 25, 36, 49, 64, 81, 100...) et d'un entier.",
+        "interactiveType": "racine-carree",
+        "demoParams": {
+          "a": 72,
+          "simplifiedA": 6,
+          "simplifiedB": 2
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Définition et existence",
+            "rule": "Condition d'existence : le radicande doit être positif ou nul",
+            "latex": "\\text{Pour tout } a \\ge 0, \\quad (\\sqrt{a})^2 = a \\quad \\text{et} \\quad \\sqrt{a^2} = a",
+            "explanation": "La racine carrée d'un nombre réel positif a est l'unique nombre positif dont le carré vaut a. Exemple : √49 = 7 car 7² = 49 et 7 > 0.",
+            "teacherTip": "Rappeler que √(-9) n'a aucun sens dans l'ensemble des nombres réels."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Écrire √72 sous la forme a√b",
+            "rule": "Recherche du plus grand carré parfait diviseur",
+            "latex": "\\sqrt{72} = \\sqrt{36 \\times 2} = \\sqrt{36} \\times \\sqrt{2}",
+            "explanation": "72 se divise par 36 qui est un carré parfait (6² = 36). On sépare la racine en produit de deux racines.",
+            "teacherTip": "Montrer que si l'élève prend 72 = 9 × 8, il trouve 3√8, et doit encore simplifier √8 = 2√2 pour obtenir 6√2."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Résultat irréductible",
+            "rule": "Extraction du carré parfait",
+            "latex": "\\sqrt{72} = 6\\sqrt{2}",
+            "explanation": "Comme √36 = 6, on obtient directement 6√2, où 2 n'a plus aucun diviseur carré parfait.",
+            "teacherTip": "Encourager les élèves à connaître par cœur les carrés des entiers de 1 à 15."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Rendre rationnel un dénominateur (Expression conjuguée)",
+            "rule": "Multiplier numérateur et dénominateur par l'expression conjuguée",
+            "latex": "\\frac{2}{\\sqrt{5} - 1} = \\frac{2(\\sqrt{5} + 1)}{(\\sqrt{5} - 1)(\\sqrt{5} + 1)} = \\frac{2(\\sqrt{5} + 1)}{5 - 1} = \\frac{\\sqrt{5} + 1}{2}",
+            "explanation": "On utilise l'identité remarquable (a - b)(a + b) = a² - b² pour éliminer le radical au dénominateur.",
+            "teacherTip": "Question systématique au BFEM : rendre rationnel le dénominateur."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Écrire √50 sous la forme a√b avec b le plus petit entier possible.",
+            "answerLatex": "\\sqrt{50} = \\sqrt{25 \\times 2} = 5\\sqrt{2}",
+            "hint": "50 = 25 × 2 et 25 est un carré parfait."
+          },
+          {
+            "question": "Calculer A = √18 - 3√50 + 2√8.",
+            "answerLatex": "A = 3\\sqrt{2} - 15\\sqrt{2} + 4\\sqrt{2} = (3 - 15 + 4)\\sqrt{2} = -8\\sqrt{2}",
+            "hint": "√18 = 3√2, √50 = 5√2, √8 = 2√2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "calcul-algebrique-3e",
+    "title": "Calcul algébrique 3e",
+    "shortTitle": "Calcul algébrique 3e",
+    "gradeLevel": "3e",
+    "category": "Activités numériques",
+    "icon": "Calculator",
+    "description": "Les 3 identités remarquables du 3e, factorisations complexes avec facteur commun masqué et réduction d'expressions littérales.",
+    "demos": [
+      {
+        "id": "identites-remarquables-3e",
+        "title": "Les trois identités remarquables et factorisation",
+        "badge": "Incontournable BFEM",
+        "defaultLatex": "(a + b)^2 = a^2 + 2ab + b^2, \\quad (a - b)^2 = a^2 - 2ab + b^2, \\quad a^2 - b^2 = (a-b)(a+b)",
+        "ruleSummary": "Les identités remarquables permettent de développer rapidement un produit ou de factoriser une différence de carrés en produit de facteurs du 1er degré.",
+        "teacherGoal": "Entraîner les élèves à reconnaître la forme a² - b² = (a - b)(a + b) avec des parenthèses comme (2x + 1)² - (x - 3)².",
+        "interactiveType": "algebra-arrows",
+        "demoParams": {},
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Carré d'une somme",
+            "rule": "(a + b)² = a² + 2ab + b²",
+            "latex": "(3x + 2)^2 = (3x)^2 + 2(3x)(2) + 2^2 = 9x^2 + 12x + 4",
+            "explanation": "Attention à bien mettre (3x)² = 9x² et ne pas oublier le double produit 2 × 3x × 2 = 12x.",
+            "teacherTip": "L'erreur classique des élèves est d'écrire 9x² + 4 en oubliant le double produit."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Carré d'une différence",
+            "rule": "(a - b)² = a² - 2ab + b²",
+            "latex": "(2x - 5)^2 = (2x)^2 - 2(2x)(5) + 5^2 = 4x^2 - 20x + 25",
+            "explanation": "Le double produit est précédé d'un signe moins (-20x), mais le dernier terme reste positif (+25).",
+            "teacherTip": "Rappeler que (-5)² est toujours positif : +25."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Différence de deux carrés (Factorisation clé)",
+            "rule": "a² - b² = (a - b)(a + b)",
+            "latex": "4x^2 - 9 = (2x)^2 - 3^2 = (2x - 3)(2x + 3)",
+            "explanation": "On identifie a = 2x et b = 3 pour écrire directement le produit sous forme factorisée.",
+            "teacherTip": "Cette forme est essentielle pour résoudre les équations produits nuls."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Factorisation composée type examen",
+            "rule": "E = (2x + 1)² - (x - 3)²",
+            "latex": "E = [(2x + 1) - (x - 3)][(2x + 1) + (x - 3)] = (x + 4)(3x - 2)",
+            "explanation": "On applique a² - b² avec a = (2x + 1) et b = (x - 3). Attention au changement de signe devant (x - 3) !",
+            "teacherTip": "Insister sur les crochets et la règle des signes lors de la suppression des parenthèses."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Développer et réduire P = (4x - 1)² - 16.",
+            "answerLatex": "P = (16x^2 - 8x + 1) - 16 = 16x^2 - 8x - 15",
+            "hint": "(4x-1)² = 16x² - 8x + 1"
+          },
+          {
+            "question": "Factoriser A = 25x² - 36.",
+            "answerLatex": "A = (5x - 6)(5x + 6)",
+            "hint": "25x² = (5x)² et 36 = 6²"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "equations-inequations-3e",
+    "title": "Équation et Inéquation à une seule inconnue 3e",
+    "shortTitle": "Équations & Inéquations 3e",
+    "gradeLevel": "3e",
+    "category": "Activités numériques",
+    "icon": "Equal",
+    "description": "Équations produits nuls (ax+b)(cx+d)=0, inéquations du 1er degré, changement de sens de l'inégalité et représentation des ensembles de solutions.",
+    "demos": [
+      {
+        "id": "equation-produit-nul-3e",
+        "title": "Résolution d'une équation produit nul et d'une inéquation",
+        "badge": "Méthode Fondamentale",
+        "defaultLatex": "A \\times B = 0 \\iff A = 0 \\quad \\text{ou} \\quad B = 0",
+        "ruleSummary": "Un produit de facteurs est nul si et seulement si l'un au moins des facteurs est nul. Pour une inéquation, la multiplication ou division par un nombre négatif inverse le sens de l'inégalité !",
+        "teacherGoal": "Montrer que toute équation du second degré en 3e se ramène à une équation produit nul après factorisation.",
+        "interactiveType": "inequations-numberline",
+        "demoParams": {
+          "threshold": -2,
+          "operator": ">="
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Règle du produit nul",
+            "rule": "(2x - 3)(x + 4) = 0",
+            "latex": "2x - 3 = 0 \\quad \\text{ou} \\quad x + 4 = 0",
+            "explanation": "On sépare l'équation en deux équations simples du premier degré à résoudre séparément.",
+            "teacherTip": "Ne jamais développer une expression déjà factorisée quand elle est égale à 0 !"
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Ensemble des solutions S",
+            "rule": "x = 3/2 ou x = -4",
+            "latex": "S = \\left\\{ -4 \\,;\\, \\frac{3}{2} \\right\\}",
+            "explanation": "L'équation admet exactement deux solutions distinctes : -4 et 3/2.",
+            "teacherTip": "Toujours écrire l'ensemble solution S sous forme d'accolades dans l'ordre croissant."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Inéquation et piège du signe négatif",
+            "rule": "Résoudre -4x + 6 ≤ 18",
+            "latex": "-4x \\le 18 - 6 \\iff -4x \\le 12 \\iff x \\ge \\frac{12}{-4} \\iff x \\ge -3",
+            "explanation": "On divise par -4 qui est strictement négatif : le symbole ≤ s'inverse et devient ≥ !",
+            "teacherTip": "Répéter la règle d'or : diviser par un négatif change le sens de l'inégalité."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Écriture sous forme d'intervalle",
+            "rule": "x ≥ -3",
+            "latex": "S = [-3 \\,;\\, +\\infty[",
+            "explanation": "La solution est l'ensemble des nombres supérieurs ou égaux à -3. Le crochet est fermé en -3 car l'inégalité est large (≥).",
+            "teacherTip": "Montrer la représentation graphique sur une droite graduée avec la partie hachurée."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Résoudre dans R l'équation : (3x + 5)(2 - x) = 0.",
+            "answerLatex": "S = \\left\\{ -\\frac{5}{3} \\,;\\, 2 \\right\\}",
+            "hint": "3x + 5 = 0 ou 2 - x = 0"
+          },
+          {
+            "question": "Résoudre l'inéquation : -2x > 8.",
+            "answerLatex": "x < \\frac{8}{-2} \\implies x < -4 \\quad (S = ]-\\infty ; -4[)",
+            "hint": "Diviser par -2 change > en <."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "statistique-3e",
+    "title": "Statistique 3e",
+    "shortTitle": "Statistique 3e",
+    "gradeLevel": "3e",
+    "category": "Activités numériques",
+    "icon": "BarChart3",
+    "description": "Effectifs cumulés croissants (ECC), fréquences, moyenne pondérée, classe modale, médiane et construction de diagrammes circulaires.",
+    "demos": [
+      {
+        "id": "stats-ecc-mediane-3e",
+        "title": "Tableau des ECC, Médiane et Moyenne pondérée",
+        "badge": "Programme BFEM",
+        "defaultLatex": "\\bar{x} = \\frac{\\sum n_i x_i}{N}, \\quad \\text{Angle} = \\frac{n_i}{N} \\times 360^\\circ",
+        "ruleSummary": "La médiane est la valeur qui partage la population en deux groupes d'effectifs égaux (50% en dessous, 50% au-dessus). Les angles du diagramme circulaire sont proportionnels aux effectifs.",
+        "teacherGoal": "Apprendre aux élèves à calculer les effectifs cumulés croissants pour repérer immédiatement la médiane sans lister toutes les valeurs.",
+        "interactiveType": "stats-chart",
+        "demoParams": {},
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Série statistique des notes au devoir",
+            "rule": "Notes x_i : [8, 10, 12, 15, 18], Effectifs n_i : [4, 8, 12, 10, 6]",
+            "latex": "N = 4 + 8 + 12 + 10 + 6 = 40\\text{ élèves}",
+            "explanation": "La taille totale de l'échantillon est N = 40 élèves.",
+            "teacherTip": "Vérifier la somme totale des effectifs avant de poursuivre."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Effectifs Cumulés Croissants (ECC)",
+            "rule": "On additionne les effectifs au fur et à mesure",
+            "latex": "\\text{ECC} : 4 \\longrightarrow 12 \\longrightarrow 24 \\longrightarrow 34 \\longrightarrow 40",
+            "explanation": "Pour la note 8 : 4. Pour la note 10 : 4+8=12. Pour 12 : 12+12=24. Pour 15 : 24+10=34. Pour 18 : 34+6=40.",
+            "teacherTip": "Le dernier ECC doit toujours être exactement égal à l'effectif total N."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Détermination de la Médiane (Me)",
+            "rule": "N / 2 = 40 / 2 = 20e valeur",
+            "latex": "\\frac{N}{2} = 20 \\implies \\text{Le premier ECC } \\ge 20 \\text{ est } 24 \\implies M_e = 12",
+            "explanation": "La médiane correspond à la 20e et 21e valeur. Dans la ligne des ECC, la valeur correspondante est 12. Donc Médiane = 12.",
+            "teacherTip": "Expliquer que 50% des élèves ont eu 12 ou moins, et 50% ont eu 12 ou plus."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Calcul du diagramme circulaire",
+            "rule": "Angle = (Effectif / N) × 360°",
+            "latex": "\\alpha_{12} = \\frac{12}{40} \\times 360^\\circ = 0{,}3 \\times 360^\\circ = 108^\\circ",
+            "explanation": "Le secteur circulaire représentant la note 12 aura un angle de 108 degrés.",
+            "teacherTip": "Rappeler que la somme de tous les angles doit être de 360 degrés."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Soit la série ordonnée : 3, 5, 7, 9, 11, 14, 17. Quelle est la médiane ?",
+            "answerLatex": "M_e = 9 \\quad (4\\text{e valeur sur 7})",
+            "hint": "Effectif impair n = 7, la médiane est au rang (7+1)/2 = 4."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "application-affine-3e",
+    "title": "Application affine - Application affine par intervalle - 3e",
+    "shortTitle": "Applications affines",
+    "gradeLevel": "3e",
+    "category": "Activités numériques",
+    "icon": "TrendingUp",
+    "description": "Fonctions affines f(x)=ax+b, coefficient directeur a, ordonnée à l'origine b, sens de variation et applications affines définies par intervalles.",
+    "demos": [
+      {
+        "id": "affine-representation-3e",
+        "title": "Détermination du coefficient directeur et tracé de la droite",
+        "badge": "Cœur du programme",
+        "defaultLatex": "f(x) = ax + b, \\quad a = \\frac{f(x_2) - f(x_1)}{x_2 - x_1}",
+        "ruleSummary": "La représentation graphique d'une application affine est une droite. Le coefficient 'a' détermine la pente et 'b' est le point de contact avec l'axe des ordonnées (0, b).",
+        "teacherGoal": "Montrer comment calculer a à partir de deux points et résoudre des problèmes de tarifs dégressifs par intervalles.",
+        "interactiveType": "linear-function",
+        "demoParams": {
+          "a": 2,
+          "b": -1
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Forme générale et nature",
+            "rule": "f(x) = ax + b (affine) ; si b = 0 : f(x) = ax (linéaire)",
+            "latex": "f(x) = 2x - 1 \\quad (a = 2, \\, b = -1)",
+            "explanation": "Comme a = 2 > 0, l'application est strictement croissante. Sa représentation graphique est une droite (D).",
+            "teacherTip": "Une fonction linéaire passe par l'origine O(0,0), tandis qu'une fonction affine passe par (0,b)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Calcul du coefficient directeur",
+            "rule": "a = (yB - yA) / (xB - xA)",
+            "latex": "a = \\frac{f(3) - f(1)}{3 - 1} = \\frac{5 - 1}{2} = \\frac{4}{2} = 2",
+            "explanation": "Le taux d'accroissement est constant et égal à 2 sur toute la droite.",
+            "teacherTip": "Faire vérifier graphiquement : quand on avance de 1 en abscisse, on monte de 2 en ordonnée."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Notion d'application affine par intervalle",
+            "rule": "Exemple : Tarif de taxi ou abonnement téléphonique",
+            "latex": "g(x) = \\begin{cases} 500x & \\text{si } 0 \\le x \\le 5 \\\\ 200x + 1500 & \\text{si } x > 5 \\end{cases}",
+            "explanation": "L'expression change de formule selon l'intervalle dans lequel se trouve la variable x (tarification par tranches).",
+            "teacherTip": "Exercice classique de modélisation économique au BFEM."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Déterminer la fonction affine f telle que f(0) = 3 et f(2) = 7.",
+            "answerLatex": "a = \\frac{7 - 3}{2 - 0} = 2, \\quad b = f(0) = 3 \\implies f(x) = 2x + 3",
+            "hint": "b est l'image de 0, puis calculer le coefficient a."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "systemes-2-inconnues-3e",
+    "title": "Équations et inéquations du 1er degré à deux inconnues 3e",
+    "shortTitle": "Systèmes à 2 inconnues",
+    "gradeLevel": "3e",
+    "category": "Activités numériques",
+    "icon": "Grid",
+    "description": "Résolution de systèmes linéaires par substitution, par combinaison linéaire et résolution graphique d'inéquations dans le plan.",
+    "demos": [
+      {
+        "id": "systeme-combinaison-3e",
+        "title": "Résolution par combinaison linéaire et interprétation graphique",
+        "badge": "Classique Examen",
+        "defaultLatex": "\\begin{cases} 2x + 3y = 12 \\\\ 5x - y = 13 \\end{cases}",
+        "ruleSummary": "Un système de deux équations à deux inconnues admet un unique couple solution (x, y) correspondant au point d'intersection des deux droites associées.",
+        "teacherGoal": "Faire maîtriser la méthode par combinaison linéaire pour éliminer une des inconnues rapidement.",
+        "interactiveType": "systemes-2-inconnues",
+        "demoParams": {},
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Énoncé du système",
+            "rule": "Équation (1) : 2x + 3y = 12 ; Équation (2) : 5x - y = 13",
+            "latex": "\\begin{cases} 2x + 3y = 12 \\quad (L_1) \\\\ 5x - y = 13 \\quad (L_2) \\end{cases}",
+            "explanation": "On choisit d'éliminer y en multipliant la ligne (L2) par 3 pour obtenir des coefficients opposés (+3y et -3y).",
+            "teacherTip": "Demander aux élèves pourquoi éliminer y est plus simple ici que d'éliminer x."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Multiplication de la ligne (L2) par 3",
+            "rule": "3 × (5x - y) = 3 × 13",
+            "latex": "\\begin{cases} 2x + 3y = 12 \\\\ 15x - 3y = 39 \\end{cases}",
+            "explanation": "Les coefficients devant y sont maintenant 3 et -3."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Addition membre à membre",
+            "rule": "(2x + 15x) + (3y - 3y) = 12 + 39",
+            "latex": "17x = 51 \\implies x = \\frac{51}{17} = 3",
+            "explanation": "Les termes en y s'annulent : 17x = 51, d'où x = 3.",
+            "teacherTip": "Toujours réécrire l'équation simplifiée avec une seule inconnue."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Remplacement pour trouver y",
+            "rule": "Dans (L2) : 5(3) - y = 13",
+            "latex": "15 - y = 13 \\implies y = 15 - 13 = 2 \\implies S = \\{ (3 \\,;\\, 2) \\}",
+            "explanation": "La solution du système est l'unique couple ordonné (3 ; 2). Graphiquement, les deux droites se coupent au point M(3, 2).",
+            "teacherTip": "Ne pas oublier de mettre la solution sous forme de couple entre parenthèses : (x ; y)."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Résoudre le système : { x + y = 10 ; x - y = 4 }.",
+            "answerLatex": "2x = 14 \\implies x = 7, \\, y = 3 \\implies S = \\{ (7 \\,;\\, 3) \\}",
+            "hint": "Additionner les deux équations directement pour éliminer y."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "vecteurs-3e",
+    "title": "Vecteurs - 3e",
+    "shortTitle": "Vecteurs - 3e",
+    "gradeLevel": "3e",
+    "category": "Activités géométriques",
+    "icon": "MoveRight",
+    "description": "Égalité de vecteurs, relation de Chasles AB + BC = AC, règle du parallélogramme et colinéarité de deux vecteurs.",
+    "demos": [
+      {
+        "id": "vecteurs-chasles-3e",
+        "title": "Relation de Chasles et somme vectorielle",
+        "badge": "Outil géométrique majeur",
+        "defaultLatex": "\\vec{AB} + \\vec{BC} = \\vec{AC}, \\quad \\vec{AB} = \\vec{DC} \\iff ABCD \\text{ est un parallélogramme}",
+        "ruleSummary": "La relation de Chasles permet de simplifier les sommes vectorielles dès que l'extrémité du premier vecteur coïncide avec l'origine du second.",
+        "teacherGoal": "Faire manipuler les vecteurs comme des déplacements (glissements) et non comme de simples longueurs.",
+        "interactiveType": "vector-chasles",
+        "demoParams": {},
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Définition d'un vecteur",
+            "rule": "Un vecteur AB est défini par : une direction, un sens et une norme (longueur)",
+            "latex": "\\vec{AB} : \\text{Direction } (AB), \\text{ Sens de } A \\to B, \\text{ Norme } ||\\vec{AB}|| = AB",
+            "explanation": "Deux vecteurs sont égaux s'ils ont la même direction, le même sens et la même longueur.",
+            "teacherTip": "Ne pas confondre direction (droite support) et sens (vers où pointe la flèche)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Relation de Chasles",
+            "rule": "Enchaînement de deux déplacements",
+            "latex": "\\vec{AB} + \\vec{BC} = \\vec{AC}",
+            "explanation": "Partir de A pour aller à B, puis partir de B pour aller à C équivaut au déplacement direct de A vers C.",
+            "teacherTip": "Repérer le point commun B au milieu des deux vecteurs."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Règle du parallélogramme",
+            "rule": "Somme de vecteurs de même origine A",
+            "latex": "\\vec{AB} + \\vec{AD} = \\vec{AC} \\iff ABCD \\text{ est un parallélogramme}",
+            "explanation": "Le vecteur somme AC correspond à la diagonale du parallélogramme construit sur [AB] et [AD].",
+            "teacherTip": "C'est l'équivalent géométrique direct de la composition des forces en physique."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Simplifier la somme vectorielle : u = AB + BC + CD.",
+            "answerLatex": "\\vec{u} = \\vec{AC} + \\vec{CD} = \\vec{AD}",
+            "hint": "Appliquer la relation de Chasles deux fois de suite."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "reperage-plan-3e",
+    "title": "Repérage dans le plan 3e",
+    "shortTitle": "Repérage dans le plan",
+    "gradeLevel": "3e",
+    "category": "Activités géométriques",
+    "icon": "Compass",
+    "description": "Coordonnées de points et de vecteurs AB(xB-xA, yB-yA), milieu d'un segment, calcul de la distance dans un repère orthonormé et colinéarité.",
+    "demos": [
+      {
+        "id": "reperage-coordonnees-distance-3e",
+        "title": "Calcul des coordonnées d'un vecteur et de la distance",
+        "badge": "Formules officielles BFEM",
+        "defaultLatex": "\\vec{AB}\\begin{pmatrix} x_B - x_A \\\\ y_B - y_A \\end{pmatrix}, \\quad AB = \\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}",
+        "ruleSummary": "Dans un repère orthonormé (O, I, J), les coordonnées d'un vecteur sont la différence des coordonnées. La distance s'obtient par l'application de Pythagore.",
+        "teacherGoal": "Faire mémoriser l'ordre de la soustraction : toujours l'extrémité MOINS l'origine (B - A).",
+        "interactiveType": "reperage-plan",
+        "demoParams": {
+          "xa": 1,
+          "ya": 2,
+          "xb": 4,
+          "yb": 6
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Coordonnées des points A et B",
+            "rule": "Soient A(1 ; 2) et B(4 ; 6) dans un repère orthonormé",
+            "latex": "A(1 \\,;\\, 2) \\quad \\text{et} \\quad B(4 \\,;\\, 6)",
+            "explanation": "xA = 1, yA = 2 et xB = 4, yB = 6.",
+            "teacherTip": "Toujours écrire l'abscisse x en premier et l'ordonnée y en second."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Coordonnées du vecteur AB",
+            "rule": "AB(xB - xA ; yB - yA)",
+            "latex": "\\vec{AB}\\begin{pmatrix} 4 - 1 \\\\ 6 - 2 \\end{pmatrix} = \\vec{AB}\\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}",
+            "explanation": "Le déplacement horizontal est de +3 et le déplacement vertical est de +4.",
+            "teacherTip": "Vérifier sur le quadrillage : 3 carreaux vers la droite, 4 carreaux vers le haut."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Coordonnées du milieu K de [AB]",
+            "rule": "K((xA + xB)/2 ; (yA + yB)/2)",
+            "latex": "x_K = \\frac{1 + 4}{2} = 2{,}5, \\quad y_K = \\frac{2 + 6}{2} = 4 \\implies K(2{,}5 \\,;\\, 4)",
+            "explanation": "Les coordonnées du milieu sont la moyenne arithmétique des coordonnées des extrémités.",
+            "teacherTip": "Attention : pour le milieu on ADDITIONNE, pour le vecteur on SOUSTRAIT."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Calcul de la distance AB",
+            "rule": "Norme du vecteur AB dans un repère orthonormé",
+            "latex": "AB = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5\\text{ unités}",
+            "explanation": "La distance entre A et B est exactement égale à 5 unités.",
+            "teacherTip": "Retrouver le fameux triplet pythagoricien (3, 4, 5)."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Calculer la distance entre E(0, -1) et F(3, 3).",
+            "answerLatex": "EF = \\sqrt{(3-0)^2 + (3-(-1))^2} = \\sqrt{3^2 + 4^2} = \\sqrt{25} = 5",
+            "hint": "Attention à 3 - (-1) = 3 + 1 = 4."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "trigonometrie-3e",
+    "title": "Relations trigonométriques dans un triangle rectangle 3e",
+    "shortTitle": "Trigonométrie 3e",
+    "gradeLevel": "3e",
+    "category": "Activités géométriques",
+    "icon": "Triangle",
+    "description": "Cosinus, Sinus, Tangente (CAH-SOH-TOA), formule fondamentale cos²(x) + sin²(x) = 1 et calcul de longueurs et d'angles.",
+    "demos": [
+      {
+        "id": "trigo-cos-sin-tan-3e",
+        "title": "Définitions de cosinus, sinus et tangente",
+        "badge": "Fondamental BFEM",
+        "defaultLatex": "\\cos = \\frac{\\text{Adj}}{\\text{Hyp}}, \\quad \\sin = \\frac{\\text{Opp}}{\\text{Hyp}}, \\quad \\tan = \\frac{\\text{Opp}}{\\text{Adj}}",
+        "ruleSummary": "Le moyen mnémotechnique universel : CAH SOH TOA. Pour tout angle aigu x : 0 < cos(x) < 1, 0 < sin(x) < 1, et cos²(x) + sin²(x) = 1.",
+        "teacherGoal": "Apprendre aux élèves à bien identifier le côté adjacent et le côté opposé selon l'angle aigu considéré.",
+        "interactiveType": "cosinus-svg",
+        "demoParams": {},
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Vocabulaire dans le triangle rectangle en A",
+            "rule": "Hypoténuse [BC], angle aigu B",
+            "latex": "\\text{Pour l'angle } \\widehat{B} : \\quad \\text{Côté adjacent} = [AB], \\quad \\text{Côté opposé} = [AC]",
+            "explanation": "L'hypoténuse est toujours opposée à l'angle droit. Le côté opposé est en face de l'angle B, le côté adjacent touche l'angle B.",
+            "teacherTip": "Insister sur le fait que le rôle d'adjacent et d'opposé s'inverse si l'on regarde l'autre angle C."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Formules trigonométriques",
+            "rule": "Rapports de longueurs",
+            "latex": "\\cos(\\widehat{B}) = \\frac{AB}{BC}, \\quad \\sin(\\widehat{B}) = \\frac{AC}{BC}, \\quad \\tan(\\widehat{B}) = \\frac{AC}{AB}",
+            "explanation": "Ces trois nombres ne dépendent que de la mesure de l'angle, pas de la taille du triangle.",
+            "teacherTip": "Rappeler que la tangente peut être supérieure à 1, contrairement au cosinus et sinus."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Formules de liaison indispensables",
+            "rule": "Relations fondamentales",
+            "latex": "\\cos^2(\\widehat{B}) + \\sin^2(\\widehat{B}) = 1 \\quad \\text{et} \\quad \\tan(\\widehat{B}) = \\frac{\\sin(\\widehat{B})}{\\cos(\\widehat{B})}",
+            "explanation": "Ces formules permettent de calculer sinus et tangente dès que l'on connaît le cosinus, sans connaître les longueurs du triangle.",
+            "teacherTip": "Démontrer la formule cos² + sin² = 1 à l'aide du théorème de Pythagore : (AB² + AC²)/BC² = BC²/BC² = 1."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Dans un triangle rectangle, si cos(x) = 0,6, calculer sin(x).",
+            "answerLatex": "\\sin^2(x) = 1 - 0{,}6^2 = 1 - 0{,}36 = 0{,}64 \\implies \\sin(x) = \\sqrt{0{,}64} = 0{,}8",
+            "hint": "cos²(x) + sin²(x) = 1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "thales-3e",
+    "title": "Théorème de Thalès - 3e",
+    "shortTitle": "Théorème de Thalès",
+    "gradeLevel": "3e",
+    "category": "Activités géométriques",
+    "icon": "Share2",
+    "description": "Théorème direct de Thalès (configuration triangle et configuration papillon), égalité des 3 rapports et réciproque pour démontrer le parallélisme.",
+    "demos": [
+      {
+        "id": "thales-direct-reciproque-3e",
+        "title": "Théorème direct et réciproque de Thalès",
+        "badge": "Incontournable Épreuve BFEM",
+        "defaultLatex": "\\text{Si } (MN) \\parallel (BC) \\implies \\frac{AM}{AB} = \\frac{AN}{AC} = \\frac{MN}{BC}",
+        "ruleSummary": "Deux droites sécantes coupées par deux droites parallèles déterminent des segments aux longueurs proportionnelles. La réciproque permet de démontrer que deux droites sont parallèles.",
+        "teacherGoal": "Apprendre aux élèves à rédiger les conditions d'alignement dans le même ordre pour la réciproque.",
+        "interactiveType": "thales-svg",
+        "demoParams": {
+          "ab": 6,
+          "am": 2,
+          "ac": 9,
+          "an": 3,
+          "bc": 7.5,
+          "mn": 2.5
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Conditions d'application du théorème direct",
+            "rule": "Hypothèses : M ∈ (AB), N ∈ (AC) et (MN) // (BC)",
+            "latex": "A, M, B \\text{ alignés, } A, N, C \\text{ alignés et } (MN) \\parallel (BC)",
+            "explanation": "Les deux droites (AB) et (AC) sont sécantes en A, et les droites (MN) et (BC) sont strictement parallèles.",
+            "teacherTip": "Exiger la rédaction rigoureuse des hypothèses avant d'écrire les égalités de rapports."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Écriture des trois rapports égaux",
+            "rule": "Rapports Petit triangle / Grand triangle",
+            "latex": "\\frac{AM}{AB} = \\frac{AN}{AC} = \\frac{MN}{BC}",
+            "explanation": "Tous les côtés du petit triangle AMN sont proportionnels aux côtés du grand triangle ABC.",
+            "teacherTip": "Vérifier que les sommets du même triangle sont tous en haut (ou tous en bas)."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Calcul d'une longueur inconnue (MN)",
+            "rule": "Soient AB = 6 cm, AM = 2 cm et BC = 7,5 cm",
+            "latex": "\\frac{2}{6} = \\frac{MN}{7{,}5} \\implies MN = \\frac{2 \\times 7{,}5}{6} = \\frac{15}{6} = 2{,}5\\text{ cm}",
+            "explanation": "On applique le produit en croix pour déterminer la longueur MN.",
+            "teacherTip": "Faire remarquer que 2/6 = 1/3, donc MN mesure le tiers de BC."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Réciproque de Thalès (Démontrer le parallélisme)",
+            "rule": "Égalité des rapports et ordre des points",
+            "latex": "\\frac{AM}{AB} = \\frac{AN}{AC} \\quad \\text{et points dans le même ordre} \\implies (MN) \\parallel (BC)",
+            "explanation": "Si les rapports sont égaux et que A, M, B d'une part et A, N, C d'autre part sont alignés dans le même ordre, alors les droites sont parallèles.",
+            "teacherTip": "Insister sur la phrase clé : \"dans le même ordre\". Sans cela, la démonstration est incomplète."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Dans un triangle ABC, AM = 3, AB = 9, AN = 4, AC = 12. Les droites (MN) et (BC) sont-elles parallèles ?",
+            "answerLatex": "\\frac{AM}{AB} = \\frac{3}{9} = \\frac{1}{3} \\quad \\text{et} \\quad \\frac{AN}{AC} = \\frac{4}{12} = \\frac{1}{3}. \\text{ Rapports égaux et points dans le même ordre } \\implies (MN) \\parallel (BC)",
+            "hint": "Calculer séparément AM/AB et AN/AC."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "angle-inscrit-3e",
+    "title": "Angle inscrit - Angle au centre - 3e",
+    "shortTitle": "Angle inscrit & Angle au centre",
+    "gradeLevel": "3e",
+    "category": "Activités géométriques",
+    "icon": "CircleDot",
+    "description": "Théorème de l'angle au centre AMB = (1/2) AOB interceptant le même arc, égalité de deux angles inscrits et triangle rectangle inscrit.",
+    "demos": [
+      {
+        "id": "angle-inscrit-theoreme-3e",
+        "title": "Propriété fondamentale de l'angle inscrit et au centre",
+        "badge": "Propriété Cercle BFEM",
+        "defaultLatex": "\\widehat{AMB} = \\frac{1}{2} \\widehat{AOB} \\quad (\\text{interception du même arc } \\overset{\\frown}{AB})",
+        "ruleSummary": "Dans un cercle, la mesure d'un angle inscrit est égale à la moitié de la mesure de l'angle au centre qui intercepte le même arc. Deux angles inscrits interceptant le même arc sont égaux.",
+        "teacherGoal": "Faire visualiser que le sommet M peut bouger sur tout l'arc sans que la mesure de l'angle inscrit ne change.",
+        "interactiveType": "angle-inscrit-svg",
+        "demoParams": {
+          "centralAngle": 80,
+          "inscribedAngle": 40
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Définitions géométriques",
+            "rule": "Angle au centre : sommet en O ; Angle inscrit : sommet M sur le cercle",
+            "latex": "O \\text{ est le centre du cercle, } A, B, M \\in (\\mathcal{C})",
+            "explanation": "L'angle au centre AOB a pour sommet le centre O. L'angle inscrit AMB a son sommet M sur le cercle et ses côtés coupent le cercle en A et B.",
+            "teacherTip": "Faire colorer au tableau l'arc de cercle intercepté par les deux angles."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Théorème de l'angle inscrit",
+            "rule": "L'angle au centre mesure le double de l'angle inscrit",
+            "latex": "\\widehat{AMB} = \\frac{1}{2} \\widehat{AOB} \\iff \\widehat{AOB} = 2 \\times \\widehat{AMB}",
+            "explanation": "Si l'angle au centre AOB mesure 80°, alors tout angle inscrit AMB interceptant le même arc AB mesure exactement 40°.",
+            "teacherTip": "Cas particulier : si [AB] est un diamètre, AOB = 180°, donc AMB = 90° (triangle rectangle inscrit)."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Deux angles inscrits interceptant le même arc",
+            "rule": "Égalité des mesures",
+            "latex": "\\widehat{AMB} = \\widehat{ANB}",
+            "explanation": "Tous les angles inscrits qui interceptent le même arc de cercle ont exactement la même mesure.",
+            "teacherTip": "Propriété très utile pour démontrer que deux triangles ont des angles égaux."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Dans un cercle de centre O, un angle au centre mesure 110°. Quelle est la mesure de l'angle inscrit qui intercepte le même arc ?",
+            "answerLatex": "\\widehat{AMB} = \\frac{110^\\circ}{2} = 55^\\circ",
+            "hint": "Angle inscrit = Angle au centre / 2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "geometrie-espace-3e",
+    "title": "Géométrie dans l'espace 3e",
+    "shortTitle": "Géométrie dans l'espace",
+    "gradeLevel": "3e",
+    "category": "Activités géométriques",
+    "icon": "Box",
+    "description": "Pyramides régulières, cônes de révolution, calculs de volumes V = (1/3) B × h, sphère et boule, et effet d'un agrandissement ou réduction (k, k², k³).",
+    "demos": [
+      {
+        "id": "espace-pyramide-cone-3e",
+        "title": "Volumes et sections planes (Pyramide, Cône, Sphère)",
+        "badge": "Calculs volumiques BFEM",
+        "defaultLatex": "V_{\\text{pyramide}} = \\frac{1}{3} \\mathcal{B} \\times h, \\quad V_{\\text{sphère}} = \\frac{4}{3} \\pi R^3, \\quad \\mathcal{A} = 4\\pi R^2",
+        "ruleSummary": "Dans une réduction de rapport k : les longueurs sont multipliées par k, les aires par k², et les volumes par k³ !",
+        "teacherGoal": "Insister sur la formule des volumes à sommet pointu (1/3 × Base × hauteur) et sur le coefficient k³ pour les volumes.",
+        "interactiveType": "geometrie-espace",
+        "demoParams": {},
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Volume d'une pyramide régulière",
+            "rule": "V = (1/3) × Aire de la base × Hauteur",
+            "latex": "V = \\frac{1}{3} \\times \\mathcal{B} \\times h = \\frac{1}{3} \\times (c^2) \\times h",
+            "explanation": "Pour une pyramide à base carrée de côté c = 6 cm et de hauteur h = 10 cm : Aire = 36 cm², Volume = (1/3) × 36 × 10 = 120 cm³.",
+            "teacherTip": "Bien rappeler que la hauteur est perpendiculaire au plan de la base en son centre."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Volume d'un cône de révolution",
+            "rule": "Base circulaire d'aire πR²",
+            "latex": "V = \\frac{1}{3} \\pi R^2 h",
+            "explanation": "Si R = 3 cm et h = 7 cm, V = (1/3) × π × 9 × 7 = 21π cm³ ≈ 65,97 cm³.",
+            "teacherTip": "Ne pas confondre le rayon R avec le diamètre D = 2R."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Section plane et coefficient de réduction k",
+            "rule": "Plan parallèle à la base",
+            "latex": "k = \\frac{h'}{h} \\implies \\mathcal{B}' = k^2 \\times \\mathcal{B} \\implies V' = k^3 \\times V",
+            "explanation": "Si la hauteur est divisée par 2 (k = 1/2), le volume de la petite pyramide est divisé par 2³ = 8 !",
+            "teacherTip": "Question classique piège : si les côtés doublent (k=2), le volume est multiplié par 8, pas par 2."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Un cône a un volume de 240 cm³. On le coupe à mi-hauteur (k = 1/2). Quel est le volume du petit cône réduit ?",
+            "answerLatex": "V' = k^3 \\times V = \\left(\\frac{1}{2}\\right)^3 \\times 240 = \\frac{1}{8} \\times 240 = 30\\text{ cm}^3",
+            "hint": "Appliquer la formule V' = k³ × V avec k = 1/2."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "construction-triangles-3e",
+    "title": "Construction de triangles - 3e",
+    "shortTitle": "Construction de triangles",
+    "gradeLevel": "3e",
+    "category": "Activités géométriques",
+    "icon": "PenTool",
+    "description": "Tracé à la règle et au compas connaissant 3 côtés (inégalité triangulaire), 2 côtés et 1 angle, ou 1 côté et 2 angles, et droites remarquables.",
+    "demos": [
+      {
+        "id": "construction-triangle-compas-3e",
+        "title": "Méthodes de construction au compas et droites remarquables",
+        "badge": "Règle & Compas",
+        "defaultLatex": "a < b + c \\quad (\\text{Inégalité triangulaire pour construire un triangle})",
+        "ruleSummary": "Pour construire un triangle, la plus grande longueur doit être strictement inférieure à la somme des deux autres. Les 4 droites remarquables sont : médiatrices, hauteurs, médianes et bissectrices.",
+        "teacherGoal": "Montrer les arcs de cercle au compas et rappeler les centres remarquables (orthocentre, centre de gravité, cercle inscrit, cercle circonscrit).",
+        "interactiveType": "triangle-construction",
+        "demoParams": {},
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Inégalité triangulaire",
+            "rule": "Condition d'existence d'un triangle ABC",
+            "latex": "BC < AB + AC \\quad (\\text{avec } [BC] \\text{ le plus grand côté})",
+            "explanation": "Si AB = 3 cm, AC = 4 cm et BC = 8 cm, comme 8 > 3 + 4 = 7, les deux arcs de cercle ne se croisent pas : le triangle est impossible à construire !",
+            "teacherTip": "Toujours tester l'inégalité triangulaire avant de commencer les tracés."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Construction des 3 côtés (Compas)",
+            "rule": "Soit AB = 6 cm, AC = 5 cm, BC = 4 cm",
+            "latex": "\\text{Tracer } [AB], \\text{ arc de cercle de centre } A \\text{ (rayon 5)}, \\text{ arc de centre } B \\text{ (rayon 4)}",
+            "explanation": "Le point C est à l'intersection des deux arcs de cercle.",
+            "teacherTip": "Garder les traits de construction au crayon visibles sur la copie d'examen."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Les 4 points de concours remarquables",
+            "rule": "Médiatrices, Hauteurs, Médianes, Bissectrices",
+            "latex": "\\begin{cases} \\text{Médiatrices} \\to \\text{Centre du cercle circonscrit} \\\\ \\text{Hauteurs} \\to \\text{Orthocentre } H \\\\ \\text{Médianes} \\to \\text{Centre de gravité } G \\; (AG = \\frac{2}{3}AA') \\\\ \\text{Bissectrices} \\to \\text{Centre du cercle inscrit} \\end{cases}",
+            "explanation": "Ces 4 familles de droites se coupent chacune en un unique point caractéristique du triangle.",
+            "teacherTip": "Rappeler que G est situé aux 2/3 de chaque médiane à partir du sommet."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Peut-on construire un triangle de côtés 4 cm, 6 cm et 11 cm ?",
+            "answerLatex": "Non, car 11 > 4 + 6 = 10 (l'inégalité triangulaire n'est pas vérifiée).",
+            "hint": "Comparer le plus grand côté à la somme des deux autres."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "partage-segment-3e",
+    "title": "Partage d'un segment en trois parties égales - 3e",
+    "shortTitle": "Partage d'un segment",
+    "gradeLevel": "3e",
+    "category": "Activités géométriques",
+    "icon": "Split",
+    "description": "Méthode géométrique exacte à la règle non graduée et au compas basée sur le théorème de Thalès pour diviser un segment en n parties égales.",
+    "demos": [
+      {
+        "id": "partage-segment-thales-3e",
+        "title": "Construction du partage d'un segment [AB] en 3 parties égales",
+        "badge": "Construction classique BFEM",
+        "defaultLatex": "AP = PQ = QB = \\frac{1}{3} AB",
+        "ruleSummary": "On trace une demi-droite auxiliaire issue de A, on y reporte 3 segments égaux au compas (A1, A2, A3), on relie A3 à B, puis on trace les parallèles passant par A1 et A2.",
+        "teacherGoal": "Expliquer pourquoi cette méthode fonctionne toujours exactement, même si la longueur du segment n'est pas divisible par 3 (ex: 7 cm ou 10 cm).",
+        "interactiveType": "partage-segment",
+        "demoParams": {},
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Tracer la demi-droite auxiliaire [Ax)",
+            "rule": "Former un angle quelconque avec le segment [AB]",
+            "latex": "[Ax) \\text{ demi-droite issue de } A",
+            "explanation": "On choisit un angle aigu commode pour tracer confortablement les repères au compas.",
+            "teacherTip": "Ne pas faire un angle trop petit ni trop grand (environ 30° à 40° est idéal)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Reporter 3 segments de même longueur au compas",
+            "rule": "Points M1, M2, M3 sur [Ax) tels que AM1 = M1M2 = M2M3",
+            "latex": "AM_1 = M_1M_2 = M_2M_3 = u \\quad (\\text{écartement constant du compas})",
+            "explanation": "Sans changer l'écartement du compas, on place 3 graduations régulières M1, M2 et M3.",
+            "teacherTip": "L'écartement choisi importe peu, seule compte l'égalité des 3 longueurs."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Joindre la dernière graduation M3 à B",
+            "rule": "Tracer la droite de référence (M3 B)",
+            "latex": "\\text{Tracer le segment } [M_3 B]",
+            "explanation": "Cette droite relie la 3e graduation à l'extrémité du segment initial."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Tracer les parallèles pour obtenir les points P et Q",
+            "rule": "Application directe du théorème de Thalès",
+            "latex": "(M_1 P) \\parallel (M_2 Q) \\parallel (M_3 B) \\implies AP = PQ = QB = \\frac{1}{3} AB",
+            "explanation": "D'après le théorème de Thalès, les droites parallèles découpent sur [AB] des segments proportionnels : AP = PQ = QB = AB / 3.",
+            "teacherTip": "Souligner que cette construction permet de partager un segment en n'importe quel nombre n de parts égales."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Pour partager un segment en 5 parties égales, combien de graduations régulières doit-on porter sur la demi-droite auxiliaire ?",
+            "answerLatex": "5 graduations régulières (puis relier la 5e au point B).",
+            "hint": "Le nombre de repères correspond au nombre de parts souhaitées."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quadrilatere-parallelogramme-3e",
+    "title": "Comment montrer qu'un quadrilatère est un parallélogramme ? - 3e",
+    "shortTitle": "Prouver un parallélogramme",
+    "gradeLevel": "3e",
+    "category": "Activités géométriques",
+    "icon": "Layers",
+    "description": "Les 5 méthodes géométriques fondamentales pour démontrer qu'un quadrilatère est un parallélogramme, rectangle, losange ou carré au BFEM.",
+    "demos": [
+      {
+        "id": "guide-parallelogramme-3e",
+        "title": "Les 5 méthodes clés pour prouver un parallélogramme",
+        "badge": "Méthodologie Démonstration",
+        "defaultLatex": "\\vec{AB} = \\vec{DC} \\iff ABCD \\text{ est un parallélogramme}",
+        "ruleSummary": "Un quadrilatère est un parallélogramme si : 1) ses diagonales ont le même milieu, 2) ses côtés opposés sont parallèles 2 à 2, 3) ses côtés opposés sont de même longueur 2 à 2, 4) un couple de côtés opposés est parallèle ET égal, 5) égalité vectorielle.",
+        "teacherGoal": "Fournir aux élèves la boîte à outils logique pour choisir la bonne propriété selon les données de l'exercice.",
+        "interactiveType": "parallelogramme-guide",
+        "demoParams": {},
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Méthode 1 : Par les diagonales (La plus fréquente)",
+            "rule": "Si un quadrilatère a ses diagonales qui se coupent en leur milieu",
+            "latex": "[AC] \\text{ et } [BD] \\text{ ont le même milieu } I \\implies ABCD \\text{ est un parallélogramme}",
+            "explanation": "Cette méthode s'utilise dès que l'énoncé parle de milieux ou de symétrie centrale.",
+            "teacherTip": "Très souvent utilisée en combinaison avec la propriété de la symétrie centrale."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Méthode 2 : Par les vecteurs (Spécifique 3e)",
+            "rule": "Égalité de deux vecteurs",
+            "latex": "\\vec{AB} = \\vec{DC} \\implies ABCD \\text{ est un parallélogramme}",
+            "explanation": "Attention à l'ordre des lettres : AB = DC (et non CD !). Les flèches vont dans le même sens.",
+            "teacherTip": "Dessiner les 4 sommets dans l'ordre cyclique pour éviter l'inversion de sens DC vs CD."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Méthode 3 : Deux côtés opposés parallèles ET égaux",
+            "rule": "Un seul couple de côtés suffit",
+            "latex": "(AB) \\parallel (CD) \\quad \\text{et} \\quad AB = CD \\implies ABCD \\text{ est un parallélogramme}",
+            "explanation": "Pas besoin de prouver les 4 côtés : un seul couple suffit s'il vérifie les deux conditions à la fois.",
+            "teacherTip": "Gain de temps précieux lors de la rédaction d'un problème de synthèse."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Évolution vers Rectangle, Losange et Carré",
+            "rule": "Propriétés supplémentaires",
+            "latex": "\\begin{cases} \\text{Parallélogramme} + \\text{1 angle droit (ou diag. égales)} & \\to \\text{Rectangle} \\\\ \\text{Parallélogramme} + \\text{2 côtés adj. égaux (ou diag. perp.)} & \\to \\text{Losange} \\\\ \\text{Rectangle} + \\text{Losange} & \\to \\text{Carré} \\end{cases}",
+            "explanation": "Le carré réunit toutes les propriétés : 4 côtés égaux, 4 angles droits, et diagonales perpendiculaires et de même longueur.",
+            "teacherTip": "Faire retenir le schéma arborescent d'évolution des quadrilatères particuliers."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Soit I le milieu de [AC] et de [BD]. Quelle est la nature de ABCD ?",
+            "answerLatex": "ABCD est un parallélogramme car ses diagonales se coupent en leur milieu commun I.",
+            "hint": "Appliquer la propriété des diagonales."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "video-equation-inconnue-3e",
+    "title": "Vidéo Equation à une inconnue",
+    "shortTitle": "Vidéo : Équation 1 inconnue",
+    "gradeLevel": "3e",
+    "category": "Cours Vidéos BFEM",
+    "icon": "Video",
+    "description": "Vidéo pédagogique complète et cours commenté : transposition de termes, équations fractionnaires et équations produits nuls expliquées pas à pas.",
+    "demos": [
+      {
+        "id": "video-eq-demo",
+        "title": "Cours Vidéo : Résoudre toute équation à une inconnue en 3e",
+        "badge": "Vidéo Explicative Complète",
+        "defaultLatex": "ax + b = 0 \\iff ax = -b \\iff x = -\\frac{b}{a} \\quad (a \\ne 0)",
+        "ruleSummary": "Méthode des balances : on applique la même opération aux deux membres. Passer un terme de l'autre côté change son signe (+ devient -, × devient ÷).",
+        "teacherGoal": "Visionner la vidéo de synthèse, retenir les astuces de calcul mental et pratiquer sur les exercices types d'examen.",
+        "interactiveType": "video-lesson",
+        "videoInfo": {
+          "embedUrl": "https://www.youtube.com/embed/n4_3Q5hS2r8",
+          "youtubeId": "n4_3Q5hS2r8",
+          "title": "Résoudre une équation du 1er degré - Cours et méthode pas à pas",
+          "duration": "12 min",
+          "channel": "Maths et Tiques / Collège Sénégal",
+          "keyPoints": [
+            "Isoler les termes contenant l'inconnue x à gauche",
+            "Regrouper les constantes numériques à droite",
+            "Réduire chaque membre",
+            "Diviser par le coefficient de x",
+            "Écrire rigoureusement l'ensemble des solutions S = { ... }"
+          ],
+          "summaryText": "Cette vidéo interactive détaille les trois cas d'équations en 3e : les équations simples ax+b=cx+d, les équations avec dénominateurs et les équations produits nuls issues d'une factorisation."
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Équation linéaire de base : 5x - 7 = 2x + 8",
+            "rule": "Transposition des termes",
+            "latex": "5x - 2x = 8 + 7 \\iff 3x = 15 \\iff x = \\frac{15}{3} = 5",
+            "explanation": "On rassemble les termes en x à gauche et les nombres à droite en inversant leurs signes."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Équation avec fractions : (x+1)/2 = (2x-3)/5",
+            "rule": "Produit en croix",
+            "latex": "5(x + 1) = 2(2x - 3) \\iff 5x + 5 = 4x - 6 \\iff x = -11",
+            "explanation": "Le produit en croix élimine directement les dénominateurs."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Équation produit nul : (3x - 1)(x + 4) = 0",
+            "rule": "A × B = 0 <=> A = 0 ou B = 0",
+            "latex": "3x - 1 = 0 \\implies x = \\frac{1}{3} \\quad \\text{ou} \\quad x + 4 = 0 \\implies x = -4",
+            "explanation": "On obtient deux solutions distinctes S = {-4 ; 1/3}."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Résoudre 7x - 4 = 3x + 12.",
+            "answerLatex": "4x = 16 \\implies x = 4 \\implies S = \\{4\\}",
+            "hint": "7x - 3x = 12 + 4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "inequation-inconnue-3e",
+    "title": "Inéquation à une inconnue - 3eme",
+    "shortTitle": "Inéquations 3ème",
+    "gradeLevel": "3e",
+    "category": "Activités numériques",
+    "icon": "GitCommit",
+    "description": "Résolution pas à pas des inéquations du premier degré, règle de changement de sens lors de la multiplication ou division par un négatif, et lecture graphique.",
+    "demos": [
+      {
+        "id": "ineq-cours-3e",
+        "title": "Résolution méthodique et ensemble de solutions sur la droite graduée",
+        "badge": "Essentiel BFEM",
+        "defaultLatex": "a < b \\iff a \\times c > b \\times c \\quad (\\text{si } c < 0)",
+        "ruleSummary": "L'inégalité change de sens uniquement si on multiplie ou divise par un nombre négatif. Les solutions sont représentées par un intervalle de réels noté ]a ; b[ ou [a ; +∞[.",
+        "teacherGoal": "Faire manipuler les crochets : crochet tourné vers l'intervalle si le nombre est inclus (≤ ou ≥), tourné vers l'extérieur si le nombre est exclu (< ou >).",
+        "interactiveType": "inequations-numberline",
+        "demoParams": {
+          "threshold": 4,
+          "operator": "<"
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Règle fondamentale de comparaison",
+            "rule": "Addition et Soustraction ne changent JAMAIS le sens",
+            "latex": "2x + 5 < 13 \\iff 2x < 13 - 5 \\iff 2x < 8 \\iff x < 4",
+            "explanation": "On divise par +2 qui est positif : le sens (<) reste conservé.",
+            "teacherTip": "Rappeler que l'addition ou la soustraction d'un nombre ne modifie jamais le sens."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Multiplication ou division par un négatif",
+            "rule": "LE SENS S'INVERSE STRICTEMENT",
+            "latex": "-3x \\ge 12 \\iff x \\le \\frac{12}{-3} \\iff x \\le -4",
+            "explanation": "Comme -3 est négatif, le symbole ≥ se retourne et devient ≤ !",
+            "teacherTip": "Faire tester avec des nombres simples : 2 < 5 mais en multipliant par -1 : -2 > -5."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Représentation sur la droite numérique",
+            "rule": "Intervalle des solutions S",
+            "latex": "S = ]-\\infty \\,;\\, -4]",
+            "explanation": "Toutes les valeurs situées à gauche de -4 sont solutions. En -4, le crochet est fermé car l'inégalité est large (≤).",
+            "teacherTip": "Faire hachurer la zone des solutions ou la zone des non-solutions selon la convention."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Résoudre dans R : 4 - 5x < 19.",
+            "answerLatex": "-5x < 15 \\implies x > \\frac{15}{-5} \\implies x > -3 \\quad (S = ]-3 ; +\\infty[)",
+            "hint": "Diviser par -5 change < en >."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "video-pythagore-trigo-3e",
+    "title": "Vidéo Théorème de Pythagore et Relation trigonométrique dans un triangle rectangle",
+    "shortTitle": "Vidéo : Pythagore & Trigonométrie",
+    "gradeLevel": "3e",
+    "category": "Cours Vidéos BFEM",
+    "icon": "Video",
+    "description": "Vidéo de cours magistrale reliant le théorème de Pythagore (longueurs) et les rapports trigonométriques cos, sin, tan (angles et côtés).",
+    "demos": [
+      {
+        "id": "video-pyth-trigo-demo",
+        "title": "Cours Vidéo : Synergie entre Pythagore et la Trigonométrie",
+        "badge": "Grand Classique Brevet",
+        "defaultLatex": "BC^2 = AB^2 + AC^2 \\quad \\iff \\quad \\cos^2(\\widehat{B}) + \\sin^2(\\widehat{B}) = 1",
+        "ruleSummary": "Pythagore permet de calculer un 3e côté connaissant les 2 autres. La trigonométrie permet de calculer un côté connaissant un côté et un angle aigu, ou de déterminer un angle.",
+        "teacherGoal": "Visionner la vidéo complète et observer comment passer d'un calcul de longueur à un calcul d'angle avec la calculatrice (Arccos, Arcsin, Arctan).",
+        "interactiveType": "video-lesson",
+        "videoInfo": {
+          "embedUrl": "https://www.youtube.com/embed/n4p5w6V5W3k",
+          "youtubeId": "n4p5w6V5W3k",
+          "title": "Pythagore et Trigonométrie : Le cours complet pour le brevet / BFEM",
+          "duration": "14 min",
+          "channel": "Maths Sénégal / Collège",
+          "keyPoints": [
+            "Bien repérer l'hypoténuse en face de l'angle droit",
+            "Choisir la bonne formule : SOH, CAH ou TOA",
+            "Vérifier que cosinus et sinus sont toujours compris entre 0 et 1",
+            "Utiliser cos²(x) + sin²(x) = 1 pour les calculs exacts",
+            "Calculer un angle avec les touches seconde cos (cos⁻¹)"
+          ],
+          "summaryText": "Cette vidéo fait la synthèse complète des outils du triangle rectangle en classe de 3ème : calcul d'hypoténuse, démonstration du parallélisme et calcul d'angles d'élévation."
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Calculer l'hypoténuse avec Pythagore",
+            "rule": "BC² = AB² + AC²",
+            "latex": "AB = 6\\text{ cm}, AC = 8\\text{ cm} \\implies BC = \\sqrt{36 + 64} = \\sqrt{100} = 10\\text{ cm}",
+            "explanation": "Application directe de Pythagore dans le triangle ABC rectangle en A."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. En déduire le cosinus et sinus de l'angle B",
+            "rule": "Rapports trigonométriques",
+            "latex": "\\cos(\\widehat{B}) = \\frac{6}{10} = 0{,}6 \\quad \\text{et} \\quad \\sin(\\widehat{B}) = \\frac{8}{10} = 0{,}8",
+            "explanation": "On vérifie bien : 0,6² + 0,8² = 0,36 + 0,64 = 1."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Déterminer la mesure de l'angle B au degré près",
+            "rule": "Fonction inverse cos⁻¹",
+            "latex": "\\widehat{B} = \\arccos(0{,}6) \\approx 53^\\circ",
+            "explanation": "À la calculatrice, cos⁻¹(0,6) donne environ 53,13 degrés."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Dans un triangle rectangle d'hypoténuse 13 cm et de côté adjacent 5 cm, calculer le cosinus.",
+            "answerLatex": "\\cos(\\alpha) = \\frac{5}{13} \\approx 0{,}385",
+            "hint": "cos = Côté adjacent / Hypoténuse"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "video-exercices-pythagore-trigo-3e",
+    "title": "Vidéo Exercices Théorème de Pythagore et Relation trigonométrique dans un triangle rectangle",
+    "shortTitle": "Vidéo : Exercices Pythagore & Trigo",
+    "gradeLevel": "3e",
+    "category": "Cours Vidéos BFEM",
+    "icon": "Video",
+    "description": "Vidéo d'exercices d'examen corrigés pas à pas : problème de hauteur d'un arbre, toiture et exercices types du BFEM sénégalais.",
+    "demos": [
+      {
+        "id": "video-ex-pyth-trigo-demo",
+        "title": "Entraînement Examen : Problèmes types résolus en vidéo",
+        "badge": "Exercices Corrigés BFEM",
+        "defaultLatex": "\\tan(30^\\circ) = \\frac{\\text{Hauteur}}{\\text{Distance}} \\implies \\text{Hauteur} = \\text{Distance} \\times \\tan(30^\\circ)",
+        "ruleSummary": "Méthode de rédaction d'examen : 1) Nommer le triangle rectangle et le sommet de l'angle droit, 2) Citer le théorème ou la relation utilisée, 3) Écrire la formule avec les lettres, 4) Remplacer et calculer, 5) Donner l'unité et l'arrondi demandé.",
+        "teacherGoal": "Apprendre aux élèves à structurer leur rédaction pour obtenir tous les points de rigueur géométrique au BFEM.",
+        "interactiveType": "video-lesson",
+        "videoInfo": {
+          "embedUrl": "https://www.youtube.com/embed/zLd1gqKj4tA",
+          "youtubeId": "zLd1gqKj4tA",
+          "title": "Exercices types Brevet / BFEM : Pythagore et Trigonométrie",
+          "duration": "16 min",
+          "channel": "Annales BFEM Sénégal / Mathématiques",
+          "keyPoints": [
+            "Toujours faire un schéma à main levée avec le codage",
+            "Identifier si l'on cherche un angle ou une longueur",
+            "Utiliser tan pour relier hauteur et ombre au sol",
+            "Arrondir uniquement à la toute fin du calcul",
+            "Rédiger la phrase de conclusion avec l'unité (mètres, cm...)"
+          ],
+          "summaryText": "Résolution commentée de 3 exercices réels tirés des épreuves du BFEM : calcul d'une rampe d'accès, hauteur d'un mât de drapeau et longueur d'un câble de téléphérique."
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Exercice 1 : Hauteur d'un mât",
+            "rule": "Observateur à 20 m, angle d'élévation 35°",
+            "latex": "\\tan(35^\\circ) = \\frac{h}{20} \\implies h = 20 \\times \\tan(35^\\circ) \\approx 20 \\times 0{,}7002 = 14\\text{ m}",
+            "explanation": "Le mât mesure environ 14 mètres de haut."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Exercice 2 : Triangle rectangle inscrit",
+            "rule": "Triangle rectangle en A avec BC = 12 cm et B = 60°",
+            "latex": "AB = BC \\times \\cos(60^\\circ) = 12 \\times 0{,}5 = 6\\text{ cm}",
+            "explanation": "Comme cos(60°) = 1/2, le côté adjacent mesure exactement la moitié de l'hypoténuse."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Un câble de 50 m est fixé au sommet d'un pylône et forme un angle de 40° avec le sol. Calculer la hauteur du pylône.",
+            "answerLatex": "h = 50 \\times \\sin(40^\\circ) \\approx 50 \\times 0{,}6428 \\approx 32{,}14\\text{ m}",
+            "hint": "sin(40°) = côté opposé / hypoténuse = h / 50"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "video-angle-inscrit-3e",
+    "title": "Vidéo Angle inscrit - Angle au centre dans un cercle",
+    "shortTitle": "Vidéo : Angle inscrit & Centre",
+    "gradeLevel": "3e",
+    "category": "Cours Vidéos BFEM",
+    "icon": "Video",
+    "description": "Vidéo pédagogique illustrant le mouvement du point sur le cercle, la relation angle au centre = 2 × angle inscrit et la résolution d'exercices géométriques.",
+    "demos": [
+      {
+        "id": "video-angle-demo",
+        "title": "Cours Vidéo : Angle inscrit et Angle au centre expliqué avec animation",
+        "badge": "Cercle et Angles 3e",
+        "defaultLatex": "\\widehat{AMB} = \\frac{1}{2} \\widehat{AOB}, \\quad \\widehat{AMB} = \\widehat{ANB}",
+        "ruleSummary": "L'angle au centre intercepte le même arc et vaut le double de l'angle inscrit. Dès que deux angles inscrits interceptent le même arc de cercle, ils ont exactement la même valeur !",
+        "teacherGoal": "Visionner l'animation dynamique du cercle pour comprendre pourquoi l'angle ne change pas quand M glisse le long de l'arc.",
+        "interactiveType": "video-lesson",
+        "videoInfo": {
+          "embedUrl": "https://www.youtube.com/embed/5r3W0gX9oPk",
+          "youtubeId": "5r3W0gX9oPk",
+          "title": "Angle inscrit et Angle au centre : Démonstration et exercices types",
+          "duration": "11 min",
+          "channel": "Collège Sénégal Maths",
+          "keyPoints": [
+            "Identifier le centre O pour repérer l'angle au centre",
+            "Repérer les points A et B qui délimitent l'arc intercepté",
+            "Vérifier que le sommet M est bien posé sur le cercle",
+            "Cas particulier du demi-cercle : angle droit de 90°",
+            "Exercices de calcul d'angles dans des polygones inscrits"
+          ],
+          "summaryText": "Vidéo d'illustration interactive démontrant visuellement l'invariance de l'angle inscrit et son lien fondamental avec le diamètre du cercle."
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Identifier l'arc commun",
+            "rule": "Arc intercepté AB",
+            "latex": "\\text{L'angle au centre } \\widehat{AOB} \\text{ et l'angle inscrit } \\widehat{AMB} \\text{ interceptent l'arc } \\overset{\\frown}{AB}",
+            "explanation": "Les deux angles ont leurs deux côtés qui passent par les mêmes points A et B du cercle."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Calcul pratique",
+            "rule": "Si AOB = 76°",
+            "latex": "\\widehat{AMB} = \\frac{76^\\circ}{2} = 38^\\circ",
+            "explanation": "L'angle inscrit vaut la moitié de l'angle au centre."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Deuxième angle inscrit interceptant le même arc",
+            "rule": "Égalité immédiate",
+            "latex": "\\widehat{ANB} = \\widehat{AMB} = 38^\\circ",
+            "explanation": "Le point N étant sur le même arc du cercle, son angle inscrit est lui aussi de 38°."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Soit un cercle de centre O. L'angle inscrit AMB mesure 42°. Que vaut l'angle au centre AOB ?",
+            "answerLatex": "\\widehat{AOB} = 2 \\times 42^\\circ = 84^\\circ",
+            "hint": "L'angle au centre est le double de l'angle inscrit."
+          }
+        ]
+      }
+    ]
+  }
+]

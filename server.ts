@@ -11,6 +11,12 @@ import {
   getMetrics,
   getAllCachedSolutions,
 } from './server/storage.js';
+import {
+  getCoursesHandler,
+  getCourseByIdHandler,
+  getExercisesHandler,
+  getChapterExercisesHandler,
+} from './server/courseApi.js';
 
 async function startServer() {
   const app = express();
@@ -22,6 +28,12 @@ async function startServer() {
   app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', service: 'Math3D Studio Resolver', timestamp: new Date().toISOString() });
   });
+
+  // Decoupled Courses & Exercises REST API (JSON backed)
+  app.get('/api/courses', getCoursesHandler);
+  app.get('/api/courses/:id', getCourseByIdHandler);
+  app.get('/api/exercises', getExercisesHandler);
+  app.get('/api/exercises/:chapterId', getChapterExercisesHandler);
 
   // KPI Metrics endpoint
   app.get('/api/metrics', (req, res) => {

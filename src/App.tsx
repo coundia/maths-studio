@@ -8,13 +8,21 @@ import { AlgebraStage } from './components/AlgebraStage';
 import { AlgebraProgressionCard } from './components/AlgebraProgressionCard';
 import { Math3DViewer } from './components/Math3DViewer';
 import { StepPlayer } from './components/StepPlayer';
-import { SENEGAL_COURSES_4E, CourseChapter } from './coursesData';
+import {
+  ALL_SENEGAL_COURSES,
+  SENEGAL_COURSES_3E,
+  SENEGAL_COURSES_4E,
+  CourseChapter,
+} from './coursesData';
 import { Sparkles, BookOpen, GraduationCap, ArrowRight } from 'lucide-react';
 
 export default function App() {
+  // Grade Level Filter ('3e' | '4e' | 'all') - Defaults to 3e per user request
+  const [selectedGrade, setSelectedGrade] = useState<'all' | '3e' | '4e'>('3e');
+
   // Navigation State
   const [activeTab, setActiveTab] = useState<'courses' | 'algebra-sandbox'>('courses');
-  const [activeChapterId, setActiveChapterId] = useState<string>('calcul-algebrique');
+  const [activeChapterId, setActiveChapterId] = useState<string>('racine-carree-3e');
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       return window.innerWidth >= 1024;
@@ -25,15 +33,23 @@ export default function App() {
   // Responsive sidebar handling on resize
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1024) {
-        // Automatically keep closed on mobile screen unless toggled
-      } else {
+      if (window.innerWidth >= 1024) {
         setIsSidebarOpen(true);
       }
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Handle changing grade level
+  const handleSelectGrade = (grade: 'all' | '3e' | '4e') => {
+    setSelectedGrade(grade);
+    if (grade === '3e') {
+      setActiveChapterId(SENEGAL_COURSES_3E[0].id);
+    } else if (grade === '4e') {
+      setActiveChapterId(SENEGAL_COURSES_4E[0].id);
+    }
+  };
 
   // Classroom & Teacher Mode
   const [isClassroomMode, setIsClassroomMode] = useState<boolean>(true);
@@ -47,7 +63,7 @@ export default function App() {
   const [activeMode, setActiveMode] = useState<'algebra' | 'geometry'>('algebra');
 
   const currentChapter: CourseChapter =
-    SENEGAL_COURSES_4E.find((c) => c.id === activeChapterId) || SENEGAL_COURSES_4E[0];
+    ALL_SENEGAL_COURSES.find((c) => c.id === activeChapterId) || ALL_SENEGAL_COURSES[0];
 
   // Resolve custom expression through 3-tier pipeline
   const handleResolve = useCallback(
@@ -111,11 +127,13 @@ export default function App() {
         onToggleClassroomMode={() => setIsClassroomMode((prev) => !prev)}
         activeMode={activeMode}
         onSelectMode={setActiveMode}
+        selectedGrade={selectedGrade}
+        onSelectGrade={handleSelectGrade}
       />
 
       {/* Main Body with Sidebar and Content */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Course Menu Sidebar (14 chapters) */}
+        {/* Course Menu Sidebar */}
         {activeTab === 'courses' && (
           <CourseSidebar
             activeChapterId={activeChapterId}
@@ -124,6 +142,8 @@ export default function App() {
             }}
             isOpen={isSidebarOpen}
             onCloseMobile={() => setIsSidebarOpen(false)}
+            selectedGrade={selectedGrade}
+            onSelectGrade={handleSelectGrade}
           />
         )}
 
@@ -136,10 +156,13 @@ export default function App() {
                 <GraduationCap className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="font-bold text-white">Espace Démo Professeur :</span>
                 <span>
-                  Support pédagogique direct pour la classe de 4ème (Programme Sénégal) — clair, simplifié et 100% heuristique.
+                  Programme officiel de Mathématiques Collège Sénégal (3ème BFEM & 4ème) — fiches, vidéos et démos interactives heuristiques.
                 </span>
               </div>
               <div className="flex items-center space-x-2 text-[11px]">
+                <span className="bg-amber-500/20 text-amber-300 font-mono px-2 py-0.5 rounded border border-amber-500/30 font-bold">
+                  {currentChapter.gradeLevel === '3e' || currentChapter.id.endsWith('-3e') ? '3ème BFEM' : '4ème'}
+                </span>
                 <span className="bg-emerald-500/20 text-emerald-300 font-mono px-2 py-0.5 rounded border border-emerald-500/30">
                   {currentChapter.shortTitle}
                 </span>
@@ -147,7 +170,7 @@ export default function App() {
             </div>
           )}
 
-          {/* TAB 1: 14 CHAPTERS OF SENEGAL 4E CURRICULUM */}
+          {/* TAB 1: CURRICULUM CHAPTERS (3E & 4E) */}
           {activeTab === 'courses' && (
             <InteractiveLessonViewer
               chapter={currentChapter}
@@ -172,7 +195,7 @@ export default function App() {
                     onClick={() => setActiveTab('courses')}
                     className="text-xs text-emerald-400 hover:text-emerald-300 font-semibold underline"
                   >
-                    Retour aux cours de 4e
+                    Retour aux cours
                   </button>
                 </div>
 

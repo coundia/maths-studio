@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { CourseChapter, CourseDemo, CourseStep } from '../coursesData';
 import { MathView } from './MathView';
 import { CalculAlgebriqueCourse } from './CalculAlgebriqueCourse';
+import { GeometryVisualizers3e } from './GeometryVisualizers3e';
+import { VideoLessonPlayer } from './VideoLessonPlayer';
+import { StudentExercisesSection } from './StudentExercisesSection';
+import { getExercisesForChapter } from '../data/getCourseExercises';
 import {
   Play,
   Pause,
@@ -29,6 +33,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
   onOpenAlgebraSolver,
 }) => {
   const currentDemo: CourseDemo = chapter.demos[0];
+  const exercises = getExercisesForChapter(chapter.id, currentDemo);
   const [currentStepIdx, setCurrentStepIdx] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [speed, setSpeed] = useState<number>(1);
@@ -95,6 +100,13 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-800/80">
           <div>
             <div className="flex items-center space-x-2">
+              <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${
+                chapter.gradeLevel === '3e' || chapter.id.endsWith('-3e')
+                  ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                  : 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
+              }`}>
+                {chapter.gradeLevel === '3e' || chapter.id.endsWith('-3e') ? '🇸🇳 Classe de 3e (BFEM)' : '🇸🇳 Classe de 4e'}
+              </span>
               <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                 {chapter.category}
               </span>
@@ -933,7 +945,38 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
               </div>
             )}
 
-            {/* 12. CALCUL ALGEBRIQUE OU AUTRES */}
+            {/* 12. COURS VIDÉOS BFEM */}
+            {currentDemo.interactiveType === 'video-lesson' && (
+              <div className="w-full">
+                <VideoLessonPlayer
+                  videoInfo={currentDemo.videoInfo}
+                  title={currentDemo.title}
+                  steps={currentDemo.steps}
+                  ruleSummary={currentDemo.ruleSummary}
+                  exercises={exercises}
+                  chapterId={chapter.id}
+                />
+              </div>
+            )}
+
+            {/* 13. VISUALISATIONS GÉOMÉTRIQUES & NUMÉRIQUES 3E */}
+            {(currentDemo.interactiveType === 'thales-svg' ||
+              currentDemo.interactiveType === 'angle-inscrit-svg' ||
+              currentDemo.interactiveType === 'partage-segment' ||
+              currentDemo.interactiveType === 'parallelogramme-guide' ||
+              currentDemo.interactiveType === 'reperage-plan' ||
+              currentDemo.interactiveType === 'racine-carree' ||
+              currentDemo.interactiveType === 'systemes-2-inconnues' ||
+              currentDemo.interactiveType === 'geometrie-espace' ||
+              currentDemo.interactiveType === 'triangle-construction') && (
+              <GeometryVisualizers3e
+                interactiveType={currentDemo.interactiveType}
+                currentStepIdx={currentStepIdx}
+                currentStep={currentStep}
+              />
+            )}
+
+            {/* 14. CALCUL ALGEBRIQUE OU AUTRES */}
             {(currentDemo.interactiveType === 'algebra-arrows' ||
               currentDemo.interactiveType === 'powers-steps' ||
               currentDemo.interactiveType === 'revision-quiz') && (
@@ -1107,6 +1150,15 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
           )}
         </div>
       </div>
+
+      {/* 3 Graded Exercises (Facile, Moyen, Difficile) for the Student */}
+      {currentDemo.interactiveType !== 'video-lesson' && (
+        <StudentExercisesSection
+          chapterId={chapter.id}
+          chapterTitle={chapter.title}
+          exercises={exercises}
+        />
+      )}
     </div>
   );
 };

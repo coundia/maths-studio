@@ -1,0 +1,1503 @@
+{
+  "racine-carree-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Écrire sous la forme a√b",
+      "question": "Écrire le nombre √75 sous la forme a√b où a et b sont des entiers avec b le plus petit possible.",
+      "hint": "Décomposer 75 en produit d'un carré parfait : 75 = 25 × 3, avec √25 = 5.",
+      "answerLatex": "\\sqrt{75} = \\sqrt{25 \\times 3} = \\sqrt{25} \\times \\sqrt{3} = 5\\sqrt{3}",
+      "detailedSolution": [
+        "1. 75 se décompose en 25 × 3.",
+        "2. 25 est un carré parfait : √25 = 5.",
+        "3. D'après la règle √(a × b) = √a × √b, √75 = 5√3."
+      ],
+      "options": [
+        {
+          "text": "5√3",
+          "isCorrect": true,
+          "explanation": "Exact : 25 × 3 = 75 et √25 = 5."
+        },
+        {
+          "text": "3√5",
+          "isCorrect": false,
+          "explanation": "Attention : 3² × 5 = 45 ≠ 75."
+        },
+        {
+          "text": "25√3",
+          "isCorrect": false,
+          "explanation": "N'oubliez pas d'extraire la racine de 25."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Réduction d'une somme de radicaux",
+      "question": "Calculer et simplifier : A = 3√12 - 2√27 + √75.",
+      "hint": "Simplifier chaque radical sous la forme k√3 (√12 = 2√3, √27 = 3√3, √75 = 5√3).",
+      "answerLatex": "A = 3(2\\sqrt{3}) - 2(3\\sqrt{3}) + 5\\sqrt{3} = 6\\sqrt{3} - 6\\sqrt{3} + 5\\sqrt{3} = 5\\sqrt{3}",
+      "detailedSolution": [
+        "1. √12 = √(4×3) = 2√3, donc 3√12 = 6√3.",
+        "2. √27 = √(9×3) = 3√3, donc 2√27 = 6√3.",
+        "3. √75 = √(25×3) = 5√3.",
+        "4. A = 6√3 - 6√3 + 5√3 = 5√3."
+      ],
+      "options": [
+        {
+          "text": "5√3",
+          "isCorrect": true,
+          "explanation": "Parfait ! 6√3 - 6√3 s'annulent, il reste 5√3."
+        },
+        {
+          "text": "7√3",
+          "isCorrect": false,
+          "explanation": "Vérifier la soustraction 6√3 - 6√3."
+        },
+        {
+          "text": "√3",
+          "isCorrect": false,
+          "explanation": "Il reste 5√3."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Rendre rationnel le dénominateur (Expression conjuguée)",
+      "question": "Écrire sans radical au dénominateur : B = 4 / (√7 - √3).",
+      "hint": "Multiplier numérateur et dénominateur par l'expression conjuguée (√7 + √3).",
+      "answerLatex": "B = \\frac{4(\\sqrt{7} + \\sqrt{3})}{(\\sqrt{7} - \\sqrt{3})(\\sqrt{7} + \\sqrt{3})} = \\frac{4(\\sqrt{7} + \\sqrt{3})}{7 - 3} = \\frac{4(\\sqrt{7} + \\sqrt{3})}{4} = \\sqrt{7} + \\sqrt{3}",
+      "detailedSolution": [
+        "1. On multiplie par le conjugué : B = 4(√7 + √3) / [(√7 - √3)(√7 + √3)]",
+        "2. Au dénominateur, identité (a - b)(a + b) = a² - b² = (√7)² - (√3)² = 7 - 3 = 4",
+        "3. On simplifie par 4 : B = √7 + √3."
+      ],
+      "options": [
+        {
+          "text": "√7 + √3",
+          "isCorrect": true,
+          "explanation": "Magnifique ! 4 se simplifie exactement avec 7 - 3 = 4."
+        },
+        {
+          "text": "4(√7 + √3) / 10",
+          "isCorrect": false,
+          "explanation": "(√7)² - (√3)² = 7 - 3 = 4 (et non 7 + 3)."
+        },
+        {
+          "text": "√7 - √3",
+          "isCorrect": false,
+          "explanation": "L'expression conjuguée de (a - b) est (a + b)."
+        }
+      ]
+    }
+  ],
+  "calcul-algebrique-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Identité remarquable (a + b)²",
+      "question": "Développer et réduire : A = (3x + 4)².",
+      "hint": "(a + b)² = a² + 2ab + b² avec a = 3x et b = 4.",
+      "answerLatex": "A = (3x)^2 + 2 \\times 3x \\times 4 + 4^2 = 9x^2 + 24x + 16",
+      "detailedSolution": [
+        "1. (3x)² = 9x²",
+        "2. Double produit : 2 × 3x × 4 = 24x",
+        "3. 4² = 16",
+        "4. Résultat : 9x² + 24x + 16."
+      ],
+      "options": [
+        {
+          "text": "9x² + 24x + 16",
+          "isCorrect": true,
+          "explanation": "Parfait ! N'oubliez jamais le double produit 2ab."
+        },
+        {
+          "text": "9x² + 16",
+          "isCorrect": false,
+          "explanation": "Attention : (a+b)² ≠ a² + b² ! Il manque le double produit 2ab = 24x."
+        },
+        {
+          "text": "3x² + 24x + 16",
+          "isCorrect": false,
+          "explanation": "(3x)² = 9x², le carré porte aussi sur le 3."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Factorisation par a² - b²",
+      "question": "Factoriser l'expression : B = (2x - 3)² - 25.",
+      "hint": "Reconnaître a² - b² = (a - b)(a + b) avec a = (2x - 3) et b = 5.",
+      "answerLatex": "B = [(2x - 3) - 5][(2x - 3) + 5] = (2x - 8)(2x + 2) = 4(x - 4)(x + 1)",
+      "detailedSolution": [
+        "1. 25 = 5², donc B est de la forme a² - b².",
+        "2. B = [(2x - 3) - 5] [(2x - 3) + 5]",
+        "3. B = (2x - 8)(2x + 2)."
+      ],
+      "options": [
+        {
+          "text": "(2x - 8)(2x + 2)",
+          "isCorrect": true,
+          "explanation": "Exactement : (a - b)(a + b)."
+        },
+        {
+          "text": "(2x - 28)(2x + 22)",
+          "isCorrect": false,
+          "explanation": "b = √25 = 5, pas 25."
+        },
+        {
+          "text": "(2x - 3)(2x + 5)",
+          "isCorrect": false,
+          "explanation": "Revoir la factorisation."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Synthèse type BFEM : Développer, factoriser, résoudre",
+      "question": "Soit E = (3x - 1)² - (3x - 1)(x + 5). 1) Factoriser E. 2) Résoudre E = 0.",
+      "hint": "Facteur commun (3x - 1). Ensuite, équation produit nul.",
+      "answerLatex": "E = (3x - 1)[(3x - 1) - (x + 5)] = (3x - 1)(2x - 6). \\quad E = 0 \\iff x = \\frac{1}{3} \\text{ ou } x = 3",
+      "detailedSolution": [
+        "1. Facteur commun (3x - 1) : E = (3x - 1) [(3x - 1) - (x + 5)] = (3x - 1)(3x - 1 - x - 5) = (3x - 1)(2x - 6).",
+        "2. Équation produit nul : 3x - 1 = 0 => x = 1/3, ou 2x - 6 = 0 => x = 3.",
+        "3. Solutions : S = {1/3 ; 3}."
+      ],
+      "options": [
+        {
+          "text": "E = (3x - 1)(2x - 6) et S = {1/3 ; 3}",
+          "isCorrect": true,
+          "explanation": "Bravo ! Exercice classique réussi avec brio."
+        },
+        {
+          "text": "E = (3x - 1)(4x + 4) et S = {1/3 ; -1}",
+          "isCorrect": false,
+          "explanation": "Attention aux signes dans - (x + 5) = -x - 5."
+        },
+        {
+          "text": "S = {-1/3 ; -3}",
+          "isCorrect": false,
+          "explanation": "Vérifier les signes des racines."
+        }
+      ]
+    }
+  ],
+  "equations-inequations-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Équation produit nul",
+      "question": "Résoudre dans ℝ : (2x + 6)(5x - 15) = 0.",
+      "hint": "Un produit est nul si l'un au moins des facteurs est nul.",
+      "answerLatex": "2x + 6 = 0 \\implies x = -3 \\quad \\text{ou} \\quad 5x - 15 = 0 \\implies x = 3. \\quad S = \\{-3 ; 3\\}",
+      "detailedSolution": [
+        "1. 2x + 6 = 0 => x = -6/2 = -3.",
+        "2. 5x - 15 = 0 => x = 15/5 = 3.",
+        "3. S = {-3 ; 3}."
+      ],
+      "options": [
+        {
+          "text": "x = -3 ou x = 3",
+          "isCorrect": true,
+          "explanation": "Correct !"
+        },
+        {
+          "text": "x = -6 ou x = 15",
+          "isCorrect": false,
+          "explanation": "Diviser par les coefficients de x."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Inéquation et droite graduée",
+      "question": "Résoudre dans ℝ : -3x + 8 ≤ 23.",
+      "hint": "Transposer 8, puis diviser par -3 en inversant le symbole ≤ en ≥.",
+      "answerLatex": "-3x \\le 15 \\implies x \\ge \\frac{15}{-3} \\implies x \\ge -5. \\quad S = [-5 ; +\\infty[",
+      "detailedSolution": [
+        "1. -3x ≤ 23 - 8 = 15.",
+        "2. Division par -3 (négatif) : x ≥ -5.",
+        "3. S = [-5 ; +∞[."
+      ],
+      "options": [
+        {
+          "text": "x ≥ -5",
+          "isCorrect": true,
+          "explanation": "Bien inversé le sens !"
+        },
+        {
+          "text": "x ≤ -5",
+          "isCorrect": false,
+          "explanation": "Oubli d'inverser le sens en divisant par -3."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Inéquation produit par tableau de signes",
+      "question": "Résoudre dans ℝ : (2x - 4)(-x + 3) > 0.",
+      "hint": "Déterminer les racines (2 et 3) puis dresser le tableau de signes.",
+      "answerLatex": "x \\in ]2 ; 3[",
+      "detailedSolution": [
+        "1. 2x - 4 s'annule en x = 2 et est positif pour x > 2.",
+        "2. -x + 3 s'annule en x = 3 et est positif pour x < 3.",
+        "3. Le produit est strictement positif entre 2 et 3 : S = ]2 ; 3[."
+      ],
+      "options": [
+        {
+          "text": "x ∈ ]2 ; 3[",
+          "isCorrect": true,
+          "explanation": "Parfaitement résolu avec le tableau de signes."
+        },
+        {
+          "text": "x ∈ ]-∞ ; 2[ ∪ ]3 ; +∞[",
+          "isCorrect": false,
+          "explanation": "Là le produit est négatif car le coefficient de x² est -2 < 0."
+        }
+      ]
+    }
+  ],
+  "statistique-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Étendue d'une série statistique",
+      "question": "Une série a pour valeurs : 4, 8, 11, 14, 19, 20. Calculer son étendue.",
+      "hint": "Étendue = Valeur maximale - Valeur minimale.",
+      "answerLatex": "E = X_{\\max} - X_{\\min} = 20 - 4 = 16",
+      "detailedSolution": [
+        "1. Valeur max = 20, valeur min = 4.",
+        "2. Étendue = 20 - 4 = 16."
+      ],
+      "options": [
+        {
+          "text": "16",
+          "isCorrect": true,
+          "explanation": "20 - 4 = 16."
+        },
+        {
+          "text": "20",
+          "isCorrect": false,
+          "explanation": "20 est la valeur maximale."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Effectifs cumulés croissants (ECC)",
+      "question": "Pour les notes (8, 10, 14, 16) d'effectifs respectifs (5, 9, 6, 4), donner la suite des ECC.",
+      "hint": "Additionner les effectifs pas à pas : 5, 5+9, 5+9+6, etc.",
+      "answerLatex": "\\text{ECC : } 5 ; 14 ; 20 ; 24",
+      "detailedSolution": [
+        "1. Pour 8 : 5.",
+        "2. Pour 10 : 5 + 9 = 14.",
+        "3. Pour 14 : 14 + 6 = 20.",
+        "4. Pour 16 : 20 + 4 = 24."
+      ],
+      "options": [
+        {
+          "text": "5 ; 14 ; 20 ; 24",
+          "isCorrect": true,
+          "explanation": "Correct : effectif total = 24."
+        },
+        {
+          "text": "5 ; 9 ; 6 ; 4",
+          "isCorrect": false,
+          "explanation": "Ce sont les effectifs simples."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Médiane d'une série discrète",
+      "question": "Dans cette classe de 24 élèves, déterminer la note médiane.",
+      "hint": "L'effectif total est N = 24 (pair). La médiane est la demi-somme des 12e et 13e valeurs. Regarder dans la ligne des ECC.",
+      "answerLatex": "\\text{Rang } 12 \\text{ et } 13 \\le 14 \\implies \\text{Médiane } = 10",
+      "detailedSolution": [
+        "1. N = 24 est pair. On cherche les 12e et 13e valeurs.",
+        "2. L'ECC de la note 10 est 14, donc les valeurs du rang 6 au rang 14 sont toutes égales à 10.",
+        "3. La 12e et la 13e notes sont toutes deux 10. Donc la médiane est 10."
+      ],
+      "options": [
+        {
+          "text": "Médiane = 10",
+          "isCorrect": true,
+          "explanation": "Exact : les 12e et 13e valeurs valent 10."
+        },
+        {
+          "text": "Médiane = 12",
+          "isCorrect": false,
+          "explanation": "12 est la moyenne arithmétique de 8 et 16, pas la médiane des élèves."
+        }
+      ]
+    }
+  ],
+  "application-affine-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Image par une fonction affine",
+      "question": "Soit f(x) = -3x + 7. Calculer l'image de 4 par f.",
+      "hint": "Remplacer x par 4 dans l'expression.",
+      "answerLatex": "f(4) = -3(4) + 7 = -12 + 7 = -5",
+      "detailedSolution": [
+        "1. f(4) = -3 × 4 + 7 = -12 + 7.",
+        "2. f(4) = -5."
+      ],
+      "options": [
+        {
+          "text": "-5",
+          "isCorrect": true,
+          "explanation": "-12 + 7 = -5."
+        },
+        {
+          "text": "5",
+          "isCorrect": false,
+          "explanation": "-12 + 7 est négatif."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Déterminer la formule de la fonction",
+      "question": "Une fonction affine g vérifie g(2) = 1 et g(5) = 7. Trouver son coefficient directeur a.",
+      "hint": "a = [g(x₂) - g(x₁)] / (x₂ - x₁).",
+      "answerLatex": "a = \\frac{7 - 1}{5 - 2} = \\frac{6}{3} = 2",
+      "detailedSolution": [
+        "1. Formule du taux d'accroissement : a = (7 - 1) / (5 - 2).",
+        "2. a = 6 / 3 = 2.",
+        "3. Le coefficient directeur est 2 (la fonction s'écrit g(x) = 2x - 3)."
+      ],
+      "options": [
+        {
+          "text": "a = 2",
+          "isCorrect": true,
+          "explanation": "6 / 3 = 2."
+        },
+        {
+          "text": "a = 3",
+          "isCorrect": false,
+          "explanation": "Revoir la division 6 / 3."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Antécédent et intersection",
+      "question": "Soit h(x) = 2x - 3. Déterminer les coordonnées du point d'intersection de sa droite représentative avec l'axe des abscisses.",
+      "hint": "L'axe des abscisses correspond à y = 0, donc résoudre h(x) = 0.",
+      "answerLatex": "2x - 3 = 0 \\implies 2x = 3 \\implies x = 1{,}5. \\quad \\text{Point } (1{,}5 ; 0)",
+      "detailedSolution": [
+        "1. Sur l'axe des abscisses, l'ordonnée y = 0.",
+        "2. 2x - 3 = 0 => 2x = 3 => x = 3/2 = 1,5.",
+        "3. Le point d'intersection est (1,5 ; 0)."
+      ],
+      "options": [
+        {
+          "text": "(1,5 ; 0)",
+          "isCorrect": true,
+          "explanation": "Très bien : h(1,5) = 0."
+        },
+        {
+          "text": "(0 ; -3)",
+          "isCorrect": false,
+          "explanation": "(0 ; -3) est l'intersection avec l'axe des ordonnées."
+        }
+      ]
+    }
+  ],
+  "systemes-2-inconnues-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Vérifier un couple solution",
+      "question": "Le couple (x = 3 ; y = 2) est-il solution du système : { 2x + y = 8 ; x - 3y = -3 } ?",
+      "hint": "Remplacer x par 3 et y par 2 dans chaque équation.",
+      "answerLatex": "2(3) + 2 = 8 \\text{ et } 3 - 3(2) = 3 - 6 = -3 \\implies \\text{Oui, c'est solution}",
+      "detailedSolution": [
+        "1. Équation 1 : 2×3 + 2 = 6 + 2 = 8 (vérifié).",
+        "2. Équation 2 : 3 - 3×2 = 3 - 6 = -3 (vérifié).",
+        "3. Le couple (3 ; 2) est bien solution du système."
+      ],
+      "options": [
+        {
+          "text": "Oui, les 2 équations sont vérifiées",
+          "isCorrect": true,
+          "explanation": "Parfait !"
+        },
+        {
+          "text": "Non, une seule équation marche",
+          "isCorrect": false,
+          "explanation": "Vérifiez : 3 - 6 = -3."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Résolution par combinaison",
+      "question": "Résoudre dans ℝ² par combinaison : { x + y = 14 ; x - y = 4 }.",
+      "hint": "Additionner les deux équations membre à membre pour éliminer y.",
+      "answerLatex": "(x+y) + (x-y) = 14 + 4 \\implies 2x = 18 \\implies x = 9. \\quad y = 14 - 9 = 5. \\quad S = \\{(9 ; 5)\\}",
+      "detailedSolution": [
+        "1. En additionnant : (x + x) + (y - y) = 14 + 4 => 2x = 18 => x = 9.",
+        "2. On remplace dans x + y = 14 : 9 + y = 14 => y = 5.",
+        "3. Solution unique : (9 ; 5)."
+      ],
+      "options": [
+        {
+          "text": "(9 ; 5)",
+          "isCorrect": true,
+          "explanation": "9 + 5 = 14 et 9 - 5 = 4."
+        },
+        {
+          "text": "(10 ; 4)",
+          "isCorrect": false,
+          "explanation": "10 - 4 = 6 ≠ 4."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Problème d'achat type BFEM",
+      "question": "3 stylos et 2 cahiers coûtent 1 900 FCFA. 2 stylos et 4 cahiers coûtent 2 600 FCFA. Quel est le prix d'un cahier ?",
+      "hint": "Poser s le prix d'un stylo et c le prix d'un cahier : { 3s + 2c = 1900 ; 2s + 4c = 2600 }.",
+      "answerLatex": "c = 500\\text{ FCFA et } s = 300\\text{ FCFA}",
+      "detailedSolution": [
+        "1. Système : { 3s + 2c = 1900 (L1) ; 2s + 4c = 2600 (L2) }.",
+        "2. Multiplions L1 par 2 : 6s + 4c = 3800. Soustrayons L2 : (6s - 2s) = 3800 - 2600 => 4s = 1200 => s = 300 FCFA.",
+        "3. D'après L1 : 3(300) + 2c = 1900 => 900 + 2c = 1900 => 2c = 1000 => c = 500 FCFA.",
+        "4. Un cahier coûte 500 FCFA."
+      ],
+      "options": [
+        {
+          "text": "500 FCFA",
+          "isCorrect": true,
+          "explanation": "Bravo ! Résolution du système type BFEM réussie."
+        },
+        {
+          "text": "300 FCFA",
+          "isCorrect": false,
+          "explanation": "300 FCFA est le prix du stylo, la question demandait le cahier."
+        },
+        {
+          "text": "450 FCFA",
+          "isCorrect": false,
+          "explanation": "Vérifier le calcul 1000 / 2 = 500."
+        }
+      ]
+    }
+  ],
+  "vecteurs-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Somme de vecteurs",
+      "question": "Simplifier l'expression vectorielle : u = AB + BC + CA.",
+      "hint": "Appliquer la relation de Chasles successivement.",
+      "answerLatex": "\\vec{u} = \\vec{AC} + \\vec{CA} = \\vec{AA} = \\vec{0}",
+      "detailedSolution": [
+        "1. AB + BC = AC.",
+        "2. AC + CA = AA = 0 (vecteur nul)."
+      ],
+      "options": [
+        {
+          "text": "Le vecteur nul 0",
+          "isCorrect": true,
+          "explanation": "Parcours fermé = vecteur nul."
+        },
+        {
+          "text": "Le vecteur AB",
+          "isCorrect": false,
+          "explanation": "AC + CA s'annulent."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Colinéarité de deux vecteurs",
+      "question": "Soit les vecteurs u(2 ; -5) et v(-6 ; 15). Sont-ils colinéaires ?",
+      "hint": "Calculer le déterminant dét(u, v) = x×y' - x'×y, ou chercher k tel que v = k×u.",
+      "answerLatex": "-6 = -3 \\times 2 \\text{ et } 15 = -3 \\times (-5) \\implies \\vec{v} = -3\\vec{u} \\implies \\text{Colinéaires}",
+      "detailedSolution": [
+        "1. Calcul du déterminant : 2 × 15 - (-5) × (-6) = 30 - 30 = 0.",
+        "2. Le déterminant étant nul, les vecteurs u et v sont colinéaires (de sens opposés)."
+      ],
+      "options": [
+        {
+          "text": "Oui, colinéaires car v = -3 u",
+          "isCorrect": true,
+          "explanation": "Exact !"
+        },
+        {
+          "text": "Non, de sens différents",
+          "isCorrect": false,
+          "explanation": "Deux vecteurs de sens opposés restent colinéaires."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Caractérisation du milieu",
+      "question": "Démontrer que I est le milieu de [AB] si et seulement si IA + IB = 0.",
+      "hint": "IA = -IB signifie que IA et IB ont même direction, même longueur et sens opposés.",
+      "answerLatex": "\\vec{IA} + \\vec{IB} = \\vec{0} \\iff \\vec{IA} = -\\vec{IB} = \\vec{BI} \\iff I \\text{ milieu de } [AB]",
+      "detailedSolution": [
+        "1. IA + IB = 0 équivaut à IA = -IB = BI.",
+        "2. Le vecteur BI est égal au vecteur IA, ce qui prouve que I est sur le segment [AB] et à égale distance de A et B.",
+        "3. Donc I est le milieu de [AB]."
+      ],
+      "options": [
+        {
+          "text": "I est le milieu de [AB]",
+          "isCorrect": true,
+          "explanation": "Propriété vectorielle fondamentale."
+        },
+        {
+          "text": "I est confondu avec A",
+          "isCorrect": false,
+          "explanation": "Si I = A, IB = 0 donc A = B."
+        }
+      ]
+    }
+  ],
+  "reperage-plan-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Coordonnées d'un vecteur",
+      "question": "Soit A(3 ; 2) et B(7 ; 5). Quelles sont les coordonnées du vecteur AB ?",
+      "hint": "AB a pour coordonnées (x_B - x_A ; y_B - y_A).",
+      "answerLatex": "\\vec{AB}(7 - 3 ; 5 - 2) = \\vec{AB}(4 ; 3)",
+      "detailedSolution": [
+        "1. x = 7 - 3 = 4.",
+        "2. y = 5 - 2 = 3.",
+        "3. AB(4 ; 3)."
+      ],
+      "options": [
+        {
+          "text": "(4 ; 3)",
+          "isCorrect": true,
+          "explanation": "Correct : extrémité moins origine."
+        },
+        {
+          "text": "(10 ; 7)",
+          "isCorrect": false,
+          "explanation": "On soustrait, on n'additionne pas."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Calcul de distance dans le plan",
+      "question": "Pour ce vecteur AB(4 ; 3), calculer la longueur de la distance AB.",
+      "hint": "AB = √(x² + y²).",
+      "answerLatex": "AB = \\sqrt{4^2 + 3^2} = \\sqrt{16 + 9} = \\sqrt{25} = 5",
+      "detailedSolution": [
+        "1. 4² + 3² = 16 + 9 = 25.",
+        "2. √25 = 5.",
+        "3. La distance AB vaut 5."
+      ],
+      "options": [
+        {
+          "text": "5",
+          "isCorrect": true,
+          "explanation": "Exact : triangle rectangle 3-4-5."
+        },
+        {
+          "text": "7",
+          "isCorrect": false,
+          "explanation": "√(16 + 9) = √25 = 5, pas 4 + 3."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Coordonnées du milieu et symétrique",
+      "question": "Soit A(-2 ; 4) et K(1 ; 1) le milieu de [AB]. Quelles sont les coordonnées de B ?",
+      "hint": "x_K = (x_A + x_B) / 2 => x_B = 2 x_K - x_A.",
+      "answerLatex": "x_B = 2(1) - (-2) = 4, \\quad y_B = 2(1) - 4 = -2 \\implies B(4 ; -2)",
+      "detailedSolution": [
+        "1. x_K = (x_A + x_B)/2 => 1 = (-2 + x_B)/2 => -2 + x_B = 2 => x_B = 4.",
+        "2. y_K = (y_A + y_B)/2 => 1 = (4 + y_B)/2 => 4 + y_B = 2 => y_B = -2.",
+        "3. Le point B a pour coordonnées (4 ; -2)."
+      ],
+      "options": [
+        {
+          "text": "B(4 ; -2)",
+          "isCorrect": true,
+          "explanation": "Excellent calcul de symétrie !"
+        },
+        {
+          "text": "B(-0,5 ; 2,5)",
+          "isCorrect": false,
+          "explanation": "Ce serait le milieu si K était l'extrémité."
+        }
+      ]
+    }
+  ],
+  "trigonometrie-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Formules trigonométriques",
+      "question": "Dans un triangle ABC rectangle en A, exprimer le sinus de l'angle B.",
+      "hint": "SOH : Sinus = Opposé / Hypoténuse.",
+      "answerLatex": "\\sin(\\widehat{B}) = \\frac{\\text{Côté opposé}}{\\text{Hypoténuse}} = \\frac{AC}{BC}",
+      "detailedSolution": [
+        "1. L'angle B a pour côté opposé [AC].",
+        "2. L'hypoténuse est [BC].",
+        "3. sin(B) = AC / BC."
+      ],
+      "options": [
+        {
+          "text": "AC / BC",
+          "isCorrect": true,
+          "explanation": "Opposé / Hypoténuse."
+        },
+        {
+          "text": "AB / BC",
+          "isCorrect": false,
+          "explanation": "AB / BC est le cosinus (Adjacent / Hypoténuse)."
+        },
+        {
+          "text": "AC / AB",
+          "isCorrect": false,
+          "explanation": "AC / AB est la tangente."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Formule fondamentale cos² + sin² = 1",
+      "question": "Soit un angle aigu x tel que cos(x) = 0,6. Calculer sin(x).",
+      "hint": "cos²(x) + sin²(x) = 1 => sin²(x) = 1 - 0,6² = 1 - 0,36.",
+      "answerLatex": "\\sin^2(x) = 1 - 0{,}36 = 0{,}64 \\implies \\sin(x) = \\sqrt{0{,}64} = 0{,}8",
+      "detailedSolution": [
+        "1. cos²(x) = 0,6² = 0,36.",
+        "2. sin²(x) = 1 - cos²(x) = 1 - 0,36 = 0,64.",
+        "3. Comme x est un angle aigu, sin(x) > 0, donc sin(x) = √0,64 = 0,8."
+      ],
+      "options": [
+        {
+          "text": "0,8",
+          "isCorrect": true,
+          "explanation": "Bravo ! 0,6² + 0,8² = 0,36 + 0,64 = 1."
+        },
+        {
+          "text": "0,4",
+          "isCorrect": false,
+          "explanation": "1 - 0,6 = 0,4, mais la formule porte sur les carrés."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Calcul de la tangente",
+      "question": "Calculer tan(x) pour cet angle où cos(x) = 0,6 et sin(x) = 0,8.",
+      "hint": "tan(x) = sin(x) / cos(x).",
+      "answerLatex": "\\tan(x) = \\frac{\\sin(x)}{\\cos(x)} = \\frac{0{,}8}{0{,}6} = \\frac{8}{6} = \\frac{4}{3}",
+      "detailedSolution": [
+        "1. Par définition, tan(x) = sin(x) / cos(x).",
+        "2. tan(x) = 0,8 / 0,6 = 8 / 6 = 4/3 ≈ 1,33."
+      ],
+      "options": [
+        {
+          "text": "4/3",
+          "isCorrect": true,
+          "explanation": "Exact : 0,8 / 0,6 = 4/3."
+        },
+        {
+          "text": "3/4",
+          "isCorrect": false,
+          "explanation": "C'est l'inverse (cos / sin)."
+        }
+      ]
+    }
+  ],
+  "thales-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Configuration classique de Thalès",
+      "question": "Dans le triangle ABC, M ∈ [AB], N ∈ [AC] avec (MN) // (BC). On donne AM = 4 cm, AB = 10 cm, AN = 6 cm. Calculer AC.",
+      "hint": "Égalité des rapports : AM / AB = AN / AC.",
+      "answerLatex": "\\frac{4}{10} = \\frac{6}{AC} \\implies AC = \\frac{10 \\times 6}{4} = \\frac{60}{4} = 15\\text{ cm}",
+      "detailedSolution": [
+        "1. D'après le théorème de Thalès : AM/AB = AN/AC.",
+        "2. 4/10 = 6/AC.",
+        "3. Produit en croix : AC = (10 × 6) / 4 = 60 / 4 = 15 cm."
+      ],
+      "options": [
+        {
+          "text": "15 cm",
+          "isCorrect": true,
+          "explanation": "Correct : 6 / (4/10) = 6 × 2,5 = 15."
+        },
+        {
+          "text": "12 cm",
+          "isCorrect": false,
+          "explanation": "Attention au produit en croix."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Configuration papillon",
+      "question": "Les droites (AB) et (CD) se coupent en O avec (AC) // (BD). Si OA = 3 cm, OB = 6 cm et OC = 4 cm, calculer OD.",
+      "hint": "Dans la configuration papillon : OA / OB = OC / OD.",
+      "answerLatex": "\\frac{3}{6} = \\frac{4}{OD} \\implies OD = \\frac{6 \\times 4}{3} = \\frac{24}{3} = 8\\text{ cm}",
+      "detailedSolution": [
+        "1. Les points A, O, B sont alignés et C, O, D sont alignés avec (AC) // (BD).",
+        "2. D'après Thalès : OA/OB = OC/OD.",
+        "3. 3/6 = 1/2 = 4/OD => OD = 4 × 2 = 8 cm."
+      ],
+      "options": [
+        {
+          "text": "8 cm",
+          "isCorrect": true,
+          "explanation": "Le rapport d'agrandissement est 2, donc 4 × 2 = 8 cm."
+        },
+        {
+          "text": "7 cm",
+          "isCorrect": false,
+          "explanation": "3/6 = 1/2, donc OD = 2 × 4 = 8."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Réciproque du théorème de Thalès",
+      "question": "Sur deux demi-droites d'origine A : AM = 2, AB = 5, AN = 3, AC = 7,5. Les droites (MN) et (BC) sont-elles parallèles ?",
+      "hint": "Comparer les rapports AM/AB et AN/AC dans le même ordre d'alignement.",
+      "answerLatex": "\\frac{AM}{AB} = \\frac{2}{5} = 0{,}4 \\quad \\text{et} \\quad \\frac{AN}{AC} = \\frac{3}{7{,}5} = 0{,}4 \\implies (MN) \\parallel (BC)",
+      "detailedSolution": [
+        "1. AM/AB = 2/5 = 0,4.",
+        "2. AN/AC = 3/7,5 = 0,4.",
+        "3. Les points A, M, B et A, N, C sont alignés dans le même ordre et AM/AB = AN/AC.",
+        "4. D'après la réciproque du théorème de Thalès, (MN) // (BC)."
+      ],
+      "options": [
+        {
+          "text": "Oui, car AM/AB = AN/AC = 0,4",
+          "isCorrect": true,
+          "explanation": "Bravo ! Réciproque de Thalès validée."
+        },
+        {
+          "text": "Non, les rapports sont différents",
+          "isCorrect": false,
+          "explanation": "3 / 7,5 = 6 / 15 = 2 / 5 = 0,4."
+        }
+      ]
+    }
+  ],
+  "angle-inscrit-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Relation angle inscrit et angle au centre",
+      "question": "Dans un cercle, un angle au centre mesure 70°. Quelle est la mesure de l'angle inscrit qui intercepte le même arc ?",
+      "hint": "L'angle inscrit vaut la moitié de l'angle au centre associé.",
+      "answerLatex": "\\widehat{AMB} = \\frac{1}{2} \\times \\widehat{AOB} = \\frac{70^\\circ}{2} = 35^\\circ",
+      "detailedSolution": [
+        "1. Propriété : angle inscrit = (angle au centre) / 2.",
+        "2. 70° / 2 = 35°."
+      ],
+      "options": [
+        {
+          "text": "35°",
+          "isCorrect": true,
+          "explanation": "Exactement : 70 / 2 = 35°."
+        },
+        {
+          "text": "140°",
+          "isCorrect": false,
+          "explanation": "C'est l'angle au centre qui est le double de l'angle inscrit."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Deux angles inscrits interceptant le même arc",
+      "question": "Deux angles inscrits AMB et ANB interceptent le même arc de cercle AB. Si AMB = 42°, que vaut ANB ?",
+      "hint": "Deux angles inscrits qui interceptent le même arc ont la même mesure.",
+      "answerLatex": "\\widehat{ANB} = \\widehat{AMB} = 42^\\circ",
+      "detailedSolution": [
+        "1. Les angles AMB et ANB sont tous deux inscrits dans le même cercle et interceptent le même arc AB.",
+        "2. Ils ont donc exactement la même mesure : 42°."
+      ],
+      "options": [
+        {
+          "text": "42°",
+          "isCorrect": true,
+          "explanation": "Même arc intercepté => même mesure."
+        },
+        {
+          "text": "84°",
+          "isCorrect": false,
+          "explanation": "84° serait l'angle au centre."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Angle inscrit dans un demi-cercle",
+      "question": "Soit [AB] un diamètre d'un cercle. M est un point du cercle distinct de A et B. Quelle est la nature du triangle AMB ?",
+      "hint": "L'angle au centre associé est l'angle plat AOB = 180°.",
+      "answerLatex": "\\widehat{AMB} = \\frac{180^\\circ}{2} = 90^\\circ \\implies AMB \\text{ est rectangle en } M",
+      "detailedSolution": [
+        "1. Le diamètre [AB] forme un angle au centre plat : AOB = 180°.",
+        "2. L'angle inscrit AMB intercepte ce diamètre : AMB = 180° / 2 = 90°.",
+        "3. Le triangle AMB est donc rectangle en M."
+      ],
+      "options": [
+        {
+          "text": "Rectangle en M",
+          "isCorrect": true,
+          "explanation": "Propriété majeure du triangle inscrit dans un demi-cercle."
+        },
+        {
+          "text": "Équilatéral",
+          "isCorrect": false,
+          "explanation": "L'angle vaut toujours 90°."
+        }
+      ]
+    }
+  ],
+  "geometrie-espace-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Volume d'un cône de révolution",
+      "question": "Calculer le volume d'un cône de hauteur h = 6 cm et de rayon de base R = 3 cm (en prenant π ≈ 3,14).",
+      "hint": "V = (1/3) × π × R² × h.",
+      "answerLatex": "V = \\frac{1}{3} \\times \\pi \\times 3^2 \\times 6 = 18\\pi \\approx 56{,}52\\text{ cm}^3",
+      "detailedSolution": [
+        "1. R² = 9.",
+        "2. (1/3) × 9 × 6 = 18.",
+        "3. V = 18π ≈ 56,52 cm³."
+      ],
+      "options": [
+        {
+          "text": "18π cm³ (≈ 56,5 cm³)",
+          "isCorrect": true,
+          "explanation": "(9 × 6) / 3 = 18."
+        },
+        {
+          "text": "54π cm³",
+          "isCorrect": false,
+          "explanation": "N'oubliez pas de diviser par 3."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Réduction d'une pyramide",
+      "question": "Une pyramide a un volume initial de 500 cm³. On la réduit à l'échelle k = 1/5. Quel est le volume de la pyramide réduite ?",
+      "hint": "Le volume est multiplié par k³ = (1/5)³ = 1/125.",
+      "answerLatex": "V' = \\left(\\frac{1}{5}\\right)^3 \\times 500 = \\frac{500}{125} = 4\\text{ cm}^3",
+      "detailedSolution": [
+        "1. k³ = 1/125.",
+        "2. V' = 500 / 125 = 4 cm³."
+      ],
+      "options": [
+        {
+          "text": "4 cm³",
+          "isCorrect": true,
+          "explanation": "500 / 125 = 4 cm³."
+        },
+        {
+          "text": "100 cm³",
+          "isCorrect": false,
+          "explanation": "500 / 5 = 100 est une réduction linéaire."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Volume d'un tronc de cône",
+      "question": "Un cône a un volume de 240 cm³. Après section à mi-hauteur (k = 1/2), le cône supérieur a un volume de 30 cm³. Quel est le volume du tronc de cône restant ?",
+      "hint": "Volume du tronc = Volume total - Volume du petit cône supérieur.",
+      "answerLatex": "V_{\\text{tronc}} = 240 - 30 = 210\\text{ cm}^3",
+      "detailedSolution": [
+        "1. Le tronc de cône est le solide obtenu en retirant la pointe supérieure.",
+        "2. V(tronc) = V(total) - V(petit cône) = 240 - 30 = 210 cm³."
+      ],
+      "options": [
+        {
+          "text": "210 cm³",
+          "isCorrect": true,
+          "explanation": "Exact : 240 - 30 = 210 cm³."
+        },
+        {
+          "text": "120 cm³",
+          "isCorrect": false,
+          "explanation": "Le tronc n'est pas la moitié du volume."
+        }
+      ]
+    }
+  ],
+  "construction-triangles-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Inégalité triangulaire",
+      "question": "Peut-on construire un triangle avec les longueurs 3 cm, 4 cm et 9 cm ?",
+      "hint": "Dans un triangle, la longueur du plus grand côté doit être strictement inférieure à la somme des deux autres.",
+      "answerLatex": "3 + 4 = 7 < 9 \\implies \\text{Impossible de construire ce triangle}",
+      "detailedSolution": [
+        "1. Le plus grand côté mesure 9 cm.",
+        "2. La somme des deux autres est 3 + 4 = 7 cm.",
+        "3. Comme 7 < 9, les deux arcs de cercle ne se couperont jamais. La construction est impossible."
+      ],
+      "options": [
+        {
+          "text": "Non, impossible car 3 + 4 < 9",
+          "isCorrect": true,
+          "explanation": "Inégalité triangulaire non respectée."
+        },
+        {
+          "text": "Oui, toujours possible avec une règle",
+          "isCorrect": false,
+          "explanation": "Les longueurs ne permettent pas de fermer le triangle."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Angles d'un triangle isocèle",
+      "question": "Dans un triangle isocèle en A, l'angle A au sommet mesure 40°. Calculer la mesure des deux autres angles B et C.",
+      "hint": "La somme des angles fait 180° et les angles à la base sont égaux : (180° - 40°) / 2.",
+      "answerLatex": "\\widehat{B} = \\widehat{C} = \\frac{180^\\circ - 40^\\circ}{2} = \\frac{140^\\circ}{2} = 70^\\circ",
+      "detailedSolution": [
+        "1. 180° - 40° = 140°.",
+        "2. Comme le triangle est isocèle en A, B = C.",
+        "3. 140° / 2 = 70° chacun."
+      ],
+      "options": [
+        {
+          "text": "70° chacun",
+          "isCorrect": true,
+          "explanation": "40° + 70° + 70° = 180°."
+        },
+        {
+          "text": "60° chacun",
+          "isCorrect": false,
+          "explanation": "40° + 60° + 60° = 160° ≠ 180°."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Centre du cercle circonscrit",
+      "question": "Où se situe le centre du cercle circonscrit d'un triangle rectangle ?",
+      "hint": "Le centre du cercle circonscrit est le point d'intersection des médiatrices.",
+      "answerLatex": "\\text{Le centre du cercle circonscrit est exactement le milieu de l'hypoténuse}",
+      "detailedSolution": [
+        "1. Dans tout triangle rectangle, l'hypoténuse est un diamètre du cercle circonscrit.",
+        "2. Le centre du cercle circonscrit est donc le milieu de l'hypoténuse."
+      ],
+      "options": [
+        {
+          "text": "Au milieu exact de l'hypoténuse",
+          "isCorrect": true,
+          "explanation": "Propriété fondamentale de géométrie !"
+        },
+        {
+          "text": "Au sommet de l'angle droit",
+          "isCorrect": false,
+          "explanation": "C'est l'orthocentre qui est au sommet de l'angle droit."
+        }
+      ]
+    }
+  ],
+  "partage-segment-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Partage en parts égales sans mesure",
+      "question": "Combien de segments de même longueur doit-on reporter au compas sur une demi-droite auxiliaire pour partager un segment [AB] en 3 parties égales ?",
+      "hint": "On reporte 3 segments consécutifs au compas.",
+      "answerLatex": "3 \\text{ reports au compas}",
+      "detailedSolution": [
+        "1. Pour n parts égales, on trace une demi-droite d'origine A et on reporte n segments égaux de même ouverture au compas.",
+        "2. Ici n = 3, donc 3 reports."
+      ],
+      "options": [
+        {
+          "text": "3 reports au compas",
+          "isCorrect": true,
+          "explanation": "Exact !"
+        },
+        {
+          "text": "2 reports",
+          "isCorrect": false,
+          "explanation": "Il faut 3 segments de même longueur."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Théorème justifiant le partage",
+      "question": "Quel théorème géométrique justifie que les parallèles découpent le segment [AB] en parties égales ?",
+      "hint": "Des droites parallèles coupant deux sécantes déterminent des segments de longueurs proportionnelles.",
+      "answerLatex": "\\text{Le théorème de Thalès}",
+      "detailedSolution": [
+        "1. Les parallèles reliant les points de la demi-droite auxiliaire au segment [AB] forment une configuration de Thalès.",
+        "2. Les rapports de longueurs étant égaux, le segment [AB] est partagé en parts égales."
+      ],
+      "options": [
+        {
+          "text": "Le théorème de Thalès",
+          "isCorrect": true,
+          "explanation": "Parfait : égalité des rapports de Thalès."
+        },
+        {
+          "text": "Le théorème de Pythagore",
+          "isCorrect": false,
+          "explanation": "Pythagore s'applique aux triangles rectangles."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Partage dans un ratio 2:3",
+      "question": "Pour placer le point M sur [AB] tel que AM / AB = 2/5, en combien de parts égales doit-on d'abord découper [AB] ?",
+      "hint": "Le dénominateur de la fraction indique le nombre total de parts égales.",
+      "answerLatex": "5 \\text{ parts égales, et on prend 2 parts pour } M",
+      "detailedSolution": [
+        "1. Le rapport AM / AB = 2/5 signifie que l'on partage [AB] en 5 parts égales.",
+        "2. Le point M est placé à la 2ème graduation à partir de A."
+      ],
+      "options": [
+        {
+          "text": "5 parts égales",
+          "isCorrect": true,
+          "explanation": "2 + 3 = 5 parts au total."
+        },
+        {
+          "text": "3 parts",
+          "isCorrect": false,
+          "explanation": "Le tout est divisé en 2 + 3 = 5."
+        }
+      ]
+    }
+  ],
+  "quadrilatere-parallelogramme-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Propriété des diagonales",
+      "question": "Si les diagonales d'un quadrilatère se coupent en leur milieu, que peut-on affirmer sur ce quadrilatère ?",
+      "hint": "C'est la définition ou propriété caractéristique du parallélogramme.",
+      "answerLatex": "\\text{C'est un parallélogramme}",
+      "detailedSolution": [
+        "1. Un quadrilatère dont les diagonales ont le même milieu est un parallélogramme."
+      ],
+      "options": [
+        {
+          "text": "C'est un parallélogramme",
+          "isCorrect": true,
+          "explanation": "Propriété fondamentale."
+        },
+        {
+          "text": "C'est obligatoirement un carré",
+          "isCorrect": false,
+          "explanation": "Pour être un carré, les diagonales doivent aussi être perpendiculaires et de même longueur."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Vecteurs et parallélogramme",
+      "question": "Si les points A, B, C, D vérifient AB = DC, quelle est la nature de ABCD ?",
+      "hint": "L'égalité vectorielle AB = DC implique le parallélisme et l'égalité des côtés opposés.",
+      "answerLatex": "\\vec{AB} = \\vec{DC} \\iff ABCD \\text{ est un parallélogramme}",
+      "detailedSolution": [
+        "1. AB = DC signifie que (AB) // (DC) et AB = DC.",
+        "2. Donc ABCD est un parallélogramme."
+      ],
+      "options": [
+        {
+          "text": "ABCD est un parallélogramme",
+          "isCorrect": true,
+          "explanation": "Exact !"
+        },
+        {
+          "text": "ABDC est un parallélogramme",
+          "isCorrect": false,
+          "explanation": "Attention à l'ordre des sommets."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Démonstration géométrique",
+      "question": "ABCD est un parallélogramme. E est le symétrique de A par rapport à B (donc B milieu de [AE]). Démontrer la nature de BCDE.",
+      "hint": "AB = DC et AB = BE donc BE = DC.",
+      "answerLatex": "\\vec{BE} = \\vec{AB} = \\vec{DC} \\implies BCDE \\text{ est un parallélogramme}",
+      "detailedSolution": [
+        "1. Comme ABCD est un parallélogramme, AB = DC.",
+        "2. Comme E est le symétrique de A par rapport à B, AB = BE.",
+        "3. Par transitivité, BE = DC. Donc le quadrilatère BCDE est un parallélogramme."
+      ],
+      "options": [
+        {
+          "text": "BCDE est un parallélogramme",
+          "isCorrect": true,
+          "explanation": "Magnifique démonstration vectorielle !"
+        },
+        {
+          "text": "BCDE est un trapèze quelconque",
+          "isCorrect": false,
+          "explanation": "Les côtés opposés sont égaux et parallèles."
+        }
+      ]
+    }
+  ],
+  "video-equation-inconnue-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Équation directe",
+      "question": "Résoudre dans ℝ : 3x - 12 = 0.",
+      "hint": "Transposer 12 puis diviser par 3.",
+      "answerLatex": "3x = 12 \\implies x = 4",
+      "detailedSolution": [
+        "1. 3x = 12.",
+        "2. x = 12 / 3 = 4."
+      ],
+      "options": [
+        {
+          "text": "x = 4",
+          "isCorrect": true,
+          "explanation": "3 × 4 = 12."
+        },
+        {
+          "text": "x = -4",
+          "isCorrect": false,
+          "explanation": "12 est positif."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Développement et regroupement",
+      "question": "Résoudre : 4(x + 2) = 2(3x - 1).",
+      "hint": "Développer les deux membres, regrouper les x à gauche et les nombres à droite.",
+      "answerLatex": "4x + 8 = 6x - 2 \\implies -2x = -10 \\implies x = 5",
+      "detailedSolution": [
+        "1. 4x + 8 = 6x - 2",
+        "2. 4x - 6x = -2 - 8 => -2x = -10",
+        "3. x = -10 / (-2) = 5."
+      ],
+      "options": [
+        {
+          "text": "x = 5",
+          "isCorrect": true,
+          "explanation": "-10 / -2 = 5."
+        },
+        {
+          "text": "x = -5",
+          "isCorrect": false,
+          "explanation": "Deux négatifs divisés donnent un positif."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Équation avec fractions",
+      "question": "Résoudre : (x - 1)/2 + (2x + 3)/3 = 5/6.",
+      "hint": "Multiplier toute l'équation par 6 (le dénominateur commun).",
+      "answerLatex": "3(x - 1) + 2(2x + 3) = 5 \\implies 3x - 3 + 4x + 6 = 5 \\implies 7x + 3 = 5 \\implies 7x = 2 \\implies x = \\frac{2}{7}",
+      "detailedSolution": [
+        "1. On multiplie par 6 : 3(x - 1) + 2(2x + 3) = 5",
+        "2. 3x - 3 + 4x + 6 = 5 => 7x + 3 = 5",
+        "3. 7x = 2 => x = 2/7."
+      ],
+      "options": [
+        {
+          "text": "x = 2/7",
+          "isCorrect": true,
+          "explanation": "Bravo ! Équation avec fractions parfaitement menée."
+        },
+        {
+          "text": "x = 8/7",
+          "isCorrect": false,
+          "explanation": "5 - 3 = 2, pas 8."
+        }
+      ]
+    }
+  ],
+  "inequation-inconnue-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Inéquation directe",
+      "question": "Résoudre dans ℝ : 5x + 15 > 0.",
+      "hint": "Transposer 15 à droite puis diviser par 5.",
+      "answerLatex": "5x > -15 \\implies x > -3. \\quad S = ]-3 ; +\\infty[",
+      "detailedSolution": [
+        "1. 5x > -15.",
+        "2. x > -15 / 5 = -3."
+      ],
+      "options": [
+        {
+          "text": "x > -3",
+          "isCorrect": true,
+          "explanation": "Exact !"
+        },
+        {
+          "text": "x < -3",
+          "isCorrect": false,
+          "explanation": "5 est positif, pas d'inversion."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Division par coefficient négatif",
+      "question": "Résoudre : -2x + 9 ≥ 1.",
+      "hint": "Diviser par -2 en inversant ≥ en ≤.",
+      "answerLatex": "-2x \\ge -8 \\implies x \\le \\frac{-8}{-2} \\implies x \\le 4. \\quad S = ]-\\infty ; 4]",
+      "detailedSolution": [
+        "1. -2x ≥ 1 - 9 = -8.",
+        "2. Division par -2 : x ≤ 4."
+      ],
+      "options": [
+        {
+          "text": "x ≤ 4",
+          "isCorrect": true,
+          "explanation": "-8 / -2 = 4 avec inversion du sens."
+        },
+        {
+          "text": "x ≥ 4",
+          "isCorrect": false,
+          "explanation": "Rappel : diviser par un négatif inverse l'inégalité."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Double encadrement",
+      "question": "Résoudre dans ℝ : -1 ≤ 2x + 3 ≤ 7.",
+      "hint": "Soustraire 3 partout puis diviser par 2.",
+      "answerLatex": "-4 \\le 2x \\le 4 \\implies -2 \\le x \\le 2. \\quad S = [-2 ; 2]",
+      "detailedSolution": [
+        "1. -1 - 3 ≤ 2x ≤ 7 - 3 => -4 ≤ 2x ≤ 4.",
+        "2. On divise par 2 : -2 ≤ x ≤ 2.",
+        "3. S = [-2 ; 2]."
+      ],
+      "options": [
+        {
+          "text": "x ∈ [-2 ; 2]",
+          "isCorrect": true,
+          "explanation": "Superbe résolution d'encadrement !"
+        },
+        {
+          "text": "x ∈ [1 ; 5]",
+          "isCorrect": false,
+          "explanation": "N'oubliez pas de soustraire 3."
+        }
+      ]
+    }
+  ],
+  "video-pythagore-trigo-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Hypoténuse d'un triangle 5-12-13",
+      "question": "Dans un triangle ABC rectangle en A, AB = 5 cm et AC = 12 cm. Calculer l'hypoténuse BC.",
+      "hint": "BC² = 5² + 12² = 25 + 144.",
+      "answerLatex": "BC = \\sqrt{25 + 144} = \\sqrt{169} = 13\\text{ cm}",
+      "detailedSolution": [
+        "1. BC² = 5² + 12² = 25 + 144 = 169.",
+        "2. BC = √169 = 13 cm."
+      ],
+      "options": [
+        {
+          "text": "13 cm",
+          "isCorrect": true,
+          "explanation": "13² = 169."
+        },
+        {
+          "text": "17 cm",
+          "isCorrect": false,
+          "explanation": "On ne fait pas 5 + 12."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Calcul du sinus et de la tangente",
+      "question": "Pour ce même triangle, calculer sin(B) et tan(B).",
+      "hint": "sin(B) = AC / BC et tan(B) = AC / AB.",
+      "answerLatex": "\\sin(\\widehat{B}) = \\frac{12}{13} \\quad \\text{et} \\quad \\tan(\\widehat{B}) = \\frac{12}{5}",
+      "detailedSolution": [
+        "1. Côté opposé à B = AC = 12.",
+        "2. sin(B) = 12 / 13.",
+        "3. tan(B) = 12 / 5 = 2,4."
+      ],
+      "options": [
+        {
+          "text": "sin(B) = 12/13 et tan(B) = 12/5",
+          "isCorrect": true,
+          "explanation": "Exact !"
+        },
+        {
+          "text": "sin(B) = 5/13",
+          "isCorrect": false,
+          "explanation": "5/13 est le cosinus de B."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Calcul de la hauteur issue de l'angle droit",
+      "question": "Dans ce triangle rectangle ABC, calculer la longueur de la hauteur [AH] issue de A.",
+      "hint": "L'aire du triangle s'écrit de 2 façons : (AB × AC) / 2 = (BC × AH) / 2.",
+      "answerLatex": "AH = \\frac{AB \\times AC}{BC} = \\frac{5 \\times 12}{13} = \\frac{60}{13} \\approx 4{,}62\\text{ cm}",
+      "detailedSolution": [
+        "1. Aire(ABC) = (AB × AC)/2 = (5 × 12)/2 = 30 cm².",
+        "2. D'autre part, Aire(ABC) = (BC × AH)/2 = (13 × AH)/2.",
+        "3. Donc 13 × AH = 60 => AH = 60/13 cm."
+      ],
+      "options": [
+        {
+          "text": "60/13 cm (≈ 4,62 cm)",
+          "isCorrect": true,
+          "explanation": "Formule clé d'aire démontrée !"
+        },
+        {
+          "text": "6 cm",
+          "isCorrect": false,
+          "explanation": "60 / 10 ferait 6, mais ici BC = 13."
+        }
+      ]
+    }
+  ],
+  "video-exercices-pythagore-trigo-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Côté opposé par le sinus",
+      "question": "Dans un triangle rectangle, l'hypoténuse mesure 10 cm et l'angle aigu mesure 30°. Sachant que sin(30°) = 0,5, calculer le côté opposé.",
+      "hint": "Côté opposé = Hypoténuse × sin(30°).",
+      "answerLatex": "\\text{Côté opposé} = 10 \\times 0{,}5 = 5\\text{ cm}",
+      "detailedSolution": [
+        "1. sin(30°) = Côté opposé / 10 = 0,5.",
+        "2. Côté opposé = 10 × 0,5 = 5 cm."
+      ],
+      "options": [
+        {
+          "text": "5 cm",
+          "isCorrect": true,
+          "explanation": "10 × 0,5 = 5 cm."
+        },
+        {
+          "text": "8,66 cm",
+          "isCorrect": false,
+          "explanation": "Ce serait avec le cosinus."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Calcul de l'hypoténuse par la tangente",
+      "question": "Un angle aigu a pour côté opposé 6 cm et tan(x) = 3/4. Calculer le côté adjacent.",
+      "hint": "tan(x) = Opposé / Adjacent => 3/4 = 6 / Adjacent.",
+      "answerLatex": "\\text{Adjacent} = \\frac{6 \\times 4}{3} = 8\\text{ cm}",
+      "detailedSolution": [
+        "1. 3/4 = 6 / Adjacent.",
+        "2. Adjacent = (6 × 4) / 3 = 24 / 3 = 8 cm."
+      ],
+      "options": [
+        {
+          "text": "8 cm",
+          "isCorrect": true,
+          "explanation": "6 / (3/4) = 8 cm."
+        },
+        {
+          "text": "4,5 cm",
+          "isCorrect": false,
+          "explanation": "Attention au produit en croix."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Problème type BFEM : Visée géodésique",
+      "question": "Un observateur placé à 50 m du pied d'un baobab vise son sommet avec un angle de 45°. L'œil est à 1,5 m du sol. Quelle est la hauteur du baobab ?",
+      "hint": "tan(45°) = 1. La partie au-dessus de l'œil vaut 50 × tan(45°) = 50 m. Ajouter la hauteur des yeux (1,5 m).",
+      "answerLatex": "H = 50 \\times \\tan(45^\\circ) + 1{,}5 = 50 \\times 1 + 1{,}5 = 51{,}5\\text{ m}",
+      "detailedSolution": [
+        "1. tan(45°) = 1, donc la hauteur mesurée au-dessus des yeux est 50 × 1 = 50 m.",
+        "2. Hauteur totale du baobab = 50 + 1,5 = 51,5 m."
+      ],
+      "options": [
+        {
+          "text": "51,5 m",
+          "isCorrect": true,
+          "explanation": "Résolution complète de problème type BFEM !"
+        },
+        {
+          "text": "50 m",
+          "isCorrect": false,
+          "explanation": "N'oubliez pas d'ajouter la hauteur de l'observateur (1,5 m)."
+        }
+      ]
+    }
+  ],
+  "video-angle-inscrit-3e": [
+    {
+      "difficulty": "facile",
+      "title": "Angle au centre",
+      "question": "Un angle inscrit mesure 45°. Quelle est la mesure de l'angle au centre qui intercepte le même arc ?",
+      "hint": "L'angle au centre est le double de l'angle inscrit associé.",
+      "answerLatex": "\\widehat{AOB} = 2 \\times 45^\\circ = 90^\\circ",
+      "detailedSolution": [
+        "1. Angle au centre = 2 × angle inscrit.",
+        "2. 2 × 45° = 90°."
+      ],
+      "options": [
+        {
+          "text": "90° (angle droit)",
+          "isCorrect": true,
+          "explanation": "2 × 45° = 90°."
+        },
+        {
+          "text": "22,5°",
+          "isCorrect": false,
+          "explanation": "L'angle au centre est le double, pas la moitié."
+        }
+      ]
+    },
+    {
+      "difficulty": "moyen",
+      "title": "Triangle rectangle inscrit",
+      "question": "Les points A, B et C sont sur un cercle de centre O. Le segment [AB] passe par le centre O. Que vaut l'angle ACB ?",
+      "hint": "Comme [AB] passe par O, c'est un diamètre.",
+      "answerLatex": "\\widehat{ACB} = 90^\\circ \\quad (\\text{triangle rectangle en } C)",
+      "detailedSolution": [
+        "1. [AB] est un diamètre.",
+        "2. Tout triangle inscrit ayant pour côté un diamètre est rectangle opposé à ce diamètre.",
+        "3. Donc l'angle ACB mesure 90°."
+      ],
+      "options": [
+        {
+          "text": "90°",
+          "isCorrect": true,
+          "explanation": "Triangle inscrit dans un demi-cercle = 90°."
+        },
+        {
+          "text": "60°",
+          "isCorrect": false,
+          "explanation": "Il est obligatoirement rectangle en C."
+        }
+      ]
+    },
+    {
+      "difficulty": "difficile",
+      "title": "Angles opposés d'un quadrilatère inscriptible",
+      "question": "Soit ABCD un quadrilatère dont les 4 sommets sont sur un même cercle. Si l'angle A mesure 85°, que vaut l'angle opposé C ?",
+      "hint": "Dans un quadrilatère inscriptible dans un cercle, la somme des angles opposés vaut 180°.",
+      "answerLatex": "\\widehat{C} = 180^\\circ - 85^\\circ = 95^\\circ",
+      "detailedSolution": [
+        "1. Les angles A et C interceptent deux arcs complémentaires formant le cercle entier (360°).",
+        "2. Leurs mesures d'angles inscrits totalisent 360° / 2 = 180°.",
+        "3. Angle C = 180° - 85° = 95°."
+      ],
+      "options": [
+        {
+          "text": "95°",
+          "isCorrect": true,
+          "explanation": "Bravo ! 85° + 95° = 180°."
+        },
+        {
+          "text": "85°",
+          "isCorrect": false,
+          "explanation": "Ils ne sont pas forcément égaux, ils sont supplémentaires."
+        }
+      ]
+    }
+  ]
+}

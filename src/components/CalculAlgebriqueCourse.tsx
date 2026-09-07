@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { MathView } from './MathView';
 import { FactorizationEngine } from './FactorizationEngine';
 import { DevelopmentEngine } from './DevelopmentEngine';
+import { StudentExercisesSection } from './StudentExercisesSection';
+import { getExercisesForChapter } from '../data/getCourseExercises';
 import {
   BookOpen,
   Sparkles,
@@ -1330,7 +1332,14 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
 
       {/* TAB 4: EXERCICES D'APPLICATION ET DEVOIRS (6) */}
       {activeSubTab === 'exercices' && (
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col space-y-6">
+          {/* 3 Interactive Graded Exercises (Facile, Moyen, Difficile) */}
+          <StudentExercisesSection
+            chapterId="calcul-algebrique"
+            chapterTitle="Calcul algébrique - 4e"
+            exercises={getExercisesForChapter('calcul-algebrique')}
+          />
+
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
               <FileText className="w-5 h-5 text-rose-400" />

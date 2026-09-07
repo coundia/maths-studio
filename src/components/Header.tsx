@@ -9,7 +9,7 @@ import {
   Sparkles,
   ChevronDown,
 } from 'lucide-react';
-import { SENEGAL_COURSES_4E } from '../coursesData';
+import { ALL_SENEGAL_COURSES } from '../coursesData';
 
 interface HeaderProps {
   onToggleSidebar: () => void;
@@ -21,6 +21,8 @@ interface HeaderProps {
   onToggleClassroomMode: () => void;
   activeMode: 'algebra' | 'geometry';
   onSelectMode: (mode: 'algebra' | 'geometry') => void;
+  selectedGrade?: 'all' | '3e' | '4e';
+  onSelectGrade?: (grade: 'all' | '3e' | '4e') => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -33,8 +35,17 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleClassroomMode,
   activeMode,
   onSelectMode,
+  selectedGrade = '3e',
+  onSelectGrade,
 }) => {
-  const currentChapter = SENEGAL_COURSES_4E.find((c) => c.id === activeChapterId);
+  const currentChapter = ALL_SENEGAL_COURSES.find((c) => c.id === activeChapterId);
+
+  const visibleCourses = ALL_SENEGAL_COURSES.filter((c) => {
+    const is3e = c.gradeLevel === '3e' || c.id.endsWith('-3e') || c.id.startsWith('video-');
+    if (selectedGrade === '3e') return is3e;
+    if (selectedGrade === '4e') return !is3e;
+    return true;
+  });
 
   return (
     <header className="w-full border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-xl px-2.5 sm:px-6 py-2 sticky top-0 z-40">
@@ -46,18 +57,22 @@ export const Header: React.FC<HeaderProps> = ({
             id="toggle-sidebar-btn"
             onClick={onToggleSidebar}
             className="min-h-[38px] px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 transition-colors flex items-center space-x-1.5 shrink-0"
-            title="Ouvrir le menu des cours (4e Sénégal)"
+            title="Ouvrir le menu des cours (Collège Sénégal)"
           >
             <Menu className="w-4 h-4 text-emerald-400" />
-            <span className="hidden sm:inline text-xs font-semibold">Chapitres (14)</span>
-            <span className="sm:hidden text-xs font-bold font-mono">14</span>
+            <span className="hidden sm:inline text-xs font-semibold">
+              Cours ({visibleCourses.length})
+            </span>
+            <span className="sm:hidden text-xs font-bold font-mono">
+              {visibleCourses.length}
+            </span>
           </button>
 
           {/* Logo & Title */}
           <div className="flex items-center space-x-2">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 p-0.5 shadow-md shadow-emerald-600/20 shrink-0">
-              <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center text-emerald-400 font-extrabold text-[11px] sm:text-xs font-mono">
-                4e
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-amber-500 to-emerald-500 p-0.5 shadow-md shadow-amber-500/20 shrink-0">
+              <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center text-amber-300 font-extrabold text-[11px] sm:text-xs font-mono">
+                {selectedGrade === 'all' ? '3e/4e' : selectedGrade}
               </div>
             </div>
             <div className="hidden min-[380px]:block">
@@ -65,8 +80,8 @@ export const Header: React.FC<HeaderProps> = ({
                 <h1 className="font-extrabold text-white text-xs sm:text-base tracking-tight leading-tight">
                   Maths <span className="text-emerald-400">Sénégal</span>
                 </h1>
-                <span className="hidden md:inline-block text-[10px] font-bold px-1.5 py-0.5 bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 rounded-full">
-                  4ème
+                <span className="hidden md:inline-block text-[10px] font-bold px-1.5 py-0.5 bg-amber-500/10 text-amber-300 border border-amber-500/30 rounded-full">
+                  {selectedGrade === '3e' ? '3ème BFEM' : selectedGrade === '4e' ? '4ème' : '3e & 4e'}
                 </span>
               </div>
             </div>
@@ -85,8 +100,10 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             <BookOpen className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Cours par classe (14)</span>
-            <span className="sm:hidden text-xs">Cours (14)</span>
+            <span className="hidden sm:inline">
+              Programme Officiel ({visibleCourses.length})
+            </span>
+            <span className="sm:hidden text-xs">Cours ({visibleCourses.length})</span>
           </button>
 
           <button
@@ -112,9 +129,9 @@ export const Header: React.FC<HeaderProps> = ({
               <select
                 value={activeChapterId}
                 onChange={(e) => onSelectChapter(e.target.value)}
-                className="bg-slate-900 border border-slate-700/80 text-slate-200 text-xs py-1.5 px-2.5 rounded-xl font-medium focus:outline-none focus:border-emerald-500 max-w-[200px] truncate"
+                className="bg-slate-900 border border-slate-700/80 text-slate-200 text-xs py-1.5 px-2.5 rounded-xl font-medium focus:outline-none focus:border-emerald-500 max-w-[210px] truncate"
               >
-                {SENEGAL_COURSES_4E.map((ch, i) => (
+                {visibleCourses.map((ch, i) => (
                   <option key={ch.id} value={ch.id}>
                     {i + 1}. {ch.shortTitle}
                   </option>
