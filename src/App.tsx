@@ -8,6 +8,7 @@ import { AlgebraStage } from './components/AlgebraStage';
 import { AlgebraProgressionCard } from './components/AlgebraProgressionCard';
 import { Math3DViewer } from './components/Math3DViewer';
 import { StepPlayer } from './components/StepPlayer';
+import { BlackboardDrawer } from './components/blackboard/BlackboardDrawer';
 import {
   ALL_SENEGAL_COURSES,
   SENEGAL_COURSES_3E,
@@ -61,6 +62,7 @@ export default function App() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
   const [activeMode, setActiveMode] = useState<'algebra' | 'geometry'>('algebra');
+  const [isBlackboardOpen, setIsBlackboardOpen] = useState<boolean>(false);
 
   const currentChapter: CourseChapter =
     ALL_SENEGAL_COURSES.find((c) => c.id === activeChapterId) || ALL_SENEGAL_COURSES[0];
@@ -132,6 +134,7 @@ export default function App() {
         onSelectMode={setActiveMode}
         selectedGrade={selectedGrade}
         onSelectGrade={handleSelectGrade}
+        onOpenBlackboard={() => setIsBlackboardOpen(true)}
       />
 
       {/* Main Body with Sidebar and Content */}
@@ -278,6 +281,8 @@ export default function App() {
           )}
         </main>
       </div>
+
+      <BlackboardDrawer isOpen={isBlackboardOpen} onClose={() => setIsBlackboardOpen(false)} />
     </div>
   );
 }

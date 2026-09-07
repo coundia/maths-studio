@@ -10,6 +10,7 @@ import {
   ChevronDown,
   Sun,
   Moon,
+  Edit3,
 } from 'lucide-react';
 import { ALL_SENEGAL_COURSES } from '../coursesData';
 import { useTheme } from '../context/ThemeContext';
@@ -26,6 +27,7 @@ interface HeaderProps {
   onSelectMode: (mode: 'algebra' | 'geometry') => void;
   selectedGrade?: 'all' | '3e' | '4e';
   onSelectGrade?: (grade: 'all' | '3e' | '4e') => void;
+  onOpenBlackboard?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -40,6 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectMode,
   selectedGrade = '3e',
   onSelectGrade,
+  onOpenBlackboard,
 }) => {
   const { theme, toggleTheme } = useTheme();
   const currentChapter = ALL_SENEGAL_COURSES.find((c) => c.id === activeChapterId);
@@ -183,6 +186,18 @@ export const Header: React.FC<HeaderProps> = ({
             <GraduationCap className="w-4 h-4" />
             <span className="hidden xl:inline font-semibold">Démo Professeur</span>
           </button>
+
+          {/* Blackboard Toggle */}
+          {onOpenBlackboard && (
+            <button
+              onClick={onOpenBlackboard}
+              className="min-h-[38px] px-2 sm:px-2.5 py-1.5 rounded-xl text-xs flex items-center space-x-1.5 border transition-all bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/60 dark:text-indigo-300 dark:border-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 shadow-sm"
+              title="Ouvrir le Tableau Interactif"
+            >
+              <Edit3 className="w-4 h-4" />
+              <span className="hidden sm:inline font-semibold">Tableau</span>
+            </button>
+          )}
 
           {/* Theme Toggle Button (Clair / Sombre) */}
           <button

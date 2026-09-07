@@ -523,7 +523,7 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
     <div
       id="math3d-interactive-stage"
       ref={containerRef}
-      className="relative w-full h-full min-h-[440px] lg:min-h-[540px] bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col justify-between select-none"
+      className="relative w-full h-full min-h-[440px] lg:min-h-[540px] bg-slate-100 dark:bg-slate-950 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col justify-between select-none"
     >
       {/* 3D WebGL Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing" />
@@ -531,9 +531,9 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
       {/* Top Floating Bar: Visual Controls & Concrete Context */}
       <div className="relative z-10 p-4 flex items-center justify-between gap-3 pointer-events-none">
         {/* Left: Step indicator badge */}
-        <div className="flex items-center space-x-2 pointer-events-auto bg-slate-900/90 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-slate-800 shadow-md">
+        <div className="flex items-center space-x-2 pointer-events-auto bg-white/80 dark:bg-slate-900/90 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-md">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+          <span className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider font-mono">
             Étape {stepNumber} / {totalSteps}
           </span>
           <span className="text-slate-500">•</span>
@@ -541,11 +541,11 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
         </div>
 
         {/* Right: Camera Presets & Unit Grid Toggle */}
-        <div className="flex items-center space-x-1.5 pointer-events-auto bg-slate-900/90 backdrop-blur-md p-1 rounded-xl border border-slate-800 shadow-md">
+        <div className="flex items-center space-x-1.5 pointer-events-auto bg-white/80 dark:bg-slate-900/90 backdrop-blur-md p-1 rounded-xl border border-slate-200 dark:border-slate-800 shadow-md">
           <button
             onClick={() => applyView('iso')}
             className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
-              cameraView === 'iso' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'
+              cameraView === 'iso' ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white'
             }`}
             title="Vue 3D Isométrique"
           >
@@ -554,7 +554,7 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
           <button
             onClick={() => applyView('top')}
             className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
-              cameraView === 'top' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'
+              cameraView === 'top' ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white'
             }`}
             title="Vue 2D du dessus (Plan)"
           >
@@ -563,7 +563,7 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
           <button
             onClick={() => setShowUnitGrid(!showUnitGrid)}
             className={`p-1.5 rounded-lg text-xs transition-colors ${
-              showUnitGrid ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white'
+              showUnitGrid ? 'bg-emerald-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-white'
             }`}
             title="Afficher/Masquer le quadrillage des cubes unités (façon Lego/Montessori)"
           >
@@ -571,7 +571,7 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
           </button>
           <button
             onClick={() => applyView('iso')}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white transition-colors"
+            className="p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white transition-colors"
             title="Réinitialiser la caméra"
           >
             <RotateCcw className="w-4 h-4" />
@@ -581,16 +581,16 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
 
       {/* Floating 3D Legend of Pieces (Terre à terre) */}
       <div className="relative z-10 px-4 py-2 pointer-events-none flex flex-wrap gap-2">
-        <div className="bg-slate-900/85 backdrop-blur-md border border-slate-800 px-3 py-1.5 rounded-xl text-xs flex items-center space-x-2 text-slate-200 shadow-sm">
+        <div className="bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border border-slate-200 dark:border-slate-800 px-3 py-1.5 rounded-xl text-xs flex items-center space-x-2 text-slate-700 dark:text-slate-200 shadow-sm">
           <span className="w-3 h-3 rounded-sm bg-sky-500 shadow-sm shadow-sky-500/50" />
           <span className="font-medium">Pièce principale R₁ (Bleue)</span>
         </div>
-        <div className="bg-slate-900/85 backdrop-blur-md border border-slate-800 px-3 py-1.5 rounded-xl text-xs flex items-center space-x-2 text-slate-200 shadow-sm">
+        <div className="bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border border-slate-200 dark:border-slate-800 px-3 py-1.5 rounded-xl text-xs flex items-center space-x-2 text-slate-700 dark:text-slate-200 shadow-sm">
           <span className="w-3 h-3 rounded-sm bg-purple-500 shadow-sm shadow-purple-500/50" />
           <span className="font-medium">Pièce mobile R₂ (Violette)</span>
         </div>
         {stepNumber <= 2 && (
-          <div className="bg-slate-900/85 backdrop-blur-md border border-slate-800 px-3 py-1.5 rounded-xl text-xs flex items-center space-x-2 text-slate-200 shadow-sm">
+          <div className="bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border border-slate-200 dark:border-slate-800 px-3 py-1.5 rounded-xl text-xs flex items-center space-x-2 text-slate-700 dark:text-slate-200 shadow-sm">
             <span className="w-3 h-3 rounded-sm bg-rose-500 shadow-sm shadow-rose-500/50" />
             <span className="font-medium">Coin retiré -a² (Rouge)</span>
           </div>
@@ -598,13 +598,13 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
       </div>
 
       {/* Bottom Interactive Animation Scrubbing Bar */}
-      <div className="relative z-10 p-4 m-3 bg-slate-900/90 backdrop-blur-xl border border-slate-800/90 rounded-xl shadow-2xl flex flex-col space-y-2.5">
+      <div className="relative z-10 p-4 m-3 bg-white/80 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800/90 rounded-xl shadow-2xl flex flex-col space-y-2.5">
         {/* Step description banner */}
         <div className="flex items-center justify-between text-xs">
           <div className="flex items-center space-x-2 text-slate-300">
             <Sparkles className="w-4 h-4 text-amber-400" />
-            <span className="font-semibold text-white">Mouvement 3D en cours :</span>
-            <span className="text-slate-300 hidden sm:inline">{stepExplanation}</span>
+            <span className="font-semibold text-slate-900 dark:text-white">Mouvement 3D en cours :</span>
+            <span className="text-slate-600 dark:text-slate-300 hidden sm:inline">{stepExplanation}</span>
           </div>
           <span className="font-mono text-xs font-bold text-indigo-400">
             {Math.round(animProgress * 100)}%
@@ -650,7 +650,7 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
                 setIsAnimating(false);
                 setAnimProgress(parseFloat(e.target.value));
               }}
-              className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500 focus:outline-none"
+              className="w-full h-2 bg-slate-300 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500 focus:outline-none"
               title="Glissez avec la souris ou le doigt pour animer manuellement la pièce en 3D !"
             />
             <span className="text-[11px] text-slate-400 font-mono">100%</span>
@@ -662,7 +662,7 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
               <button
                 onClick={onPrevStep}
                 disabled={stepNumber <= 1}
-                className="px-2 py-1 bg-slate-800 hover:bg-slate-700 disabled:opacity-30 text-slate-200 text-xs rounded transition-colors"
+                className="px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 disabled:opacity-30 text-slate-700 dark:text-slate-200 text-xs rounded transition-colors"
                 title="Étape précédente"
               >
                 ◀
@@ -670,7 +670,7 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
               <button
                 onClick={onNextStep}
                 disabled={stepNumber >= totalSteps}
-                className="px-2 py-1 bg-slate-800 hover:bg-slate-700 disabled:opacity-30 text-slate-200 text-xs rounded transition-colors"
+                className="px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 disabled:opacity-30 text-slate-700 dark:text-slate-200 text-xs rounded transition-colors"
                 title="Étape suivante"
               >
                 ▶

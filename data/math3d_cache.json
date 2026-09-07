@@ -1270,6 +1270,558 @@
           }
         }
       ]
+    },
+    "70bc607a197d1b025431102527e363c0f44ac97f47f2a8dfbb69acd0311c9ecf": {
+      "id": "70bc607a197d1b025431102527e363c0f44ac97f47f2a8dfbb69acd0311c9ecf",
+      "rawExpression": "(x+3)(x+4)",
+      "normalizedExpression": "(x+3)(x+4)",
+      "operationType": "expansion",
+      "finalFormLatex": "x^2 + 7x + 12",
+      "summary": "Développement par double distributivité : (x+3)(x+4) = x^2 + 7x + 12.",
+      "source": "heuristic",
+      "cachedAt": "2026-09-07T22:15:01.614Z",
+      "latencyMs": 8,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Expression initiale & Règle de double distributivité",
+          "explanation": "Pour développer (x + 3)(x + 4), chaque terme de la première parenthèse doit être multiplié par chacun des termes de la deuxième parenthèse.",
+          "appliedRule": "Double distributivité : (a + b)(c + d) = a×c + a×d + b×c + b×d",
+          "latex": "(x + 3)(x + 4)",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": 4,
+              "depth": 0.5
+            },
+            "action": "initial_state"
+          },
+          "algebraAnimation": {
+            "type": "initial",
+            "tokens": [
+              {
+                "text": "(x",
+                "type": "bracket",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 3)",
+                "type": "bracket",
+                "color": "#f59e0b"
+              },
+              {
+                "text": "(x",
+                "type": "bracket",
+                "color": "#818cf8"
+              },
+              {
+                "text": "+ 4)",
+                "type": "bracket",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "On prépare les deux facteurs avant de distribuer chaque terme."
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Distribution des 4 flèches de multiplication",
+          "explanation": "On trace les 4 multiplications : (x) × (x), puis (x) × (4), puis (3) × (x), et enfin (3) × (4).",
+          "appliedRule": "Développement terme à terme",
+          "latex": "= x \\times x + x \\times (4) + (3) \\times x + (3) \\times (4)",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": 4,
+              "depth": 0.5
+            },
+            "action": "separate"
+          },
+          "algebraAnimation": {
+            "type": "distribution",
+            "distributingFactorText": "x puis +3",
+            "arrows": [
+              {
+                "fromIndex": 0,
+                "toIndex": 2,
+                "label": "x × x",
+                "color": "#ef4444"
+              },
+              {
+                "fromIndex": 0,
+                "toIndex": 3,
+                "label": "x × (4)",
+                "color": "#ef4444"
+              },
+              {
+                "fromIndex": 1,
+                "toIndex": 2,
+                "label": "(3) × x",
+                "color": "#ef4444"
+              },
+              {
+                "fromIndex": 1,
+                "toIndex": 3,
+                "label": "(3) × (4)",
+                "color": "#ef4444"
+              }
+            ],
+            "tokens": [
+              {
+                "text": "x · x",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "x · (4)",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "(3) · x",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "(3) · (4)",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              }
+            ],
+            "activeExplanation": "L'élément distributeur est en ROUGE et se déplace vers chaque terme du second facteur."
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Calcul des 4 produits individuels (zéro disparition)",
+          "explanation": "On effectue chaque multiplication : x × x = x^2 ; x × (4) = +4x ; (3) × x = +3x ; (3) × (4) = +12.",
+          "appliedRule": "Multiplication des coefficients et puissances",
+          "latex": "= x^2 + 4x + 3x + 12",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": 4,
+              "depth": 0.5
+            },
+            "action": "rearrange"
+          },
+          "algebraAnimation": {
+            "type": "products",
+            "replacedTermsText": "Produits intermédiaires remplacés par leurs valeurs calculées",
+            "tokens": [
+              {
+                "text": "x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 4x",
+                "type": "variable",
+                "color": "#818cf8"
+              },
+              {
+                "text": "+ 3x",
+                "type": "variable",
+                "color": "#f59e0b"
+              },
+              {
+                "text": "+ 12",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "Chaque produit partiel est calculé avec son signe respectif."
+          }
+        },
+        {
+          "stepNumber": 4,
+          "title": "Regroupement des termes semblables en x mis en ROUGE",
+          "explanation": "Les deux termes du milieu (4x et 3x) ont la même partie littérale x. On les additionne : (4) + (3) = 7.",
+          "appliedRule": "Réduction des termes semblables (même puissance)",
+          "latex": "= x^2 + \\mathbf{[(4)x + (3)x]} + 12",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": 4,
+              "depth": 0.5
+            },
+            "action": "highlight"
+          },
+          "algebraAnimation": {
+            "type": "combine",
+            "replacedTermsText": "+ 4x + 3x remplacés par + 7x",
+            "highlightPairs": [
+              [
+                1,
+                2
+              ]
+            ],
+            "tokens": [
+              {
+                "text": "x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "[+ 4x + 3x]",
+                "type": "variable",
+                "color": "#ef4444",
+                "isReplaced": true,
+                "highlight": true
+              },
+              {
+                "text": "+ 12",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "On met en ROUGE les termes en x à remplacer par leur somme !"
+          }
+        },
+        {
+          "stepNumber": 5,
+          "title": "Forme finale développée et ordonnée",
+          "explanation": "L'expression est désormais sous sa forme développée, réduite et ordonnée par puissances décroissantes de x : x^2 + 7x + 12.",
+          "appliedRule": "Forme canonique polynômiale",
+          "latex": "= x^2 + 7x + 12",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": 4,
+              "depth": 0.5
+            },
+            "action": "final_factored"
+          },
+          "algebraAnimation": {
+            "type": "final",
+            "tokens": [
+              {
+                "text": "x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 7x",
+                "type": "variable",
+                "color": "#10b981",
+                "highlight": true
+              },
+              {
+                "text": "+ 12",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "Résultat final développé et réduit !"
+          }
+        }
+      ]
+    },
+    "31c6b682fe3a3ab124ac72f501426dea534febdf7c2c32a410c915fa89effb58": {
+      "id": "31c6b682fe3a3ab124ac72f501426dea534febdf7c2c32a410c915fa89effb58",
+      "rawExpression": "(2x+1)(x+3)",
+      "normalizedExpression": "(2x+1)(x+3)",
+      "operationType": "expansion",
+      "finalFormLatex": "2x^2 + 7x + 3",
+      "summary": "Développement par double distributivité : (2x+1)(x+3) = 2x^2 + 7x + 3.",
+      "source": "heuristic",
+      "cachedAt": "2026-09-07T22:15:02.256Z",
+      "latencyMs": 0,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Expression initiale & Règle de double distributivité",
+          "explanation": "Pour développer (2x + 1)(x + 3), chaque terme de la première parenthèse doit être multiplié par chacun des termes de la deuxième parenthèse.",
+          "appliedRule": "Double distributivité : (a + b)(c + d) = a×c + a×d + b×c + b×d",
+          "latex": "(2x + 1)(x + 3)",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 3,
+              "depth": 0.5
+            },
+            "action": "initial_state"
+          },
+          "algebraAnimation": {
+            "type": "initial",
+            "tokens": [
+              {
+                "text": "(2x",
+                "type": "bracket",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 1)",
+                "type": "bracket",
+                "color": "#f59e0b"
+              },
+              {
+                "text": "(x",
+                "type": "bracket",
+                "color": "#818cf8"
+              },
+              {
+                "text": "+ 3)",
+                "type": "bracket",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "On prépare les deux facteurs avant de distribuer chaque terme."
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Distribution des 4 flèches de multiplication",
+          "explanation": "On trace les 4 multiplications : (2x) × (x), puis (2x) × (3), puis (1) × (x), et enfin (1) × (3).",
+          "appliedRule": "Développement terme à terme",
+          "latex": "= 2x \\times x + 2x \\times (3) + (1) \\times x + (1) \\times (3)",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 3,
+              "depth": 0.5
+            },
+            "action": "separate"
+          },
+          "algebraAnimation": {
+            "type": "distribution",
+            "distributingFactorText": "2x puis +1",
+            "arrows": [
+              {
+                "fromIndex": 0,
+                "toIndex": 2,
+                "label": "2x × x",
+                "color": "#ef4444"
+              },
+              {
+                "fromIndex": 0,
+                "toIndex": 3,
+                "label": "2x × (3)",
+                "color": "#ef4444"
+              },
+              {
+                "fromIndex": 1,
+                "toIndex": 2,
+                "label": "(1) × x",
+                "color": "#ef4444"
+              },
+              {
+                "fromIndex": 1,
+                "toIndex": 3,
+                "label": "(1) × (3)",
+                "color": "#ef4444"
+              }
+            ],
+            "tokens": [
+              {
+                "text": "2x · x",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "2x · (3)",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "(1) · x",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "(1) · (3)",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              }
+            ],
+            "activeExplanation": "L'élément distributeur est en ROUGE et se déplace vers chaque terme du second facteur."
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Calcul des 4 produits individuels (zéro disparition)",
+          "explanation": "On effectue chaque multiplication : 2x × x = 2x^2 ; 2x × (3) = +6x ; (1) × x = +1x ; (1) × (3) = +3.",
+          "appliedRule": "Multiplication des coefficients et puissances",
+          "latex": "= 2x^2 + 6x + 1x + 3",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 3,
+              "depth": 0.5
+            },
+            "action": "rearrange"
+          },
+          "algebraAnimation": {
+            "type": "products",
+            "replacedTermsText": "Produits intermédiaires remplacés par leurs valeurs calculées",
+            "tokens": [
+              {
+                "text": "2x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 6x",
+                "type": "variable",
+                "color": "#818cf8"
+              },
+              {
+                "text": "+ 1x",
+                "type": "variable",
+                "color": "#f59e0b"
+              },
+              {
+                "text": "+ 3",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "Chaque produit partiel est calculé avec son signe respectif."
+          }
+        },
+        {
+          "stepNumber": 4,
+          "title": "Regroupement des termes semblables en x mis en ROUGE",
+          "explanation": "Les deux termes du milieu (6x et 1x) ont la même partie littérale x. On les additionne : (6) + (1) = 7.",
+          "appliedRule": "Réduction des termes semblables (même puissance)",
+          "latex": "= 2x^2 + \\mathbf{[(6)x + (1)x]} + 3",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 3,
+              "depth": 0.5
+            },
+            "action": "highlight"
+          },
+          "algebraAnimation": {
+            "type": "combine",
+            "replacedTermsText": "+ 6x + 1x remplacés par + 7x",
+            "highlightPairs": [
+              [
+                1,
+                2
+              ]
+            ],
+            "tokens": [
+              {
+                "text": "2x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "[+ 6x + 1x]",
+                "type": "variable",
+                "color": "#ef4444",
+                "isReplaced": true,
+                "highlight": true
+              },
+              {
+                "text": "+ 3",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "On met en ROUGE les termes en x à remplacer par leur somme !"
+          }
+        },
+        {
+          "stepNumber": 5,
+          "title": "Forme finale développée et ordonnée",
+          "explanation": "L'expression est désormais sous sa forme développée, réduite et ordonnée par puissances décroissantes de x : 2x^2 + 7x + 3.",
+          "appliedRule": "Forme canonique polynômiale",
+          "latex": "= 2x^2 + 7x + 3",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 3,
+              "depth": 0.5
+            },
+            "action": "final_factored"
+          },
+          "algebraAnimation": {
+            "type": "final",
+            "tokens": [
+              {
+                "text": "2x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 7x",
+                "type": "variable",
+                "color": "#10b981",
+                "highlight": true
+              },
+              {
+                "text": "+ 3",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "Résultat final développé et réduit !"
+          }
+        }
+      ]
     }
   },
   "accessCount": {
@@ -1277,7 +1829,9 @@
     "7c5993d6d7bf3ab1bf669a19f64c6b26cc9b1be466290c5bf0c84ffa39338c8b": 1,
     "dbcf2cae5f63cbe097f42d62e59354e4fe85cbbc5f3e6f9988895fcc3a8f7d9b": 1,
     "a9ff87385ddc127f5625769ad2774779bbce8ffa9f1697add871d0a023812cc0": 1,
-    "fa84feac86bd74770c8b6d48b52fcdf2b3e01ffcb6b97ee24085c77629206788": 1,
-    "6c208facfdd7d246feab9d8c57b90c4e4b7ae0b592b28484e1ed90742bf0da9c": 1
+    "fa84feac86bd74770c8b6d48b52fcdf2b3e01ffcb6b97ee24085c77629206788": 302,
+    "6c208facfdd7d246feab9d8c57b90c4e4b7ae0b592b28484e1ed90742bf0da9c": 2,
+    "70bc607a197d1b025431102527e363c0f44ac97f47f2a8dfbb69acd0311c9ecf": 1,
+    "31c6b682fe3a3ab124ac72f501426dea534febdf7c2c32a410c915fa89effb58": 1
   }
 }
