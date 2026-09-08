@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/mathlive"></script>
+</head>
+<body>
+    <math-field id="mf">x=23</math-field>
+    <div id="out"></div>
+    <script>
+        const mf = document.getElementById('mf');
+        mf.addEventListener('selection-change', () => {
+            let sel = "";
+            try {
+                sel = mf.getValue(mf.selection, 'latex');
+            } catch (e) {
+                try {
+                    sel = mf.getValue(mf.selection.ranges[0], 'latex');
+                } catch (e2) {}
+            }
+            document.getElementById('out').innerText = "Sel: " + sel;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/mathlive"></script>
+</head>
+<body>
+    <math-field id="mf">x=23</math-field>
+    <script>
+        window.onload = () => {
+            const mf = document.getElementById('mf');
+            mf.addEventListener('selection-change', () => {
+                if (!mf.hasFocus()) return;
+                const sel = mf.getValue(mf.selection, 'latex'); // Wait, selection value?
+                // Let's check how to get selection in MathLive
+                console.log(mf.selection);
+            });
+        };
+    </script>
+</body>
+</html>

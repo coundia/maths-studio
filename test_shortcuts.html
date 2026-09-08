@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/mathlive"></script>
+</head>
+<body>
+    <math-field id="mf"></math-field>
+    <script>
+        window.onload = () => {
+            const mf = document.getElementById('mf');
+            console.log(mf.inlineShortcuts); // Check if it's populated
+            mf.inlineShortcuts = {
+                ...mf.inlineShortcuts,
+                "/([xyzabcntXYZABCNT])([2-9])/": "$1^$2"
+            };
+        };
+    </script>
+</body>
+</html>

@@ -6,12 +6,16 @@ interface Point {
   y: number;
 }
 
-export const WhiteboardCanvas: React.FC = () => {
+interface WhiteboardCanvasProps {
+  isOverlay?: boolean;
+}
+
+export const WhiteboardCanvas: React.FC<WhiteboardCanvasProps> = ({ isOverlay = false }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [color, setColor] = useState('#ffffff');
-  const [lineWidth, setLineWidth] = useState(3);
+  const [color, setColor] = useState(isOverlay ? '#ef4444' : '#ffffff');
+  const [lineWidth, setLineWidth] = useState(isOverlay ? 4 : 3);
   const [isEraser, setIsEraser] = useState(false);
 
   // Resize canvas to fill container
@@ -106,12 +110,14 @@ export const WhiteboardCanvas: React.FC = () => {
     }
   };
 
-  const COLORS = ['#ffffff', '#f87171', '#34d399', '#60a5fa', '#fbbf24'];
+  const COLORS = isOverlay 
+    ? ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'] 
+    : ['#ffffff', '#f87171', '#34d399', '#60a5fa', '#fbbf24'];
 
   return (
-    <div className="w-full h-full flex flex-col bg-slate-900 rounded-2xl overflow-hidden border border-slate-700 relative shadow-inner">
+    <div className={`w-full h-full flex flex-col relative ${isOverlay ? 'pointer-events-auto z-50' : 'bg-slate-900 rounded-2xl overflow-hidden border border-slate-700 shadow-inner'}`}>
       {/* Drawing toolbar */}
-      <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-slate-800/90 backdrop-blur-md p-2 rounded-xl flex items-center space-x-2 border border-slate-700 shadow-xl z-10">
+      <div className={`absolute left-1/2 -translate-x-1/2 bg-slate-800/90 backdrop-blur-md p-2 rounded-xl flex items-center space-x-2 border border-slate-700 shadow-xl z-10 ${isOverlay ? 'top-24' : 'top-4'}`}>
         <div className="flex space-x-1 border-r border-slate-600 pr-2 mr-1">
           {COLORS.map(c => (
             <button
