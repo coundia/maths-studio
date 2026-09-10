@@ -8,6 +8,7 @@ import {
 import { useTheme } from '../../context/ThemeContext';
 import { WhiteboardCanvas } from './WhiteboardCanvas';
 import 'mathlive';
+import { initVirtualKeyboardInCurrentBrowsingContext } from 'mathlive';
 
 // Declare math-field for TypeScript
 declare module 'react' {
@@ -85,17 +86,31 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
   // Configure MathLive Virtual Keyboard
   useEffect(() => {
     if (typeof window !== 'undefined' && isOpen && activeMode === 'type') {
+      try {
+        initVirtualKeyboardInCurrentBrowsingContext();
+      } catch (e) {
+        console.warn('initVirtualKeyboardInCurrentBrowsingContext:', e);
+      }
+
       const mvk = (window as any).mathVirtualKeyboard;
       if (mvk) {
         if (kbdContainerRef.current) {
-          mvk.container = kbdContainerRef.current;
+          try {
+            mvk.container = kbdContainerRef.current;
+          } catch (e) {
+            console.warn('mathVirtualKeyboard container assignment error handled:', e);
+          }
         }
         
         // Hide/show based on state
-        if (isKeyboardOpen) {
-          mvk.show();
-        } else {
-          mvk.hide();
+        try {
+          if (isKeyboardOpen) {
+            mvk.show();
+          } else {
+            mvk.hide();
+          }
+        } catch (e) {
+          console.warn('mathVirtualKeyboard show/hide error:', e);
         }
       }
     }
@@ -105,8 +120,14 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
       if (typeof window !== 'undefined') {
         const mvk = (window as any).mathVirtualKeyboard;
         if (mvk) {
-          mvk.hide();
-          mvk.container = document.body; // reset to default
+          try {
+            mvk.hide();
+          } catch (e) {}
+          try {
+            mvk.container = document.body; // reset to default
+          } catch (e) {
+            // Silently ignore if in an iframe
+          }
         }
       }
     };

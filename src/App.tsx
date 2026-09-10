@@ -9,6 +9,7 @@ import { AlgebraProgressionCard } from './components/AlgebraProgressionCard';
 import { Math3DViewer } from './components/Math3DViewer';
 import { StepPlayer } from './components/StepPlayer';
 import { BlackboardDrawer } from './components/blackboard/BlackboardDrawer';
+import { AlgebraRemindersSection } from './components/AlgebraRemindersSection';
 import {
   ALL_SENEGAL_COURSES,
   SENEGAL_COURSES_3E,
@@ -212,6 +213,12 @@ export default function App() {
                   activeSolution={activeSolution}
                 />
               </div>
+
+              {/* Fiches Rappels de Cours (Puissances, Signes dans ℤ, Identités Remarquables) */}
+              <AlgebraRemindersSection
+                onSelectExample={(expr, op) => handleResolve(expr, op)}
+                isOpenDefault={false}
+              />
 
               {errorMsg && (
                 <div className="p-4 rounded-xl bg-rose-950/50 border border-rose-800 text-rose-300 text-sm flex items-center justify-between">

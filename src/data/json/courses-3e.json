@@ -67,6 +67,92 @@
             "hint": "√18 = 3√2, √50 = 5√2, √8 = 2√2"
           }
         ]
+      },
+      {
+        "id": "racine-carree-conjuguee",
+        "title": "Rendre rationnel le dénominateur (Quantité conjuguée)",
+        "badge": "Technique BFEM",
+        "defaultLatex": "\\frac{k}{\\sqrt{a} + \\sqrt{b}} = \\frac{k(\\sqrt{a} - \\sqrt{b})}{a - b}",
+        "ruleSummary": "Pour éliminer une racine au dénominateur, on multiplie par le même radical s'il est seul, ou par l'expression conjuguée (a - b)(a + b) = a² - b² s'il y a une somme.",
+        "teacherGoal": "Apprendre à transformer les écritures fractionnaires sans modifier la valeur du quotient.",
+        "interactiveType": "racine-carree",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Cas 1 : Dénominateur à radical unique",
+            "rule": "Multiplier numérateur et dénominateur par le radical √b",
+            "latex": "\\frac{6}{\\sqrt{3}} = \\frac{6 \\times \\sqrt{3}}{\\sqrt{3} \\times \\sqrt{3}} = \\frac{6\\sqrt{3}}{3} = 2\\sqrt{3}",
+            "explanation": "Puisque (√3)² = 3, le dénominateur devient un entier rationnel.",
+            "teacherTip": "Ne laissez jamais une fraction sous la forme a/√b dans une copie d'examen."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Cas 2 : Dénominateur sous forme de binôme √a - √b",
+            "rule": "Utiliser la quantité conjuguée (√a + √b)",
+            "latex": "\\frac{4}{\\sqrt{7} - \\sqrt{3}} = \\frac{4(\\sqrt{7} + \\sqrt{3})}{(\\sqrt{7} - \\sqrt{3})(\\sqrt{7} + \\sqrt{3})}",
+            "explanation": "L'expression conjuguée de (√7 - √3) est (√7 + √3).",
+            "teacherTip": "Pensez à mettre des parenthèses autour du numérateur et du dénominateur."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Développement du dénominateur remarquable",
+            "rule": "Identité (x - y)(x + y) = x² - y²",
+            "latex": "(\\sqrt{7})^2 - (\\sqrt{3})^2 = 7 - 3 = 4 \\implies \\frac{4(\\sqrt{7} + \\sqrt{3})}{4}",
+            "explanation": "Les racines disparaissent totalement au dénominateur !",
+            "teacherTip": "Vérifiez bien que le dénominateur n'est pas nul avant de simplifier."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Simplification finale",
+            "rule": "Division par le facteur commun",
+            "latex": "\\frac{4(\\sqrt{7} + \\sqrt{3})}{4} = \\sqrt{7} + \\sqrt{3}",
+            "explanation": "Le résultat final est parfaitement rationnel au dénominateur (égal à 1).",
+            "teacherTip": "Encadrez toujours votre résultat final."
+          }
+        ]
+      },
+      {
+        "id": "racine-carree-equation-x2",
+        "title": "Résolution des équations de la forme x² = a",
+        "badge": "Équations clés",
+        "defaultLatex": "x^2 = a \\iff (x = \\sqrt{a} \\quad \\text{ou} \\quad x = -\\sqrt{a}) \\quad [a > 0]",
+        "ruleSummary": "Une équation x² = a admet deux solutions opposées si a > 0, une unique solution 0 si a = 0, et aucune solution si a < 0.",
+        "teacherGoal": "Éviter l'oubli systématique de la solution négative par les candidats.",
+        "interactiveType": "racine-carree",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Cas où a est strictement positif (ex: x² = 49)",
+            "rule": "Deux solutions réelles opposées",
+            "latex": "x^2 = 49 \\iff x = \\sqrt{49} = 7 \\quad \\text{ou} \\quad x = -\\sqrt{49} = -7",
+            "explanation": "Car 7² = 49 et (-7)² = 49. L'ensemble des solutions est S = {-7 ; 7}.",
+            "teacherTip": "Piège fréquent au BFEM : ne pas oublier la solution négative !"
+          },
+          {
+            "stepNumber": 2,
+            "title": "Cas où a est nul (x² = 0)",
+            "rule": "Une solution unique",
+            "latex": "x^2 = 0 \\iff x = 0 \\implies S = \\{0\\}",
+            "explanation": "Le seul nombre réel dont le carré est nul est 0.",
+            "teacherTip": "C'est un singleton {0}."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Cas où a est strictement négatif (ex: x² = -16)",
+            "rule": "Aucune solution dans ℝ",
+            "latex": "x^2 = -16 \\implies S = \\emptyset",
+            "explanation": "Un carré de réel est toujours positif ou nul dans ℝ. Il ne peut être négatif.",
+            "teacherTip": "Écrire clairement : S = ∅ (ensemble vide)."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Cas avec expression composée : (2x - 3)² = 25",
+            "rule": "Se ramener à deux équations du 1er degré",
+            "latex": "2x - 3 = 5 \\quad \\text{ou} \\quad 2x - 3 = -5 \\implies x = 4 \\quad \\text{ou} \\quad x = -1",
+            "explanation": "On résout séparément 2x = 8 (x = 4) et 2x = -2 (x = -1). D'où S = {-1 ; 4}.",
+            "teacherTip": "Ne développez surtout pas ! Utilisez la propriété de x² = a."
+          }
+        ]
       }
     ]
   },
@@ -384,6 +470,49 @@
             "hint": "Additionner les deux équations directement pour éliminer y."
           }
         ]
+      },
+      {
+        "id": "systemes-substitution",
+        "title": "Méthode par Substitution",
+        "badge": "Méthode Alternative",
+        "defaultLatex": "\\begin{cases} x + 2y = 8 \\\\ 3x - 4y = 4 \\end{cases} \\implies x = 8 - 2y",
+        "ruleSummary": "La méthode par substitution est idéale lorsqu'une des inconnues possède un coefficient égal à 1 ou -1.",
+        "teacherGoal": "Donner aux élèves la flexibilité de choisir la méthode la plus rapide selon le sujet.",
+        "interactiveType": "systemes-2-inconnues",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Isolement d'une inconnue facile (x)",
+            "rule": "Exprimer x en fonction de y dans l'équation (1)",
+            "latex": "x + 2y = 8 \\implies x = 8 - 2y \\quad (1')",
+            "explanation": "On choisit x dans la 1ère équation car son coefficient est 1.",
+            "teacherTip": "Isolez toujours l'inconnue sans coefficient pour éviter les fractions."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Substitution de x dans la 2ème équation",
+            "rule": "Remplacer x par (8 - 2y) dans l'équation (2)",
+            "latex": "3(8 - 2y) - 4y = 4",
+            "explanation": "La deuxième équation ne contient plus qu'une seule inconnue y !",
+            "teacherTip": "N'oubliez pas de distribuer le 3 sur les deux termes : 3×8 et 3×(-2y)."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Développement et résolution en y",
+            "rule": "Équation du 1er degré en y",
+            "latex": "24 - 6y - 4y = 4 \\implies -10y = 4 - 24 = -20 \\implies y = \\frac{-20}{-10} = 2",
+            "explanation": "On trouve la première valeur : y = 2.",
+            "teacherTip": "Attention aux signes négatifs : -20 / -10 = +2."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Calcul de x et solution finale",
+            "rule": "Remplacer y = 2 dans x = 8 - 2y",
+            "latex": "x = 8 - 2(2) = 8 - 4 = 4 \\implies S = \\{(4 ; 2)\\}",
+            "explanation": "On remplace y pour déduire immédiatement x.",
+            "teacherTip": "Écrire la solution sous forme de couple ordonné (x ; y)."
+          }
+        ]
       }
     ]
   },
@@ -559,6 +688,84 @@
             "hint": "cos²(x) + sin²(x) = 1"
           }
         ]
+      },
+      {
+        "id": "trigo-relations-fondamentales",
+        "title": "Formules fondamentales : cos²(x) + sin²(x) = 1 et tan(x)",
+        "badge": "Propriétés Clés",
+        "defaultLatex": "\\cos^2(x) + \\sin^2(x) = 1 \\quad \\text{et} \\quad \\tan(x) = \\frac{\\sin(x)}{\\cos(x)}",
+        "ruleSummary": "Ces deux formules permettent de déduire le sinus et la tangente d'un angle connaissant son cosinus, sans même avoir besoin de mesurer les côtés ni d'utiliser une calculatrice.",
+        "teacherGoal": "Maîtriser les calculs algébriques sur les rapports trigonométriques.",
+        "interactiveType": "cosinus-svg",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Application de cos²(x) + sin²(x) = 1",
+            "rule": "Somme des carrés toujours égale à 1",
+            "latex": "\\cos(x) = \\frac{3}{5} \\implies \\left(\\frac{3}{5}\\right)^2 + \\sin^2(x) = 1",
+            "explanation": "On élève la valeur connue au carré : 9/25.",
+            "teacherTip": "N'oubliez pas de mettre toute la fraction entre parenthèses."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Calcul de sin²(x)",
+            "rule": "Soustraction à 1",
+            "latex": "\\sin^2(x) = 1 - \\frac{9}{25} = \\frac{25 - 9}{25} = \\frac{16}{25}",
+            "explanation": "On met au même dénominateur 25.",
+            "teacherTip": "25/25 - 9/25 = 16/25."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Extraction de sin(x)",
+            "rule": "x angle aigu donc sin(x) > 0",
+            "latex": "\\sin(x) = \\sqrt{\\frac{16}{25}} = \\frac{4}{5}",
+            "explanation": "La racine carrée d'une fraction est le quotient des racines : √16 / √25 = 4/5.",
+            "teacherTip": "Précisez toujours : \"x étant aigu, sin(x) est positif\"."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Calcul de la tangente tan(x)",
+            "rule": "tan(x) = sin(x) / cos(x)",
+            "latex": "\\tan(x) = \\frac{\\frac{4}{5}}{\\frac{3}{5}} = \\frac{4}{5} \\times \\frac{5}{3} = \\frac{4}{3}",
+            "explanation": "On simplifie par 5 pour obtenir la tangente exacte.",
+            "teacherTip": "Vérifiez la cohérence : 4/3 > 0."
+          }
+        ]
+      },
+      {
+        "id": "trigo-angles-remarquables",
+        "title": "Valeurs remarquables des angles 30°, 45° et 60°",
+        "badge": "Tableau BFEM",
+        "defaultLatex": "\\cos(60^\\circ) = \\sin(30^\\circ) = \\frac{1}{2}, \\quad \\cos(45^\\circ) = \\frac{\\sqrt{2}}{2}, \\quad \\cos(30^\\circ) = \\frac{\\sqrt{3}}{2}",
+        "ruleSummary": "Le tableau des angles remarquables est fourni ou exigé par cœur au BFEM. Deux angles complémentaires ont le cosinus de l'un égal au sinus de l'autre.",
+        "teacherGoal": "Permettre aux élèves de résoudre sans calculatrice les épreuves de géométrie.",
+        "interactiveType": "cosinus-svg",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Angle de 30° : petit angle",
+            "rule": "sin(30°) = 1/2 et cos(30°) = √3 / 2",
+            "latex": "\\cos(30^\\circ) = \\frac{\\sqrt{3}}{2} \\approx 0,866, \\quad \\sin(30^\\circ) = \\frac{1}{2} = 0,5, \\quad \\tan(30^\\circ) = \\frac{\\sqrt{3}}{3}",
+            "explanation": "Issu de la moitié d'un triangle équilatéral.",
+            "teacherTip": "Retenez : le côté opposé à 30° vaut la moitié de l'hypoténuse."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Angle de 45° : triangle rectangle isocèle",
+            "rule": "Cosinus et sinus égaux",
+            "latex": "\\cos(45^\\circ) = \\sin(45^\\circ) = \\frac{\\sqrt{2}}{2}, \\quad \\tan(45^\\circ) = 1",
+            "explanation": "Comme les deux côtés de l'angle droit sont égaux, tan(45°) = côté/côté = 1.",
+            "teacherTip": "Pratique pour la diagonale d'un carré."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Angle de 60° : complémentaire de 30°",
+            "rule": "Inversion des valeurs de 30°",
+            "latex": "\\cos(60^\\circ) = \\frac{1}{2}, \\quad \\sin(60^\\circ) = \\frac{\\sqrt{3}}{2}, \\quad \\tan(60^\\circ) = \\sqrt{3}",
+            "explanation": "Puisque 30° + 60° = 90°, cos(60°) = sin(30°) et sin(60°) = cos(30°).",
+            "teacherTip": "Règle des angles complémentaires : cos(90° - x) = sin(x)."
+          }
+        ]
       }
     ]
   },
@@ -626,6 +833,84 @@
             "question": "Dans un triangle ABC, AM = 3, AB = 9, AN = 4, AC = 12. Les droites (MN) et (BC) sont-elles parallèles ?",
             "answerLatex": "\\frac{AM}{AB} = \\frac{3}{9} = \\frac{1}{3} \\quad \\text{et} \\quad \\frac{AN}{AC} = \\frac{4}{12} = \\frac{1}{3}. \\text{ Rapports égaux et points dans le même ordre } \\implies (MN) \\parallel (BC)",
             "hint": "Calculer séparément AM/AB et AN/AC."
+          }
+        ]
+      },
+      {
+        "id": "thales-reciproque",
+        "title": "Réciproque de Thalès : Démontrer le parallélisme",
+        "badge": "Démonstration BFEM",
+        "defaultLatex": "\\frac{AM}{AB} = \\frac{AN}{AC} \\quad \\text{et points alignés dans le même ordre} \\implies (MN) \\parallel (BC)",
+        "ruleSummary": "Pour prouver que deux droites sont parallèles : on calcule séparément deux rapports de longueurs. S'ils sont égaux et que les points sont alignés dans le même ordre, les droites sont parallèles.",
+        "teacherGoal": "Apprendre la rédaction rigoureuse exigée par les correcteurs.",
+        "interactiveType": "thales-svg",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Calcul du premier rapport numérique AM / AB",
+            "rule": "Calcul séparé sous forme de fraction irréductible",
+            "latex": "\\frac{AM}{AB} = \\frac{4}{6} = \\frac{2}{3}",
+            "explanation": "On calcule la première fraction de manière totalement indépendante.",
+            "teacherTip": "Ne jamais écrire l'égalité des rapports dès le départ !"
+          },
+          {
+            "stepNumber": 2,
+            "title": "Calcul du deuxième rapport numérique AN / AC",
+            "rule": "Calcul séparé sous forme de fraction irréductible",
+            "latex": "\\frac{AN}{AC} = \\frac{5}{7,5} = \\frac{50}{75} = \\frac{2}{3}",
+            "explanation": "On simplifie la fraction pour pouvoir la comparer à la première.",
+            "teacherTip": "Multipliez par 10 le numérateur et dénominateur pour chasser les virgules."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Constat de l'égalité et ordre des points",
+            "rule": "Vérification des deux conditions d'application",
+            "latex": "\\frac{AM}{AB} = \\frac{AN}{AC} = \\frac{2}{3}",
+            "explanation": "Les deux quotients sont strictement égaux. De plus, les points A, M, B d'une part et A, N, C d'autre part sont alignés dans le même ordre.",
+            "teacherTip": "La mention de l'alignement dans le même ordre rapporte 0,5 pt au BFEM."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Conclusion par la réciproque de Thalès",
+            "rule": "D'après la réciproque du théorème de Thalès",
+            "latex": "(MN) \\parallel (BC)",
+            "explanation": "Les deux droites sont parallèles.",
+            "teacherTip": "Encadrez le résultat final."
+          }
+        ]
+      },
+      {
+        "id": "thales-papillon",
+        "title": "Configuration Papillon (Croisée) du Théorème de Thalès",
+        "badge": "Configuration BFEM",
+        "defaultLatex": "\\frac{AM}{AB} = \\frac{AN}{AC} = \\frac{MN}{BC} \\quad (A \\text{ situé entre les droites})",
+        "ruleSummary": "Lorsque deux droites sécantes en A forment un sablier ou papillon avec (BC) // (MN), les rapports de Thalès restent valables depuis le point d'intersection A.",
+        "teacherGoal": "Reconnaître la disposition croisée et ne pas se tromper de sommet de départ.",
+        "interactiveType": "thales-svg",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Identification du point d'intersection A",
+            "rule": "Sommet commun aux deux triangles",
+            "latex": "(BM) \\text{ et } (CN) \\text{ sécantes en } A, \\quad (MN) \\parallel (BC)",
+            "explanation": "Les triangles AMN et ABC sont opposés par le sommet A.",
+            "teacherTip": "Le point commun A doit être présent au début de chaque rapport."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Écriture des rapports de longueurs",
+            "rule": "Rapports des longueurs homologues",
+            "latex": "\\frac{AM}{AB} = \\frac{AN}{AC} = \\frac{MN}{BC}",
+            "explanation": "AM correspond à AB sur la même droite sécante ; AN correspond à AC.",
+            "teacherTip": "Ne croisez pas les droites ! AM est aligné avec B, pas avec C."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Calcul d'une longueur inconnue par produit en croix",
+            "rule": "Application numérique",
+            "latex": "\\frac{2}{5} = \\frac{MN}{12} \\implies MN = \\frac{2 \\times 12}{5} = \\frac{24}{5} = 4,8\\text{ cm}",
+            "explanation": "On isole l'inconnue MN par la règle de trois.",
+            "teacherTip": "Donnez la valeur exacte fractionnaire puis décimale."
           }
         ]
       }

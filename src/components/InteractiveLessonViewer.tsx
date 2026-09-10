@@ -25,7 +25,13 @@ import {
   Tv,
   Zap,
   BookOpenCheck,
+  BookOpen,
+  Award,
+  Layers,
 } from 'lucide-react';
+import { CourseSheetViewer } from './CourseSheetViewer';
+
+export type LessonTabMode = 'animation' | 'cours-complet' | 'methodes-bfem' | 'exercices';
 
 interface InteractiveLessonViewerProps {
   chapter: CourseChapter;
@@ -38,7 +44,10 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
   onOpenAlgebraSolver,
   onSelectChapter,
 }) => {
-  const currentDemo: CourseDemo = chapter.demos[0];
+  const [activeTabMode, setActiveTabMode] = useState<LessonTabMode>('animation');
+  const [activeDemoIdx, setActiveDemoIdx] = useState<number>(0);
+
+  const currentDemo: CourseDemo = chapter.demos[activeDemoIdx] || chapter.demos[0];
   const exercises = getExercisesForChapter(chapter.id, currentDemo);
   const prerequisites = getChapterPrerequisites(chapter);
   const [currentStepIdx, setCurrentStepIdx] = useState<number>(0);
@@ -60,10 +69,12 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
 
   // Reset step when chapter changes
   useEffect(() => {
+    setActiveDemoIdx(0);
     setCurrentStepIdx(0);
     setIsPlaying(false);
     setHideSolutionForClass(false);
     setIsPrerequisitesOpen(false);
+    setActiveTabMode('animation');
   }, [chapter.id]);
 
   // Autoplay loop
@@ -224,8 +235,119 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
         </div>
       </div>
 
-      {/* Main Split: Left = Heuristic Animated Stage, Right = Step-by-Step Derivation */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+      {/* Course Navigation Tab Bar */}
+      <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-neutral-100 dark:bg-slate-900 border border-neutral-300 dark:border-slate-800 overflow-x-auto scrollbar-thin">
+        <button
+          onClick={() => setActiveTabMode('animation')}
+          className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
+            activeTabMode === 'animation'
+              ? 'bg-emerald-600 text-white shadow-md'
+              : 'text-neutral-700 hover:text-black hover:bg-white/60 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800/60'
+          }`}
+        >
+          <Play className="w-3.5 h-3.5" />
+          <span>1. Démonstration Animée & Tableau ({chapter.demos.length} {chapter.demos.length > 1 ? 'parties' : 'partie'})</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTabMode('cours-complet')}
+          className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
+            activeTabMode === 'cours-complet'
+              ? 'bg-indigo-600 text-white shadow-md'
+              : 'text-neutral-700 hover:text-black hover:bg-white/60 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800/60'
+          }`}
+        >
+          <BookOpen className="w-3.5 h-3.5" />
+          <span>2. Fiche Complète du Cours & Théorèmes</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTabMode('methodes-bfem')}
+          className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
+            activeTabMode === 'methodes-bfem'
+              ? 'bg-amber-600 text-white shadow-md'
+              : 'text-neutral-700 hover:text-black hover:bg-white/60 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800/60'
+          }`}
+        >
+          <Award className="w-3.5 h-3.5" />
+          <span>3. Méthodes Types & Rédaction BFEM</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTabMode('exercices')}
+          className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
+            activeTabMode === 'exercices'
+              ? 'bg-rose-600 text-white shadow-md'
+              : 'text-neutral-700 hover:text-black hover:bg-white/60 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800/60'
+          }`}
+        >
+          <Zap className="w-3.5 h-3.5" />
+          <span>4. Exercices Corrigés & Quiz</span>
+        </button>
+      </div>
+
+      {/* VIEW MODE 1: COMPREHENSIVE COURSE SHEET OR BFEM METHODS */}
+      {(activeTabMode === 'cours-complet' || activeTabMode === 'methodes-bfem') && (
+        <CourseSheetViewer
+          chapter={chapter}
+          onOpenPrerequisites={() => setIsPrerequisitesOpen(true)}
+          onOpenAlgebraSolver={onOpenAlgebraSolver}
+        />
+      )}
+
+      {/* VIEW MODE 2: STANDALONE EXERCISES & QUIZ */}
+      {activeTabMode === 'exercices' && currentDemo.interactiveType !== 'video-lesson' && (
+        <div className="space-y-6">
+          <QuickQuiz
+            chapter={chapter}
+            demo={currentDemo}
+            onScrollToExercises={() => {
+              const el = document.getElementById('student-exercises-section');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+          />
+          <StudentExercisesSection
+            chapterId={chapter.id}
+            chapterTitle={chapter.title}
+            exercises={exercises}
+          />
+        </div>
+      )}
+
+      {/* VIEW MODE 3: ANIMATION & STEP-BY-STEP DERIVATION (Default) */}
+      {activeTabMode === 'animation' && (
+        <>
+          {/* Multi-part Sub-Lessons Selector if Chapter has multiple demos */}
+          {chapter.demos.length > 1 && (
+            <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-900/80 border border-slate-800 overflow-x-auto scrollbar-thin">
+              <span className="text-xs font-bold text-slate-400 flex items-center gap-1.5 whitespace-nowrap">
+                <Layers className="w-4 h-4 text-emerald-400" />
+                Parties du cours :
+              </span>
+              {chapter.demos.map((d, dIdx) => (
+                <button
+                  key={d.id || dIdx}
+                  onClick={() => {
+                    setActiveDemoIdx(dIdx);
+                    setCurrentStepIdx(0);
+                    setIsPlaying(false);
+                  }}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border ${
+                    activeDemoIdx === dIdx
+                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-sm font-bold'
+                      : 'bg-slate-800/80 hover:bg-slate-800 text-slate-400 border-transparent hover:text-slate-200'
+                  }`}
+                >
+                  Partie {dIdx + 1} : {d.title}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Main Split: Left = Heuristic Animated Stage, Right = Step-by-Step Derivation */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
         {/* Left Column: Visual Heuristic Interactive Stage (7 cols) */}
         <div className="lg:col-span-7 flex flex-col bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl relative min-h-[460px] overflow-hidden">
           {/* Header of Stage */}
@@ -1264,6 +1386,8 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
           chapterTitle={chapter.title}
           exercises={exercises}
         />
+      )}
+        </>
       )}
 
       {/* Floating Quick-Access Right Drawer Trigger */}

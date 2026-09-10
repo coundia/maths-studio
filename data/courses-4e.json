@@ -67,6 +67,76 @@
             "hint": "5² + 12² = 25 + 144 = 169"
           }
         ]
+      },
+      {
+        "id": "pythagore-reciproque",
+        "title": "Réciproque du Théorème de Pythagore : Démontrer un angle droit",
+        "badge": "Démonstration Clé",
+        "defaultLatex": "BC^2 = AB^2 + AC^2 \\implies \\triangle ABC \\text{ rectangle en } A",
+        "ruleSummary": "Pour prouver qu'un triangle est rectangle : on repère le plus long côté, on calcule son carré séparément, puis la somme des carrés des deux autres. S'il y a égalité, le triangle est rectangle.",
+        "teacherGoal": "Apprendre la séparation obligatoire des calculs pour éviter le raisonnement circulaire.",
+        "interactiveType": "pythagore-svg",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Identifier le côté le plus long et calculer son carré",
+            "rule": "Calcul isolé du candidat à l'hypoténuse (ex: BC = 10)",
+            "latex": "BC^2 = 10^2 = 100",
+            "explanation": "On prend le côté le plus long et on calcule son carré seul.",
+            "teacherTip": "Ne jamais écrire l'égalité avant d'avoir calculé chaque membre."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Calculer la somme des carrés des deux autres côtés",
+            "rule": "Somme AB² + AC² (ex: AB = 6, AC = 8)",
+            "latex": "AB^2 + AC^2 = 6^2 + 8^2 = 36 + 64 = 100",
+            "explanation": "On additionne 36 et 64 pour obtenir 100.",
+            "teacherTip": "Faites bien le calcul intermédiaire 36 + 64."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Constater l'égalité et conclure",
+            "rule": "D'après la réciproque du théorème de Pythagore",
+            "latex": "BC^2 = AB^2 + AC^2 = 100 \\implies \\triangle ABC \\text{ est rectangle en } A",
+            "explanation": "L'égalité étant vérifiée, le triangle possède un angle droit au sommet opposé à [BC].",
+            "teacherTip": "Précisez toujours le sommet de l'angle droit (ici A)."
+          }
+        ]
+      },
+      {
+        "id": "pythagore-contraposee",
+        "title": "Contraposée de Pythagore : Prouver qu'un triangle n'est pas rectangle",
+        "badge": "Preuve par l'inégalité",
+        "defaultLatex": "BC^2 \\ne AB^2 + AC^2 \\implies \\triangle ABC \\text{ n'est pas rectangle}",
+        "ruleSummary": "Si le carré du plus long côté est différent de la somme des carrés des deux autres, alors le triangle n'a aucun angle droit.",
+        "teacherGoal": "Savoir justifier rigoureusement l'absence d'angle droit.",
+        "interactiveType": "pythagore-svg",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Calcul du carré du plus long côté (ex: 9 cm)",
+            "rule": "Plus long côté",
+            "latex": "BC^2 = 9^2 = 81",
+            "explanation": "On calcule 9² = 81.",
+            "teacherTip": "Repérez sans vous tromper le plus grand des 3 nombres."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Calcul de la somme des deux autres carrés (ex: 5 cm et 7 cm)",
+            "rule": "Somme des carrés",
+            "latex": "AB^2 + AC^2 = 5^2 + 7^2 = 25 + 49 = 74",
+            "explanation": "La somme vaut 74.",
+            "teacherTip": "Comparez immédiatement les deux valeurs : 81 et 74."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Constat de l'inégalité et conclusion",
+            "rule": "Contraposée de Pythagore",
+            "latex": "BC^2 \\ne AB^2 + AC^2 \\quad (81 \\ne 74) \\implies \\triangle ABC \\text{ n'est pas rectangle}",
+            "explanation": "Puisque l'égalité de Pythagore n'est pas respectée, le triangle ne peut pas être rectangle.",
+            "teacherTip": "Mentionnez le symbole ≠ de façon très lisible."
+          }
+        ]
       }
     ]
   },
@@ -114,6 +184,76 @@
             "latex": "IJ = \\frac{BC}{2} = \\frac{8\\text{ cm}}{2} = 4\\text{ cm}",
             "explanation": "Le segment [IJ] mesure exactement la moitié de la base [BC]. Si BC = 8 cm, alors IJ = 4 cm.",
             "teacherTip": "Poser la question inverse : si IJ = 5 cm, combien mesure BC ? (Réponse : 10 cm)."
+          }
+        ]
+      },
+      {
+        "id": "milieux-longueur",
+        "title": "2ème Théorème : Calcul de la longueur du segment joignant les milieux",
+        "badge": "Longueur Moitié",
+        "defaultLatex": "IJ = \\frac{1}{2} \\times BC = \\frac{BC}{2}",
+        "ruleSummary": "Dans un triangle, la longueur du segment joignant les milieux de deux côtés est égale à la moitié de la longueur du troisième côté.",
+        "teacherGoal": "Utiliser la relation numérique pour calculer des distances sans trigonométrie.",
+        "interactiveType": "droite-milieux-svg",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Hypothèses sur les milieux des côtés",
+            "rule": "I milieu de [AB] et J milieu de [AC]",
+            "latex": "I \\text{ milieu de } [AB], \\quad J \\text{ milieu de } [AC]",
+            "explanation": "On identifie les deux points milieux donnés par l'énoncé ou démontrés au préalable.",
+            "teacherTip": "Vérifiez les codages de longueurs égales sur la figure."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Formule du 2ème théorème de la droite des milieux",
+            "rule": "Longueur = Base / 2",
+            "latex": "IJ = \\frac{BC}{2}",
+            "explanation": "La distance entre les deux milieux vaut exactement la moitié de la base [BC].",
+            "teacherTip": "Inversement, BC = 2 × IJ."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Application numérique",
+            "rule": "Calcul direct",
+            "latex": "BC = 15\\text{ cm} \\implies IJ = \\frac{15}{2} = 7,5\\text{ cm}",
+            "explanation": "On divise simplement par 2 pour obtenir la mesure du segment [IJ].",
+            "teacherTip": "N'oubliez pas l'unité (cm)."
+          }
+        ]
+      },
+      {
+        "id": "milieux-reciproque",
+        "title": "3ème Théorème : Démontrer qu'un point est le milieu d'un côté",
+        "badge": "Réciproque des milieux",
+        "defaultLatex": "I \\text{ milieu de } [AB] \\text{ et } (IJ) \\parallel (BC) \\implies J \\text{ milieu de } [AC]",
+        "ruleSummary": "Dans un triangle, si une droite passe par le milieu d'un premier côté et est parallèle à un deuxième côté, alors elle coupe le troisième côté en son milieu.",
+        "teacherGoal": "Prouver qu'un point est milieu sans calcul de longueur.",
+        "interactiveType": "droite-milieux-svg",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Énoncé des deux hypothèses fondamentales",
+            "rule": "1 milieu + 1 parallélisme",
+            "latex": "I \\text{ milieu de } [AB] \\quad \\text{et} \\quad (d) \\parallel (BC) \\text{ passant par } I",
+            "explanation": "Dans le triangle ABC, la droite (d) passe par le milieu I de [AB] et est parallèle à (BC).",
+            "teacherTip": "Il faut impérativement réunir ces deux conditions."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Application du 3ème théorème des milieux",
+            "rule": "La droite coupe le 3ème côté en son milieu",
+            "latex": "(d) \\text{ coupe } [AC] \\text{ en un point } J",
+            "explanation": "D'après le théorème, le point d'intersection J est obligatoirement le milieu de [AC].",
+            "teacherTip": "Très utile pour démontrer des parallélogrammes par les diagonales."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Conclusion",
+            "rule": "J est le milieu de [AC]",
+            "latex": "AJ = JC = \\frac{AC}{2}",
+            "explanation": "Le segment [AC] est partagé en deux segments de même longueur.",
+            "teacherTip": "Pensez à ajouter le codage sur la figure."
           }
         ]
       }
@@ -216,6 +356,90 @@
             "rule": "Termes semblables : 2x + 1x = 3x",
             "latex": "= x^2 + \\mathbf{3x} + 2",
             "explanation": "On additionne les coefficients des termes de même degré."
+          }
+        ]
+      },
+      {
+        "id": "regle-signes-z",
+        "title": "Règles de calcul dans Z : Moins × Moins = Plus et suppression de parenthèses",
+        "badge": "Règle des signes dans Z",
+        "defaultLatex": "(-a) \\times (-b) = +ab \\quad \\text{et} \\quad -(-b) = +b",
+        "ruleSummary": "Dans Z, le produit de deux nombres de même signe est positif : (-) × (-) = (+) et (+) × (+) = (+). Le produit de deux nombres de signes contraires est négatif : (-) × (+) = (-).",
+        "teacherGoal": "Expliquer pourquoi 'Moins par Moins donne Plus' et éviter les erreurs de signes lors du développement.",
+        "interactiveType": "algebra-arrows",
+        "demoParams": {
+          "expr": "(-3)*(-4)"
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Règle fondamentale du produit de deux négatifs",
+            "rule": "Moins × Moins = Plus",
+            "latex": "(-3) \\times (-4) = +12",
+            "explanation": "Les deux facteurs ont le même signe (négatif), leur produit est donc strictement positif (+12)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Soustraction dans Z : soustraire un négatif",
+            "rule": "Soustraire un nombre revient à ajouter son opposé : a - (-b) = a + b",
+            "latex": "7 - (-5) = 7 + 5 = 12",
+            "explanation": "Le signe 'moins' devant une parenthèse négative se transforme en addition."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Produit de plusieurs facteurs négatifs",
+            "rule": "Nombre de facteurs négatifs : PAIR => (+), IMPAIR => (-)",
+            "latex": "(-2) \\times (-3) \\times (-5) = -30 \\quad \\text{car 3 facteurs négatifs (impair)}",
+            "explanation": "(-2) × (-3) = +6, puis (+6) × (-5) = -30. Compter les signes '-' permet de connaître le signe immédiatement !"
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Application au développement avec parenthèse précédée de '-'",
+            "rule": "-(3x - 5) = -3x + 5",
+            "latex": "4x - (3x - 5) = 4x - 3x + 5 = x + 5",
+            "explanation": "Le signe '-' devant la parenthèse inverse le signe de chaque terme intérieur : +3x devient -3x et -5 devient +5."
+          }
+        ]
+      },
+      {
+        "id": "calcul-puissances-algebriques",
+        "title": "Calculs de puissances : Règles, exposants négatifs et piège (-x)² vs -x²",
+        "badge": "Puissances & Monômes",
+        "defaultLatex": "a^m \\times a^n = a^{m+n}, \\quad (a^m)^n = a^{m \\times n}, \\quad a^{-n} = \\frac{1}{a^n}",
+        "ruleSummary": "Pour multiplier deux puissances d'une même base, on additionne les exposants. Pour un nombre négatif : (-a)^pair est positif, (-a)^impair est négatif, et ne jamais confondre (-3)² = +9 avec -3² = -9.",
+        "teacherGoal": "Maîtriser les propriétés fondamentales des puissances en calcul littéral et numérique.",
+        "interactiveType": "algebra-arrows",
+        "demoParams": {
+          "expr": "(2x^3)^2"
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Produit de deux puissances de même base",
+            "rule": "a^m × a^n = a^(m+n)",
+            "latex": "x^3 \\times x^4 = x^{3+4} = x^7 \\quad \\text{et} \\quad 2^3 \\times 2^2 = 2^5 = 32",
+            "explanation": "On conserve la même base et on additionne les exposants (attention : on ne multiplie pas les exposants !)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Puissance d'une puissance et puissance d'un produit",
+            "rule": "(a^m)^n = a^(m×n) et (ab)^n = a^n × b^n",
+            "latex": "(2x^3)^2 = 2^2 \\times (x^3)^2 = 4x^{3 \\times 2} = 4x^6",
+            "explanation": "L'exposant 2 s'applique au coefficient 2 (qui donne 4) ET à la variable x³ (qui donne x⁶)."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Le piège classique : (-3)² vs -3² et exposant pair/impair",
+            "rule": "(-a)^n avec parenthèses vs -a^n sans parenthèses",
+            "latex": "(-3)^2 = (-3) \\times (-3) = +9, \\quad \\text{alors que } -3^2 = -(3 \\times 3) = -9",
+            "explanation": "Dans (-3)², le carré s'applique à tout le nombre négatif (-3). Dans -3², le carré s'applique uniquement à 3 puis on applique le signe '-'."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Exposants négatifs et division de puissances",
+            "rule": "a^m / a^n = a^(m-n) et a^(-n) = 1 / a^n",
+            "latex": "\\frac{x^7}{x^3} = x^{7-3} = x^4, \\quad 2^{-3} = \\frac{1}{2^3} = \\frac{1}{8} = 0,125",
+            "explanation": "Un exposant négatif ne signifie pas un nombre négatif, mais l'inverse de la puissance positive."
           }
         ]
       }
