@@ -5,7 +5,7 @@ import {
   PenTool, Keyboard, Highlighter, Palette, Underline, CheckSquare, Square, Code,
   History, Clock, Eye, Sun, Moon, Settings, Sliders, Pipette,
   GripHorizontal, Minimize2, Maximize2, MoreHorizontal, ChevronDown, ChevronUp, Maximize,
-  Calculator, Sparkles
+  Calculator, Sparkles, RefreshCw, Type
 } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { WhiteboardCanvas } from './WhiteboardCanvas';
@@ -32,6 +32,216 @@ declare module 'react' {
       };
     }
   }
+}
+
+export type BlackboardLine = {
+  id: number;
+  initialValue: string;
+  isComment?: boolean;
+  commentText?: string;
+  color?: string;
+};
+
+/**
+ * Détecte si une ligne représente un commentaire / texte (commence par '#' ou '\#').
+ * Exemple : "#1.Factorisons A" -> true
+ */
+export function isCommentLine(input: string): boolean {
+  if (!input) return false;
+  const s = input.trim();
+  return s.startsWith('#') || s.startsWith('\\#') || s.startsWith('{\\#}') || /^\\text\{\s*\\?#/.test(s);
+}
+
+/**
+ * Extrait le texte d'un commentaire en retirant le symbole dièse (#) initial.
+ * Exemple : "#1.Factorisons A" -> "1.Factorisons A"
+ */
+export function extractCommentText(input: string): string {
+  if (!input) return '';
+  let s = input.trim();
+  const textMatch = s.match(/^\\text\{\s*\\?#(.*)\}$/);
+  if (textMatch) {
+    s = textMatch[1];
+  } else {
+    s = s.replace(/^(\{\\\#\}|\\\#|#+)\s*/, '');
+  }
+  return s.trim();
+}
+
+/**
+ * Normalise et convertit les notations mathématiques en LaTeX standard :
+ * - Notation 'v' pour racine carrée : 2v2 -> 2\sqrt{2}, v2 -> \sqrt{2}, 3v5 -> 3\sqrt{5}, v(x+1) -> \sqrt{x+1}, (2v3)2 -> (2\sqrt{3})^{2}
+ * - Variables & segments suivis de puissances : x2 -> x^{2}, x3 -> x^{3}, 2x2 -> 2x^{2}, AB2 -> AB^{2}, y4 -> y^{4}
+ * - Expressions parenthésées suivies d'exposant : (x+1)2 -> (x+1)^{2}, (2\sqrt{2})2 -> (2\sqrt{2})^{2}, \right)3 -> \right)^{3}
+ * - Raccourcis usuels : racine / rac / sqrt, pi, deg, +-
+ * - Opérateurs de multiplication : * ou · ou • ou \cdot -> \times 
+ * - Opérateurs de comparaison et flèches : != -> \neq, <= -> \leq, >= -> \geq, => -> \Rightarrow, <=> -> \Leftrightarrow
+ * - Protège intégralement les commandes LaTeX réelles (\times, \frac, \sqrt, \alpha, \pi, etc.)
+ */
+export function formatMathExpression(input: string): string {
+  if (!input) return '';
+  if (isCommentLine(input)) {
+    return '#' + extractCommentText(input);
+  }
+  let str = input;
+  str = str.replace(/\\\$/g, '');
+  str = str.replace(/\*\*([0-9]+)/g, '^{$1}');
+  str = str.replace(/\\cdot\b/g, '\\times ');
+  str = str.replace(/[·•\*]/g, '\\times ');
+  str = str.replace(/!=/g, '\\neq ');
+  str = str.replace(/<=/g, '\\leq ');
+  str = str.replace(/>=/g, '\\geq ');
+  str = str.replace(/<=>/g, '\\Leftrightarrow ');
+  str = str.replace(/=>/g, '\\Rightarrow ');
+  str = str.replace(/->/g, '\\rightarrow ');
+  str = str.replace(/\+-/g, '\\pm ');
+
+  // Normaliser \text{v} ou \mathrm{v} généré par certains claviers en 'v'
+  str = str.replace(/\\text\{v\}/g, 'v');
+  str = str.replace(/\\mathrm\{v\}/g, 'v');
+
+  // Interprétation logique de 'v' comme racine carrée (ex: 2v2 -> 2\sqrt{2}, v3 -> \sqrt{3}, 3v5 -> 3\sqrt{5})
+  // 1) v avec parenthèses LaTeX (\left( ... \right)) ou () ou {}
+  str = str.replace(/(?<![a-zA-Z\\])v\s*\\left\((.*?)\\right\)/g, '\\sqrt{$1}');
+  str = str.replace(/(?<![a-zA-Z\\])v\s*\(([^)]+)\)/g, '\\sqrt{$1}');
+  str = str.replace(/(?<![a-zA-Z\\])v\s*\{([^}]+)\}/g, '\\sqrt{$1}');
+  str = str.replace(/([0-9]+)\s*v\s*\\left\((.*?)\\right\)/g, '$1\\sqrt{$2}');
+  str = str.replace(/([0-9]+)\s*v\s*\(([^)]+)\)/g, '$1\\sqrt{$2}');
+  str = str.replace(/([0-9]+)\s*v\s*\{([^}]+)\}/g, '$1\\sqrt{$2}');
+
+  // 2) Nombre suivi de v et d'un nombre (ex: 2v2 -> 2\sqrt{2}, 3v5 -> 3\sqrt{5}, 10v3 -> 10\sqrt{3})
+  str = str.replace(/([0-9]+)\s*v\s*([0-9]+)/g, '$1\\sqrt{$2}');
+
+  // 3) Racine suivie d'un nombre sans coefficient précédent (ex: v2 -> \sqrt{2}, v3 -> \sqrt{3}, +v5 -> +\sqrt{5})
+  str = str.replace(/(?<![a-zA-Z\\])v\s*([0-9]+)/g, '\\sqrt{$1}');
+
+  // 4) Nombre suivi de v et d'une variable (ex: 2vx -> 2\sqrt{x}, 3va -> 3\sqrt{a})
+  str = str.replace(/([0-9]+)\s*v\s*([a-zA-Z])(?![a-zA-Z])/g, '$1\\sqrt{$2}');
+
+  // 5) v isolé suivi d'une variable simple (ex: vx -> \sqrt{x})
+  str = str.replace(/(?<![a-zA-Z\\])v\s*([a-zA-Z])(?![a-zA-Z])/g, '\\sqrt{$1}');
+
+  // 6) Autres alias fréquents pour racine : racine2 -> \sqrt{2}, rac3 -> \sqrt{3}, sqrt4 -> \sqrt{4}
+  str = str.replace(/(?<![a-zA-Z\\])(?:racine|rac|sqrt)\s*([0-9]+)/g, '\\sqrt{$1}');
+  str = str.replace(/(?<![a-zA-Z\\])(?:racine|rac|sqrt)\s*\\left\((.*?)\\right\)/g, '\\sqrt{$1}');
+  str = str.replace(/(?<![a-zA-Z\\])(?:racine|rac|sqrt)\s*\(([^)]+)\)/g, '\\sqrt{$1}');
+  str = str.replace(/(?<![a-zA-Z\\])(?:racine|rac|sqrt)\s*\{([^}]+)\}/g, '\\sqrt{$1}');
+
+  // 7) Raccourci pi hors commande
+  str = str.replace(/(?<![a-zA-Z\\])pi(?![a-zA-Z])/gi, '\\pi');
+
+  // Parenthèses suivies d'un exposant : (x+1)2 -> (x+1)^{2}, (2\sqrt{2})2 -> (2\sqrt{2})^{2}, \right)3 -> \right)^{3}
+  str = str.replace(/(\)|\\right\))\s*([2-9][0-9]*|1[0-9]+)/g, '$1^{$2}');
+
+  // Variables et longueurs géométriques suivies de nombres (ex: x2 -> x^{2}, x3 -> x^{3}, BC2 -> BC^{2})
+  const regex = /(\\[a-zA-Z]+(?:\{[^}]*\})*)|(?<![\\^_a-zA-Z])([a-zA-Z]+)\s*([2-9][0-9]*|1[0-9]+)/g;
+
+  str = str.replace(regex, (match, cmd, varName, varPow) => {
+    if (cmd) return cmd;
+    if (varName && varPow) return `${varName}^{${varPow}}`;
+    return match;
+  });
+
+  return str.replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * Fournit la table complète des raccourcis automatiques en ligne pour MathLive.
+ * Interprète de façon intuitive les saisies comme 2v2 (2 racine de 2), x2, etc.
+ */
+export function getMathLiveInlineShortcuts(autoCompleteEnabled: boolean): Record<string, string> {
+  if (!autoCompleteEnabled) {
+    return {
+      '*': '\\times',
+      'xx': '\\times',
+      'cdot': '\\times',
+      'times': '\\times',
+    };
+  }
+
+  const shortcuts: Record<string, string> = {
+    // Multiplication
+    '*': '\\times',
+    'xx': '\\times',
+    'cdot': '\\times',
+    'times': '\\times',
+
+    // Opérateurs de comparaison, logique et flèches
+    '!=': '\\neq',
+    '<=': '\\leq',
+    '>=': '\\geq',
+    '=>': '\\Rightarrow',
+    '<=>': '\\Leftrightarrow',
+    '->': '\\rightarrow',
+    '+-': '\\pm',
+
+    // Ensembles de nombres usuels
+    'IR': '\\mathbb{R}',
+    'IN': '\\mathbb{N}',
+    'IZ': '\\mathbb{Z}',
+    'IQ': '\\mathbb{Q}',
+    'ID': '\\mathbb{D}',
+
+    // Fonctions et notations du programme
+    'pi': '\\pi',
+    'deg': '^{\\circ}',
+    '°': '^{\\circ}',
+    'racine': '\\sqrt{#?}',
+    'rac': '\\sqrt{#?}',
+    'sqrt': '\\sqrt{#?}',
+    'vecteur': '\\vec{#?}',
+    'vect': '\\vec{#?}',
+    'angle': '\\widehat{#?}',
+
+    // Puissances usuelles de variables
+    'x2': 'x^2', 'x3': 'x^3', 'x4': 'x^4',
+    'y2': 'y^2', 'y3': 'y^3', 'y4': 'y^4',
+    'z2': 'z^2', 'z3': 'z^3',
+    'a2': 'a^2', 'a3': 'a^3',
+    'b2': 'b^2', 'b3': 'b^3',
+    'c2': 'c^2', 'c3': 'c^3',
+    't2': 't^2', 't3': 't^3',
+    'n2': 'n^2', 'n3': 'n^3',
+
+    // Théorème de Pythagore / segments géométriques
+    'AB2': 'AB^2', 'BC2': 'BC^2', 'AC2': 'AC^2',
+    'MN2': 'MN^2', 'EF2': 'EF^2', 'AH2': 'AH^2',
+    'AI2': 'AI^2', 'BH2': 'BH^2', 'CH2': 'CH^2',
+
+    // Parenthèses avec carré
+    ')2': ')^2',
+    ')3': ')^3',
+
+    // 'v' comme racine carrée
+    'v(': '\\sqrt(',
+    'v{': '\\sqrt{',
+  };
+
+  // Raccourcis directs pour v + nombre (v2 -> \sqrt{2}, v3 -> \sqrt{3}, etc.)
+  for (let n = 1; n <= 19; n++) {
+    shortcuts[`v${n}`] = `\\sqrt{${n}}`;
+  }
+
+  // Raccourcis directs pour coefficient + v + nombre (2v2 -> 2\sqrt{2}, 3v5 -> 3\sqrt{5}, etc.)
+  for (let c = 2; c <= 15; c++) {
+    for (const d of [2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 17, 19]) {
+      shortcuts[`${c}v${d}`] = `${c}\\sqrt{${d}}`;
+    }
+  }
+
+  // Regex shortcuts pour MathLive
+  // 1) 2v2 -> 2\sqrt{2}
+  shortcuts['/([0-9]+)v([0-9]+)/'] = '$1\\sqrt{$2}';
+  // 2) Nombre suivi de v -> place le curseur dans la racine (2v -> 2\sqrt{#?})
+  shortcuts['/([0-9]+)v/'] = '$1\\sqrt{#?}';
+  // 3) Racine en début ou après opérateur (ex: v2 -> \sqrt{2})
+  shortcuts['/([^a-zA-Z\\]|^)v([0-9]+)/'] = '$1\\sqrt{$2}';
+  // 4) Racine avec parenthèse (v( -> \sqrt()
+  shortcuts['/([^a-zA-Z\\]|^)v\\(/'] = '$1\\sqrt(';
+  // 5) Variables avec puissances
+  shortcuts['/([xyzabcntXYZABCNT])([2-9])/'] = '$1^$2';
+
+  return shortcuts;
 }
 
 interface BlackboardDrawerProps {
@@ -130,26 +340,41 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
     return [];
   });
   
+  const commentInputsRef = useRef<Record<number, HTMLInputElement | null>>({});
+
   // Initialize lines from localStorage if available
-  const [lines, setLines] = useState<{id: number, initialValue: string}[]>(() => {
+  const [lines, setLines] = useState<BlackboardLine[]>(() => {
     try {
       const saved = localStorage.getItem('math3d_blackboard_lines');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed.map((val, idx) => ({ id: Date.now() + idx, initialValue: val }));
+          return parsed.map((val, idx) => {
+            const isComment = isCommentLine(val);
+            return {
+              id: Date.now() + idx,
+              initialValue: val,
+              isComment,
+              commentText: isComment ? extractCommentText(val) : '',
+            };
+          });
         }
       }
     } catch (e) {
       console.error('Failed to parse blackboard history:', e);
     }
-    return [{id: Date.now(), initialValue: ''}];
+    return [{ id: Date.now(), initialValue: '', isComment: false, commentText: '' }];
   });
   
   const [activeLineId, setActiveLineId] = useState<number | null>(null);
 
-  const handleAddLine = (afterIndex?: number) => {
-    const newLine = { id: Date.now(), initialValue: '' };
+  const handleAddLine = (afterIndex?: number, asComment = false) => {
+    const newLine: BlackboardLine = {
+      id: Date.now(),
+      initialValue: '',
+      isComment: asComment,
+      commentText: '',
+    };
     if (afterIndex !== undefined && afterIndex >= 0) {
       setLines(prev => {
         const next = [...prev];
@@ -161,7 +386,11 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
     }
     setActiveLineId(newLine.id);
     setTimeout(() => {
-      mathFieldsRef.current[newLine.id]?.focus();
+      if (asComment) {
+        commentInputsRef.current[newLine.id]?.focus();
+      } else {
+        mathFieldsRef.current[newLine.id]?.focus();
+      }
     }, 60);
   };
   const autoCompleteEnabled = boardSettings.autoCompleteEnabled;
@@ -169,6 +398,121 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
     handleUpdateSettings({ ...boardSettings, autoCompleteEnabled: val });
   };
   const [rawModeLines, setRawModeLines] = useState<Record<number, boolean>>({});
+  const [refreshingLineId, setRefreshingLineId] = useState<number | null>(null);
+
+  const handleRefreshLine = (lineId: number) => {
+    setRefreshingLineId(lineId);
+
+    const targetLine = lines.find(l => l.id === lineId);
+    if (targetLine?.isComment) {
+      const inputEl = commentInputsRef.current[lineId];
+      const cur = inputEl ? inputEl.value : (targetLine.commentText || '');
+      const cleaned = extractCommentText(cur);
+      if (inputEl) inputEl.value = cleaned;
+      setLines(prev => prev.map(l => l.id === lineId ? { ...l, commentText: cleaned } : l));
+      saveToLocalStorageSilently();
+      setTimeout(() => setRefreshingLineId(null), 450);
+      return;
+    }
+
+    // If currently in raw LaTeX edit mode, sync from textarea and switch back to visual math mode
+    const textarea = document.querySelector(`textarea[data-line-id="${lineId}"]`) as HTMLTextAreaElement;
+    let currentVal = '';
+
+    if (rawModeLines[lineId] && textarea) {
+      currentVal = textarea.value || '';
+      setRawModeLines(prev => ({ ...prev, [lineId]: false }));
+    } else {
+      const mf = mathFieldsRef.current[lineId];
+      currentVal = mf?.value || '';
+    }
+
+    // Check if line starts with '#' or '\#' (interpreted as a comment/text line without the #)
+    if (isCommentLine(currentVal)) {
+      const comment = extractCommentText(currentVal);
+      setLines(prev => prev.map(l => l.id === lineId ? {
+        ...l,
+        isComment: true,
+        commentText: comment,
+        initialValue: `#${comment}`
+      } : l));
+      setTimeout(() => {
+        const inputEl = commentInputsRef.current[lineId];
+        if (inputEl) {
+          inputEl.value = comment;
+          inputEl.focus();
+        }
+        saveToLocalStorageSilently();
+      }, 50);
+      setTimeout(() => setRefreshingLineId(null), 450);
+      return;
+    }
+
+    // Auto-convert x2 -> x^2, x3 -> x^3, * -> \times, etc.
+    const cleaned = formatMathExpression(currentVal);
+
+    // Update lines state in React
+    setLines(prev => prev.map(l => l.id === lineId ? { ...l, initialValue: cleaned } : l));
+
+    const mf = mathFieldsRef.current[lineId];
+    if (mf) {
+      try {
+        mf.setValue('', { format: 'latex' });
+        setTimeout(() => {
+          mf.setValue(cleaned, { format: 'latex' });
+          try {
+            if (typeof mf.render === 'function') {
+              mf.render();
+            }
+          } catch {}
+          mf.focus();
+          saveToLocalStorageSilently();
+        }, 25);
+      } catch (e) {
+        console.error("Erreur de rafraîchissement du rendu :", e);
+      }
+    }
+
+    setTimeout(() => {
+      setRefreshingLineId(null);
+    }, 450);
+  };
+
+  const handleRefreshAllLines = () => {
+    lines.forEach(line => {
+      if (line.isComment) {
+        const inputEl = commentInputsRef.current[line.id];
+        if (inputEl) {
+          inputEl.value = extractCommentText(inputEl.value);
+        }
+      } else {
+        const mf = mathFieldsRef.current[line.id];
+        const currentVal = mf?.value || line.initialValue || '';
+        if (isCommentLine(currentVal)) {
+          const comment = extractCommentText(currentVal);
+          setLines(prev => prev.map(l => l.id === line.id ? { ...l, isComment: true, commentText: comment } : l));
+        } else {
+          const cleaned = formatMathExpression(currentVal);
+          if (mf) {
+            mf.setValue(cleaned, { format: 'latex' });
+            try {
+              if (typeof mf.render === 'function') mf.render();
+            } catch {}
+          }
+        }
+      }
+    });
+    setLines(prev => prev.map(l => {
+      if (l.isComment) {
+        const inputEl = commentInputsRef.current[l.id];
+        return { ...l, commentText: inputEl?.value ?? l.commentText };
+      }
+      const mf = mathFieldsRef.current[l.id];
+      return { ...l, initialValue: mf?.value || l.initialValue };
+    }));
+    saveToLocalStorageSilently();
+  };
+
   const [selectionContext, setSelectionContext] = useState<{
     lineId: number;
     show: boolean;
@@ -264,12 +608,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
     Object.values(mathFieldsRef.current).forEach((mf: any) => {
       if (mf) {
         if (!autoCompleteEnabled) {
-          mf.inlineShortcuts = {
-            '*': '\\times',
-            'xx': '\\times',
-            'cdot': '\\times',
-            'times': '\\times',
-          };
+          mf.inlineShortcuts = getMathLiveInlineShortcuts(false);
         } else {
           // Restore defaults first
           mf.inlineShortcuts = undefined;
@@ -278,56 +617,27 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
           const defaults = mf.inlineShortcuts || {};
           mf.inlineShortcuts = {
             ...defaults,
-            // Puissances fréquentes
-            'x2': 'x^2', 'x3': 'x^3', 'x4': 'x^4',
-            'y2': 'y^2', 'y3': 'y^3', 'y4': 'y^4',
-            'z2': 'z^2', 'z3': 'z^3',
-            'a2': 'a^2', 'a3': 'a^3',
-            'b2': 'b^2', 'b3': 'b^3',
-            'c2': 'c^2', 'c3': 'c^3',
-            't2': 't^2', 't3': 't^3',
-            'n2': 'n^2', 'n3': 'n^3',
-            
-            // Opérateurs de comparaison et flèches
-            '!=': '\\neq',
-            '<=': '\\leq',
-            '>=': '\\geq',
-            '=>': '\\Rightarrow',
-            '->': '\\rightarrow',
-            '+-': '\\pm',
-            
-            // Opérateurs arithmétiques (interpréter la multiplication comme '×')
-            '*': '\\times',
-            'xx': '\\times',
-            'cdot': '\\times',
-            'times': '\\times',
-            
-            // Raccourcis texte français
-            'racine': '\\sqrt',
-            'rac': '\\sqrt',
-            'vecteur': '\\vec',
-            'vect': '\\vec',
-            'angle': '\\widehat',
-            
-            // Ensembles de nombres
-            'IR': '\\mathbb{R}',
-            'IN': '\\mathbb{N}',
-            'IZ': '\\mathbb{Z}',
-            'IQ': '\\mathbb{Q}',
+            ...getMathLiveInlineShortcuts(true),
           };
         }
       }
     });
   }, [autoCompleteEnabled, lines]);
 
+  const getLineSerializedValue = (line: BlackboardLine): string => {
+    if (line.isComment) {
+      const inputEl = commentInputsRef.current[line.id];
+      const text = inputEl ? inputEl.value : (line.commentText || '');
+      return `#${extractCommentText(text)}`;
+    }
+    const mf = mathFieldsRef.current[line.id];
+    return mf ? mf.value : (line.initialValue || '');
+  };
+
   // Fonction de sauvegarde silencieuse (Auto-save)
   const saveToLocalStorageSilently = () => {
-    // Extract values directly from DOM to avoid React closure stale state
-    const fields = document.querySelectorAll('#printable-blackboard math-field');
-    if (fields.length > 0) {
-      const currentValues = Array.from(fields).map((el: any) => el.value || '');
-      localStorage.setItem('math3d_blackboard_lines', JSON.stringify(currentValues));
-    }
+    const currentValues = lines.map(line => getLineSerializedValue(line));
+    localStorage.setItem('math3d_blackboard_lines', JSON.stringify(currentValues));
     
     const canvas = document.querySelector('canvas') as HTMLCanvasElement;
     if (canvas) {
@@ -337,7 +647,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
 
   // Auto-save whenever the structure of lines changes (add/delete/duplicate)
   useEffect(() => {
-    // Petit timeout pour laisser React rendre les nouveaux math-fields dans le DOM
+    // Petit timeout pour laisser React rendre les nouveaux éléments dans le DOM
     const t = setTimeout(saveToLocalStorageSilently, 100);
     return () => clearTimeout(t);
   }, [lines]);
@@ -346,10 +656,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
     saveToLocalStorageSilently();
     
     // Also create a snapshot in the history (Left Sidebar)
-    const currentValues = lines.map(line => {
-      const mf = mathFieldsRef.current[line.id];
-      return mf ? mf.value : line.initialValue;
-    });
+    const currentValues = lines.map(line => getLineSerializedValue(line));
     
     const newSave: SavedBoard = {
       id: Date.now(),
@@ -367,7 +674,15 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
   };
 
   const loadSave = (save: SavedBoard) => {
-    setLines(save.lines.map((val, idx) => ({ id: Date.now() + idx, initialValue: val })));
+    setLines(save.lines.map((val, idx) => {
+      const isComment = isCommentLine(val);
+      return {
+        id: Date.now() + idx,
+        initialValue: val,
+        isComment,
+        commentText: isComment ? extractCommentText(val) : '',
+      };
+    }));
     setIsLeftSidebarOpen(false);
   };
 
@@ -387,10 +702,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
   };
 
   const handleExport = () => {
-    const currentValues = lines.map(line => {
-      const mf = mathFieldsRef.current[line.id];
-      return mf ? mf.value : line.initialValue;
-    });
+    const currentValues = lines.map(line => getLineSerializedValue(line));
     
     const blob = new Blob([JSON.stringify(currentValues, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -416,7 +728,15 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
           // If empty array, give at least one empty line
           if (parsed.length === 0) parsed.push('');
           
-          setLines(parsed.map((val, idx) => ({ id: Date.now() + idx, initialValue: val })));
+          setLines(parsed.map((val, idx) => {
+            const isComment = isCommentLine(val);
+            return {
+              id: Date.now() + idx,
+              initialValue: val,
+              isComment,
+              commentText: isComment ? extractCommentText(val) : '',
+            };
+          }));
         } else {
           alert("Format de fichier invalide. Veuillez importer un fichier JSON valide.");
         }
@@ -648,6 +968,30 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                       >
                         <Upload className="w-4 h-4 text-slate-500" />
                         <span>Importer un fichier (.json)</span>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          handleRefreshAllLines();
+                          setIsActionsMenuOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-sky-50 dark:hover:bg-sky-950/40 text-sky-600 dark:text-sky-400 text-left transition-colors cursor-pointer"
+                        title="Rafraîchit et convertit automatiquement les puissances (x2 → x², x3 → x³) sur toutes les lignes"
+                      >
+                        <RefreshCw className="w-4 h-4 text-sky-500" />
+                        <span>Rafraîchir & Formater tout</span>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          handleAddLine(lines.length - 1, true);
+                          setIsActionsMenuOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-600 dark:text-amber-400 text-left transition-colors cursor-pointer"
+                        title="Insérer une ligne de texte ou commentaire"
+                      >
+                        <Type className="w-4 h-4 text-amber-500" />
+                        <span>Ajouter un commentaire</span>
                       </button>
 
                       <div className="my-1.5 border-t border-slate-100 dark:border-slate-800" />
@@ -983,234 +1327,453 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                               </span>
                             )}
                             
-                            <div className={`w-full flex-1 flex ${boardSettings.alignment === 'left' ? 'justify-start' : 'justify-center'} ${rawModeLines[line.id] ? 'hidden' : 'block'}`}>
-                          <math-field 
-                            ref={(el: any) => {
-                              if (el) {
-                                if (!mathFieldsRef.current[line.id]) {
-                                  // First time initialization for this field
-                                  el.value = line.initialValue;
-                                  
-                                  el.addEventListener('paste', (e: ClipboardEvent) => {
-                                    if (!autoCompleteRef.current) return;
-                                    
-                                    const text = e.clipboardData?.getData('text/plain');
-                                    // If it's empty or already looks like LaTeX, let MathLive handle it naturally
-                                    if (!text || text.includes('\\')) return;
-                                    
-                                    e.preventDefault();
-                                    
-                                    let processed = text;
-                                    // Replace common math variable powers: x2 -> x^2
-                                    processed = processed.replace(/([xyzabcntXYZABCNT])([2-9])/g, '$1^$2');
-                                    // Replace common operators (interpréte la multiplication comme '×')
-                                    processed = processed.replace(/\\cdot\b/g, '\\times');
-                                    processed = processed.replace(/[·•\*]/g, '\\times');
-                                    processed = processed.replace(/!=/g, '\\neq');
-                                    processed = processed.replace(/<=/g, '\\leq');
-                                    processed = processed.replace(/>=/g, '\\geq');
-                                    
-                                    el.executeCommand(['insert', processed]);
-                                  });
-
-                                  // Auto-save on every keystroke & auto-correction de \cdot en \times
-                                  el.addEventListener('input', () => {
-                                    if (el.value && (el.value.includes('\\cdot') || el.value.includes('·'))) {
-                                      const currentSel = el.selection;
-                                      el.setValue(el.value.replace(/\\cdot\b/g, '\\times').replace(/·/g, '\\times'), { format: 'latex' });
-                                      try {
-                                        if (currentSel) el.selection = currentSel;
-                                      } catch {}
-                                    }
-                                    saveToLocalStorageSilently();
-                                  });
-                                  
-                                  // Detect selection for context menu
-                                  el.addEventListener('selection-change', () => {
-                                    if (el.hasFocus() && !el.selection.isCollapsed) {
-                                      try {
-                                        const sel = el.getValue(el.selection, 'latex');
-                                        if (/^[0-9]+$/.test(sel)) {
-                                          setSelectionContext({ lineId: line.id, show: true });
-                                        } else {
-                                          setSelectionContext(null);
-                                        }
-                                      } catch (e) {
-                                        setSelectionContext(null);
+                            {/* Line content: Comment (Plain text) OR Math Field (Formula) */}
+                            {line.isComment ? (
+                              <div className={`w-full flex-1 flex items-center ${boardSettings.alignment === 'left' ? 'justify-start' : 'justify-center'} px-2 sm:px-4 py-1`}>
+                                <div 
+                                  className="w-full max-w-4xl flex items-center px-3.5 py-2 rounded-xl border-l-4 border-amber-500/70 dark:border-amber-400/70 bg-amber-50/40 dark:bg-amber-950/20 text-slate-800 dark:text-slate-100 transition-all focus-within:ring-2 focus-within:ring-amber-500/30 focus-within:border-amber-500 print:bg-transparent print:border-l-0 print:px-0 print:py-0"
+                                >
+                                  <input
+                                    ref={(el) => { commentInputsRef.current[line.id] = el; }}
+                                    type="text"
+                                    defaultValue={extractCommentText(line.commentText || '')}
+                                    placeholder="Commentaire ou consigne (ex: 1. Factorisons A)..."
+                                    className="w-full bg-transparent border-none outline-none font-sans font-semibold tracking-wide text-slate-900 dark:text-slate-100 placeholder:text-slate-400/70 dark:placeholder:text-slate-500 print:text-black print:font-bold"
+                                    style={{
+                                      fontSize: getFontSizeRem(boardSettings.fontSize),
+                                      textAlign: boardSettings.alignment,
+                                      color: line.color || undefined
+                                    }}
+                                    onFocus={() => {
+                                      setActiveLineId(line.id);
+                                    }}
+                                    onChange={(e) => {
+                                      let val = e.target.value;
+                                      if (val.startsWith('#')) {
+                                        val = val.replace(/^#+\s*/, '');
+                                        e.target.value = val;
                                       }
-                                    } else {
-                                      setSelectionContext(null);
+                                      setLines(prev => prev.map(l => l.id === line.id ? { ...l, commentText: val } : l));
+                                      saveToLocalStorageSilently();
+                                    }}
+                                    onKeyDown={(e) => {
+                                      if (e.key === 'Enter') {
+                                        e.preventDefault();
+                                        handleAddLine(index);
+                                      } else if (e.key === 'Backspace' && e.currentTarget.value === '') {
+                                        e.preventDefault();
+                                        setLines(prev => prev.map(l => l.id === line.id ? { ...l, isComment: false, commentText: '', initialValue: '' } : l));
+                                        setTimeout(() => {
+                                          mathFieldsRef.current[line.id]?.focus();
+                                        }, 50);
+                                      }
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            ) : (
+                              <div className={`w-full flex-1 flex ${boardSettings.alignment === 'left' ? 'justify-start' : 'justify-center'} ${rawModeLines[line.id] ? 'hidden' : 'block'}`}>
+                                <math-field 
+                                  ref={(el: any) => {
+                                    if (el) {
+                                      if (!mathFieldsRef.current[line.id]) {
+                                        // First time initialization for this field
+                                        el.value = line.initialValue;
+                                        
+                                        el.addEventListener('paste', (e: ClipboardEvent) => {
+                                          const text = e.clipboardData?.getData('text/plain');
+                                          if (text && isCommentLine(text)) {
+                                            e.preventDefault();
+                                            const comment = extractCommentText(text);
+                                            setLines(prev => prev.map(l => l.id === line.id ? {
+                                              ...l,
+                                              isComment: true,
+                                              commentText: comment,
+                                              initialValue: `#${comment}`
+                                            } : l));
+                                            setTimeout(() => {
+                                              const inputEl = commentInputsRef.current[line.id];
+                                              if (inputEl) {
+                                                inputEl.value = comment;
+                                                inputEl.focus();
+                                              }
+                                              saveToLocalStorageSilently();
+                                            }, 50);
+                                            return;
+                                          }
+
+                                          if (!autoCompleteRef.current) return;
+                                          if (!text) return;
+                                          
+                                          // Format pasted text into clean standard LaTeX (e.g. 2v2 -> 2\sqrt{2}, x2 -> x^2)
+                                          e.preventDefault();
+                                          const processed = formatMathExpression(text);
+                                          el.executeCommand(['insert', processed]);
+                                        });
+
+                                        // Auto-save on every keystroke & auto-detection of comment '#'
+                                        el.addEventListener('input', () => {
+                                          if (el.value && isCommentLine(el.value)) {
+                                            const comment = extractCommentText(el.value);
+                                            setLines(prev => prev.map(l => l.id === line.id ? {
+                                              ...l,
+                                              isComment: true,
+                                              commentText: comment,
+                                              initialValue: `#${comment}`
+                                            } : l));
+                                            setTimeout(() => {
+                                              const inputEl = commentInputsRef.current[line.id];
+                                              if (inputEl) {
+                                                inputEl.value = comment;
+                                                inputEl.focus();
+                                              }
+                                              saveToLocalStorageSilently();
+                                            }, 50);
+                                            return;
+                                          }
+
+                                          let val = el.value || '';
+                                          let needsUpdate = false;
+
+                                          if (val.includes('\\text{v}') || val.includes('\\mathrm{v}')) {
+                                            val = val.replace(/\\(text|mathrm)\{v\}/g, 'v');
+                                            needsUpdate = true;
+                                          }
+
+                                          if (val.includes('\\cdot') || val.includes('·')) {
+                                            val = val.replace(/\\cdot\b/g, '\\times').replace(/·/g, '\\times');
+                                            needsUpdate = true;
+                                          }
+
+                                          // Détection automatique en temps réel des motifs "v" comme racine carrée (ex: 2v2 -> 2\sqrt{2}, v2 -> \sqrt{2})
+                                          if (autoCompleteRef.current && (
+                                            /([0-9]+)\s*v\s*([0-9]+)/.test(val) ||
+                                            /(?<![a-zA-Z\\])v\s*([0-9]+)/.test(val) ||
+                                            /(?<![a-zA-Z\\])v\s*\\left\(/.test(val) ||
+                                            /(?<![a-zA-Z\\])v\s*\(/.test(val)
+                                          )) {
+                                            val = val.replace(/([0-9]+)\s*v\s*\\left\((.*?)\\right\)/g, '$1\\sqrt{$2}');
+                                            val = val.replace(/([0-9]+)\s*v\s*\(([^)]+)\)/g, '$1\\sqrt{$2}');
+                                            val = val.replace(/(?<![a-zA-Z\\])v\s*\\left\((.*?)\\right\)/g, '\\sqrt{$1}');
+                                            val = val.replace(/(?<![a-zA-Z\\])v\s*\(([^)]+)\)/g, '\\sqrt{$1}');
+                                            val = val.replace(/([0-9]+)\s*v\s*([0-9]+)/g, '$1\\sqrt{$2}');
+                                            val = val.replace(/(?<![a-zA-Z\\])v\s*([0-9]+)/g, '\\sqrt{$1}');
+                                            needsUpdate = true;
+                                          }
+
+                                          if (needsUpdate) {
+                                            const currentSel = el.selection;
+                                            el.setValue(val, { format: 'latex' });
+                                            try {
+                                              if (currentSel) el.selection = currentSel;
+                                            } catch {}
+                                          }
+                                          saveToLocalStorageSilently();
+                                        });
+                                        
+                                        // Detect selection for context menu
+                                        el.addEventListener('selection-change', () => {
+                                          if (el.hasFocus() && !el.selection.isCollapsed) {
+                                            try {
+                                              const sel = el.getValue(el.selection, 'latex');
+                                              if (/^[0-9]+$/.test(sel)) {
+                                                setSelectionContext({ lineId: line.id, show: true });
+                                              } else {
+                                                setSelectionContext(null);
+                                              }
+                                            } catch (e) {
+                                              setSelectionContext(null);
+                                            }
+                                          } else {
+                                            setSelectionContext(null);
+                                          }
+                                        });
+                                      }
+                                      // Save base shortcuts on first initialization if not saved
+                                      if (!el._baseShortcuts) {
+                                        el._baseShortcuts = el.inlineShortcuts || {};
+                                      }
+
+                                      mathFieldsRef.current[line.id] = el;
+                                      el.onkeydown = (e: KeyboardEvent) => {
+                                        if (e.key === '#' || (e.key === '3' && e.altKey)) {
+                                          e.preventDefault();
+                                          setLines(prev => prev.map(l => l.id === line.id ? {
+                                            ...l,
+                                            isComment: true,
+                                            commentText: '',
+                                            initialValue: '#'
+                                          } : l));
+                                          setTimeout(() => {
+                                            commentInputsRef.current[line.id]?.focus();
+                                          }, 50);
+                                          return;
+                                        }
+
+                                        if (e.key === 'Enter' && !e.shiftKey) {
+                                          e.preventDefault();
+                                          try {
+                                            const currentVal = el.value || '';
+                                            if (isCommentLine(currentVal)) {
+                                              const comment = extractCommentText(currentVal);
+                                              setLines(prev => prev.map(l => l.id === line.id ? {
+                                                ...l,
+                                                isComment: true,
+                                                commentText: comment,
+                                                initialValue: `#${comment}`
+                                              } : l));
+                                              handleAddLine(index);
+                                              return;
+                                            }
+                                            const formatted = formatMathExpression(currentVal);
+                                            if (formatted !== currentVal) {
+                                              el.setValue(formatted, { format: 'latex' });
+                                              try {
+                                                if (typeof el.render === 'function') el.render();
+                                              } catch {}
+                                            }
+                                          } catch {}
+                                          handleAddLine(index);
+                                        }
+                                      };
+                                      try {
+                                        el.mathVirtualKeyboardPolicy = 'manual';
+                                      } catch {}
+                                      el.inlineShortcuts = getMathLiveInlineShortcuts(autoCompleteEnabled);
                                     }
+                                  }}
+                                  math-virtual-keyboard-policy="manual"
+                                  onFocus={() => {
+                                    setActiveLineId(line.id);
+                                    if (boardSettings.autoOpenKeyboardOnFocus) {
+                                      setIsKeyboardOpen(true);
+                                      setIsKeyboardMinimized(false);
+                                    }
+                                  }}
+                                  style={{ 
+                                    fontSize: getFontSizeRem(boardSettings.fontSize), 
+                                    width: '90%', 
+                                    textAlign: boardSettings.alignment, 
+                                    border: 'none', 
+                                    outline: 'none', 
+                                    background: 'transparent',
+                                    color: 'inherit'
+                                  }}
+                                >
+                                </math-field>
+
+                                {/* Context Menu for Power/Subscript */}
+                                {selectionContext?.show && selectionContext.lineId === line.id && (
+                                   <div className="absolute top-[-50px] z-50 flex items-center gap-1 bg-slate-800 text-white p-1 rounded-xl shadow-2xl border border-slate-700 animate-in fade-in slide-in-from-bottom-2">
+                                      <button 
+                                        onMouseDown={(e) => {
+                                          e.preventDefault(); 
+                                          if (mathFieldsRef.current[line.id]) {
+                                            mathFieldsRef.current[line.id].insert('^{#0}');
+                                            mathFieldsRef.current[line.id].focus();
+                                          }
+                                          setSelectionContext(null);
+                                        }}
+                                        className="flex items-center px-3 py-1.5 text-xs font-bold hover:bg-indigo-500 rounded-lg transition-colors"
+                                        title="Mettre en Puissance"
+                                      >
+                                        x²
+                                      </button>
+                                      <div className="w-px h-5 bg-slate-600 mx-0.5" />
+                                      <button 
+                                        onMouseDown={(e) => {
+                                          e.preventDefault(); 
+                                          if (mathFieldsRef.current[line.id]) {
+                                            mathFieldsRef.current[line.id].insert('_{#0}');
+                                            mathFieldsRef.current[line.id].focus();
+                                          }
+                                          setSelectionContext(null);
+                                        }}
+                                        className="flex items-center px-3 py-1.5 text-xs font-bold hover:bg-emerald-500 rounded-lg transition-colors"
+                                        title="Mettre en Indice"
+                                      >
+                                        x₂
+                                      </button>
+                                   </div>
+                                )}
+                              </div>
+                            )}
+
+                            {/* Raw LaTeX Editor (only available for math lines) */}
+                            {!line.isComment && rawModeLines[line.id] && (
+                              <div className="w-full flex-1 flex justify-center px-4">
+                                <textarea
+                                  data-line-id={line.id}
+                                  className="w-full max-w-2xl bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-mono text-sm p-3 rounded-xl border-2 border-indigo-200 dark:border-indigo-800 focus:border-indigo-500 focus:outline-none resize-none"
+                                  rows={3}
+                                  defaultValue={mathFieldsRef.current[line.id]?.value || line.initialValue}
+                                  placeholder="Entrez le code LaTeX brut ici..."
+                                  onBlur={(e) => {
+                                    const el = mathFieldsRef.current[line.id];
+                                    if (el) {
+                                      // Clean value (strip $$)
+                                      let val = e.target.value.trim();
+                                      if (val.startsWith('$$') && val.endsWith('$$')) {
+                                        val = val.substring(2, val.length - 2).trim();
+                                      } else if (val.startsWith('$') && val.endsWith('$')) {
+                                        val = val.substring(1, val.length - 1).trim();
+                                      }
+                                      // Convert raw string literal '\$' or '$$' inserted by bad pastes to real LaTeX
+                                      val = val.replace(/\\\$/g, ''); 
+                                      // Format math powers and operators
+                                      val = formatMathExpression(val);
+                                      el.value = val;
+                                      saveToLocalStorageSilently();
+                                    }
+                                  }}
+                                />
+                              </div>
+                            )}
+
+                            {/* Actions line - Discrete glassmorphic capsule */}
+                            <div className={`absolute right-1 flex items-center gap-1 transition-opacity print:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-md p-1 rounded-xl border border-slate-200/80 dark:border-slate-700/80 shadow-md ${
+                              activeLineId === line.id ? 'opacity-100' : 'opacity-60 sm:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'
+                            }`}>
+                              {/* Refresh / Re-render Equation Icon */}
+                              <button
+                                onClick={() => handleRefreshLine(line.id)}
+                                className={`p-1.5 text-sky-500 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-sky-950/30 rounded-lg transition-all cursor-pointer ${
+                                  refreshingLineId === line.id ? 'animate-spin text-sky-600' : 'hover:rotate-45'
+                                }`}
+                                title={line.isComment ? "Actualiser le commentaire" : "Actualiser et formater le calcul (ex: x2 → x², x3 → x³)"}
+                              >
+                                <RefreshCw className="w-4 h-4" />
+                              </button>
+
+                              {/* Toggle between Math formula and Text comment */}
+                              <button
+                                onClick={() => {
+                                  if (line.isComment) {
+                                    // Convert to Math formula
+                                    const text = line.commentText || '';
+                                    setLines(prev => prev.map(l => l.id === line.id ? {
+                                      ...l,
+                                      isComment: false,
+                                      initialValue: text,
+                                      commentText: ''
+                                    } : l));
+                                    setTimeout(() => {
+                                      const mf = mathFieldsRef.current[line.id];
+                                      if (mf) {
+                                        mf.value = text;
+                                        mf.focus();
+                                      }
+                                      saveToLocalStorageSilently();
+                                    }, 50);
+                                  } else {
+                                    // Convert to Comment (text without #)
+                                    const mf = mathFieldsRef.current[line.id];
+                                    const val = mf ? mf.value : (line.initialValue || '');
+                                    const comment = extractCommentText(val);
+                                    setLines(prev => prev.map(l => l.id === line.id ? {
+                                      ...l,
+                                      isComment: true,
+                                      commentText: comment,
+                                      initialValue: `#${comment}`
+                                    } : l));
+                                    setTimeout(() => {
+                                      const inputEl = commentInputsRef.current[line.id];
+                                      if (inputEl) {
+                                        inputEl.value = comment;
+                                        inputEl.focus();
+                                      }
+                                      saveToLocalStorageSilently();
+                                    }, 50);
+                                  }
+                                }}
+                                className="p-1.5 text-amber-500 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/30 rounded-lg transition-all cursor-pointer"
+                                title={line.isComment ? "Convertir en formule mathématique" : "Convertir en texte / commentaire"}
+                              >
+                                {line.isComment ? <Calculator className="w-4 h-4" /> : <Type className="w-4 h-4" />}
+                              </button>
+
+                              {!line.isComment && (
+                                <button
+                                  onClick={() => {
+                                    setRawModeLines(prev => ({ ...prev, [line.id]: !prev[line.id] }));
+                                    if (rawModeLines[line.id]) {
+                                      setTimeout(() => mathFieldsRef.current[line.id]?.focus(), 50);
+                                    }
+                                  }}
+                                  className="p-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all cursor-pointer"
+                                  title={rawModeLines[line.id] ? "Interpréter (Vue Mathématique)" : "Éditer le LaTeX brut"}
+                                >
+                                  {rawModeLines[line.id] ? <Eye className="w-4 h-4" /> : <Code className="w-4 h-4" />}
+                                </button>
+                              )}
+
+                              <button
+                                onClick={() => {
+                                  let duplicatedVal = '';
+                                  if (line.isComment) {
+                                    const inputEl = commentInputsRef.current[line.id];
+                                    duplicatedVal = inputEl ? inputEl.value : (line.commentText || '');
+                                  } else {
+                                    const mf = mathFieldsRef.current[line.id];
+                                    duplicatedVal = mf ? mf.value : (line.initialValue || '');
+                                  }
+                                  const newLines = [...lines];
+                                  newLines.splice(index + 1, 0, {
+                                    id: Date.now(),
+                                    initialValue: line.isComment ? `#${duplicatedVal}` : duplicatedVal,
+                                    isComment: line.isComment,
+                                    commentText: line.isComment ? duplicatedVal : '',
+                                    color: line.color,
                                   });
-                                }
-                                // Save base shortcuts on first initialization if not saved
-                                if (!el._baseShortcuts) {
-                                  el._baseShortcuts = el.inlineShortcuts || {};
-                                }
-
-                                mathFieldsRef.current[line.id] = el;
-                                el.onkeydown = (e: KeyboardEvent) => {
-                                  if (e.key === 'Enter' && !e.shiftKey) {
-                                    e.preventDefault();
-                                    handleAddLine(index);
-                                  }
-                                };
-                                try {
-                                  el.mathVirtualKeyboardPolicy = 'manual';
-                                } catch {}
-                                el.inlineShortcuts = {
-                                  ...(autoCompleteEnabled ? (el._baseShortcuts || {}) : {}),
-                                  '*': '\\times',
-                                  'xx': '\\times',
-                                  'cdot': '\\times',
-                                  'times': '\\times',
-                                  ...(autoCompleteEnabled ? { "/([xyzabcntXYZABCNT])([2-9])/": "$1^$2" } : {})
-                                };
-                              }
-                            }}
-                            math-virtual-keyboard-policy="manual"
-                            onFocus={() => {
-                              setActiveLineId(line.id);
-                              if (boardSettings.autoOpenKeyboardOnFocus) {
-                                setIsKeyboardOpen(true);
-                                setIsKeyboardMinimized(false);
-                              }
-                            }}
-                            style={{ 
-                              fontSize: getFontSizeRem(boardSettings.fontSize), 
-                              width: '90%', 
-                              textAlign: boardSettings.alignment, 
-                              border: 'none', 
-                              outline: 'none', 
-                              background: 'transparent',
-                              color: 'inherit'
-                            }}
-                          >
-                          </math-field>
-
-                          {/* Context Menu for Power/Subscript */}
-                          {selectionContext?.show && selectionContext.lineId === line.id && (
-                             <div className="absolute top-[-50px] z-50 flex items-center gap-1 bg-slate-800 text-white p-1 rounded-xl shadow-2xl border border-slate-700 animate-in fade-in slide-in-from-bottom-2">
-                                <button 
-                                  onMouseDown={(e) => {
-                                    e.preventDefault(); 
-                                    if (mathFieldsRef.current[line.id]) {
-                                      mathFieldsRef.current[line.id].insert('^{#0}');
-                                      mathFieldsRef.current[line.id].focus();
-                                    }
-                                    setSelectionContext(null);
+                                  setLines(newLines);
+                                }}
+                                className="p-1.5 text-indigo-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-lg transition-all cursor-pointer"
+                                title="Dupliquer la ligne"
+                              >
+                                <Copy className="w-4 h-4" />
+                              </button>
+                              
+                              {lines.length > 1 && (
+                                <button
+                                  onClick={() => {
+                                    const newLines = lines.filter(l => l.id !== line.id);
+                                    setLines(newLines);
+                                    delete mathFieldsRef.current[line.id];
+                                    delete commentInputsRef.current[line.id];
                                   }}
-                                  className="flex items-center px-3 py-1.5 text-xs font-bold hover:bg-indigo-500 rounded-lg transition-colors"
-                                  title="Mettre en Puissance"
+                                  className="p-1.5 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg transition-all cursor-pointer"
+                                  title="Supprimer la ligne"
                                 >
-                                  x²
+                                  <Trash2 className="w-4 h-4" />
                                 </button>
-                                <div className="w-px h-5 bg-slate-600 mx-0.5" />
-                                <button 
-                                  onMouseDown={(e) => {
-                                    e.preventDefault();
-                                    if (mathFieldsRef.current[line.id]) {
-                                      mathFieldsRef.current[line.id].insert('_{#0}');
-                                      mathFieldsRef.current[line.id].focus();
-                                    }
-                                    setSelectionContext(null);
-                                  }}
-                                  className="flex items-center px-3 py-1.5 text-xs font-bold hover:bg-emerald-500 rounded-lg transition-colors"
-                                  title="Mettre en Indice"
-                                >
-                                  x₂
-                                </button>
-                             </div>
-                          )}
-                        </div>
-
-                        {/* Raw LaTeX Editor */}
-                        {rawModeLines[line.id] && (
-                          <div className="w-full flex-1 flex justify-center px-4">
-                            <textarea
-                              className="w-full max-w-2xl bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-mono text-sm p-3 rounded-xl border-2 border-indigo-200 dark:border-indigo-800 focus:border-indigo-500 focus:outline-none resize-none"
-                              rows={3}
-                              defaultValue={mathFieldsRef.current[line.id]?.value || line.initialValue}
-                              placeholder="Entrez le code LaTeX brut ici..."
-                              onBlur={(e) => {
-                                const el = mathFieldsRef.current[line.id];
-                                if (el) {
-                                  // Clean value (strip $$)
-                                  let val = e.target.value.trim();
-                                  if (val.startsWith('$$') && val.endsWith('$$')) {
-                                    val = val.substring(2, val.length - 2).trim();
-                                  } else if (val.startsWith('$') && val.endsWith('$')) {
-                                    val = val.substring(1, val.length - 1).trim();
-                                  }
-                                  // Convert raw string literal '\$' or '$$' inserted by bad pastes to real LaTeX
-                                  val = val.replace(/\\\$/g, ''); 
-                                  el.value = val;
-                                  saveToLocalStorageSilently();
-                                }
-                              }}
-                            />
+                              )}
+                            </div>
                           </div>
-                        )}
-
-                        {/* Actions line - Discrete glassmorphic capsule */}
-                        <div className="absolute right-1 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity print:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-md p-1 rounded-xl border border-slate-200/80 dark:border-slate-700/80 shadow-md">
+                        ))}
+                        
+                        {/* Primary Call to Action Buttons */}
+                        <div className="mt-8 flex flex-wrap items-center justify-center gap-3 print:hidden">
                           <button
-                            onClick={() => {
-                              setRawModeLines(prev => ({ ...prev, [line.id]: !prev[line.id] }));
-                              if (rawModeLines[line.id]) {
-                                setTimeout(() => mathFieldsRef.current[line.id]?.focus(), 50);
-                              }
-                            }}
-                            className="p-1.5 text-amber-500 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/30 rounded-lg transition-all cursor-pointer"
-                            title={rawModeLines[line.id] ? "Interpréter (Vue Mathématique)" : "Éditer le LaTeX brut"}
+                            id="btn-add-line-bottom-cta"
+                            onClick={() => handleAddLine()}
+                            className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 active:scale-95 text-white font-semibold text-xs sm:text-sm rounded-2xl shadow-lg hover:shadow-indigo-500/25 transition-all flex items-center gap-2 cursor-pointer"
                           >
-                            {rawModeLines[line.id] ? <Eye className="w-4 h-4" /> : <Code className="w-4 h-4" />}
+                            <Plus className="w-4 h-4" />
+                            <span>Ajouter une ligne de calcul</span>
+                            <span className="ml-1 px-2 py-0.5 text-[10px] font-mono font-medium bg-white/20 rounded-md">Entrée ↵</span>
                           </button>
 
                           <button
-                            onClick={() => {
-                              const mf = mathFieldsRef.current[line.id];
-                              const currentValue = mf ? mf.value : '';
-                              const newLines = [...lines];
-                              newLines.splice(index + 1, 0, { id: Date.now(), initialValue: currentValue });
-                              setLines(newLines);
-                            }}
-                            className="p-1.5 text-indigo-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-lg transition-all cursor-pointer"
-                            title="Dupliquer la ligne"
+                            id="btn-add-comment-bottom-cta"
+                            onClick={() => handleAddLine(undefined, true)}
+                            className="px-4 py-2.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-semibold text-xs sm:text-sm rounded-2xl transition-all flex items-center gap-2 cursor-pointer"
+                            title="Ajouter une consigne ou un titre (ex: 1. Factorisons A)"
                           >
-                            <Copy className="w-4 h-4" />
+                            <Type className="w-4 h-4 text-amber-500" />
+                            <span>Commentaire / Titre</span>
                           </button>
-                          
-                          {lines.length > 1 && (
-                            <button
-                              onClick={() => {
-                                const newLines = lines.filter(l => l.id !== line.id);
-                                setLines(newLines);
-                                delete mathFieldsRef.current[line.id];
-                              }}
-                              className="p-1.5 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg transition-all cursor-pointer"
-                              title="Supprimer la ligne"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          )}
                         </div>
                       </div>
-                    ))}
-                    
-                    {/* Primary Call to Action Button */}
-                    <div className="mt-8 flex flex-col items-center gap-2 print:hidden">
-                      <button
-                        id="btn-add-line-bottom-cta"
-                        onClick={() => handleAddLine()}
-                        className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 active:scale-95 text-white font-semibold text-xs sm:text-sm rounded-2xl shadow-lg hover:shadow-indigo-500/25 transition-all flex items-center gap-2.5 cursor-pointer"
-                      >
-                        <Plus className="w-4 h-4" />
-                        <span>Ajouter une ligne de calcul</span>
-                        <span className="ml-1 px-2 py-0.5 text-[10px] font-mono font-medium bg-white/20 rounded-md">Entrée ↵</span>
-                      </button>
-                    </div>
-                  </div>
                     );
                   })()}
                   <p className="mt-4 text-slate-400 dark:text-slate-500 text-xs flex items-center gap-1.5 print:hidden">

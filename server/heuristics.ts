@@ -26,6 +26,10 @@ export function normalizeExpression(expr: string): string {
   clean = clean.replace(/([0-9]+)\*([a-z])/g, '$1$2');
   clean = clean.replace(/([a-z])\*([0-9]+)/g, '$2$1');
   
+  // Convert 'v' shortcut for square root: 2v2 -> 2sqrt(2), v2 -> sqrt(2)
+  clean = clean.replace(/([0-9]+)v([0-9]+)/g, '$1sqrt($2)');
+  clean = clean.replace(/(?<![a-z\\])v([0-9]+)/g, 'sqrt($1)');
+  
   return clean;
 }
 
