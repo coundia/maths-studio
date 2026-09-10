@@ -1384,7 +1384,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                                     placeholder="Commentaire ou consigne (ex: 1. Factorisons A)..."
                                     className="w-full bg-transparent border-none outline-none font-sans font-semibold tracking-wide text-slate-900 dark:text-slate-100 placeholder:text-slate-400/70 dark:placeholder:text-slate-500 print:text-black print:font-bold"
                                     style={{
-                                      fontSize: getFontSizeRem(boardSettings.fontSize),
+                                      fontSize: `max(0.85rem, calc(${getFontSizeRem(boardSettings.fontSize)} * 0.45))`,
                                       textAlign: boardSettings.alignment,
                                       color: line.color || undefined
                                     }}
@@ -1712,14 +1712,19 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                                     const mf = mathFieldsRef.current[line.id];
                                     if (mf) {
                                       mf.focus();
-                                      const rect = mf.getBoundingClientRect();
-                                      mf.dispatchEvent(new MouseEvent('contextmenu', {
-                                        bubbles: true,
-                                        cancelable: true,
-                                        clientX: rect.right - 20,
-                                        clientY: rect.top + 20,
-                                        button: 2
-                                      }));
+                                      if (typeof mf.showMenu === 'function') {
+                                        mf.showMenu();
+                                      } else {
+                                        // Fallback if MathLive version doesn't support showMenu
+                                        const rect = mf.getBoundingClientRect();
+                                        mf.dispatchEvent(new MouseEvent('contextmenu', {
+                                          bubbles: true,
+                                          cancelable: true,
+                                          clientX: rect.right - 20,
+                                          clientY: rect.top + 20,
+                                          button: 2
+                                        }));
+                                      }
                                     }
                                   }}
                                   className="p-1.5 text-slate-500 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all cursor-pointer"
