@@ -30,7 +30,21 @@ export interface BoardSettings {
   drawDefaultColor: string;
   drawDefaultWidth: number;
   customColors: string[]; // List of user-added custom hex colors
+  aiToken?: string; // Token API Gemini pour l'heuristique
+  aiIncludeComments: boolean; // Si l'IA doit inclure des commentaires dans ses étapes
+  customOperations: string[]; // Opérations affichées dans le menu baguette magique
 }
+
+export const DEFAULT_OPERATIONS: string[] = [
+  'Factorisation',
+  'Développement',
+  'Réduction',
+  'Résolution',
+  'Mise au même dénominateur',
+  'Dérivation',
+  'Intégration',
+  'Calcul'
+];
 
 export const DEFAULT_PRESET_COLORS: string[] = [
   '#38bdf8', // Sky
@@ -60,9 +74,12 @@ export const DEFAULT_BOARD_SETTINGS: BoardSettings = {
   autoCompleteEnabled: true,
   autoOpenKeyboardOnFocus: false,
   enterCreatesNewLine: true,
-  drawDefaultColor: '#38bdf8',
-  drawDefaultWidth: 3,
-  customColors: DEFAULT_CUSTOM_COLORS,
+  drawDefaultColor: '#ec4899',
+  drawDefaultWidth: 4,
+  customColors: [...DEFAULT_CUSTOM_COLORS],
+  aiToken: '',
+  aiIncludeComments: true,
+  customOperations: [...DEFAULT_OPERATIONS],
 };
 
 const STORAGE_KEY = 'math3d_board_settings';
@@ -87,6 +104,10 @@ export function loadBoardSettings(): BoardSettings {
         customColors: Array.isArray(parsed.customColors) && parsed.customColors.length > 0 
           ? parsed.customColors 
           : DEFAULT_CUSTOM_COLORS,
+        aiIncludeComments: parsed.aiIncludeComments !== undefined ? parsed.aiIncludeComments : true,
+        customOperations: Array.isArray(parsed.customOperations) && parsed.customOperations.length > 0
+          ? parsed.customOperations
+          : DEFAULT_OPERATIONS,
       };
     }
   } catch (err) {

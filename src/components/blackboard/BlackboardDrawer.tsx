@@ -260,6 +260,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
   const [isActionsMenuOpen, setIsActionsMenuOpen] = useState(false);
   const [isFormatBarOpen, setIsFormatBarOpen] = useState(false);
   const [isZenMode, setIsZenMode] = useState(false);
+  const [isClearingBoard, setIsClearingBoard] = useState(false);
   const actionsMenuRef = useRef<HTMLDivElement>(null);
   const [boardSettings, setBoardSettings] = useState<BoardSettings>(() => loadBoardSettings());
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -320,9 +321,36 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
   };
 
   const handleClearBoard = () => {
-    setLines([{ id: Date.now(), initialValue: '' }]);
-    mathFieldsRef.current = {};
-    localStorage.removeItem('math3d_blackboard_lines');
+    setIsClearingBoard(true);
+    setTimeout(() => {
+      setLines([{ id: Date.now(), initialValue: '' }]);
+      mathFieldsRef.current = {};
+      localStorage.removeItem('math3d_blackboard_lines');
+      setTimeout(() => {
+        setIsClearingBoard(false);
+      }, 50);
+    }, 400); // Correspond à la durée de l'animation CSS
+  };
+
+  const handleSaveAndClearBoard = () => {
+    // 1. Sauvegarde dans l'historique
+    const currentValues = lines.map(line => getLineSerializedValue(line));
+    
+    // Ne pas sauvegarder un tableau vide
+    if (currentValues.length > 0 && currentValues.some(v => v.trim() !== '')) {
+      const newSave: SavedBoard = {
+        id: Date.now(),
+        date: new Date().toLocaleString(),
+        name: `Brouillon du ${new Date().toLocaleDateString()}`,
+        lines: currentValues,
+      };
+      const updatedSaves = [newSave, ...savedBoards];
+      setSavedBoards(updatedSaves);
+      localStorage.setItem('math3d_board_saves', JSON.stringify(updatedSaves));
+    }
+
+    // 2. Animation d'effacement
+    handleClearBoard();
   };
 
   // Type for a saved board
@@ -370,6 +398,9 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
   
   const [activeLineId, setActiveLineId] = useState<number | null>(null);
 
+  // État pour les menus d'heuristiques flottants
+  const [openHeuristicsMenuId, setOpenHeuristicsMenuId] = useState<number | null>(null);
+
   const handleAddLine = (afterIndex?: number, asComment = false) => {
     const newLine: BlackboardLine = {
       id: Date.now(),
@@ -394,6 +425,89 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
         mathFieldsRef.current[newLine.id]?.focus();
       }
     }, 60);
+  };
+
+  const handleHeuristicAction = async (lineId: number, action: string) => {
+    setOpenHeuristicsMenuId(null);
+    const lineIndex = lines.findIndex(l => l.id === lineId);
+    if (lineIndex === -1) return;
+    
+    const mf = mathFieldsRef.current[lineId];
+    const latex = mf ? mf.value : '';
+    if (!latex) return;
+    
+    if (!boardSettings.aiToken) {
+      alert("Veuillez configurer votre clé API Gemini dans les paramètres du tableau (icône engrenage) pour utiliser l'IA.");
+      return;
+    }
+
+    setRefreshingLineId(lineId); // Démarre l'animation de chargement
+    
+    try {
+      const response = await fetch('/api/resolve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          expression: latex,
+          operationType: action,
+          aiToken: boardSettings.aiToken,
+          aiIncludeComments: boardSettings.aiIncludeComments
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok || data.error) {
+        throw new Error(data.error || "Erreur de l'API");
+      }
+
+      if (!data.steps || data.steps.length === 0) {
+        throw new Error("L'IA n'a retourné aucune étape.");
+      }
+
+      const newLines = [...lines];
+      const idBase = Date.now();
+      
+      const linesToInsert: BlackboardLine[] = [];
+      
+      // On insère le résumé d'abord s'il y en a un
+      if (data.summary) {
+        linesToInsert.push({
+          id: idBase,
+          initialValue: `#${data.summary}`,
+          isComment: true,
+          commentText: data.summary
+        });
+      }
+      
+      data.steps.forEach((step: any, idx: number) => {
+        if (step.explanation) {
+          linesToInsert.push({
+            id: idBase + 1 + (idx * 2),
+            initialValue: `#${step.explanation}`,
+            isComment: true,
+            commentText: step.explanation
+          });
+        }
+        linesToInsert.push({
+          id: idBase + 2 + (idx * 2),
+          initialValue: step.latex || '',
+          isComment: false
+        });
+      });
+      
+      newLines.splice(lineIndex + 1, 0, ...linesToInsert);
+      setLines(newLines);
+      
+      setTimeout(() => {
+        saveToLocalStorageSilently();
+      }, 100);
+      
+    } catch (err: any) {
+      alert(`Erreur IA : ${err.message}`);
+    } finally {
+      setRefreshingLineId(null);
+    }
   };
   const autoCompleteEnabled = boardSettings.autoCompleteEnabled;
   const setAutoCompleteEnabled = (val: boolean) => {
@@ -1063,6 +1177,32 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                 <Maximize className="w-4 h-4" />
               </button>
 
+              {/* Save & Clear Board Button */}
+              <button
+                onClick={() => {
+                  if (window.confirm('Voulez-vous sauvegarder puis effacer ce tableau ?')) {
+                    handleSaveAndClearBoard();
+                  }
+                }}
+                className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-all cursor-pointer shadow-sm ml-2"
+                title="Sauvegarder et effacer le tableau"
+              >
+                <Save className="w-4 h-4" />
+              </button>
+
+              {/* Clear Board Button */}
+              <button
+                onClick={() => {
+                  if (window.confirm('Voulez-vous vraiment effacer tout le tableau ?')) {
+                    handleClearBoard();
+                  }
+                }}
+                className="p-2 rounded-xl bg-rose-50 dark:bg-rose-900/30 text-rose-500 hover:text-rose-600 dark:hover:text-rose-400 border border-rose-200 dark:border-rose-800 hover:bg-rose-100 dark:hover:bg-rose-900/50 transition-all cursor-pointer shadow-sm"
+                title="Effacer tout le tableau"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+
               {/* Board Settings Icon Button */}
               <button
                 id="btn-open-board-settings"
@@ -1355,7 +1495,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                     return (
                       <div 
                         id="printable-blackboard" 
-                        className={`w-full shrink-0 flex flex-col items-center gap-4 ${themeClasses.containerClass} ${themeClasses.textClass} rounded-3xl border p-6 sm:p-8 min-h-[calc(100vh-200px)] mb-8 transition-colors duration-200 print:shadow-none print:border-none print:bg-transparent print:p-0 print:mb-0`}
+                        className={`w-full shrink-0 flex flex-col items-center gap-4 ${themeClasses.containerClass} ${themeClasses.textClass} rounded-3xl border p-6 sm:p-8 min-h-[calc(100vh-200px)] mb-8 transition-all duration-400 ease-in-out print:shadow-none print:border-none print:bg-transparent print:p-0 print:mb-0 ${isClearingBoard ? 'opacity-0 scale-95 blur-md translate-y-4' : 'opacity-100 scale-100 blur-0 translate-y-0'}`}
                         style={gridStyle}
                       >
                         {lines.map((line, index) => (
@@ -1364,6 +1504,16 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                             data-line-id={line.id}
                             className={`w-full flex items-center ${boardSettings.alignment === 'left' ? 'justify-start pl-8 sm:pl-14' : 'justify-center'} gap-2 group relative print:mb-6 print:break-inside-avoid transition-all duration-300 ${zoomedLineId === line.id ? 'scale-[1.3] z-50 shadow-2xl bg-white/10 dark:bg-black/10 rounded-2xl py-2 ' + (boardSettings.alignment === 'left' ? 'origin-left' : 'origin-center') : 'scale-100 z-10'}`}
                           >
+                            {/* Loader IA Overlay */}
+                            {refreshingLineId === line.id && (
+                              <div className="absolute inset-0 z-50 flex items-center justify-center bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm rounded-xl pointer-events-none">
+                                <div className="flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-indigo-500 text-white px-4 py-2 rounded-full shadow-lg shadow-indigo-500/20">
+                                  <RefreshCw className="w-4 h-4 animate-spin" />
+                                  <span className="text-xs font-bold tracking-wide">L'IA réfléchit...</span>
+                                </div>
+                              </div>
+                            )}
+
                             {/* Numbering */}
                             {boardSettings.showLineNumbers && (
                               <span className="absolute left-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-indigo-50/80 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 font-bold rounded-lg text-xs sm:text-sm shadow-sm print:hidden">
@@ -1732,6 +1882,65 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                                 >
                                   <MoreHorizontal className="w-4 h-4" />
                                 </button>
+                              )}
+
+                              {/* Heuristics / Operations Dropdown */}
+                              {!line.isComment && (
+                                <div className="relative">
+                                  <button
+                                    onClick={() => setOpenHeuristicsMenuId(openHeuristicsMenuId === line.id ? null : line.id)}
+                                    className="p-1.5 text-emerald-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 rounded-lg transition-all cursor-pointer flex items-center"
+                                    title="Opérations magiques (Factoriser, Développer, etc.)"
+                                  >
+                                    <Sparkles className="w-4 h-4" />
+                                  </button>
+                                  <AnimatePresence>
+                                    {openHeuristicsMenuId === line.id && (
+                                      <motion.div
+                                        initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                                        className="absolute right-0 bottom-full mb-2 w-48 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col z-50 origin-bottom-right"
+                                      >
+                                        <div className="px-3 py-2 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 flex flex-col gap-1.5">
+                                          <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Opérations auto.</span>
+                                          <label className="flex items-center gap-1.5 cursor-pointer hover:bg-slate-200/50 dark:hover:bg-slate-800/50 p-1 -ml-1 rounded transition-colors">
+                                            <input 
+                                              type="checkbox" 
+                                              checked={boardSettings.aiIncludeComments}
+                                              onChange={(e) => handleUpdateSettings({ ...boardSettings, aiIncludeComments: e.target.checked })}
+                                              className="w-3 h-3 rounded text-indigo-600 focus:ring-indigo-500 bg-white border-slate-300 dark:bg-slate-700 dark:border-slate-600 cursor-pointer"
+                                            />
+                                            <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400 select-none">Avec commentaires</span>
+                                          </label>
+                                        </div>
+                                        <div className="max-h-60 overflow-y-auto py-1">
+                                          {(boardSettings.customOperations || []).map((op, idx) => (
+                                            <button 
+                                              key={idx}
+                                              onClick={() => handleHeuristicAction(line.id, op)} 
+                                              className="w-full px-3 py-2 text-left text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
+                                            >
+                                              {op}
+                                            </button>
+                                          ))}
+                                          <div className="my-1 border-t border-slate-200 dark:border-slate-700"></div>
+                                          <button 
+                                            onClick={() => {
+                                              const customOp = window.prompt("Quelle opération souhaitez-vous effectuer ? (ex: Trouver la limite en +l'infini)");
+                                              if (customOp && customOp.trim()) {
+                                                handleHeuristicAction(line.id, customOp.trim());
+                                              }
+                                            }} 
+                                            className="w-full px-3 py-2 text-left text-sm font-bold hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 transition-colors cursor-pointer"
+                                          >
+                                            Autre opération...
+                                          </button>
+                                        </div>
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
+                                </div>
                               )}
 
                               {/* Refresh / Re-render Equation Icon */}

@@ -79,6 +79,8 @@ async function startServer() {
     try {
       const rawExpression = sanitizeAlgebraInput(req.body?.expression || '');
       const operationType = req.body?.operationType || 'factorization';
+      const aiToken = req.body?.aiToken;
+      const aiIncludeComments = req.body?.aiIncludeComments !== false;
 
       if (!rawExpression) {
         return res.status(400).json({ error: "L'expression mathématique ne peut pas être vide." });
@@ -105,6 +107,8 @@ async function startServer() {
       }
 
       // TIER 2: Deterministic Heuristic (FR-05) - Target < 15 ms, 0 AI calls
+      // DESACTIVE SUITE A LA DEMANDE UTILISATEUR :
+      /*
       const heuristicSolution = solveByHeuristic(rawExpression, normalized, operationType);
       if (heuristicSolution) {
         heuristicSolution.latencyMs = Date.now() - startTime;
@@ -113,11 +117,12 @@ async function startServer() {
         recordResolution('heuristic');
         return res.json(heuristicSolution);
       }
+      */
 
       // TIER 3: Fallback IA Unique (FR-06) - Zero calculation redundancy
       // Only 1 call per unique problem, temperature 0.0, strict JSON schema
       try {
-        const aiSolution = await solveByGeminiAI(rawExpression, normalized, operationType);
+        const aiSolution = await solveByGeminiAI(rawExpression, normalized, operationType, aiToken, aiIncludeComments);
         aiSolution.latencyMs = Date.now() - startTime;
         // FR-07: Immediate atomic persistence
         saveSolution(aiSolution);

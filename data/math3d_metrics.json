@@ -1,8 +1,8 @@
 {
-  "totalRequests": 422,
-  "cacheHits": 414,
+  "totalRequests": 457,
+  "cacheHits": 447,
   "heuristicResolutions": 8,
-  "aiCalls": 0,
+  "aiCalls": 2,
   "stepsCompleted": 5,
   "totalStepsViewed": 5
 }

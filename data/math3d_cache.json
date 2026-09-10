@@ -1822,6 +1822,249 @@
           }
         }
       ]
+    },
+    "49641e38ac6a942913f488ba84fc59ddf15d77e7df219fdf1ef93705eb245cb5": {
+      "id": "49641e38ac6a942913f488ba84fc59ddf15d77e7df219fdf1ef93705eb245cb5",
+      "rawExpression": "A=^{}left(x^{}-1right)^2",
+      "normalizedExpression": "a=^{}left(x^{}-1right)^2",
+      "operationType": "Développement",
+      "finalFormLatex": "x^2 - 2 \\times x + 1",
+      "summary": "Développement pas-à-pas de l'identité remarquable (x - 1)^2 par soustraction d'aires et réajustement géométrique en 3D.",
+      "source": "ai",
+      "cachedAt": "2026-09-10T17:40:43.937Z",
+      "latencyMs": 16940,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Identification du carré d'une différence",
+          "explanation": "L'expression donnée est (x - 1)^2. Sur le plan géométrique, elle représente l'aire d'un carré de côté (x - 1), modélisée en 3D par un prisme droit d'épaisseur unitaire.",
+          "appliedRule": "Définition de l'élévation au carré : A^2 = A \\times A",
+          "latex": "(x - 1)^2",
+          "visualState": {
+            "type": "perfect_square_3d",
+            "action": "initial_state",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 1,
+              "depth": 1
+            },
+            "cutoutProgress": 0,
+            "slideProgress": 0,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "Étape 1",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Inclusion dans le grand carré initial",
+          "explanation": "Pour développer, on part d'un grand pavé de base x \\times x de surface x^2. On identifie la zone réduite obtenue en retranchant 1 sur chaque dimension principale.",
+          "appliedRule": "Identité remarquable : (A - B)^2 = A^2 - 2 \\times A \\times B + B^2",
+          "latex": "x^2 - 2 \\times (x \\times 1) + 1^2",
+          "visualState": {
+            "type": "perfect_square_3d",
+            "action": "slice_cut",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 1,
+              "depth": 1
+            },
+            "cutoutProgress": 0.25,
+            "slideProgress": 0.25,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "Étape 2",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Soustraction des bandes et compensation du coin",
+          "explanation": "En retirant deux bandes rectangulaires de dimensions x \\times 1, le petit carré d'angle 1 \\times 1 est retranché deux fois. Il faut donc rajouter une fois 1^2 pour compenser ce double retrait.",
+          "appliedRule": "Compensation géométrique d'intersection : Aire = Grand Carré - 2 Rectangles + Coin",
+          "latex": "x^2 - 2 \\times x + 1",
+          "visualState": {
+            "type": "perfect_square_3d",
+            "action": "rearrange",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 1,
+              "depth": 1
+            },
+            "cutoutProgress": 0.5,
+            "slideProgress": 0.5,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "Étape 3",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 4,
+          "title": "Forme développée et réduite",
+          "explanation": "L'expression est désormais totalement développée et réduite sous sa forme canonique polynômiale standard.",
+          "appliedRule": "Réduction polynomiale",
+          "latex": "x^2 - 2 \\times x + 1",
+          "visualState": {
+            "type": "perfect_square_3d",
+            "action": "final_factored",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 1,
+              "depth": 1
+            },
+            "cutoutProgress": 1,
+            "slideProgress": 1,
+            "rotationAngle": 1.5707963267948966,
+            "labels": [
+              {
+                "text": "Étape 4",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "110f107d56e340bc3e3811e2c778ab8c92dafa966ca8aabdfeeb13e2121863c5": {
+      "id": "110f107d56e340bc3e3811e2c778ab8c92dafa966ca8aabdfeeb13e2121863c5",
+      "rawExpression": "A=frac34+frac{5}{-4}",
+      "normalizedExpression": "a=frac34+frac{5}{-4}",
+      "operationType": "Calcul",
+      "finalFormLatex": "a = -\\frac{1}{2}",
+      "summary": "Pour additionner deux fractions ayant le même dénominateur en valeur absolue, on commence par gérer le signe négatif au dénominateur, puis on soustrait directement les numérateurs avant de simplifier la fraction obtenue.",
+      "source": "ai",
+      "cachedAt": "2026-09-10T17:56:19.606Z",
+      "latencyMs": 18479,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Normalisation du signe négatif",
+          "explanation": "On applique la règle des signes pour les fractions : diviser un nombre positif par un nombre négatif donne un quotient négatif. Ainsi, 5 divisé par -4 devient -5/4.",
+          "appliedRule": "\\frac{A}{-B} = -\\frac{A}{B}",
+          "latex": "a = \\frac{3}{4} - \\frac{5}{4}",
+          "visualState": {
+            "type": "grouped_blocks_3d",
+            "action": "initial_state",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": -5,
+              "depth": 1
+            },
+            "cutoutProgress": 0,
+            "slideProgress": 0,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "Étape 1",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Soustraction sous un dénominateur commun",
+          "explanation": "Les deux termes possèdent le même dénominateur 4. On réunit l'expression sous une seule barre de fraction en conservant ce dénominateur commun et en calculant la différence des numérateurs.",
+          "appliedRule": "\\frac{A}{C} - \\frac{B}{C} = \\frac{A - B}{C}",
+          "latex": "a = \\frac{3 - 5}{4} = \\frac{-2}{4}",
+          "visualState": {
+            "type": "grouped_blocks_3d",
+            "action": "rearrange",
+            "dimensions": {
+              "x": 4,
+              "a": -2,
+              "b": 1,
+              "depth": 1
+            },
+            "cutoutProgress": 0.3333333333333333,
+            "slideProgress": 0.3333333333333333,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "Étape 2",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Simplification de la fraction",
+          "explanation": "On simplifie la fraction en divisant le numérateur et le dénominateur par leur plus grand commun diviseur, qui est 2. On obtient la forme irréductible finale.",
+          "appliedRule": "\\frac{k \\times A}{k \\times B} = \\frac{A}{B}",
+          "latex": "a = -\\frac{1}{2}",
+          "visualState": {
+            "type": "grouped_blocks_3d",
+            "action": "final_factored",
+            "dimensions": {
+              "x": 2,
+              "a": -1,
+              "b": 1,
+              "depth": 1
+            },
+            "cutoutProgress": 1,
+            "slideProgress": 1,
+            "rotationAngle": 1.5707963267948966,
+            "labels": [
+              {
+                "text": "Étape 3",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        }
+      ]
     }
   },
   "accessCount": {
@@ -1829,9 +2072,11 @@
     "7c5993d6d7bf3ab1bf669a19f64c6b26cc9b1be466290c5bf0c84ffa39338c8b": 1,
     "dbcf2cae5f63cbe097f42d62e59354e4fe85cbbc5f3e6f9988895fcc3a8f7d9b": 1,
     "a9ff87385ddc127f5625769ad2774779bbce8ffa9f1697add871d0a023812cc0": 1,
-    "fa84feac86bd74770c8b6d48b52fcdf2b3e01ffcb6b97ee24085c77629206788": 302,
+    "fa84feac86bd74770c8b6d48b52fcdf2b3e01ffcb6b97ee24085c77629206788": 311,
     "6c208facfdd7d246feab9d8c57b90c4e4b7ae0b592b28484e1ed90742bf0da9c": 2,
     "70bc607a197d1b025431102527e363c0f44ac97f47f2a8dfbb69acd0311c9ecf": 1,
-    "31c6b682fe3a3ab124ac72f501426dea534febdf7c2c32a410c915fa89effb58": 1
+    "31c6b682fe3a3ab124ac72f501426dea534febdf7c2c32a410c915fa89effb58": 1,
+    "49641e38ac6a942913f488ba84fc59ddf15d77e7df219fdf1ef93705eb245cb5": 1,
+    "110f107d56e340bc3e3811e2c778ab8c92dafa966ca8aabdfeeb13e2121863c5": 1
   }
 }

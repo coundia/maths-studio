@@ -3,22 +3,28 @@ import { ExpressionSolution, MathStep } from '../src/types.js';
 import { computeExpressionHash } from './heuristics.js';
 
 let aiClient: GoogleGenAI | null = null;
+let currentApiKey: string | null = null;
 
-function getGenAI(): GoogleGenAI {
-  if (!aiClient) {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      throw new Error('GEMINI_API_KEY environment variable is required');
-    }
-    aiClient = new GoogleGenAI({
-      apiKey,
-      httpOptions: {
-        headers: {
-          'User-Agent': 'aistudio-build',
-        },
-      },
-    });
+function getGenAI(userApiKey?: string): GoogleGenAI {
+  const apiKey = userApiKey || process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error('Une clé API Gemini est requise. Veuillez la configurer dans les paramètres (icône Engrenage).');
   }
+  
+  if (aiClient && currentApiKey === apiKey) {
+    return aiClient;
+  }
+  
+  currentApiKey = apiKey;
+  aiClient = new GoogleGenAI({
+    apiKey,
+    httpOptions: {
+      headers: {
+        'User-Agent': 'aistudio-build',
+      },
+    },
+  });
+  
   return aiClient;
 }
 
@@ -40,22 +46,29 @@ export function sanitizeAlgebraInput(input: string): string {
 export async function solveByGeminiAI(
   rawExpr: string,
   normalizedExpr: string,
-  operationType: string
+  operationType: string,
+  aiToken?: string,
+  aiIncludeComments: boolean = true
 ): Promise<ExpressionSolution> {
   const startTime = Date.now();
   const hash = computeExpressionHash(operationType, normalizedExpr);
-  const ai = getGenAI();
+  const ai = getGenAI(aiToken);
+
+  const commentRule = aiIncludeComments 
+    ? "2. Décompose l'explication en 3 à 5 étapes pédagogiques claires adaptées à un lycéen ou étudiant (Persona Amadou)."
+    : "2. INTERDICTION D'UTILISER DU TEXTE. Ne fournis AUCUN commentaire, explication ou texte narratif. Le champ 'explanation' DOIT être vide. Fournis UNIQUEMENT les formules mathématiques.";
 
   const prompt = `Tu es le moteur mathématique de Math3D Studio. Décompose pas-à-pas la factorisation ou résolution de l'expression suivante : "${normalizedExpr}" (Type d'opération demandée : ${operationType}).
 
 RÈGLES STRICTES :
-1. Décompose l'explication en 3 à 5 étapes pédagogiques claires adaptées à un lycéen ou étudiant (Persona Amadou).
-2. Pour chaque étape, associe une interprétation spatiale et géométrique 3D (aires, volumes, découpes, réagencements de blocs).
-3. Toutes les formules LaTeX DOIVENT être fournies SANS délimiteurs "$" ou "$$".
-4. Spécifie pour chaque étape le type visuel 3D parmi : "difference_of_squares_3d", "perfect_square_3d", "common_factor_3d", "grouped_blocks_3d", "quadratic_tiles_3d", "generic_algebra_3d".
-5. Spécifie l'action géométrique parmi : "initial_state", "slice_cut", "separate", "rearrange", "highlight", "final_factored".
-6. Langue : Français soigné et rigoureux.
-7. Notation de multiplication : utilise TOUJOURS \\times (symbole ×) et JAMAIS \\cdot (point) dans les formules LaTeX.`;
+1. ATTENTION : Réfléchis méthodiquement (Chain of Thought) pour garantir que ton calcul algébrique est 100% exact. Ne fais pas d'erreur de signe, de développement ou de factorisation. Vérifie ton calcul mentalement avant de l'écrire.
+${commentRule}
+3. Pour chaque étape, associe une interprétation spatiale et géométrique 3D (aires, volumes, découpes, réagencements de blocs).
+4. Toutes les formules LaTeX DOIVENT être fournies SANS délimiteurs "$" ou "$$".
+5. Spécifie pour chaque étape le type visuel 3D parmi : "difference_of_squares_3d", "perfect_square_3d", "common_factor_3d", "grouped_blocks_3d", "quadratic_tiles_3d", "generic_algebra_3d".
+6. Spécifie l'action géométrique parmi : "initial_state", "slice_cut", "separate", "rearrange", "highlight", "final_factored".
+7. Langue : Français soigné et rigoureux.
+8. Notation de multiplication : utilise TOUJOURS \\times (symbole ×) et JAMAIS \\cdot (point) dans les formules LaTeX.`;
 
   const response = await ai.models.generateContent({
     model: 'gemini-3.8-flash',
