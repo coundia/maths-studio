@@ -10,6 +10,8 @@ import {
   recordStepView,
   getMetrics,
   getAllCachedSolutions,
+  getStoredBoardSettings,
+  saveBoardSettingsToDisk,
 } from './server/storage.js';
 import {
   getCoursesHandler,
@@ -44,6 +46,24 @@ async function startServer() {
   app.get('/api/history', (req, res) => {
     const list = getAllCachedSolutions();
     res.json(list.slice(0, 30));
+  });
+
+  // Board Settings storage endpoints
+  app.get('/api/board/settings', (req, res) => {
+    const settings = getStoredBoardSettings();
+    res.json({ status: 'ok', settings: settings || null });
+  });
+
+  app.post('/api/board/settings', (req, res) => {
+    const newSettings = req.body;
+    if (!newSettings || typeof newSettings !== 'object') {
+      return res.status(400).json({ error: 'Invalid settings payload' });
+    }
+    const saved = saveBoardSettingsToDisk(newSettings);
+    if (!saved) {
+      return res.status(500).json({ error: 'Failed to write settings to disk' });
+    }
+    res.json({ status: 'ok', settings: newSettings });
   });
 
   // Step Completion tracking for KPI (FR-10, Section 7)

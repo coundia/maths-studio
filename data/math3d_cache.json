@@ -103,7 +103,7 @@
           "title": "Partition en deux sous-rectangles R₁ et R₂",
           "explanation": "Pour factoriser la surface en « L », on la scinde en deux rectangles contigus : le rectangle R₁ de dimensions (x - 3) × (x) et le rectangle R₂ de dimensions (x - 3) × 3.",
           "appliedRule": "Décomposition polygonale",
-          "latex": "R_1 = (x - 3) \\cdot x \\quad \\text{et} \\quad R_2 = (x - 3) \\cdot 3",
+          "latex": "R_1 = (x - 3) \\times x \\quad \\text{et} \\quad R_2 = (x - 3) \\times 3",
           "visualState": {
             "type": "difference_of_squares_3d",
             "dimensions": {
@@ -151,7 +151,7 @@
           "title": "Rotation et translation de R₂ vers R₁",
           "explanation": "Le rectangle R₂ pivote à 90° et vient s'aligner parfaitement le long de R₁ car ils partagent la même dimension commune (x - 3).",
           "appliedRule": "Isométrie & Transformation géométrique",
-          "latex": "\\text{Aire} = (x - 3) \\cdot x + (x - 3) \\cdot 3 = (x - 3)(x + 3)",
+          "latex": "\\text{Aire} = (x - 3) \\times x + (x - 3) \\times 3 = (x - 3)(x + 3)",
           "visualState": {
             "type": "difference_of_squares_3d",
             "dimensions": {
@@ -232,8 +232,8 @@
           "stepNumber": 1,
           "title": "Recherche du plus grand facteur commun (PGCD = 3)",
           "explanation": "Dans l'expression 3x + 6, on remarque que 3 = 3 × 1 et 6 = 3 × 2. 3 est donc un diviseur commun aux deux termes.",
-          "appliedRule": "Distributivité simple : k·u + k·v = k(u + v)",
-          "latex": "3x + 6 = (3 \\cdot x) + (3 \\cdot 2)",
+          "appliedRule": "Distributivité simple : k × u + k × v = k(u + v)",
+          "latex": "3x + 6 = (3 \\times x) + (3 \\times 2)",
           "visualState": {
             "type": "common_factor_3d",
             "dimensions": {
@@ -621,7 +621,7 @@
           "title": "Partition en deux sous-rectangles R₁ et R₂",
           "explanation": "Pour factoriser la surface en « L », on la scinde en deux rectangles contigus : le rectangle R₁ de dimensions (x - 4) × (x) et le rectangle R₂ de dimensions (x - 4) × 4.",
           "appliedRule": "Décomposition polygonale",
-          "latex": "R_1 = (x - 4) \\cdot x \\quad \\text{et} \\quad R_2 = (x - 4) \\cdot 4",
+          "latex": "R_1 = (x - 4) \\times x \\quad \\text{et} \\quad R_2 = (x - 4) \\times 4",
           "visualState": {
             "type": "difference_of_squares_3d",
             "dimensions": {
@@ -669,7 +669,7 @@
           "title": "Rotation et translation de R₂ vers R₁",
           "explanation": "Le rectangle R₂ pivote à 90° et vient s'aligner parfaitement le long de R₁ car ils partagent la même dimension commune (x - 4).",
           "appliedRule": "Isométrie & Transformation géométrique",
-          "latex": "\\text{Aire} = (x - 4) \\cdot x + (x - 4) \\cdot 4 = (x - 4)(x + 4)",
+          "latex": "\\text{Aire} = (x - 4) \\times x + (x - 4) \\times 4 = (x - 4)(x + 4)",
           "visualState": {
             "type": "difference_of_squares_3d",
             "dimensions": {

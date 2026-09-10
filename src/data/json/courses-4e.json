@@ -570,7 +570,7 @@
           {
             "stepNumber": 1,
             "title": "1. Définition de l'application linéaire",
-            "rule": "Forme générale : f(x) = a · x",
+            "rule": "Forme générale : f(x) = a × x",
             "latex": "f(x) = 500x \\quad (a = 500)",
             "explanation": "Si 1 kg de mangues coûte 500 FCFA, alors le prix de x kilogrammes est donné par f(x) = 500 × x."
           },

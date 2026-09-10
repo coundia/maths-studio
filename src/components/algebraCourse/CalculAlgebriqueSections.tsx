@@ -1664,7 +1664,7 @@ export const CalculAlgebriqueSections: React.FC<CalculAlgebriqueSectionsProps> =
                   </tr>
                   <tr>
                     <td className="p-2.5 font-sans font-bold text-amber-400">Factorisation parenthèse</td>
-                    <td className="p-2.5 text-slate-200">k·A + k·B = k(A + B)</td>
+                    <td className="p-2.5 text-slate-200">k × A + k × B = k(A + B)</td>
                     <td className="p-2.5 text-amber-300">(x+1)(2x-3)+(x+1)(x+4)=(x+1)(3x+1)</td>
                   </tr>
                   <tr>

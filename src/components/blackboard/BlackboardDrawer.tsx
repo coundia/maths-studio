@@ -1,12 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useDragControls } from 'motion/react';
 import { 
   X, ChevronRight, ChevronLeft, Plus, Trash2, Edit2, Copy, Save, Download, Upload, FileDown,
   PenTool, Keyboard, Highlighter, Palette, Underline, CheckSquare, Square, Code,
-  History, Clock, Eye, Sun, Moon
+  History, Clock, Eye, Sun, Moon, Settings, Sliders, Pipette,
+  GripHorizontal, Minimize2, Maximize2, MoreHorizontal, ChevronDown, ChevronUp, Maximize,
+  Calculator, Sparkles
 } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { WhiteboardCanvas } from './WhiteboardCanvas';
+import { 
+  BoardSettings, 
+  DEFAULT_BOARD_SETTINGS, 
+  loadBoardSettings, 
+  saveBoardSettings, 
+  fetchServerBoardSettings,
+  getBoardThemeClasses, 
+  getGridStyle, 
+  getFontSizeRem 
+} from './boardSettings';
+import { BoardSettingsDrawer } from './BoardSettingsDrawer';
 import 'mathlive';
 import { initVirtualKeyboardInCurrentBrowsingContext } from 'mathlive';
 
@@ -28,10 +41,77 @@ interface BlackboardDrawerProps {
 
 export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onClose }) => {
   const [activeMode, setActiveMode] = useState<'draw' | 'type'>('type');
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(true);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [isKeyboardMinimized, setIsKeyboardMinimized] = useState(false);
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false);
   const [isDemoMode, setIsDemoMode] = useState(false);
+  const [isActionsMenuOpen, setIsActionsMenuOpen] = useState(false);
+  const [isFormatBarOpen, setIsFormatBarOpen] = useState(false);
+  const [isZenMode, setIsZenMode] = useState(false);
+  const actionsMenuRef = useRef<HTMLDivElement>(null);
+  const [boardSettings, setBoardSettings] = useState<BoardSettings>(() => loadBoardSettings());
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const dragControls = useDragControls();
+  const boardBodyRef = useRef<HTMLDivElement>(null);
+
+  // Close actions dropdown on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (actionsMenuRef.current && !actionsMenuRef.current.contains(e.target as Node)) {
+        setIsActionsMenuOpen(false);
+      }
+    };
+    if (isActionsMenuOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [isActionsMenuOpen]);
+
+  // Synchronize board settings with server data storage on mount
+  useEffect(() => {
+    fetchServerBoardSettings().then((remoteSettings) => {
+      if (remoteSettings) {
+        setBoardSettings((current) => ({
+          ...current,
+          ...remoteSettings,
+          customColors: Array.isArray(remoteSettings.customColors) && remoteSettings.customColors.length > 0
+            ? remoteSettings.customColors
+            : current.customColors,
+        }));
+      }
+    });
+  }, []);
+
+  const handleUpdateSettings = (newSettings: BoardSettings) => {
+    setBoardSettings(newSettings);
+    saveBoardSettings(newSettings);
+  };
+
+  const handleAddCustomColor = (color: string) => {
+    const hex = color.trim().toLowerCase();
+    const existing = boardSettings.customColors || [];
+    if (!existing.some((c) => c.toLowerCase() === hex)) {
+      const updated = {
+        ...boardSettings,
+        customColors: [...existing, hex],
+      };
+      handleUpdateSettings(updated);
+    }
+  };
+
+  const handleResetSettings = () => {
+    setBoardSettings(DEFAULT_BOARD_SETTINGS);
+    saveBoardSettings(DEFAULT_BOARD_SETTINGS);
+  };
+
+  const handleClearBoard = () => {
+    setLines([{ id: Date.now(), initialValue: '' }]);
+    mathFieldsRef.current = {};
+    localStorage.removeItem('math3d_blackboard_lines');
+  };
 
   // Type for a saved board
   type SavedBoard = {
@@ -67,7 +147,27 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
   });
   
   const [activeLineId, setActiveLineId] = useState<number | null>(null);
-  const [autoCompleteEnabled, setAutoCompleteEnabled] = useState(true);
+
+  const handleAddLine = (afterIndex?: number) => {
+    const newLine = { id: Date.now(), initialValue: '' };
+    if (afterIndex !== undefined && afterIndex >= 0) {
+      setLines(prev => {
+        const next = [...prev];
+        next.splice(afterIndex + 1, 0, newLine);
+        return next;
+      });
+    } else {
+      setLines(prev => [...prev, newLine]);
+    }
+    setActiveLineId(newLine.id);
+    setTimeout(() => {
+      mathFieldsRef.current[newLine.id]?.focus();
+    }, 60);
+  };
+  const autoCompleteEnabled = boardSettings.autoCompleteEnabled;
+  const setAutoCompleteEnabled = (val: boolean) => {
+    handleUpdateSettings({ ...boardSettings, autoCompleteEnabled: val });
+  };
   const [rawModeLines, setRawModeLines] = useState<Record<number, boolean>>({});
   const [selectionContext, setSelectionContext] = useState<{
     lineId: number;
@@ -85,6 +185,9 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
 
   // Configure MathLive Virtual Keyboard
   useEffect(() => {
+    let handleGeometryChange: (() => void) | null = null;
+    let mvkRef: any = null;
+
     if (typeof window !== 'undefined' && isOpen && activeMode === 'type') {
       try {
         initVirtualKeyboardInCurrentBrowsingContext();
@@ -94,6 +197,11 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
 
       const mvk = (window as any).mathVirtualKeyboard;
       if (mvk) {
+        mvkRef = mvk;
+        try {
+          mvk.policy = 'manual';
+        } catch (e) {}
+
         if (kbdContainerRef.current) {
           try {
             mvk.container = kbdContainerRef.current;
@@ -104,7 +212,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
         
         // Hide/show based on state
         try {
-          if (isKeyboardOpen) {
+          if (isKeyboardOpen && !isKeyboardMinimized) {
             mvk.show();
           } else {
             mvk.hide();
@@ -112,11 +220,29 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
         } catch (e) {
           console.warn('mathVirtualKeyboard show/hide error:', e);
         }
+
+        // Prevent MathLive from automatically hiding on focusout/blur during drag
+        handleGeometryChange = () => {
+          if (isKeyboardOpen && !isKeyboardMinimized && !mvk.visible) {
+            try {
+              mvk.show();
+            } catch (e) {}
+          }
+        };
+
+        try {
+          mvk.addEventListener('geometrychange', handleGeometryChange);
+        } catch (e) {}
       }
     }
     
     // Cleanup on unmount or close
     return () => {
+      if (mvkRef && handleGeometryChange) {
+        try {
+          mvkRef.removeEventListener('geometrychange', handleGeometryChange);
+        } catch (e) {}
+      }
       if (typeof window !== 'undefined') {
         const mvk = (window as any).mathVirtualKeyboard;
         if (mvk) {
@@ -131,14 +257,19 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
         }
       }
     };
-  }, [isOpen, activeMode, isKeyboardOpen]);
+  }, [isOpen, activeMode, isKeyboardOpen, isKeyboardMinimized]);
 
   // Apply inline shortcuts setting to all math fields
   useEffect(() => {
     Object.values(mathFieldsRef.current).forEach((mf: any) => {
       if (mf) {
         if (!autoCompleteEnabled) {
-          mf.inlineShortcuts = {};
+          mf.inlineShortcuts = {
+            '*': '\\times',
+            'xx': '\\times',
+            'cdot': '\\times',
+            'times': '\\times',
+          };
         } else {
           // Restore defaults first
           mf.inlineShortcuts = undefined;
@@ -165,9 +296,11 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
             '->': '\\rightarrow',
             '+-': '\\pm',
             
-            // Opérateurs arithmétiques
+            // Opérateurs arithmétiques (interpréter la multiplication comme '×')
             '*': '\\times',
             'xx': '\\times',
+            'cdot': '\\times',
+            'times': '\\times',
             
             // Raccourcis texte français
             'racine': '\\sqrt',
@@ -334,42 +467,124 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
           `}</style>
 
           {/* Header */}
-          <div className="flex items-center justify-between p-4 sm:px-6 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md shrink-0 print:hidden">
-            <div className="flex items-center space-x-3">
+          <div className={`flex items-center justify-between p-3 sm:px-6 border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shrink-0 z-20 print:hidden transition-all ${isZenMode ? 'hidden' : 'flex'}`}>
+            {/* Left: History toggle & Title & Mode Switcher */}
+            <div className="flex items-center gap-2 sm:gap-4">
               <button
                 onClick={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)}
-                className={`p-2 rounded-xl border transition-colors ${isLeftSidebarOpen ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700'}`}
-                title="Ouvrir l'historique des brouillons"
+                className={`p-2 rounded-xl border transition-colors ${
+                  isLeftSidebarOpen 
+                    ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400 border-indigo-300 dark:border-indigo-700 shadow-sm' 
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700'
+                }`}
+                title="Historique des sauvegardes"
               >
-                <History className="w-5 h-5" />
+                <History className="w-4 h-4" />
               </button>
               
-              <div className="hidden sm:block p-2 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-xl border border-indigo-500/20 print:hidden">
-                <PenTool className="w-5 h-5" />
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 bg-gradient-to-tr from-indigo-500 to-indigo-600 text-white rounded-xl shadow-sm">
+                  <Calculator className="w-4 h-4" />
+                </div>
+                <div>
+                  <h2 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-tight">
+                    Tableau Math3D
+                  </h2>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">
+                    {activeMode === 'type' ? 'Calculs & Formules' : 'Dessin Libre'}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-white leading-tight">
-                  Tableau Interactif (MathLive)
-                </h2>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
-                  {activeMode === 'type' ? 'Éditeur WYSIWYG' : 'Dessin Libre'}
-                </p>
+
+              {/* Mode Switcher Pill */}
+              <div className="flex items-center p-1 bg-slate-200/60 dark:bg-slate-800/80 rounded-xl border border-slate-300/60 dark:border-slate-700/60">
+                <button
+                  onClick={() => setActiveMode('type')}
+                  className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
+                    activeMode === 'type'
+                      ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                  }`}
+                >
+                  <Keyboard className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Équations</span>
+                </button>
+                <button
+                  onClick={() => setActiveMode('draw')}
+                  className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
+                    activeMode === 'draw'
+                      ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                  }`}
+                >
+                  <PenTool className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Dessin</span>
+                </button>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 sm:gap-6">
+            {/* Right: Primary Call to Action & Controls */}
+            <div className="flex items-center gap-2 sm:gap-3">
               
-              {/* Theme Toggle Button */}
-              <button
-                onClick={toggleTheme}
-                className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-200/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors shadow-sm"
-                title={theme === 'dark' ? "Passer au mode clair" : "Passer au mode sombre"}
-              >
-                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-              </button>
+              {/* Primary Call to Action (CTA) */}
+              {activeMode === 'type' ? (
+                <button
+                  id="btn-header-add-line"
+                  onClick={() => handleAddLine()}
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-xs font-semibold rounded-xl transition-all shadow-sm hover:shadow-indigo-500/25 cursor-pointer"
+                  title="Ajouter une ligne de calcul (Entrée)"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span className="hidden sm:inline">Nouvelle Ligne</span>
+                </button>
+              ) : (
+                <button
+                  onClick={handleSave}
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white text-xs font-semibold rounded-xl transition-all shadow-sm cursor-pointer"
+                  title="Sauvegarder le dessin actuel"
+                >
+                  <Save className="w-4 h-4" />
+                  <span className="hidden sm:inline">Sauvegarder</span>
+                </button>
+              )}
 
-              {/* Import / Export / Save Group */}
-              <div className="hidden md:flex items-center bg-slate-200/50 dark:bg-slate-900 p-1 rounded-xl border border-slate-300 dark:border-slate-700">
+              {/* Virtual Keyboard Toggle (in type mode) */}
+              {activeMode === 'type' && (
+                <button
+                  id="btn-toggle-floating-keyboard"
+                  onClick={() => {
+                    setIsKeyboardOpen(!isKeyboardOpen);
+                    if (!isKeyboardOpen) setIsKeyboardMinimized(false);
+                  }}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                    isKeyboardOpen
+                      ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border-indigo-300 dark:border-indigo-700 shadow-xs'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700'
+                  }`}
+                  title={isKeyboardOpen ? "Masquer le clavier virtuel" : "Afficher le clavier virtuel"}
+                >
+                  <Keyboard className="w-4 h-4 text-indigo-500" />
+                  <span className="hidden md:inline">Clavier</span>
+                </button>
+              )}
+
+              {/* Collapsible Actions Dropdown (Grouped Import, Export, PDF, Clear) */}
+              <div className="relative" ref={actionsMenuRef}>
+                <button
+                  id="btn-board-actions-menu"
+                  onClick={() => setIsActionsMenuOpen(!isActionsMenuOpen)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                    isActionsMenuOpen
+                      ? 'bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white border-slate-300 dark:border-slate-600 shadow-sm'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700'
+                  }`}
+                  title="Actions du tableau (Export, Sauvegarde, Import)"
+                >
+                  <MoreHorizontal className="w-4 h-4" />
+                  <span className="hidden sm:inline">Actions</span>
+                  <ChevronDown className="w-3 h-3 text-slate-400" />
+                </button>
+
                 <input 
                   type="file" 
                   ref={fileInputRef} 
@@ -377,84 +592,126 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                   accept=".json" 
                   onChange={handleImport} 
                 />
-                
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all shadow-sm"
-                  title="Importer un fichier de tableau (.json)"
-                >
-                  <Upload className="w-4 h-4" />
-                  <span>Importer</span>
-                </button>
-                
-                <div className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
-                
-                <button
-                  onClick={handleExport}
-                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all shadow-sm"
-                  title="Exporter le tableau actuel (.json)"
-                >
-                  <Download className="w-4 h-4" />
-                  <span>Exporter</span>
-                </button>
-                <button
-                  onClick={() => window.print()}
-                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-white dark:hover:bg-slate-800 transition-all shadow-sm"
-                  title="Exporter au format PDF (Imprimer)"
-                >
-                  <FileDown className="w-4 h-4" />
-                  <span>PDF</span>
-                </button>
+
+                <AnimatePresence>
+                  {isActionsMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95, y: 5 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95, y: 5 }}
+                      transition={{ duration: 0.12 }}
+                      className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl py-1.5 z-50 text-xs font-medium"
+                    >
+                      <div className="px-3 py-1.5 text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                        Gestion & Export
+                      </div>
+
+                      <button
+                        onClick={() => {
+                          handleSave();
+                          setIsActionsMenuOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-left transition-colors cursor-pointer"
+                      >
+                        <Save className="w-4 h-4 text-emerald-500" />
+                        <span>Sauvegarder dans l'historique</span>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          window.print();
+                          setIsActionsMenuOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-left transition-colors cursor-pointer"
+                      >
+                        <FileDown className="w-4 h-4 text-rose-500" />
+                        <span>Exporter en PDF (Imprimer)</span>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          handleExport();
+                          setIsActionsMenuOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-left transition-colors cursor-pointer"
+                      >
+                        <Download className="w-4 h-4 text-indigo-500" />
+                        <span>Télécharger fichier (.json)</span>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          fileInputRef.current?.click();
+                          setIsActionsMenuOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-left transition-colors cursor-pointer"
+                      >
+                        <Upload className="w-4 h-4 text-slate-500" />
+                        <span>Importer un fichier (.json)</span>
+                      </button>
+
+                      <div className="my-1.5 border-t border-slate-100 dark:border-slate-800" />
+
+                      <button
+                        onClick={() => {
+                          handleClearBoard();
+                          setIsActionsMenuOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-rose-600 dark:text-rose-400 text-left transition-colors cursor-pointer"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        <span>Effacer tout le tableau</span>
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
-              {/* Save Button */}
+              {/* Zen Mode Button */}
               <button
-                onClick={handleSave}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm"
-                title="Créer une nouvelle sauvegarde dans l'historique"
+                onClick={() => setIsZenMode(true)}
+                className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
+                title="Mode Plein Écran Épuré (Masquer les barres d'outils)"
               >
-                <Save className="w-4 h-4" />
-                <span className="hidden sm:inline">Sauvegarder</span>
+                <Maximize className="w-4 h-4" />
               </button>
 
-              {/* Mode Switcher */}
-              <div className="flex items-center gap-1 bg-slate-200/50 dark:bg-slate-900 p-1 rounded-xl border border-slate-300 dark:border-slate-700">
-                <button
-                  onClick={() => setActiveMode('type')}
-                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                    activeMode === 'type'
-                      ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-                  }`}
-                >
-                  <Keyboard className="w-4 h-4" />
-                  <span className="hidden sm:inline">Équations</span>
-                </button>
-                <button
-                  onClick={() => setActiveMode('draw')}
-                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                    activeMode === 'draw'
-                      ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-                  }`}
-                >
-                  <PenTool className="w-4 h-4" />
-                  <span className="hidden sm:inline">Dessin</span>
-                </button>
-              </div>
+              {/* Board Settings Icon Button */}
+              <button
+                id="btn-open-board-settings"
+                onClick={() => setIsSettingsOpen(true)}
+                className={`p-2 rounded-xl border transition-all cursor-pointer ${
+                  isSettingsOpen
+                    ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400 border-indigo-300 dark:border-indigo-700 shadow-sm'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-indigo-600 dark:hover:text-indigo-400'
+                }`}
+                title="Paramètres du tableau (Arrière-plan, Grille, Taille, Raccourcis)"
+              >
+                <Settings className="w-4 h-4" />
+              </button>
 
+              {/* Theme Toggle Button */}
+              <button
+                onClick={toggleTheme}
+                className="flex items-center justify-center w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-slate-700 shadow-xs cursor-pointer"
+                title={theme === 'dark' ? "Passer au mode clair" : "Passer au mode sombre"}
+              >
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+
+              {/* Close Button */}
               <button
                 onClick={onClose}
-                className="p-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full transition-colors border border-slate-200 dark:border-slate-700"
+                className="p-2 bg-slate-100 hover:bg-rose-100 dark:bg-slate-800 dark:hover:bg-rose-950/40 text-slate-700 hover:text-rose-600 dark:text-slate-300 dark:hover:text-rose-400 rounded-xl transition-colors border border-slate-200 dark:border-slate-700 cursor-pointer"
                 title="Fermer le tableau"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
           </div>
 
           {/* Body */}
-          <div className="flex-1 relative overflow-hidden flex print:overflow-visible">
+          <div ref={boardBodyRef} className="flex-1 relative overflow-hidden flex print:overflow-visible">
             
             {/* Left Sidebar for History */}
             <AnimatePresence>
@@ -546,102 +803,187 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
 
             {activeMode === 'draw' ? (
               <div className="flex-1 p-4 print:p-0">
-                <WhiteboardCanvas />
+                <WhiteboardCanvas 
+                  themeStyle={boardSettings.themeStyle}
+                  gridPattern={boardSettings.gridPattern}
+                  gridOpacity={boardSettings.gridOpacity}
+                  defaultColor={boardSettings.drawDefaultColor}
+                  defaultLineWidth={boardSettings.drawDefaultWidth}
+                  customColors={boardSettings.customColors}
+                  onAddCustomColor={handleAddCustomColor}
+                />
               </div>
             ) : (
               <>
                 {/* Full Page Equation Display (MathLive Field) */}
-                <div className={`flex-1 flex flex-col items-center justify-start p-4 sm:p-8 overflow-y-auto print:overflow-visible print:p-0 transition-all duration-300 relative ${isKeyboardOpen ? (isLeftSidebarOpen ? 'mx-0 sm:ml-80 md:ml-96 sm:mr-96 md:mr-[450px] print:mx-0' : 'mr-0 sm:mr-96 md:mr-[450px] print:mr-0') : (isLeftSidebarOpen ? 'ml-0 sm:ml-80 md:ml-96 print:ml-0 mr-0' : 'mr-0')}`}>
+                <div className={`flex-1 flex flex-col items-center justify-start p-4 sm:p-8 overflow-y-auto print:overflow-visible print:p-0 transition-all duration-300 relative ${isLeftSidebarOpen ? 'ml-0 sm:ml-80 md:ml-96 print:ml-0 mr-0' : 'mr-0'}`}>
                   
                   {/* Demo Mode Overlay */}
                   {isDemoMode && (
                     <div className="absolute inset-0 z-[60]">
-                      <WhiteboardCanvas isOverlay={true} />
+                      <WhiteboardCanvas 
+                        isOverlay={true} 
+                        customColors={boardSettings.customColors}
+                        onAddCustomColor={handleAddCustomColor}
+                      />
                     </div>
                   )}
 
-                  {/* Formatting Toolbar */}
-                  <div className="flex flex-wrap items-center justify-center gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-2 sm:px-4 rounded-xl mb-4 self-center shadow-lg sticky top-0 z-[70] transition-opacity print:hidden">
-                    
-                    {/* Demo Mode Toggle */}
+                  {/* Collapsible Format & Style Toolbar ("buttons masquable") */}
+                  <div className="sticky top-2 z-[70] self-center flex flex-col items-center mb-4 transition-all print:hidden">
+                    {/* Collapsed/Expand Toggle Pill */}
                     <button
-                      onClick={() => setIsDemoMode(!isDemoMode)}
-                      className={`flex items-center gap-1.5 text-xs font-semibold transition-colors border-r border-slate-200 dark:border-slate-700 pr-3 ${isDemoMode ? 'text-amber-500' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'}`}
-                      title="Mode Démonstration : Dessiner sur les équations"
+                      id="btn-toggle-format-bar"
+                      onClick={() => setIsFormatBarOpen(!isFormatBarOpen)}
+                      className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md border shadow-sm transition-all cursor-pointer ${
+                        isFormatBarOpen
+                          ? 'bg-indigo-600 text-white border-indigo-500 shadow-indigo-500/20'
+                          : 'bg-white/90 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400 hover:shadow'
+                      }`}
+                      title={isFormatBarOpen ? "Masquer la barre d'outils" : "Afficher les couleurs et outils de formatage"}
                     >
-                      <Highlighter className="w-4 h-4" />
-                      <span className="hidden sm:inline">Mode Démo</span>
-                      <span className="sm:hidden">Démo</span>
+                      <Palette className="w-3.5 h-3.5 text-indigo-400" />
+                      <span>{isFormatBarOpen ? 'Masquer les outils' : 'Outils de Style & Couleurs'}</span>
+                      {isFormatBarOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                     </button>
 
-                    {/* Auto-complete Toggle */}
-                    <button
-                      onClick={() => setAutoCompleteEnabled(!autoCompleteEnabled)}
-                      className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors border-r border-slate-200 dark:border-slate-700 pr-3"
-                      title="Transformer automatiquement les mots (ex: pi) en symboles (π)"
-                    >
-                      {autoCompleteEnabled ? <CheckSquare className="w-4 h-4 text-emerald-500" /> : <Square className="w-4 h-4" />}
-                      <span className="hidden sm:inline">Auto-complétion</span>
-                      <span className="sm:hidden">Auto</span>
-                    </button>
+                    {/* Expanded Toolbar Panel */}
+                    <AnimatePresence>
+                      {isFormatBarOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                          transition={{ duration: 0.15 }}
+                          className="mt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-800 p-2 sm:px-4 rounded-2xl shadow-xl max-w-full"
+                        >
+                          {/* Demo Mode Toggle */}
+                          <button
+                            onClick={() => setIsDemoMode(!isDemoMode)}
+                            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${
+                              isDemoMode 
+                                ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-300 dark:border-amber-700' 
+                                : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                            }`}
+                            title="Mode Démonstration : Dessiner sur les équations"
+                          >
+                            <Highlighter className="w-3.5 h-3.5 text-amber-500" />
+                            <span className="hidden sm:inline">Surligneur Démo</span>
+                          </button>
 
-                    <span className="text-xs font-semibold text-slate-500 flex items-center gap-1">
-                      <Palette className="w-3.5 h-3.5" /> Style :
-                    </span>
-                    {['#ef4444', '#3b82f6', '#10b981', '#f59e0b'].map((c) => (
-                      <button
-                        key={c}
-                        onClick={() => {
-                          if (activeLineId && mathFieldsRef.current[activeLineId]) {
-                            mathFieldsRef.current[activeLineId].applyStyle({ color: c });
-                            mathFieldsRef.current[activeLineId].focus();
-                          }
-                        }}
-                        className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-transparent hover:border-slate-300 dark:hover:border-slate-600 shadow-sm transition-transform hover:scale-110 active:scale-95"
-                        style={{ backgroundColor: c }}
-                        title="Mettre en couleur la sélection"
-                      />
-                    ))}
-                    
-                    <button
-                      onClick={() => {
-                        if (activeLineId && mathFieldsRef.current[activeLineId]) {
-                          // Reset color to default (inherit doesn't always work perfectly, but removing the color style does)
-                          mathFieldsRef.current[activeLineId].applyStyle({ color: 'none' });
-                          mathFieldsRef.current[activeLineId].focus();
-                        }
-                      }}
-                      className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-slate-300 dark:border-slate-600 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700"
-                      title="Enlever la couleur"
-                    >
-                      X
-                    </button>
-                    
-                    <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1" />
-                    
-                    <button
-                      onClick={() => {
-                        if (activeLineId && mathFieldsRef.current[activeLineId]) {
-                          mathFieldsRef.current[activeLineId].insert('\\underline{#0}');
-                          mathFieldsRef.current[activeLineId].focus();
-                        }
-                      }}
-                      className="p-1.5 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
-                      title="Souligner la sélection"
-                    >
-                      <Underline className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </button>
+                          {/* Auto-complete Toggle */}
+                          <button
+                            onClick={() => setAutoCompleteEnabled(!autoCompleteEnabled)}
+                            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${
+                              autoCompleteEnabled 
+                                ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-700' 
+                                : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                            }`}
+                            title="Transformer automatiquement les mots (ex: pi) en symboles (π)"
+                          >
+                            {autoCompleteEnabled ? <CheckSquare className="w-3.5 h-3.5 text-emerald-500" /> : <Square className="w-3.5 h-3.5" />}
+                            <span className="hidden sm:inline">Auto-complétion</span>
+                          </button>
+
+                          <div className="w-px h-5 bg-slate-200 dark:bg-slate-700" />
+
+                          {/* Color swatches */}
+                          <div className="flex items-center gap-1.5 max-w-[200px] sm:max-w-[320px] overflow-x-auto py-0.5">
+                            {Array.from(new Set(['#ef4444', '#3b82f6', '#10b981', '#f59e0b', ...(boardSettings.customColors || [])])).map((c) => (
+                              <button
+                                key={c}
+                                onClick={() => {
+                                  if (activeLineId && mathFieldsRef.current[activeLineId]) {
+                                    mathFieldsRef.current[activeLineId].applyStyle({ color: c });
+                                    mathFieldsRef.current[activeLineId].focus();
+                                  }
+                                }}
+                                className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-black/10 hover:border-slate-300 dark:hover:border-slate-600 shadow-xs transition-transform hover:scale-110 active:scale-95 shrink-0 cursor-pointer"
+                                style={{ backgroundColor: c }}
+                                title={`Mettre en couleur ${c}`}
+                              />
+                            ))}
+                          </div>
+
+                          {/* On-the-fly Color Picker */}
+                          <div 
+                            className="relative w-5 h-5 sm:w-6 sm:h-6 rounded-full overflow-hidden border border-slate-300 dark:border-slate-600 shadow-xs hover:scale-110 transition-transform cursor-pointer shrink-0"
+                            title="Choisir une autre couleur pour la formule"
+                          >
+                            <input
+                              type="color"
+                              defaultValue="#ec4899"
+                              onChange={(e) => {
+                                const newC = e.target.value;
+                                if (activeLineId && mathFieldsRef.current[activeLineId]) {
+                                  mathFieldsRef.current[activeLineId].applyStyle({ color: newC });
+                                  mathFieldsRef.current[activeLineId].focus();
+                                }
+                                handleAddCustomColor(newC);
+                              }}
+                              className="absolute -top-2 -left-2 w-10 h-10 cursor-pointer opacity-0"
+                            />
+                            <div className="w-full h-full flex items-center justify-center bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 text-white">
+                              <Pipette className="w-3 h-3 drop-shadow" />
+                            </div>
+                          </div>
+                          
+                          <button
+                            onClick={() => {
+                              if (activeLineId && mathFieldsRef.current[activeLineId]) {
+                                mathFieldsRef.current[activeLineId].applyStyle({ color: 'none' });
+                                mathFieldsRef.current[activeLineId].focus();
+                              }
+                            }}
+                            className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-slate-300 dark:border-slate-600 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 shrink-0 cursor-pointer"
+                            title="Enlever la couleur"
+                          >
+                            ✕
+                          </button>
+                          
+                          <div className="w-px h-5 bg-slate-200 dark:bg-slate-700" />
+                          
+                          {/* Underline */}
+                          <button
+                            onClick={() => {
+                              if (activeLineId && mathFieldsRef.current[activeLineId]) {
+                                mathFieldsRef.current[activeLineId].insert('\\underline{#0}');
+                                mathFieldsRef.current[activeLineId].focus();
+                              }
+                            }}
+                            className="p-1.5 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors cursor-pointer"
+                            title="Souligner la sélection"
+                          >
+                            <Underline className="w-4 h-4" />
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
 
-                  <div id="printable-blackboard" className="w-full flex-1 flex flex-col items-center gap-4 bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 min-h-[300px] mb-8 print:shadow-none print:border-none print:bg-transparent print:p-0 print:mb-0">
-                    {lines.map((line, index) => (
-                      <div key={line.id} className="w-full flex items-center justify-center gap-2 group relative print:mb-6 print:break-inside-avoid">
-                        {/* Numbering */}
-                        <span className="absolute left-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 font-bold rounded-lg text-xs sm:text-sm shadow-sm print:hidden">
-                          {index + 1}
-                        </span>
-                        
-                        <div className={`w-full flex-1 flex justify-center ${rawModeLines[line.id] ? 'hidden' : 'block'}`}>
+                  {(() => {
+                    const isDark = theme === 'dark';
+                    const themeClasses = getBoardThemeClasses(boardSettings.themeStyle, isDark);
+                    const gridStyle = getGridStyle(boardSettings.gridPattern, boardSettings.gridOpacity, boardSettings.themeStyle, isDark);
+                    return (
+                      <div 
+                        id="printable-blackboard" 
+                        className={`w-full flex-1 flex flex-col items-center gap-4 ${themeClasses.containerClass} ${themeClasses.textClass} rounded-3xl border p-6 sm:p-8 min-h-[300px] mb-8 transition-colors duration-200 print:shadow-none print:border-none print:bg-transparent print:p-0 print:mb-0`}
+                        style={gridStyle}
+                      >
+                        {lines.map((line, index) => (
+                          <div 
+                            key={line.id} 
+                            className={`w-full flex items-center ${boardSettings.alignment === 'left' ? 'justify-start pl-8 sm:pl-14' : 'justify-center'} gap-2 group relative print:mb-6 print:break-inside-avoid`}
+                          >
+                            {/* Numbering */}
+                            {boardSettings.showLineNumbers && (
+                              <span className="absolute left-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-indigo-50/80 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 font-bold rounded-lg text-xs sm:text-sm shadow-sm print:hidden">
+                                {index + 1}
+                              </span>
+                            )}
+                            
+                            <div className={`w-full flex-1 flex ${boardSettings.alignment === 'left' ? 'justify-start' : 'justify-center'} ${rawModeLines[line.id] ? 'hidden' : 'block'}`}>
                           <math-field 
                             ref={(el: any) => {
                               if (el) {
@@ -661,17 +1003,25 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                                     let processed = text;
                                     // Replace common math variable powers: x2 -> x^2
                                     processed = processed.replace(/([xyzabcntXYZABCNT])([2-9])/g, '$1^$2');
-                                    // Replace common operators
-                                    processed = processed.replace(/\*/g, '\\times');
+                                    // Replace common operators (interpréte la multiplication comme '×')
+                                    processed = processed.replace(/\\cdot\b/g, '\\times');
+                                    processed = processed.replace(/[·•\*]/g, '\\times');
                                     processed = processed.replace(/!=/g, '\\neq');
                                     processed = processed.replace(/<=/g, '\\leq');
                                     processed = processed.replace(/>=/g, '\\geq');
                                     
                                     el.executeCommand(['insert', processed]);
                                   });
-                                  
-                                  // Auto-save on every keystroke
+
+                                  // Auto-save on every keystroke & auto-correction de \cdot en \times
                                   el.addEventListener('input', () => {
+                                    if (el.value && (el.value.includes('\\cdot') || el.value.includes('·'))) {
+                                      const currentSel = el.selection;
+                                      el.setValue(el.value.replace(/\\cdot\b/g, '\\times').replace(/·/g, '\\times'), { format: 'latex' });
+                                      try {
+                                        if (currentSel) el.selection = currentSel;
+                                      } catch {}
+                                    }
                                     saveToLocalStorageSilently();
                                   });
                                   
@@ -697,19 +1047,39 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                                 if (!el._baseShortcuts) {
                                   el._baseShortcuts = el.inlineShortcuts || {};
                                 }
-                                
+
                                 mathFieldsRef.current[line.id] = el;
-                                el.inlineShortcuts = autoCompleteEnabled ? {
-                                  ...el._baseShortcuts,
-                                  "/([xyzabcntXYZABCNT])([2-9])/": "$1^$2"
-                                } : {};
+                                el.onkeydown = (e: KeyboardEvent) => {
+                                  if (e.key === 'Enter' && !e.shiftKey) {
+                                    e.preventDefault();
+                                    handleAddLine(index);
+                                  }
+                                };
+                                try {
+                                  el.mathVirtualKeyboardPolicy = 'manual';
+                                } catch {}
+                                el.inlineShortcuts = {
+                                  ...(autoCompleteEnabled ? (el._baseShortcuts || {}) : {}),
+                                  '*': '\\times',
+                                  'xx': '\\times',
+                                  'cdot': '\\times',
+                                  'times': '\\times',
+                                  ...(autoCompleteEnabled ? { "/([xyzabcntXYZABCNT])([2-9])/": "$1^$2" } : {})
+                                };
                               }
                             }}
-                            onFocus={() => setActiveLineId(line.id)}
+                            math-virtual-keyboard-policy="manual"
+                            onFocus={() => {
+                              setActiveLineId(line.id);
+                              if (boardSettings.autoOpenKeyboardOnFocus) {
+                                setIsKeyboardOpen(true);
+                                setIsKeyboardMinimized(false);
+                              }
+                            }}
                             style={{ 
-                              fontSize: '2.5rem', 
+                              fontSize: getFontSizeRem(boardSettings.fontSize), 
                               width: '90%', 
-                              textAlign: 'center', 
+                              textAlign: boardSettings.alignment, 
                               border: 'none', 
                               outline: 'none', 
                               background: 'transparent',
@@ -782,20 +1152,19 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                           </div>
                         )}
 
-                        {/* Actions line */}
-                        <div className="absolute right-0 flex items-center opacity-0 group-hover:opacity-100 transition-opacity print:hidden">
+                        {/* Actions line - Discrete glassmorphic capsule */}
+                        <div className="absolute right-1 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity print:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-md p-1 rounded-xl border border-slate-200/80 dark:border-slate-700/80 shadow-md">
                           <button
                             onClick={() => {
                               setRawModeLines(prev => ({ ...prev, [line.id]: !prev[line.id] }));
-                              // Focus the field if switching back to math mode
                               if (rawModeLines[line.id]) {
                                 setTimeout(() => mathFieldsRef.current[line.id]?.focus(), 50);
                               }
                             }}
-                            className="p-2 text-amber-500 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/30 rounded-lg transition-all"
+                            className="p-1.5 text-amber-500 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/30 rounded-lg transition-all cursor-pointer"
                             title={rawModeLines[line.id] ? "Interpréter (Vue Mathématique)" : "Éditer le LaTeX brut"}
                           >
-                            {rawModeLines[line.id] ? <Eye className="w-5 h-5" /> : <Code className="w-5 h-5" />}
+                            {rawModeLines[line.id] ? <Eye className="w-4 h-4" /> : <Code className="w-4 h-4" />}
                           </button>
 
                           <button
@@ -806,10 +1175,10 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                               newLines.splice(index + 1, 0, { id: Date.now(), initialValue: currentValue });
                               setLines(newLines);
                             }}
-                            className="p-2 text-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-lg transition-all"
+                            className="p-1.5 text-indigo-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-lg transition-all cursor-pointer"
                             title="Dupliquer la ligne"
                           >
-                            <Copy className="w-5 h-5" />
+                            <Copy className="w-4 h-4" />
                           </button>
                           
                           {lines.length > 1 && (
@@ -819,67 +1188,123 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                                 setLines(newLines);
                                 delete mathFieldsRef.current[line.id];
                               }}
-                              className="p-2 text-rose-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg transition-all"
+                              className="p-1.5 text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg transition-all cursor-pointer"
                               title="Supprimer la ligne"
                             >
-                              <Trash2 className="w-5 h-5" />
+                              <Trash2 className="w-4 h-4" />
                             </button>
                           )}
                         </div>
                       </div>
                     ))}
                     
-                    <button
-                      onClick={() => setLines([...lines, { id: Date.now(), initialValue: '' }])}
-                      className="mt-6 px-5 py-2.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-medium rounded-xl hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors flex items-center gap-2 print:hidden"
-                    >
-                      <Plus className="w-4 h-4" />
-                      <span>Nouvelle Ligne de Calcul</span>
-                    </button>
+                    {/* Primary Call to Action Button */}
+                    <div className="mt-8 flex flex-col items-center gap-2 print:hidden">
+                      <button
+                        id="btn-add-line-bottom-cta"
+                        onClick={() => handleAddLine()}
+                        className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 active:scale-95 text-white font-semibold text-xs sm:text-sm rounded-2xl shadow-lg hover:shadow-indigo-500/25 transition-all flex items-center gap-2.5 cursor-pointer"
+                      >
+                        <Plus className="w-4 h-4" />
+                        <span>Ajouter une ligne de calcul</span>
+                        <span className="ml-1 px-2 py-0.5 text-[10px] font-mono font-medium bg-white/20 rounded-md">Entrée ↵</span>
+                      </button>
+                    </div>
                   </div>
-                  <p className="mt-4 text-slate-500 dark:text-slate-400 text-sm flex items-center gap-2 print:hidden">
-                    <Keyboard className="w-4 h-4" /> Tapez au clavier ou utilisez le panneau latéral.
+                    );
+                  })()}
+                  <p className="mt-4 text-slate-400 dark:text-slate-500 text-xs flex items-center gap-1.5 print:hidden">
+                    <Keyboard className="w-3.5 h-3.5 text-indigo-400" /> Saisie au clavier physique ou avec le clavier interactif flottant.
                   </p>
                 </div>
 
-                {/* Keyboard Toggle Button (when hidden) */}
-                {!isKeyboardOpen && (
-                  <button
-                    onClick={() => setIsKeyboardOpen(true)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-l-2xl shadow-xl transition-all z-20 print:hidden"
-                    title="Afficher le clavier"
-                  >
-                    <ChevronLeft className="w-6 h-6" />
-                  </button>
-                )}
+                {/* Floating Virtual Keyboard Toggle Button (when closed) */}
+                <AnimatePresence>
+                  {!isKeyboardOpen && (
+                    <motion.button
+                      id="btn-open-floating-keyboard"
+                      initial={{ opacity: 0, scale: 0.85, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.85, y: 10 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        setIsKeyboardOpen(true);
+                        setIsKeyboardMinimized(false);
+                      }}
+                      className="absolute bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl shadow-xl hover:shadow-indigo-500/25 transition-all text-xs sm:text-sm font-semibold border border-indigo-400/30 print:hidden cursor-pointer"
+                      title="Afficher le clavier virtuel flottant"
+                    >
+                      <Keyboard className="w-4 h-4" />
+                      <span>Clavier Virtuel</span>
+                    </motion.button>
+                  )}
+                </AnimatePresence>
 
-                {/* Right Drawer Keyboard Container */}
+                {/* Floating Draggable Virtual Keyboard Container */}
                 <AnimatePresence>
                   {isKeyboardOpen && (
                     <motion.div
-                      initial={{ x: '100%' }}
-                      animate={{ x: 0 }}
-                      exit={{ x: '100%' }}
-                      transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                      className="absolute right-0 top-0 bottom-0 w-full sm:w-96 md:w-[450px] bg-white dark:bg-slate-950 border-l border-slate-200 dark:border-slate-800 shadow-2xl z-30 flex flex-col print:hidden"
+                      drag
+                      dragControls={dragControls}
+                      dragListener={false}
+                      dragMomentum={false}
+                      dragConstraints={boardBodyRef}
+                      dragElastic={0}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.18 }}
+                      className="absolute bottom-6 right-6 z-50 w-[94vw] sm:w-[580px] md:w-[640px] max-w-[calc(100vw-32px)] bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800/90 shadow-2xl rounded-2xl overflow-hidden flex flex-col print:hidden select-none"
+                      style={{
+                        boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(99, 102, 241, 0.15)'
+                      }}
                     >
-                      <div className="flex items-center justify-between p-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shrink-0">
-                        <span className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
-                          <Keyboard className="w-4 h-4" /> Clavier Virtuel MathLive
-                        </span>
-                        <button
-                          onClick={() => setIsKeyboardOpen(false)}
-                          className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg transition-colors text-slate-500"
-                          title="Masquer le clavier"
-                        >
-                          <ChevronRight className="w-5 h-5" />
-                        </button>
+                      {/* Draggable Header */}
+                      <div
+                        onPointerDown={(e) => {
+                          e.preventDefault();
+                          dragControls.start(e);
+                        }}
+                        className="flex items-center justify-between px-3.5 py-2.5 border-b border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-800/90 cursor-grab active:cursor-grabbing shrink-0 select-none touch-none"
+                        title="Glisser pour déplacer le clavier"
+                      >
+                        <div className="flex items-center gap-2 pointer-events-none">
+                          <GripHorizontal className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                          <span className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                            <Keyboard className="w-4 h-4 text-indigo-500" />
+                            <span>Clavier Virtuel MathLive</span>
+                          </span>
+                          <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-medium bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-full border border-indigo-200/60 dark:border-indigo-800/50">
+                            Flottant & Déplaçable
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-1">
+                          {/* Minimize / Expand Toggle */}
+                          <button
+                            onClick={() => setIsKeyboardMinimized(!isKeyboardMinimized)}
+                            className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors text-slate-500 dark:text-slate-400 cursor-pointer"
+                            title={isKeyboardMinimized ? "Agrandir le clavier" : "Réduire le clavier"}
+                          >
+                            {isKeyboardMinimized ? <Maximize2 className="w-3.5 h-3.5" /> : <Minimize2 className="w-3.5 h-3.5" />}
+                          </button>
+
+                          {/* Close */}
+                          <button
+                            onClick={() => setIsKeyboardOpen(false)}
+                            className="p-1.5 hover:bg-rose-100 dark:hover:bg-rose-900/40 hover:text-rose-600 dark:hover:text-rose-400 rounded-lg transition-colors text-slate-500 dark:text-slate-400 cursor-pointer"
+                            title="Masquer le clavier"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
-                      
+
                       {/* Container for MathLive Virtual Keyboard */}
                       <div 
                         ref={kbdContainerRef} 
-                        className="flex-1 overflow-y-auto bg-slate-100 dark:bg-slate-900 relative"
+                        className={isKeyboardMinimized ? 'hidden' : 'h-[250px] sm:h-[280px] overflow-y-auto overflow-x-hidden bg-slate-50 dark:bg-slate-950 relative'}
                         style={{ '--keyboard-zindex': 10 } as React.CSSProperties}
                       >
                         {/* MathLive injects its keyboard here */}
@@ -890,6 +1315,33 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
               </>
             )}
           </div>
+
+          {/* Floating Exit Button for Zen Mode */}
+          <AnimatePresence>
+            {isZenMode && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8, y: -20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: -20 }}
+                onClick={() => setIsZenMode(false)}
+                className="fixed top-4 right-4 z-[90] flex items-center gap-2 px-4 py-2 bg-slate-900/90 hover:bg-slate-900 text-white rounded-full shadow-2xl backdrop-blur-md border border-white/20 text-xs font-semibold cursor-pointer transition-all hover:scale-105 active:scale-95 print:hidden"
+                title="Quitter le mode plein écran épuré"
+              >
+                <X className="w-4 h-4" />
+                <span>Quitter Mode Zen</span>
+              </motion.button>
+            )}
+          </AnimatePresence>
+
+          {/* Board Settings Drawer */}
+          <BoardSettingsDrawer
+            isOpen={isSettingsOpen}
+            onClose={() => setIsSettingsOpen(false)}
+            settings={boardSettings}
+            onUpdateSettings={handleUpdateSettings}
+            onResetSettings={handleResetSettings}
+            onClearBoard={handleClearBoard}
+          />
         </motion.div>
       )}
     </AnimatePresence>

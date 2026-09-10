@@ -131,13 +131,13 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
             { fromIndex: 1, toIndex: 3, label: `(${b}) × (${d})`, color: '#ef4444' },
           ],
           tokens: [
-            { text: `${term1} · ${term3}`, type: 'product', color: '#ef4444', isDistributor: true, highlight: true },
+            { text: `${term1} × ${term3}`, type: 'product', color: '#ef4444', isDistributor: true, highlight: true },
             { text: `+`, type: 'operator' },
-            { text: `${term1} · (${d})`, type: 'product', color: '#ef4444', isDistributor: true, highlight: true },
+            { text: `${term1} × (${d})`, type: 'product', color: '#ef4444', isDistributor: true, highlight: true },
             { text: `+`, type: 'operator' },
-            { text: `(${b}) · ${term3}`, type: 'product', color: '#ef4444', isDistributor: true, highlight: true },
+            { text: `(${b}) × ${term3}`, type: 'product', color: '#ef4444', isDistributor: true, highlight: true },
             { text: `+`, type: 'operator' },
-            { text: `(${b}) · (${d})`, type: 'product', color: '#ef4444', isDistributor: true, highlight: true },
+            { text: `(${b}) × (${d})`, type: 'product', color: '#ef4444', isDistributor: true, highlight: true },
           ],
           activeExplanation: "L'élément distributeur est en ROUGE et se déplace vers chaque terme du second facteur."
         }
@@ -288,8 +288,8 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
           explanation: `Pour factoriser la surface en « L », on la scinde en deux rectangles contigus : le rectangle R₁ de dimensions (${coeff === 1 ? 'x' : `${coeff}x`} - ${a}) × (${coeff === 1 ? 'x' : `${coeff}x`}) et le rectangle R₂ de dimensions (${coeff === 1 ? 'x' : `${coeff}x`} - ${a}) × ${a}.`,
           appliedRule: "Décomposition polygonale",
           latex: coeff === 1
-            ? `R_1 = (x - ${a}) \\cdot x \\quad \\text{et} \\quad R_2 = (x - ${a}) \\cdot ${a}`
-            : `R_1 = (${coeff}x - ${a}) \\cdot ${coeff}x \\quad \\text{et} \\quad R_2 = (${coeff}x - ${a}) \\cdot ${a}`,
+            ? `R_1 = (x - ${a}) \\times x \\quad \\text{et} \\quad R_2 = (x - ${a}) \\times ${a}`
+            : `R_1 = (${coeff}x - ${a}) \\times ${coeff}x \\quad \\text{et} \\quad R_2 = (${coeff}x - ${a}) \\times ${a}`,
           visualState: {
             type: 'difference_of_squares_3d',
             dimensions: { x: 5, a: Math.min(2.5, Math.max(1.2, (a / (coeff * 3)) * 2.5)), depth: 0.8 },
@@ -310,7 +310,7 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
           explanation: `Le rectangle R₂ pivote à 90° et vient s'aligner parfaitement le long de R₁ car ils partagent la même dimension commune (${coeff === 1 ? 'x' : `${coeff}x`} - ${a}).`,
           appliedRule: "Isométrie & Transformation géométrique",
           latex: coeff === 1
-            ? `\\text{Aire} = (x - ${a}) \\cdot x + (x - ${a}) \\cdot ${a} = (x - ${a})(x + ${a})`
+            ? `\\text{Aire} = (x - ${a}) \\times x + (x - ${a}) \\times ${a} = (x - ${a})(x + ${a})`
             : `\\text{Aire} = (${coeff}x - ${a})(${coeff}x + ${a})`,
           visualState: {
             type: 'difference_of_squares_3d',
@@ -411,7 +411,7 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
           stepNumber: 2,
           title: `Décomposition & Révélation du facteur commun en ROUGE (${factor})`,
           explanation: `On décompose chaque terme : ${aCoeff}x = ${factor} × ${remXStr} et ${bConst} = ${factor} × ${remConst}. Le nombre ${factor} apparaît en ROUGE dans chaque bloc : c'est notre facteur commun !`,
-          appliedRule: "Décomposition en facteurs : k·u + k·v",
+          appliedRule: "Décomposition en facteurs : k × u + k × v",
           latex: `= {\\color{red}${factorStr}} \\times ${remXStr} ${sign} {\\color{red}${factorStr}} \\times ${remConst}`,
           visualState: {
             type: 'common_factor_3d',
@@ -430,11 +430,11 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
             factorizationPhase: 'reveal_red',
             tokens: [
               { text: factorStr, type: 'constant', color: '#ef4444', isCommonFactor: true, highlight: true },
-              { text: '·', type: 'operator' },
+              { text: '×', type: 'operator' },
               { text: remXStr, type: 'variable', color: '#38bdf8', isRemaining: true },
               { text: sign, type: 'operator' },
               { text: factorStr, type: 'constant', color: '#ef4444', isCommonFactor: true, highlight: true },
-              { text: '·', type: 'operator' },
+              { text: '×', type: 'operator' },
               { text: `${remConst}`, type: 'constant', color: '#f59e0b', isRemaining: true },
             ],
             activeExplanation: `Le chiffre ${factor} est mis en évidence en ROUGE dans chaque terme.`
@@ -444,8 +444,8 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
           stepNumber: 3,
           title: "Déplacement visible & Mise en tête du facteur rouge",
           explanation: `Les chiffres ${factor} en rouge quittent leurs termes d'origine et glissent physiquement vers l'avant (à gauche) pour être mis en facteur devant les crochets.`,
-          appliedRule: "Distributivité inverse : k·a + k·b = k(a + b)",
-          latex: `= {\\color{red}${factorStr}} \\cdot [${remXStr} ${sign} ${remConst}]`,
+          appliedRule: "Distributivité inverse : k × a + k × b = k(a + b)",
+          latex: `= {\\color{red}${factorStr}} \\times [${remXStr} ${sign} ${remConst}]`,
           visualState: {
             type: 'common_factor_3d',
             dimensions: { x: 4, a: factor, b: remConst, depth: 1.0 },
@@ -461,7 +461,7 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
             factorizationPhase: 'extract_front',
             tokens: [
               { text: factorStr, type: 'constant', color: '#ef4444', isCommonFactor: true, highlight: true },
-              { text: '·', type: 'operator' },
+              { text: '×', type: 'operator' },
               { text: '[', type: 'bracket' },
               { text: remXStr, type: 'variable', color: '#38bdf8', isRemaining: true },
               { text: sign, type: 'operator' },
@@ -539,7 +539,7 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
         stepNumber: 1,
         title: "Expression initiale & Repérage de la lettre commune x",
         explanation: `Dans l'expression ${aCoeff === 1 ? 'x^2' : `${aCoeff}x^2`} ${sign} ${bCoeff}x, la variable x est présente dans chaque terme. On cherche le plus grand coefficient commun : PGCD(${aCoeff}, ${bCoeff}) = ${kNum}.`,
-        appliedRule: "Facteur monôme de la forme k·x",
+        appliedRule: "Facteur monôme de la forme k × x",
         latex: `${aCoeff === 1 ? 'x^2' : `${aCoeff}x^2`} ${sign} ${bCoeff}x`,
         visualState: {
           type: 'common_factor_3d',
@@ -559,7 +559,7 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
         stepNumber: 2,
         title: `Décomposition & Mise en ROUGE du facteur commun (${commonFactorStr})`,
         explanation: `On fait apparaître explicitement ${commonFactorStr} : ${aCoeff === 1 ? 'x^2' : `${aCoeff}x^2`} = ${commonFactorStr} × ${remAStr} et ${bCoeff}x = ${commonFactorStr} × ${remB}. Le facteur ${commonFactorStr} est allumé en ROUGE !`,
-        appliedRule: "Écriture kx·u + kx·v",
+        appliedRule: "Écriture kx × u + kx × v",
         latex: `= {\\color{red}${commonFactorStr}} \\times ${remAStr} ${sign} {\\color{red}${commonFactorStr}} \\times ${remB}`,
         visualState: {
           type: 'common_factor_3d',
@@ -573,11 +573,11 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
           factorizationPhase: 'reveal_red',
           tokens: [
             { text: commonFactorStr, type: 'variable', color: '#ef4444', isCommonFactor: true, highlight: true },
-            { text: '·', type: 'operator' },
+            { text: '×', type: 'operator' },
             { text: remAStr, type: 'variable', color: '#38bdf8', isRemaining: true },
             { text: sign, type: 'operator' },
             { text: commonFactorStr, type: 'variable', color: '#ef4444', isCommonFactor: true, highlight: true },
-            { text: '·', type: 'operator' },
+            { text: '×', type: 'operator' },
             { text: `${remB}`, type: 'constant', color: '#f59e0b', isRemaining: true },
           ],
           activeExplanation: `Le facteur commun ${commonFactorStr} est mis en rouge.`
@@ -588,7 +588,7 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
         title: "Déplacement physique des termes vers la gauche",
         explanation: `Le monôme rouge ${commonFactorStr} est déplacé vers l'avant à l'extérieur des crochets. Les restes (${remAStr} et ${remB}) sont réunis dans le crochet.`,
         appliedRule: "Distributivité inverse",
-        latex: `= {\\color{red}${commonFactorStr}} \\cdot [${insideTerm}]`,
+        latex: `= {\\color{red}${commonFactorStr}} \\times [${insideTerm}]`,
         visualState: {
           type: 'common_factor_3d',
           dimensions: { x: 4, a: kNum, b: remB, depth: 1.0 },
@@ -600,7 +600,7 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
           factorizationPhase: 'extract_front',
           tokens: [
             { text: commonFactorStr, type: 'variable', color: '#ef4444', isCommonFactor: true, highlight: true },
-            { text: '·', type: 'operator' },
+            { text: '×', type: 'operator' },
             { text: '[', type: 'bracket' },
             { text: remAStr, type: 'variable', color: '#38bdf8', isRemaining: true },
             { text: sign, type: 'operator' },
@@ -732,11 +732,11 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
             factorizationPhase: 'reveal_red',
             tokens: [
               { text: common, type: 'bracket', color: '#ef4444', isCommonFactor: true, highlight: true },
-              { text: '·', type: 'operator' },
+              { text: '×', type: 'operator' },
               { text: rem1, type: 'bracket', color: '#38bdf8', isRemaining: true },
               { text: middleSign, type: 'operator' },
               { text: common, type: 'bracket', color: '#ef4444', isCommonFactor: true, highlight: true },
-              { text: '·', type: 'operator' },
+              { text: '×', type: 'operator' },
               { text: rem2, type: 'bracket', color: '#f59e0b', isRemaining: true },
             ]
           }
@@ -745,8 +745,8 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
           stepNumber: 3,
           title: "Déplacement vers l'avant & Regroupement dans les crochets",
           explanation: `Le facteur rouge ${common} glisse physiquement vers l'avant (à gauche) pour n'apparaître qu'une seule fois. On ouvre de grands crochets [ ... ] pour y ranger tout ce qui reste : ${rem1} ${middleSign} ${rem2}.`,
-          appliedRule: "Distributivité inverse : k·A + k·B = k[A + B]",
-          latex: `= {\\color{red}${common}} \\cdot [${rem1} ${middleSign} ${rem2}]`,
+          appliedRule: "Distributivité inverse : k × A + k × B = k[A + B]",
+          latex: `= {\\color{red}${common}} \\times [${rem1} ${middleSign} ${rem2}]`,
           visualState: {
             type: 'generic_algebra_3d',
             dimensions: { x: 4, a: 2, b: 3, depth: 0.8 },
@@ -758,7 +758,7 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
             factorizationPhase: 'extract_front',
             tokens: [
               { text: common, type: 'bracket', color: '#ef4444', isCommonFactor: true, highlight: true },
-              { text: '·', type: 'operator' },
+              { text: '×', type: 'operator' },
               { text: '[', type: 'bracket' },
               { text: rem1, type: 'bracket', color: '#38bdf8', isRemaining: true },
               { text: middleSign, type: 'operator' },
@@ -772,7 +772,7 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
           title: "Réduction des termes intérieurs au crochet",
           explanation: `On supprime les parenthèses intérieures dans le crochet en respectant scrupuleusement la règle des signes${middleSign === '-' ? ' (le signe - change tous les signes du second terme !)' : ''}.`,
           appliedRule: "Réduction des termes semblables",
-          latex: `= ${common} \\cdot [${rem1.replace(/[()]/g, '')} ${middleSign === '-' ? `- (${rem2.replace(/[()]/g, '')})` : `+ ${rem2.replace(/[()]/g, '')}`}]`,
+          latex: `= ${common} \\times [${rem1.replace(/[()]/g, '')} ${middleSign === '-' ? `- (${rem2.replace(/[()]/g, '')})` : `+ ${rem2.replace(/[()]/g, '')}`}]`,
           visualState: {
             type: 'generic_algebra_3d',
             dimensions: { x: 4, a: 2, b: 3, depth: 0.8 },
@@ -784,7 +784,7 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
             factorizationPhase: 'simplified',
             tokens: [
               { text: common, type: 'bracket', color: '#ef4444', isCommonFactor: true, highlight: true },
-              { text: '·', type: 'operator' },
+              { text: '×', type: 'operator' },
               { text: `[${rem1} ${middleSign} ${rem2}]`, type: 'bracket', color: '#10b981' },
             ]
           }
@@ -920,7 +920,7 @@ export function solveByHeuristic(rawExpr: string, normalizedExpr: string, operat
           title: "Méthode somme-produit",
           explanation: `Pour factoriser x² ${b >= 0 ? `+ ${b}` : `- ${Math.abs(b)}`}x ${c >= 0 ? `+ ${c}` : `- ${Math.abs(c)}`}, on cherche deux entiers p et q tels que p + q = ${b} et p × q = ${c}. On trouve p = ${foundP} et q = ${foundQ}.`,
           appliedRule: "Factorisation des trinômes : x² + (p+q)x + pq = (x+p)(x+q)",
-          latex: `p + q = ${foundP} + (${foundQ}) = ${b}, \\quad p \\cdot q = (${foundP}) \\cdot (${foundQ}) = ${c}`,
+          latex: `p + q = ${foundP} + (${foundQ}) = ${b}, \\quad p \\times q = (${foundP}) \\times (${foundQ}) = ${c}`,
           visualState: {
             type: 'quadratic_tiles_3d',
             dimensions: { x: 4, a: Math.abs(foundP), b: Math.abs(foundQ), depth: 0.8 },

@@ -758,7 +758,7 @@ export const DevelopmentEngine: React.FC<DevelopmentEngineProps> = ({
                 {currentStage === 1 && <MathView latex={activeProblem.expressionLatex} display={false} />}
                 {currentStage === 2 && (
                   <MathView
-                    latex={`= {\\color{red}${activeProblem.distributorItem}} \\cdot (${activeProblem.termsInside.join(' + ').replace(/\+ -/g, '- ')})`}
+                    latex={`= {\\color{red}${activeProblem.distributorItem}} \\times (${activeProblem.termsInside.join(' + ').replace(/\+ -/g, '- ')})`}
                     display={false}
                   />
                 )}

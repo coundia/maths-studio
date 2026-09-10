@@ -1,5 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Eraser, Trash2 } from 'lucide-react';
+import { Eraser, Trash2, Plus, Pipette, ChevronUp, PenTool } from 'lucide-react';
+import { 
+  BoardThemeStyle, 
+  BoardGridPattern, 
+  getGridStyle, 
+  getBoardThemeClasses 
+} from './boardSettings';
+import { useTheme } from '../../context/ThemeContext';
 
 interface Point {
   x: number;
@@ -8,15 +15,54 @@ interface Point {
 
 interface WhiteboardCanvasProps {
   isOverlay?: boolean;
+  themeStyle?: BoardThemeStyle;
+  gridPattern?: BoardGridPattern;
+  gridOpacity?: number;
+  defaultColor?: string;
+  defaultLineWidth?: number;
+  customColors?: string[];
+  onAddCustomColor?: (color: string) => void;
 }
 
-export const WhiteboardCanvas: React.FC<WhiteboardCanvasProps> = ({ isOverlay = false }) => {
+export const WhiteboardCanvas: React.FC<WhiteboardCanvasProps> = ({ 
+  isOverlay = false,
+  themeStyle = 'classic-slate',
+  gridPattern = 'none',
+  gridOpacity = 0.15,
+  defaultColor,
+  defaultLineWidth,
+  customColors = [],
+  onAddCustomColor
+}) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [color, setColor] = useState(isOverlay ? '#ef4444' : '#ffffff');
-  const [lineWidth, setLineWidth] = useState(isOverlay ? 4 : 3);
+  const [color, setColor] = useState(() => {
+    if (isOverlay) return '#ef4444';
+    if (defaultColor) return defaultColor;
+    return themeStyle === 'whiteboard-clean' ? '#1e293b' : '#ffffff';
+  });
+  const [lineWidth, setLineWidth] = useState(() => {
+    if (isOverlay) return 4;
+    return defaultLineWidth || 3;
+  });
   const [isEraser, setIsEraser] = useState(false);
+  const [isToolbarVisible, setIsToolbarVisible] = useState(true);
+
+  // Sync default color and line width when settings change
+  useEffect(() => {
+    if (!isOverlay && defaultColor) {
+      setColor(defaultColor);
+    }
+  }, [defaultColor, isOverlay]);
+
+  useEffect(() => {
+    if (!isOverlay && defaultLineWidth) {
+      setLineWidth(defaultLineWidth);
+    }
+  }, [defaultLineWidth, isOverlay]);
 
   // Resize canvas to fill container
   useEffect(() => {
@@ -110,41 +156,105 @@ export const WhiteboardCanvas: React.FC<WhiteboardCanvasProps> = ({ isOverlay = 
     }
   };
 
-  const COLORS = isOverlay 
+  const baseColors = isOverlay 
     ? ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'] 
-    : ['#ffffff', '#f87171', '#34d399', '#60a5fa', '#fbbf24'];
+    : ['#ffffff', '#f87171', '#34d399', '#60a5fa', '#fbbf24', '#c084fc'];
+
+  const allToolbarColors = Array.from(new Set([...baseColors, ...(customColors || [])]));
+
+  const themeClasses = getBoardThemeClasses(themeStyle, isDark);
+  const gridStyle = getGridStyle(gridPattern, gridOpacity, themeStyle, isDark);
 
   return (
-    <div className={`w-full h-full flex flex-col relative ${isOverlay ? 'pointer-events-auto z-50' : 'bg-slate-900 rounded-2xl overflow-hidden border border-slate-700 shadow-inner'}`}>
-      {/* Drawing toolbar */}
-      <div className={`absolute left-1/2 -translate-x-1/2 bg-slate-800/90 backdrop-blur-md p-2 rounded-xl flex items-center space-x-2 border border-slate-700 shadow-xl z-10 ${isOverlay ? 'top-24' : 'top-4'}`}>
-        <div className="flex space-x-1 border-r border-slate-600 pr-2 mr-1">
-          {COLORS.map(c => (
-            <button
-              key={c}
-              onClick={() => { setColor(c); setIsEraser(false); }}
-              className={`w-6 h-6 rounded-full transition-transform ${color === c && !isEraser ? 'scale-125 ring-2 ring-white ring-offset-2 ring-offset-slate-800' : 'hover:scale-110'}`}
-              style={{ backgroundColor: c }}
-            />
-          ))}
+    <div 
+      className={`w-full h-full flex flex-col relative ${isOverlay ? 'pointer-events-auto z-50' : `${themeClasses.containerClass} rounded-2xl overflow-hidden shadow-inner`}`}
+      style={!isOverlay ? gridStyle : undefined}
+    >
+      {/* Drawing toolbar - Collapsible */}
+      {isToolbarVisible ? (
+        <div className={`absolute left-1/2 -translate-x-1/2 bg-slate-900/90 backdrop-blur-md p-2 rounded-2xl flex items-center space-x-2 border border-slate-700 shadow-2xl z-10 max-w-[95%] overflow-x-auto ${isOverlay ? 'top-24' : 'top-4'}`}>
+          <div className="flex items-center space-x-1.5 border-r border-slate-700 pr-2 mr-1">
+            {allToolbarColors.map(c => (
+              <button
+                key={c}
+                onClick={() => { setColor(c); setIsEraser(false); }}
+                className={`w-6 h-6 rounded-full transition-transform shrink-0 border border-black/20 ${color.toLowerCase() === c.toLowerCase() && !isEraser ? 'scale-125 ring-2 ring-white ring-offset-2 ring-offset-slate-900 shadow-md' : 'hover:scale-110'}`}
+                style={{ backgroundColor: c }}
+                title={c}
+              />
+            ))}
+
+            {/* Real-time Color Picker */}
+            <div className="relative w-6 h-6 rounded-full overflow-hidden border-2 border-slate-400 hover:scale-110 transition-transform cursor-pointer shrink-0" title="Choisir une autre couleur">
+              <input
+                type="color"
+                value={color}
+                onChange={(e) => {
+                  const newC = e.target.value;
+                  setColor(newC);
+                  setIsEraser(false);
+                }}
+                className="absolute -top-2 -left-2 w-10 h-10 cursor-pointer opacity-0"
+                title="Choisir une autre couleur"
+              />
+              <div 
+                className="w-full h-full flex items-center justify-center text-white"
+                style={{ backgroundColor: color }}
+              >
+                <Pipette className="w-3 h-3 drop-shadow" />
+              </div>
+            </div>
+
+            {/* Quick Add picked color to custom colors */}
+            {onAddCustomColor && !allToolbarColors.some(c => c.toLowerCase() === color.toLowerCase()) && (
+              <button
+                onClick={() => onAddCustomColor(color)}
+                className="p-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full text-xs transition-colors shrink-0 shadow-sm"
+                title={`Ajouter ${color} à ma palette personnalisée`}
+              >
+                <Plus className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+          
+          <button
+            onClick={() => setIsEraser(!isEraser)}
+            className={`p-1.5 rounded-lg transition-colors shrink-0 cursor-pointer ${isEraser ? 'bg-indigo-600 text-white' : 'text-slate-300 hover:bg-slate-700'}`}
+            title="Gomme"
+          >
+            <Eraser className="w-5 h-5" />
+          </button>
+          
+          <button
+            onClick={clearCanvas}
+            className="p-1.5 rounded-lg text-rose-400 hover:bg-rose-500/20 transition-colors shrink-0 cursor-pointer"
+            title="Effacer tout"
+          >
+            <Trash2 className="w-5 h-5" />
+          </button>
+
+          <div className="w-px h-5 bg-slate-700 mx-1" />
+
+          {/* Hide Toolbar Button */}
+          <button
+            onClick={() => setIsToolbarVisible(false)}
+            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors shrink-0 cursor-pointer"
+            title="Masquer la barre d'outils"
+          >
+            <ChevronUp className="w-4 h-4" />
+          </button>
         </div>
-        
+      ) : (
+        /* Collapsed Pill Button */
         <button
-          onClick={() => setIsEraser(!isEraser)}
-          className={`p-1.5 rounded-lg transition-colors ${isEraser ? 'bg-indigo-600 text-white' : 'text-slate-300 hover:bg-slate-700'}`}
-          title="Gomme"
+          onClick={() => setIsToolbarVisible(true)}
+          className={`absolute left-1/2 -translate-x-1/2 bg-slate-900/85 hover:bg-slate-900 backdrop-blur-md px-3.5 py-1.5 rounded-full flex items-center gap-2 border border-slate-700/80 text-xs font-semibold text-white shadow-xl z-10 cursor-pointer transition-all hover:scale-105 ${isOverlay ? 'top-24' : 'top-4'}`}
+          title="Afficher les outils de dessin"
         >
-          <Eraser className="w-5 h-5" />
+          <PenTool className="w-3.5 h-3.5 text-indigo-400" />
+          <span>Outils de dessin</span>
         </button>
-        
-        <button
-          onClick={clearCanvas}
-          className="p-1.5 rounded-lg text-rose-400 hover:bg-rose-500/20 transition-colors"
-          title="Effacer tout"
-        >
-          <Trash2 className="w-5 h-5" />
-        </button>
-      </div>
+      )}
 
       <div ref={containerRef} className="flex-1 w-full h-full cursor-crosshair touch-none">
         <canvas

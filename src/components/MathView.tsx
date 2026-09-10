@@ -18,7 +18,16 @@ export const MathView: React.FC<MathViewProps> = ({
     if (!latex) return '';
     try {
       // Remove accidental $ if present
-      const cleanLatex = latex.replace(/^\$+|\$+$/g, '').trim();
+      let cleanLatex = latex.replace(/^\$+|\$+$/g, '').trim();
+
+      // Interpréter la multiplication comme '×' (\times) au lieu de '.' (\cdot) à l'affichage
+      cleanLatex = cleanLatex
+        .replace(/\\cdot\b/g, '\\times')
+        .replace(/\\cdotp\b/g, '\\times')
+        .replace(/·/g, ' \\times ')
+        .replace(/•/g, ' \\times ')
+        .replace(/([0-9a-zA-Z)\]}])\s*\*\s*([0-9a-zA-Z(\[\\])/g, '$1 \\times $2');
+
       return katex.renderToString(cleanLatex, {
         displayMode: display,
         throwOnError: false,

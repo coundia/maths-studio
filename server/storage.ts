@@ -5,6 +5,7 @@ import { ExpressionSolution, StudioMetrics } from '../src/types.js';
 const DATA_DIR = path.join(process.cwd(), 'data');
 const CACHE_FILE = path.join(DATA_DIR, 'math3d_cache.json');
 const METRICS_FILE = path.join(DATA_DIR, 'math3d_metrics.json');
+const BOARD_SETTINGS_FILE = path.join(DATA_DIR, 'board_settings.json');
 
 // Ensure directory exists
 if (!fs.existsSync(DATA_DIR)) {
@@ -134,4 +135,28 @@ export function getAllCachedSolutions(): ExpressionSolution[] {
   return Object.values(memoryCache.solutions).sort((a, b) => {
     return new Date(b.cachedAt).getTime() - new Date(a.cachedAt).getTime();
   });
+}
+
+export function getStoredBoardSettings(): any | null {
+  try {
+    if (fs.existsSync(BOARD_SETTINGS_FILE)) {
+      const raw = fs.readFileSync(BOARD_SETTINGS_FILE, 'utf-8');
+      return JSON.parse(raw);
+    }
+  } catch (err) {
+    console.error('Error reading board settings from disk:', err);
+  }
+  return null;
+}
+
+export function saveBoardSettingsToDisk(settings: any): boolean {
+  try {
+    const tempFile = `${BOARD_SETTINGS_FILE}.tmp`;
+    fs.writeFileSync(tempFile, JSON.stringify(settings, null, 2), 'utf-8');
+    fs.renameSync(tempFile, BOARD_SETTINGS_FILE);
+    return true;
+  } catch (err) {
+    console.error('Error persisting board settings to disk:', err);
+    return false;
+  }
 }

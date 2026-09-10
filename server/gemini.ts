@@ -54,7 +54,8 @@ RÈGLES STRICTES :
 3. Toutes les formules LaTeX DOIVENT être fournies SANS délimiteurs "$" ou "$$".
 4. Spécifie pour chaque étape le type visuel 3D parmi : "difference_of_squares_3d", "perfect_square_3d", "common_factor_3d", "grouped_blocks_3d", "quadratic_tiles_3d", "generic_algebra_3d".
 5. Spécifie l'action géométrique parmi : "initial_state", "slice_cut", "separate", "rearrange", "highlight", "final_factored".
-6. Langue : Français soigné et rigoureux.`;
+6. Langue : Français soigné et rigoureux.
+7. Notation de multiplication : utilise TOUJOURS \\times (symbole ×) et JAMAIS \\cdot (point) dans les formules LaTeX.`;
 
   const response = await ai.models.generateContent({
     model: 'gemini-3.8-flash',
@@ -132,7 +133,7 @@ RÈGLES STRICTES :
     title: st.title || `Étape ${idx + 1}`,
     explanation: st.explanation || '',
     appliedRule: st.appliedRule || 'Propriété algébrique',
-    latex: (st.latex || '').replace(/\$/g, ''),
+    latex: (st.latex || '').replace(/\$/g, '').replace(/\\cdot\b/g, '\\times').replace(/\\cdotp\b/g, '\\times').replace(/·/g, ' \\times '),
     visualState: {
       type: st.visualState?.type || 'grouped_blocks_3d',
       action: st.visualState?.action || 'initial_state',
@@ -156,7 +157,7 @@ RÈGLES STRICTES :
     rawExpression: rawExpr,
     normalizedExpression: normalizedExpr,
     operationType: operationType as any,
-    finalFormLatex: (parsed.finalFormLatex || '').replace(/\$/g, ''),
+    finalFormLatex: (parsed.finalFormLatex || '').replace(/\$/g, '').replace(/\\cdot\b/g, '\\times').replace(/\\cdotp\b/g, '\\times').replace(/·/g, ' \\times '),
     summary: parsed.summary || 'Résolution et factorisation complétée.',
     source: 'ai',
     cachedAt: new Date().toISOString(),
