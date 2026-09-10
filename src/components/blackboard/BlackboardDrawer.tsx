@@ -765,8 +765,12 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
           transition={{ duration: 0.2 }}
           className="fixed inset-0 bg-slate-50 dark:bg-[#0B1120] z-[100] flex flex-col overflow-hidden print:bg-white print:static print:h-auto print:overflow-visible"
         >
-          {/* Print only formulas stylesheet */}
+          {/* MathLive Toggles and Print Stylesheet */}
           <style>{`
+            math-field::part(virtual-keyboard-toggle),
+            math-field::part(menu-toggle) {
+              display: none !important;
+            }
             @media print {
               body * {
                 visibility: hidden;
@@ -781,9 +785,6 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                 width: 100%;
                 margin: 0 !important;
                 padding: 0 !important;
-              }
-              math-field::part(virtual-keyboard-toggle) {
-                display: none !important;
               }
             }
           `}</style>
@@ -1636,6 +1637,44 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                             <div className={`absolute right-1 flex items-center gap-1 transition-opacity print:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-md p-1 rounded-xl border border-slate-200/80 dark:border-slate-700/80 shadow-md ${
                               activeLineId === line.id ? 'opacity-100' : 'opacity-60 sm:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'
                             }`}>
+                              {/* Toggle Virtual Keyboard (MathLive Toggle Equivalent) */}
+                              {!line.isComment && (
+                                <button
+                                  onClick={() => {
+                                    setIsKeyboardOpen(true);
+                                    setIsKeyboardMinimized(false);
+                                    setTimeout(() => mathFieldsRef.current[line.id]?.focus(), 50);
+                                  }}
+                                  className="p-1.5 text-indigo-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-lg transition-all cursor-pointer"
+                                  title="Ouvrir le clavier virtuel"
+                                >
+                                  <Keyboard className="w-4 h-4" />
+                                </button>
+                              )}
+
+                              {/* Context Menu Toggle (MathLive Menu) */}
+                              {!line.isComment && (
+                                <button
+                                  onClick={(e) => {
+                                    const mf = mathFieldsRef.current[line.id];
+                                    if (mf) {
+                                      // MathLive doesn't expose a direct toggleMenu command, but it listens to contextmenu
+                                      const rect = mf.getBoundingClientRect();
+                                      mf.dispatchEvent(new MouseEvent('contextmenu', {
+                                        bubbles: true,
+                                        cancelable: true,
+                                        clientX: e.clientX,
+                                        clientY: e.clientY
+                                      }));
+                                    }
+                                  }}
+                                  className="p-1.5 text-slate-500 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all cursor-pointer"
+                                  title="Menu MathLive (Options avancées)"
+                                >
+                                  <MoreHorizontal className="w-4 h-4" />
+                                </button>
+                              )}
+
                               {/* Refresh / Re-render Equation Icon */}
                               <button
                                 onClick={() => handleRefreshLine(line.id)}
