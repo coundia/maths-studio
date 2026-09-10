@@ -324,7 +324,10 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                   </label>
                   <div className="grid grid-cols-2 gap-2">
                     {FONT_SIZES.map((size) => {
-                      const isSelected = settings.fontSize === size.id;
+                      // Tolérance pour l'arrondi (ex: 2.6000001)
+                      const isSelected = typeof settings.fontSize === 'number' 
+                        ? Math.abs(settings.fontSize - (size.id as number)) < 0.1
+                        : settings.fontSize === size.id;
                       return (
                         <button
                           key={size.id}
@@ -348,6 +351,30 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                       );
                     })}
                   </div>
+                </div>
+
+                {/* Zoom Step Configurator */}
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                      Vitesse de zoom (+ / -) :
+                    </label>
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-400">
+                      {(settings.zoomStep || 0.2).toFixed(1)} rem
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0.1"
+                    max="1.5"
+                    step="0.1"
+                    value={settings.zoomStep || 0.2}
+                    onChange={(e) => update('zoomStep', parseFloat(e.target.value))}
+                    className="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    Ajustez la sensibilité des boutons de zoom en bas à gauche.
+                  </p>
                 </div>
 
                 {/* Alignment */}

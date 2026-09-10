@@ -1,0 +1,21 @@
+{
+  "themeStyle": "classic-slate",
+  "gridPattern": "grid-small",
+  "gridOpacity": 0.15,
+  "fontSize": 5,
+  "zoomStep": 0.2,
+  "alignment": "center",
+  "showLineNumbers": true,
+  "autoCompleteEnabled": true,
+  "autoOpenKeyboardOnFocus": false,
+  "enterCreatesNewLine": true,
+  "drawDefaultColor": "#38bdf8",
+  "drawDefaultWidth": 3,
+  "customColors": [
+    "#ec4899",
+    "#8b5cf6",
+    "#06b6d4",
+    "#84cc16",
+    "#f97316"
+  ]
+}

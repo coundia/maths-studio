@@ -5,7 +5,7 @@ import {
   PenTool, Keyboard, Highlighter, Palette, Underline, CheckSquare, Square, Code,
   History, Clock, Eye, Sun, Moon, Settings, Sliders, Pipette,
   GripHorizontal, Minimize2, Maximize2, MoreHorizontal, ChevronDown, ChevronUp, Maximize,
-  Calculator, Sparkles, RefreshCw, Type
+  Calculator, Sparkles, RefreshCw, Type, ZoomIn, ZoomOut, Search
 } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { WhiteboardCanvas } from './WhiteboardCanvas';
@@ -401,6 +401,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
   };
   const [rawModeLines, setRawModeLines] = useState<Record<number, boolean>>({});
   const [refreshingLineId, setRefreshingLineId] = useState<number | null>(null);
+  const [zoomedLineId, setZoomedLineId] = useState<number | null>(null);
 
   const handleRefreshLine = (lineId: number) => {
     setRefreshingLineId(lineId);
@@ -608,19 +609,23 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
   // Apply inline shortcuts setting to all math fields
   useEffect(() => {
     Object.values(mathFieldsRef.current).forEach((mf: any) => {
-      if (mf) {
-        if (!autoCompleteEnabled) {
-          mf.inlineShortcuts = getMathLiveInlineShortcuts(false);
-        } else {
-          // Restore defaults first
-          mf.inlineShortcuts = undefined;
-          
-          // Get defaults (now restored) and merge with our custom shortcuts
-          const defaults = mf.inlineShortcuts || {};
-          mf.inlineShortcuts = {
-            ...defaults,
-            ...getMathLiveInlineShortcuts(true),
-          };
+      if (mf && mf.isConnected) {
+        try {
+          if (!autoCompleteEnabled) {
+            mf.inlineShortcuts = getMathLiveInlineShortcuts(false);
+          } else {
+            // Restore defaults first
+            mf.inlineShortcuts = undefined;
+            
+            // Get defaults (now restored) and merge with our custom shortcuts
+            const defaults = mf.inlineShortcuts || {};
+            mf.inlineShortcuts = {
+              ...defaults,
+              ...getMathLiveInlineShortcuts(true),
+            };
+          }
+        } catch (error) {
+          // Ignore if mathfield throws not mounted error
         }
       }
     });
@@ -1014,6 +1019,41 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                 </AnimatePresence>
               </div>
 
+              {/* Zoom Buttons */}
+              <div className="flex items-center gap-0.5 bg-slate-100 dark:bg-slate-800 rounded-xl p-0.5 border border-slate-200 dark:border-slate-700">
+                <button
+                  onClick={() => {
+                    let currentSize = typeof boardSettings.fontSize === 'number' ? boardSettings.fontSize : 2.6;
+                    let step = typeof boardSettings.zoomStep === 'number' ? boardSettings.zoomStep : 0.2;
+                    let newSize = Math.max(0.5, currentSize - step);
+                    // Arrondi à deux décimales
+                    newSize = Math.round(newSize * 100) / 100;
+                    handleUpdateSettings({ ...boardSettings, fontSize: newSize });
+                  }}
+                  className="p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-slate-200 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer shadow-sm"
+                  disabled={typeof boardSettings.fontSize === 'number' && boardSettings.fontSize <= 0.5}
+                  title="Dézoomer"
+                >
+                  <ZoomOut className="w-4 h-4" />
+                </button>
+                <div className="w-px h-4 bg-slate-300 dark:bg-slate-600" />
+                <button
+                  onClick={() => {
+                    let currentSize = typeof boardSettings.fontSize === 'number' ? boardSettings.fontSize : 2.6;
+                    let step = typeof boardSettings.zoomStep === 'number' ? boardSettings.zoomStep : 0.2;
+                    let newSize = Math.min(20.0, currentSize + step);
+                    // Arrondi à deux décimales
+                    newSize = Math.round(newSize * 100) / 100;
+                    handleUpdateSettings({ ...boardSettings, fontSize: newSize });
+                  }}
+                  className="p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-slate-200 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer shadow-sm"
+                  disabled={typeof boardSettings.fontSize === 'number' && boardSettings.fontSize >= 20.0}
+                  title="Zoomer"
+                >
+                  <ZoomIn className="w-4 h-4" />
+                </button>
+              </div>
+
               {/* Zen Mode Button */}
               <button
                 onClick={() => setIsZenMode(true)}
@@ -1315,13 +1355,14 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                     return (
                       <div 
                         id="printable-blackboard" 
-                        className={`w-full flex-1 flex flex-col items-center gap-4 ${themeClasses.containerClass} ${themeClasses.textClass} rounded-3xl border p-6 sm:p-8 min-h-[300px] mb-8 transition-colors duration-200 print:shadow-none print:border-none print:bg-transparent print:p-0 print:mb-0`}
+                        className={`w-full shrink-0 flex flex-col items-center gap-4 ${themeClasses.containerClass} ${themeClasses.textClass} rounded-3xl border p-6 sm:p-8 min-h-[calc(100vh-200px)] mb-8 transition-colors duration-200 print:shadow-none print:border-none print:bg-transparent print:p-0 print:mb-0`}
                         style={gridStyle}
                       >
                         {lines.map((line, index) => (
                           <div 
                             key={line.id} 
-                            className={`w-full flex items-center ${boardSettings.alignment === 'left' ? 'justify-start pl-8 sm:pl-14' : 'justify-center'} gap-2 group relative print:mb-6 print:break-inside-avoid`}
+                            data-line-id={line.id}
+                            className={`w-full flex items-center ${boardSettings.alignment === 'left' ? 'justify-start pl-8 sm:pl-14' : 'justify-center'} gap-2 group relative print:mb-6 print:break-inside-avoid transition-all duration-300 ${zoomedLineId === line.id ? 'scale-[1.3] z-50 shadow-2xl bg-white/10 dark:bg-black/10 rounded-2xl py-2 ' + (boardSettings.alignment === 'left' ? 'origin-left' : 'origin-center') : 'scale-100 z-10'}`}
                           >
                             {/* Numbering */}
                             {boardSettings.showLineNumbers && (
@@ -1499,6 +1540,13 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
 
                                       mathFieldsRef.current[line.id] = el;
                                       el.onkeydown = (e: KeyboardEvent) => {
+                                        if (e.key === 'Tab') {
+                                          e.preventDefault();
+                                          try {
+                                            el.executeCommand(['insert', '\\quad ']);
+                                          } catch {}
+                                          return false;
+                                        }
                                         if (e.key === '#' || (e.key === '3' && e.altKey)) {
                                           e.preventDefault();
                                           setLines(prev => prev.map(l => l.id === line.id ? {
@@ -1542,6 +1590,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                                       try {
                                         el.mathVirtualKeyboardPolicy = 'manual';
                                       } catch {}
+                                      el.mathModeSpace = '\\;'; // Configure the spacebar to insert a medium space
                                       el.inlineShortcuts = getMathLiveInlineShortcuts(autoCompleteEnabled);
                                     }
                                   }}
@@ -1655,16 +1704,21 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                               {/* Context Menu Toggle (MathLive Menu) */}
                               {!line.isComment && (
                                 <button
+                                  onMouseDown={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                  }}
                                   onClick={(e) => {
                                     const mf = mathFieldsRef.current[line.id];
                                     if (mf) {
-                                      // MathLive doesn't expose a direct toggleMenu command, but it listens to contextmenu
+                                      mf.focus();
                                       const rect = mf.getBoundingClientRect();
                                       mf.dispatchEvent(new MouseEvent('contextmenu', {
                                         bubbles: true,
                                         cancelable: true,
-                                        clientX: e.clientX,
-                                        clientY: e.clientY
+                                        clientX: rect.right - 20,
+                                        clientY: rect.top + 20,
+                                        button: 2
                                       }));
                                     }
                                   }}
@@ -1684,6 +1738,25 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                                 title={line.isComment ? "Actualiser le commentaire" : "Actualiser et formater le calcul (ex: x2 → x², x3 → x³)"}
                               >
                                 <RefreshCw className="w-4 h-4" />
+                              </button>
+
+                              {/* Toggle between Math formula and Text comment */}
+                              <button
+                                onClick={() => {
+                                  if (zoomedLineId === line.id) {
+                                    setZoomedLineId(null);
+                                  } else {
+                                    setZoomedLineId(line.id);
+                                  }
+                                }}
+                                className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                                  zoomedLineId === line.id 
+                                    ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-400' 
+                                    : 'text-emerald-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/30'
+                                }`}
+                                title={zoomedLineId === line.id ? "Réduire l'aperçu" : "Agrandir (Loupe)"}
+                              >
+                                <Search className="w-4 h-4" />
                               </button>
 
                               {/* Toggle between Math formula and Text comment */}
@@ -1792,34 +1865,63 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                           </div>
                         ))}
                         
-                        {/* Primary Call to Action Buttons */}
-                        <div className="mt-8 flex flex-wrap items-center justify-center gap-3 print:hidden">
-                          <button
-                            id="btn-add-line-bottom-cta"
-                            onClick={() => handleAddLine()}
-                            className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 active:scale-95 text-white font-semibold text-xs sm:text-sm rounded-2xl shadow-lg hover:shadow-indigo-500/25 transition-all flex items-center gap-2 cursor-pointer"
-                          >
-                            <Plus className="w-4 h-4" />
-                            <span>Ajouter une ligne de calcul</span>
-                            <span className="ml-1 px-2 py-0.5 text-[10px] font-mono font-medium bg-white/20 rounded-md">Entrée ↵</span>
-                          </button>
-
-                          <button
-                            id="btn-add-comment-bottom-cta"
-                            onClick={() => handleAddLine(undefined, true)}
-                            className="px-4 py-2.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-semibold text-xs sm:text-sm rounded-2xl transition-all flex items-center gap-2 cursor-pointer"
-                            title="Ajouter une consigne ou un titre (ex: 1. Factorisons A)"
-                          >
-                            <Type className="w-4 h-4 text-amber-500" />
-                            <span>Commentaire / Titre</span>
-                          </button>
-                        </div>
+                        {/* CTA Buttons ont été supprimés à la demande de l'utilisateur (remplacés par des FAB) */}
                       </div>
                     );
                   })()}
                   <p className="mt-4 text-slate-400 dark:text-slate-500 text-xs flex items-center gap-1.5 print:hidden">
                     <Keyboard className="w-3.5 h-3.5 text-indigo-400" /> Saisie au clavier physique ou avec le clavier interactif flottant.
                   </p>
+                </div>
+
+                {/* Floating Magic Loupe (Draggable) */}
+                <motion.div
+                  id="floating-loupe"
+                  drag
+                  dragMomentum={false}
+                  onDrag={(e, info) => {
+                    let target = document.elementFromPoint(info.point.x, info.point.y);
+                    if (target?.closest('#floating-loupe')) {
+                       target = document.elementFromPoint(info.point.x, info.point.y - 40);
+                    }
+                    const lineRow = target?.closest('[data-line-id]');
+                    if (lineRow) {
+                      const id = Number(lineRow.getAttribute('data-line-id'));
+                      if (id && zoomedLineId !== id) {
+                        setZoomedLineId(id);
+                      }
+                    } else {
+                      if (zoomedLineId !== null) setZoomedLineId(null);
+                    }
+                  }}
+                  className="fixed bottom-24 left-6 sm:left-12 z-[150] w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 text-white rounded-full shadow-lg shadow-emerald-500/40 flex items-center justify-center cursor-grab active:cursor-grabbing border-2 border-white/20 backdrop-blur-md print:hidden"
+                  title="Loupe magique : Glissez-moi sur une ligne pour la zoomer !"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Search className="w-6 h-6" />
+                </motion.div>
+
+                {/* Floating Action Buttons (FAB) for adding lines */}
+                <div className="absolute bottom-[4.5rem] right-6 flex flex-col gap-3 z-40 print:hidden">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleAddLine(undefined, true)}
+                    className="flex items-center justify-center w-12 h-12 bg-amber-500 hover:bg-amber-600 text-white rounded-full shadow-lg shadow-amber-500/20 transition-all cursor-pointer"
+                    title="Ajouter un commentaire ou un titre"
+                  >
+                    <Type className="w-5 h-5" />
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleAddLine()}
+                    className="flex items-center justify-center w-12 h-12 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-lg shadow-indigo-500/20 transition-all cursor-pointer"
+                    title="Ajouter une équation mathématique"
+                  >
+                    <Plus className="w-6 h-6" />
+                  </motion.button>
                 </div>
 
                 {/* Floating Virtual Keyboard Toggle Button (when closed) */}

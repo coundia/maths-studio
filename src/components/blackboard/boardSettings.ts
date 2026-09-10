@@ -12,7 +12,7 @@ export type BoardGridPattern =
   | 'ruled'
   | 'dots';
 
-export type BoardFontSize = 'compact' | 'normal' | 'large' | 'huge';
+export type BoardFontSize = number; // in rem
 
 export type BoardAlignment = 'center' | 'left';
 
@@ -21,6 +21,7 @@ export interface BoardSettings {
   gridPattern: BoardGridPattern;
   gridOpacity: number; // 0.05 to 0.4
   fontSize: BoardFontSize;
+  zoomStep: number; // Pas de zoom configurable
   alignment: BoardAlignment;
   showLineNumbers: boolean;
   autoCompleteEnabled: boolean;
@@ -52,7 +53,8 @@ export const DEFAULT_BOARD_SETTINGS: BoardSettings = {
   themeStyle: 'classic-slate',
   gridPattern: 'grid-small',
   gridOpacity: 0.15,
-  fontSize: 'large',
+  fontSize: 2.6,
+  zoomStep: 0.2,
   alignment: 'center',
   showLineNumbers: true,
   autoCompleteEnabled: true,
@@ -70,9 +72,18 @@ export function loadBoardSettings(): BoardSettings {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
+      let fontSize = parsed.fontSize;
+      if (typeof fontSize === 'string') {
+        if (fontSize === 'compact') fontSize = 1.8;
+        else if (fontSize === 'normal') fontSize = 2.2;
+        else if (fontSize === 'huge') fontSize = 3.4;
+        else fontSize = 2.6;
+      }
       return { 
         ...DEFAULT_BOARD_SETTINGS, 
         ...parsed,
+        fontSize,
+        zoomStep: parsed.zoomStep !== undefined ? parsed.zoomStep : 0.2,
         customColors: Array.isArray(parsed.customColors) && parsed.customColors.length > 0 
           ? parsed.customColors 
           : DEFAULT_CUSTOM_COLORS,
@@ -90,9 +101,18 @@ export async function fetchServerBoardSettings(): Promise<BoardSettings | null> 
     if (res.ok) {
       const data = await res.json();
       if (data.settings) {
+        let fontSize = data.settings.fontSize;
+        if (typeof fontSize === 'string') {
+          if (fontSize === 'compact') fontSize = 1.8;
+          else if (fontSize === 'normal') fontSize = 2.2;
+          else if (fontSize === 'huge') fontSize = 3.4;
+          else fontSize = 2.6;
+        }
         return {
           ...DEFAULT_BOARD_SETTINGS,
           ...data.settings,
+          fontSize: fontSize || 2.6,
+          zoomStep: data.settings.zoomStep !== undefined ? data.settings.zoomStep : 0.2,
           customColors: Array.isArray(data.settings.customColors) && data.settings.customColors.length > 0
             ? data.settings.customColors
             : DEFAULT_CUSTOM_COLORS,
@@ -134,8 +154,9 @@ export function normalizeHexColor(color: string): string {
 }
 
 
-export function getFontSizeRem(size: BoardFontSize): string {
-  switch (size) {
+export function getFontSizeRem(size: BoardFontSize | string): string {
+  if (typeof size === 'number') return `${size}rem`;
+  switch (size as string) {
     case 'compact': return '1.8rem';
     case 'normal': return '2.2rem';
     case 'large': return '2.6rem';
