@@ -1,6 +1,8 @@
 import { CourseChapter, CourseExercise, CourseDemo } from '../coursesData';
+import courses5eJson from '../data/json/courses-5e.json';
 import courses4eJson from '../data/json/courses-4e.json';
 import courses3eJson from '../data/json/courses-3e.json';
+import exercises5eJson from '../data/json/exercises-5e.json';
 import exercises4eJson from '../data/json/exercises-4e.json';
 import exercises3eJson from '../data/json/exercises-3e.json';
 
@@ -11,13 +13,18 @@ import exercises3eJson from '../data/json/exercises-3e.json';
 const API_BASE_URL = ((import.meta as any)?.env?.VITE_API_URL as string) || '';
 
 // In-memory typed JSON datasets
+const LOCAL_COURSES_5E: CourseChapter[] = (courses5eJson as unknown as CourseChapter[]).map(c => ({
+  ...c,
+  gradeLevel: '5e' as const
+}));
 const LOCAL_COURSES_4E: CourseChapter[] = (courses4eJson as unknown as CourseChapter[]).map(c => ({
   ...c,
   gradeLevel: '4e' as const
 }));
 const LOCAL_COURSES_3E: CourseChapter[] = courses3eJson as unknown as CourseChapter[];
-const ALL_LOCAL_COURSES: CourseChapter[] = [...LOCAL_COURSES_3E, ...LOCAL_COURSES_4E];
+const ALL_LOCAL_COURSES: CourseChapter[] = [...LOCAL_COURSES_3E, ...LOCAL_COURSES_4E, ...LOCAL_COURSES_5E];
 
+const LOCAL_EXERCISES_5E = exercises5eJson as unknown as Record<string, CourseExercise[]>;
 const LOCAL_EXERCISES_4E = exercises4eJson as unknown as Record<string, CourseExercise[]>;
 const LOCAL_EXERCISES_3E = exercises3eJson as unknown as Record<string, CourseExercise[]>;
 
@@ -36,7 +43,8 @@ export const CourseService = {
     return ALL_LOCAL_COURSES;
   },
 
-  getCoursesByGradeSync(grade: '4e' | '3e'): CourseChapter[] {
+  getCoursesByGradeSync(grade: '5e' | '4e' | '3e'): CourseChapter[] {
+    if (grade === '5e') return LOCAL_COURSES_5E;
     if (grade === '4e') return LOCAL_COURSES_4E;
     return LOCAL_COURSES_3E;
   },
@@ -51,6 +59,9 @@ export const CourseService = {
     }
     if (LOCAL_EXERCISES_4E[chapterId] && LOCAL_EXERCISES_4E[chapterId].length >= 3) {
       return LOCAL_EXERCISES_4E[chapterId];
+    }
+    if (LOCAL_EXERCISES_5E[chapterId] && LOCAL_EXERCISES_5E[chapterId].length >= 3) {
+      return LOCAL_EXERCISES_5E[chapterId];
     }
     if (demo?.exercises && demo.exercises.length >= 3) {
       return demo.exercises;
@@ -102,7 +113,7 @@ export const CourseService = {
    * Asynchronous REST API Client
    * Calls the backend (/api/courses), with graceful fallback to bundled JSON
    */
-  async fetchCourses(grade?: '4e' | '3e'): Promise<CourseChapter[]> {
+  async fetchCourses(grade?: '5e' | '4e' | '3e'): Promise<CourseChapter[]> {
     const url = grade 
       ? `${API_BASE_URL}/api/courses?grade=${grade}` 
       : `${API_BASE_URL}/api/courses`;

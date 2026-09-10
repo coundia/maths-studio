@@ -1,0 +1,1208 @@
+[
+  {
+    "id": "geometrie-espace-5e",
+    "title": "Géométrie dans l'espace - 5e",
+    "shortTitle": "Géométrie dans l'espace",
+    "category": "Activités géométriques",
+    "icon": "Box",
+    "description": "Étude du prisme droit et du cylindre de révolution : perspective cavalière, patrons, calcul des aires latérales et des volumes.",
+    "demos": [
+      {
+        "id": "prisme-droit-5e",
+        "title": "Le Prisme droit : Patron, Aire latérale et Volume",
+        "badge": "Solide fondamental",
+        "defaultLatex": "\\mathcal{V} = \\mathcal{B} \\times h, \\quad \\mathcal{A}_L = \\mathcal{P}_{\\text{base}} \\times h",
+        "ruleSummary": "Un prisme droit possède deux bases polygonales superposables et parallèles, et des faces latérales rectangulaires perpendiculaires aux bases.",
+        "teacherGoal": "Faire visualiser aux élèves le dépliage du prisme droit en son patron et l'origine de la formule de l'aire latérale.",
+        "interactiveType": "geometrie-espace-5e",
+        "demoParams": {
+          "baseType": "triangulaire",
+          "baseArea": 12,
+          "height": 8,
+          "perimeter": 16
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Caractéristiques du prisme droit",
+            "rule": "Définition géométrique",
+            "latex": "\\text{Bases polygonales superposables et parallèles, faces latérales rectangulaires}",
+            "explanation": "Les deux bases ont exactement la même forme (triangles, trapèzes, etc.) et les arêtes latérales sont de même longueur, égale à la hauteur h.",
+            "teacherTip": "Rappeler que le cube et le pavé droit sont des prismes droits particuliers."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Formule de l'aire latérale",
+            "rule": "Somme des aires des rectangles latéraux",
+            "latex": "\\mathcal{A}_L = \\mathcal{P}_{\\text{base}} \\times h",
+            "explanation": "Dépliée sur le patron, l'ensemble des faces latérales forme un grand rectangle dont la longueur est le périmètre de la base et la largeur est la hauteur.",
+            "teacherTip": "Insister sur l'unité : si les longueurs sont en cm, l'aire est en cm²."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Calcul du volume",
+            "rule": "Volume d'un prisme droit",
+            "latex": "\\mathcal{V} = \\mathcal{B} \\times h",
+            "explanation": "Le volume est égal au produit de l'aire d'une base B par la hauteur h du solide.",
+            "teacherTip": "Faire attention à calculer l'aire de la base selon sa forme : pour un triangle, B = (base × hauteur)/2."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Exemple numérique",
+            "rule": "Application avec B = 12 cm² et h = 8 cm",
+            "latex": "\\mathcal{V} = 12 \\times 8 = 96\\text{ cm}^3",
+            "explanation": "Le volume du prisme droit est de 96 centimètres cubes.",
+            "teacherTip": "Vérifier la conversion : 1 L = 1 dm³ = 1000 cm³."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Un prisme droit a pour base un triangle d'aire 15 cm² et pour hauteur 7 cm. Calculer son volume.",
+            "answerLatex": "\\mathcal{V} = 15 \\times 7 = 105\\text{ cm}^3",
+            "hint": "Applique la formule V = B × h.",
+            "detailedSolution": [
+              "1. La formule du volume d'un prisme droit est V = B × h.",
+              "2. On remplace par les valeurs données : B = 15 cm² et h = 7 cm.",
+              "3. V = 15 × 7 = 105 cm³."
+            ]
+          },
+          {
+            "question": "La base d'un prisme droit a un périmètre de 24 cm et sa hauteur mesure 10 cm. Calculer son aire latérale.",
+            "answerLatex": "\\mathcal{A}_L = 24 \\times 10 = 240\\text{ cm}^2",
+            "hint": "Aire latérale = Périmètre de la base × Hauteur.",
+            "detailedSolution": [
+              "1. La formule est A_L = P_base × h.",
+              "2. A_L = 24 cm × 10 cm = 240 cm²."
+            ]
+          },
+          {
+            "question": "Un prisme droit de volume 180 cm³ a une hauteur de 9 cm. Quelle est l'aire de sa base ?",
+            "answerLatex": "\\mathcal{B} = \\frac{\\mathcal{V}}{h} = \\frac{180}{9} = 20\\text{ cm}^2",
+            "hint": "Puisque V = B × h, alors B = V / h.",
+            "detailedSolution": [
+              "1. On sait que V = B × h.",
+              "2. Donc B = V / h = 180 / 9 = 20 cm²."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cylindre-revolution-5e",
+        "title": "Le Cylindre de révolution : Aire latérale et Volume",
+        "badge": "Solide rond",
+        "defaultLatex": "\\mathcal{V} = \\pi r^2 \\times h, \\quad \\mathcal{A}_L = 2\\pi r \\times h",
+        "ruleSummary": "Un cylindre de révolution est engendré par la rotation d'un rectangle autour d'un de ses côtés. Ses bases sont deux disques parallèles de rayon r.",
+        "teacherGoal": "Comprendre le patron du cylindre : le rectangle latéral a pour longueur le périmètre du disque 2πr.",
+        "interactiveType": "geometrie-espace-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Définition et éléments caractéristiques",
+            "rule": "Bases circulaires et axe de rotation",
+            "latex": "\\text{Deux disques de rayon } r \\text{ distants de la hauteur } h",
+            "explanation": "Le patron se compose de deux disques de rayon r et d'un rectangle de dimensions (2πr) et h.",
+            "teacherTip": "Faire le lien avec une boîte de conserve ou un rouleau."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Aire latérale du cylindre",
+            "rule": "Développement du rectangle latéral",
+            "latex": "\\mathcal{A}_L = 2 \\times \\pi \\times r \\times h",
+            "explanation": "La longueur du rectangle enroulé autour du disque est le périmètre du disque : P = 2πr.",
+            "teacherTip": "Prendre π ≈ 3,14 pour les valeurs approchées."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Volume du cylindre",
+            "rule": "Formule du volume",
+            "latex": "\\mathcal{V} = \\mathcal{B} \\times h = \\pi r^2 \\times h",
+            "explanation": "L'aire du disque de base est B = π × r². Le volume est B multiplié par la hauteur h.",
+            "teacherTip": "Bien insister : le carré s'applique seulement au rayon r, pas à la hauteur."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Calculer le volume d'un cylindre de rayon r = 3 cm et de hauteur h = 10 cm (en valeur exacte avec π, puis approchée).",
+            "answerLatex": "\\mathcal{V} = \\pi \\times 3^2 \\times 10 = 90\\pi\\text{ cm}^3 \\approx 282,74\\text{ cm}^3",
+            "hint": "V = π × r² × h = π × 9 × 10.",
+            "detailedSolution": [
+              "1. V = π × r² × h.",
+              "2. V = π × 3² × 10 = π × 9 × 10 = 90π cm³.",
+              "3. En prenant π ≈ 3,1416, on obtient environ 282,74 cm³."
+            ]
+          },
+          {
+            "question": "Un cylindre a un rayon de 5 cm et une hauteur de 8 cm. Calculer son aire latérale exacte en fonction de π.",
+            "answerLatex": "\\mathcal{A}_L = 2\\pi \\times 5 \\times 8 = 80\\pi\\text{ cm}^2",
+            "hint": "A_L = 2 × π × r × h."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quadrilatere-5e",
+    "title": "Le quadrilatère - 5e",
+    "shortTitle": "Le quadrilatère",
+    "category": "Activités géométriques",
+    "icon": "Square",
+    "description": "Le parallélogramme et ses propriétés, ainsi que les quadrilatères particuliers : rectangle, losange, carré et trapèze.",
+    "demos": [
+      {
+        "id": "parallelogramme-prop-5e",
+        "title": "Le Parallélogramme : Définition et Propriétés",
+        "badge": "Théorème central",
+        "defaultLatex": "ABCD \\text{ parallélogramme} \\iff [AC] \\text{ et } [BD] \\text{ ont même milieu}",
+        "ruleSummary": "Un parallélogramme est un quadrilatère dont les côtés opposés sont parallèles deux à deux. Ses diagonales se coupent en leur milieu.",
+        "teacherGoal": "Apprendre aux élèves les 3 caractérisations pour reconnaître ou démontrer un parallélogramme.",
+        "interactiveType": "parallelogramme-guide",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Définition géométrique",
+            "rule": "Parallélisme des côtés opposés",
+            "latex": "(AB) \\parallel (CD) \\quad \\text{et} \\quad (AD) \\parallel (BC)",
+            "explanation": "Par définition, les côtés opposés sont situés sur des droites parallèles.",
+            "teacherTip": "Faire tracer deux bandes de droites parallèles qui s'intersectent."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Propriété des diagonales (Centre de symétrie)",
+            "rule": "Milieu commun des diagonales",
+            "latex": "I = \\text{milieu de } [AC] = \\text{milieu de } [BD]",
+            "explanation": "Le point d'intersection I des diagonales est le centre de symétrie du parallélogramme.",
+            "teacherTip": "C'est la méthode la plus fréquente pour prouver qu'un quadrilatère est un parallélogramme."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Propriété des côtés et angles opposés",
+            "rule": "Égalités de longueurs et de mesures",
+            "latex": "AB = CD, \\quad AD = BC, \\quad \\widehat{A} = \\widehat{C}, \\quad \\widehat{B} = \\widehat{D}",
+            "explanation": "Les côtés opposés ont même longueur et les angles opposés ont même mesure. Les angles consécutifs sont supplémentaires (leur somme vaut 180°).",
+            "teacherTip": "Vérifier que les élèves nomment les sommets en tournant autour de la figure : A-B-C-D."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Aire du parallélogramme",
+            "rule": "Formule de l'aire",
+            "latex": "\\text{Aire} = \\text{Base} \\times \\text{Hauteur relative} = b \\times h",
+            "explanation": "L'aire est le produit de la longueur d'un côté par la distance à la droite opposée.",
+            "teacherTip": "Ne pas confondre la hauteur h avec la longueur du côté oblique !"
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Dans un quadrilatère MNPQ, les diagonales [MP] et [NQ] se coupent en un point O tel que OM = OP = 4 cm et ON = OQ = 3 cm. Quelle est la nature de MNPQ ?",
+            "answerLatex": "MNPQ \\text{ est un parallélogramme car ses diagonales ont le même milieu } O.",
+            "hint": "Que représente le point O pour les segments [MP] et [NQ] ?",
+            "detailedSolution": [
+              "1. Puisque OM = OP, O est le milieu de [MP].",
+              "2. Puisque ON = OQ, O est le milieu de [NQ].",
+              "3. Un quadrilatère dont les diagonales se coupent en leur milieu est un parallélogramme.",
+              "4. Donc MNPQ est un parallélogramme."
+            ]
+          },
+          {
+            "question": "Un parallélogramme a une base de 8 cm et une hauteur relative de 5 cm. Calculer son aire.",
+            "answerLatex": "\\text{Aire} = 8 \\times 5 = 40\\text{ cm}^2",
+            "hint": "Aire = base × hauteur."
+          }
+        ]
+      },
+      {
+        "id": "quadrilateres-particuliers-5e",
+        "title": "Rectangle, Losange et Carré",
+        "badge": "Quadrilatères particuliers",
+        "defaultLatex": "\\text{Rectangle: 4 angles droits} \\quad \\text{Losange: 4 côtés égaux} \\quad \\text{Carré: les deux}",
+        "ruleSummary": "Le rectangle est un parallélogramme à diagonales égales. Le losange a des diagonales perpendiculaires. Le carré réunit les deux propriétés.",
+        "teacherGoal": "Structurer l'arbre des quadrilatères pour que l'élève choisisse la bonne propriété de démonstration.",
+        "interactiveType": "quadrilatere-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Le Rectangle",
+            "rule": "Angle droit ou diagonales de même longueur",
+            "latex": "\\text{Parallélogramme avec un angle droit} \\iff \\text{Diagonales de même longueur } (AC = BD)",
+            "explanation": "Un parallélogramme ayant un angle droit ou des diagonales de même longueur est un rectangle.",
+            "teacherTip": "Insister : un seul angle droit suffit pour un parallélogramme."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Le Losange",
+            "rule": "Deux côtés consécutifs égaux ou diagonales perpendiculaires",
+            "latex": "\\text{Parallélogramme avec } AB = BC \\iff (AC) \\perp (BD)",
+            "explanation": "Si un parallélogramme a deux côtés consécutifs égaux ou ses diagonales perpendiculaires, c'est un losange.",
+            "teacherTip": "L'aire du losange se calcule par (Grande diagonale × Petite diagonale) / 2."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Le Carré",
+            "rule": "À la fois rectangle et losange",
+            "latex": "\\text{Carré} = \\text{Rectangle} + \\text{Losange}",
+            "explanation": "Le carré possède 4 angles droits, 4 côtés de même longueur, des diagonales de même longueur et perpendiculaires.",
+            "teacherTip": "Le carré est le quadrilatère le plus régulier."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Un parallélogramme ABCD a des diagonales qui mesurent toutes deux 10 cm. De quel quadrilatère particulier s'agit-il ?",
+            "answerLatex": "ABCD \\text{ est un rectangle car c'est un parallélogramme dont les diagonales ont la même longueur.}",
+            "hint": "Quelle propriété sur les diagonales caractérise le rectangle ?"
+          },
+          {
+            "question": "Un parallélogramme dont les diagonales sont perpendiculaires et de même longueur est un...",
+            "answerLatex": "\\text{Carré (car perpendiculaires } \\implies \\text{losange et égales } \\implies \\text{rectangle)}",
+            "hint": "Réfléchis à la combinaison losange + rectangle."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "proportionnalite-5e",
+    "title": "Proportionnalité - 5e",
+    "shortTitle": "Proportionnalité",
+    "category": "Activités numériques",
+    "icon": "Percent",
+    "description": "Reconnaître et utiliser la proportionnalité : coefficient, quatrième proportionnelle (produit en croix), pourcentages et échelles.",
+    "demos": [
+      {
+        "id": "tableau-proportionnalite-5e",
+        "title": "Tableau de proportionnalité et Coefficient",
+        "badge": "Règle fondamentale",
+        "defaultLatex": "y = k \\times x \\iff k = \\frac{y}{x}",
+        "ruleSummary": "Deux grandeurs sont proportionnelles si l'on passe des valeurs de la première à celles de la seconde en multipliant toujours par un même nombre non nul k.",
+        "teacherGoal": "Vérifier la proportionnalité en calculant les quotients et identifier le coefficient k.",
+        "interactiveType": "proportionnalite-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Notion de proportionnalité",
+            "rule": "Définition par quotient constant",
+            "latex": "\\frac{y_1}{x_1} = \\frac{y_2}{x_2} = \\dots = k \\quad (k \\neq 0)",
+            "explanation": "Le coefficient k est appelé le coefficient de proportionnalité.",
+            "teacherTip": "Montrer qu'en divisant la ligne 2 par la ligne 1, on trouve toujours la même constante."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Quatrième proportionnelle (Produit en croix)",
+            "rule": "Égalité des produits en croix",
+            "latex": "\\frac{a}{b} = \\frac{c}{x} \\implies a \\times x = b \\times c \\implies x = \\frac{b \\times c}{a}",
+            "explanation": "Pour trouver la valeur inconnue x, on multiplie les deux termes de la diagonale connue et on divise par le troisième.",
+            "teacherTip": "Le produit en croix évite de calculer un coefficient décimal non exact."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Exemple pratique",
+            "rule": "3 kg de mangues coûtent 1500 FCFA. Quel est le prix de 7 kg ?",
+            "latex": "x = \\frac{1500 \\times 7}{3} = 500 \\times 7 = 3500\\text{ FCFA}",
+            "explanation": "Le prix au kilogramme est de 500 FCFA. Pour 7 kg, le coût est de 3500 FCFA.",
+            "teacherTip": "Ancrer les exemples dans le contexte quotidien des élèves au Sénégal."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "4 cahiers coûtent 1200 FCFA. Combien coûtent 9 cahiers ?",
+            "answerLatex": "x = \\frac{1200 \\times 9}{4} = 300 \\times 9 = 2700\\text{ FCFA}",
+            "hint": "Utilise le produit en croix ou calcule d'abord le prix d'un seul cahier.",
+            "detailedSolution": [
+              "1. Prix d'un cahier : 1200 / 4 = 300 FCFA.",
+              "2. Prix de 9 cahiers : 9 × 300 = 2700 FCFA."
+            ]
+          },
+          {
+            "question": "Une voiture consomme 6 litres d'essence pour 100 km. Combien consomme-t-elle pour 350 km ?",
+            "answerLatex": "x = \\frac{6 \\times 350}{100} = \\frac{2100}{100} = 21\\text{ litres}",
+            "hint": "Produit en croix : x = (6 × 350) / 100."
+          }
+        ]
+      },
+      {
+        "id": "pourcentages-echelles-5e",
+        "title": "Pourcentages et Échelles",
+        "badge": "Applications concrètes",
+        "defaultLatex": "P = \\frac{t}{100} \\times V, \\quad \\text{Échelle} = \\frac{\\text{Distance sur plan}}{\\text{Distance réelle}}",
+        "ruleSummary": "Prendre t % d'une quantité, c'est la multiplier par t/100. L'échelle est le rapport des distances dans la même unité.",
+        "teacherGoal": "Maîtriser les calculs de remises, augmentations et lecture de cartes.",
+        "interactiveType": "proportionnalite-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Calculer un pourcentage",
+            "rule": "Appliquer un taux t %",
+            "latex": "\\text{Valeur} = \\frac{t}{100} \\times \\text{Quantité totale}",
+            "explanation": "Par exemple, 20 % de 8000 FCFA représente (20/100) × 8000 = 1600 FCFA.",
+            "teacherTip": "Rappeler que 50% c'est la moitié, 25% le quart, 10% diviser par 10."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Échelle d'une carte",
+            "rule": "Rapport de réduction",
+            "latex": "e = \\frac{d_{\\text{carte}}}{D_{\\text{réelle}}} \\quad (\\text{même unité})",
+            "explanation": "Une échelle 1/50 000 signifie que 1 cm sur la carte représente 50 000 cm (soit 500 m) sur le terrain.",
+            "teacherTip": "Toujours convertir dans la même unité (en centimètres) avant de poser le rapport."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Dans une classe de 40 élèves de 5e, 60% sont des filles. Combien y a-t-il de filles ?",
+            "answerLatex": "N = \\frac{60}{100} \\times 40 = 0,6 \\times 40 = 24\\text{ filles}",
+            "hint": "Calcule (60 / 100) × 40."
+          },
+          {
+            "question": "Sur une carte à l'échelle 1/200 000, deux villes sont distantes de 4 cm. Quelle est la distance réelle en kilomètres ?",
+            "answerLatex": "D = 4 \\times 200\\,000\\text{ cm} = 800\\,000\\text{ cm} = 8\\text{ km}",
+            "hint": "Multiplie 4 par 200 000 cm, puis convertis en kilomètres (1 km = 100 000 cm)."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "equations-inequations-5e",
+    "title": "Équations et Inéquations - 5e",
+    "shortTitle": "Équations & Inéquations",
+    "category": "Activités numériques",
+    "icon": "Equal",
+    "description": "Résolution des équations élémentaires du premier degré (x + a = b, ax = b) et introduction aux inégalités simples.",
+    "demos": [
+      {
+        "id": "equations-base-5e",
+        "title": "Résolution d'équations : x + a = b et ax = b",
+        "badge": "Algèbre niveau 5e",
+        "defaultLatex": "x + a = b \\iff x = b - a, \\quad a \\cdot x = b \\iff x = \\frac{b}{a}",
+        "ruleSummary": "Résoudre une équation, c'est trouver la valeur de l'inconnue x qui rend l'égalité vraie. On applique le principe de la balance équilibrée.",
+        "teacherGoal": "Apprendre à isoler l'inconnue en neutralisant les termes additionnés ou multipliés.",
+        "interactiveType": "equations-steps",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Équation de type addition : x + a = b",
+            "rule": "Soustraire a des deux côtés",
+            "latex": "x + 7 = 15 \\iff x = 15 - 7 \\iff x = 8",
+            "explanation": "Pour isoler x, on soustrait 7 à chaque membre de l'égalité.",
+            "teacherTip": "Expliquer l'image de la balance : ce qu'on enlève à gauche, on doit l'enlever à droite."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Équation de type multiplication : ax = b (a ≠ 0)",
+            "rule": "Diviser par a des deux côtés",
+            "latex": "4x = 28 \\iff x = \\frac{28}{4} \\iff x = 7",
+            "explanation": "Pour isoler x, on divise les deux membres par le coefficient multiplicateur 4.",
+            "teacherTip": "Attention à ne pas soustraire 4 ! 4x est un produit."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Équation combinée : ax + b = c",
+            "rule": "Déplacer b d'abord, puis diviser par a",
+            "latex": "2x + 5 = 17 \\iff 2x = 17 - 5 = 12 \\iff x = \\frac{12}{2} = 6",
+            "explanation": "On commence par neutraliser le terme constant +5, puis on divise par 2.",
+            "teacherTip": "Toujours vérifier la solution en remplaçant x dans l'équation de départ : 2(6) + 5 = 12 + 5 = 17."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Résoudre l'équation : x + 9 = 24",
+            "answerLatex": "x = 24 - 9 = 15",
+            "hint": "Soustrait 9 de chaque côté : x = 24 - 9."
+          },
+          {
+            "question": "Résoudre l'équation : 5x = 45",
+            "answerLatex": "x = \\frac{45}{5} = 9",
+            "hint": "Divise par 5 : x = 45 / 5."
+          },
+          {
+            "question": "Résoudre l'équation : 3x - 4 = 11",
+            "answerLatex": "3x = 11 + 4 = 15 \\implies x = \\frac{15}{3} = 5",
+            "hint": "Ajoute 4 des deux côtés, puis divise par 3.",
+            "detailedSolution": [
+              "1. On ajoute 4 aux deux membres : 3x = 11 + 4 = 15.",
+              "2. On divise par 3 : x = 15 / 3 = 5.",
+              "3. Vérification : 3×5 - 4 = 15 - 4 = 11. La solution est 5."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "reperage-5e",
+    "title": "Le repérage - 5e",
+    "shortTitle": "Le repérage",
+    "category": "Activités géométriques",
+    "icon": "Compass",
+    "description": "Repérage sur une droite graduée (abscisse, distance) et repérage dans le plan (repère orthogonal, coordonnées).",
+    "demos": [
+      {
+        "id": "reperage-droite-5e",
+        "title": "Repérage sur la droite graduée",
+        "badge": "Axe gradué",
+        "defaultLatex": "d(A, B) = AB = x_B - x_A \\quad (x_B \\ge x_A)",
+        "ruleSummary": "Sur une droite graduée munie d'une origine O et d'une unité, chaque point correspond à un nombre relatif appelé son abscisse.",
+        "teacherGoal": "Apprendre à lire une abscisse et calculer la distance entre deux points comme la différence (plus grande - plus petite).",
+        "interactiveType": "reperage-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Abscisse d'un point",
+            "rule": "Définition de la droite graduée",
+            "latex": "O(0), \\quad I(1), \\quad A(x_A)",
+            "explanation": "Les nombres positifs sont placés à droite de l'origine O, les nombres négatifs à gauche.",
+            "teacherTip": "Rappeler que la distance à zéro d'un point est sa valeur absolue."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Calcul de la distance entre deux points",
+            "rule": "Distance = Abscisse la plus grande - Abscisse la plus petite",
+            "latex": "AB = x_{\\text{max}} - x_{\\text{min}}",
+            "explanation": "Une distance est toujours un nombre positif ou nul.",
+            "teacherTip": "Exemple clé : si A(-3) et B(+4), AB = 4 - (-3) = 4 + 3 = 7."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Sur une droite graduée, on a A(-5) et B(3). Calculer la distance AB.",
+            "answerLatex": "AB = 3 - (-5) = 3 + 5 = 8",
+            "hint": "Distance = plus grande abscisse - plus petite abscisse = 3 - (-5)."
+          },
+          {
+            "question": "Quel est le milieu M du segment [AB] avec A(-4) et B(6) ?",
+            "answerLatex": "x_M = \\frac{-4 + 6}{2} = \\frac{2}{2} = 1",
+            "hint": "L'abscisse du milieu est la demi-somme : (x_A + x_B) / 2."
+          }
+        ]
+      },
+      {
+        "id": "reperage-plan-5e",
+        "title": "Repérage dans le plan (Coordonnées)",
+        "badge": "Repère orthogonal",
+        "defaultLatex": "M(x ,;\\, y) \\iff x = \\text{abscisse (axe horizontal)}, \\; y = \\text{ordonnée (axe vertical)}",
+        "ruleSummary": "Deux droites graduées perpendiculaires de même origine forment un repère orthogonal du plan. La position de M est définie par son couple (x ; y).",
+        "teacherGoal": "Ne jamais inverser l'ordre des coordonnées : toujours (x en premier, y en second).",
+        "interactiveType": "reperage-plan",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Les deux axes du repère",
+            "rule": "Axe des abscisses (Ox) et axe des ordonnées (Oy)",
+            "latex": "(Ox) : \\text{horizontal}, \\quad (Oy) : \\text{vertical}",
+            "explanation": "L'origine O a pour coordonnées (0 ; 0).",
+            "teacherTip": "Moyen mnémotechnique : l'abscisse au sol (horizontal), l'ordonnée monte au ciel (vertical)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Lecture et placement d'un point",
+            "rule": "Couple (abscisse ; ordonnée)",
+            "latex": "A(3\\,;\\,2), \\quad B(-2\\,;\\,4), \\quad C(-3\\,;\\,-1)",
+            "explanation": "Pour placer A(3 ; 2), on part de l'origine, on avance de 3 vers la droite puis on monte de 2.",
+            "teacherTip": "Faire remarquer les signes selon les 4 quadrants du plan."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Dans quel quadrant se trouve le point P(-3 ; -4) ?",
+            "answerLatex": "\\text{En bas à gauche (quadrant où } x < 0 \\text{ et } y < 0)",
+            "hint": "L'abscisse est négative (gauche) et l'ordonnée est négative (bas)."
+          },
+          {
+            "question": "Quelles sont les coordonnées du point situé sur l'axe des ordonnées à 5 unités au-dessus de l'origine ?",
+            "answerLatex": "(0 \\,;\\, 5)",
+            "hint": "Tout point sur l'axe des ordonnées a une abscisse x = 0."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "puissance-d-5e",
+    "title": "La puissance dans D - 5e",
+    "shortTitle": "Puissances dans D",
+    "category": "Activités numériques",
+    "icon": "Superscript",
+    "description": "Puissances d'un décimal à exposant entier positif, puissances de 10, notation scientifique et règles de calcul.",
+    "demos": [
+      {
+        "id": "puissances-regles-5e",
+        "title": "Définition et Règles de calcul des puissances",
+        "badge": "Règles opératoires",
+        "defaultLatex": "a^n \\times a^p = a^{n+p}, \\quad (a^n)^p = a^{n \\times p}, \\quad \\frac{a^n}{a^p} = a^{n-p}",
+        "ruleSummary": "Pour tout décimal a et tout entier n ≥ 1, a puissance n est le produit de n facteurs égaux à a. Par convention, a^0 = 1 (si a ≠ 0).",
+        "teacherGoal": "Éviter la confusion classique entre 2³ = 8 et 2×3 = 6.",
+        "interactiveType": "powers-steps",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Définition de a^n",
+            "rule": "Produit de n facteurs identiques",
+            "latex": "a^n = \\underbrace{a \\times a \\times \\dots \\times a}_{n \\text{ facteurs}}, \\quad a^1 = a, \\quad a^0 = 1",
+            "explanation": "Exemples : 5² = 5 × 5 = 25 ; 2³ = 2 × 2 × 2 = 8 ; 10⁴ = 10 000.",
+            "teacherTip": "Faire répéter : a^n n'est PAS a multiplié par n !"
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Produit de puissances de même base",
+            "rule": "On additionne les exposants",
+            "latex": "a^n \\times a^p = a^{n+p}",
+            "explanation": "Exemple : 3² × 3⁴ = 3^(2+4) = 3⁶.",
+            "teacherTip": "Montrer que 3² × 3⁴ = (3×3) × (3×3×3×3) = 6 facteurs."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Puissances de 10",
+            "rule": "Exposant positif = nombre de zéros",
+            "latex": "10^n = 1\\underbrace{00\\dots0}_{n \\text{ zéros}}, \\quad 10^3 = 1000, \\quad 10^6 = 1\\,000\\,000",
+            "explanation": "La puissance de 10 correspond au chiffre 1 suivi de n zéros.",
+            "teacherTip": "Très utile pour l'écriture des grands nombres en sciences physiques."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Calculer : 4³",
+            "answerLatex": "4^3 = 4 \\times 4 \\times 4 = 16 \\times 4 = 64",
+            "hint": "4 × 4 = 16, puis 16 × 4 = 64."
+          },
+          {
+            "question": "Écrire sous la forme d'une seule puissance : 7⁴ × 7³",
+            "answerLatex": "7^{4+3} = 7^7",
+            "hint": "Additionne les exposants : 4 + 3 = 7."
+          },
+          {
+            "question": "Écrire 100 000 sous forme de puissance de 10.",
+            "answerLatex": "10^5",
+            "hint": "Compte le nombre de zéros : il y a 5 zéros après le 1."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "triangles-5e",
+    "title": "Les triangles - 5e",
+    "shortTitle": "Les triangles",
+    "category": "Activités géométriques",
+    "icon": "Triangle",
+    "description": "Somme des angles d'un triangle (180°), inégalité triangulaire, construction et droites remarquables (médiatrices, hauteurs, médianes, bissectrices).",
+    "demos": [
+      {
+        "id": "somme-angles-inegalite-5e",
+        "title": "Somme des angles et Inégalité triangulaire",
+        "badge": "Théorème fondamental",
+        "defaultLatex": "\\widehat{A} + \\widehat{B} + \\widehat{C} = 180^\\circ, \\quad BC < AB + AC",
+        "ruleSummary": "Dans un triangle quelconque, la somme des mesures des trois angles vaut toujours 180°. De plus, chaque côté est strictement inférieur à la somme des deux autres.",
+        "teacherGoal": "Calculer le 3e angle d'un triangle connaissant les deux autres et vérifier la possibilité de construction.",
+        "interactiveType": "triangles-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Somme des angles d'un triangle",
+            "rule": "Propriété universelle",
+            "latex": "\\widehat{A} + \\widehat{B} + \\widehat{C} = 180^\\circ",
+            "explanation": "Cette règle est vraie pour TOUS les triangles (scalène, isocèle, rectangle, équilatéral).",
+            "teacherTip": "Conséquence : dans un triangle rectangle, les deux angles aigus sont complémentaires (leur somme vaut 90°)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Cas particuliers remarquables",
+            "rule": "Triangle isocèle et équilatéral",
+            "latex": "\\text{Isocèle : 2 angles à la base égaux} \\quad \\text{Équilatéral : 3 angles de } 60^\\circ",
+            "explanation": "Dans un triangle équilatéral, 180° / 3 = 60° pour chaque angle.",
+            "teacherTip": "Faire le lien entre les axes de symétrie et l'égalité des angles."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Inégalité triangulaire",
+            "rule": "Condition de constructibilité d'un triangle",
+            "latex": "a < b + c, \\quad b < a + c, \\quad c < a + b",
+            "explanation": "La plus grande longueur doit être strictement inférieure à la somme des deux autres longueurs. Si a = b + c, les points sont alignés (triangle aplati).",
+            "teacherTip": "Astuce : il suffit de comparer le plus grand côté à la somme des deux plus petits."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Dans un triangle ABC, on donne Â = 50° et B̂ = 70°. Calculer la mesure de l'angle Ĉ.",
+            "answerLatex": "\\widehat{C} = 180^\\circ - (50^\\circ + 70^\\circ) = 180^\\circ - 120^\\circ = 60^\\circ",
+            "hint": "La somme des angles vaut 180°.",
+            "detailedSolution": [
+              "1. Â + B̂ + Ĉ = 180°.",
+              "2. Ĉ = 180° - (50° + 70°) = 180° - 120° = 60°."
+            ]
+          },
+          {
+            "question": "Peut-on construire un triangle avec des côtés mesurant 3 cm, 4 cm et 8 cm ?",
+            "answerLatex": "\\text{Non, car } 8 > 3 + 4 = 7 \\text{ (le plus grand côté est supérieur à la somme des deux autres).}",
+            "hint": "Compare 8 avec 3 + 4."
+          }
+        ]
+      },
+      {
+        "id": "droites-remarquables-5e",
+        "title": "Les 4 Droites remarquables du triangle",
+        "badge": "Géométrie classique",
+        "defaultLatex": "\\text{Médiatrices (Cercle circonscrit), Hauteurs (Orthocentre), Bissectrices (Inscrit), Médianes (Gravité)}",
+        "ruleSummary": "Les droites remarquables d'un triangle sont concourantes en des points caractéristiques essentiels pour les constructions.",
+        "teacherGoal": "Distinguer clairement le rôle et la construction de chaque droite remarquable.",
+        "interactiveType": "triangles-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Les Médiatrices",
+            "rule": "Perpendiculaire au milieu d'un côté",
+            "latex": "\\text{Concours en } O, \\text{ centre du cercle circonscrit}",
+            "explanation": "Le point O est équidistant des 3 sommets du triangle : OA = OB = OC.",
+            "teacherTip": "Se construit au compas ou à la règle graduée et l'équerre."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Les Hauteurs",
+            "rule": "Passe par un sommet et perpendiculaire au côté opposé",
+            "latex": "\\text{Concours en } H, \\text{ l'orthocentre du triangle}",
+            "explanation": "La hauteur sert au calcul de l'aire du triangle : Aire = (base × hauteur) / 2.",
+            "teacherTip": "Dans un triangle obtusangle, l'orthocentre se situe à l'extérieur du triangle."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Les Médianes",
+            "rule": "Joint un sommet au milieu du côté opposé",
+            "latex": "\\text{Concours en } G, \\text{ centre de gravité tel que } AG = \\frac{2}{3}AA'",
+            "explanation": "G est le point d'équilibre physique de la plaque triangulaire.",
+            "teacherTip": "Le centre de gravité est situé aux deux tiers de chaque médiane en partant du sommet."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Les Bissectrices",
+            "rule": "Demi-droite qui partage un angle en deux angles égaux",
+            "latex": "\\text{Concours en } I, \\text{ centre du cercle inscrit}",
+            "explanation": "Le point I est équidistant des trois côtés du triangle.",
+            "teacherTip": "Le cercle inscrit est tangent aux 3 côtés à l'intérieur du triangle."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Quel est le point de concours des trois médiatrices d'un triangle ?",
+            "answerLatex": "\\text{Le centre du cercle circonscrit au triangle.}",
+            "hint": "Ce point passe par les trois sommets du triangle."
+          },
+          {
+            "question": "Une médiane mesure 9 cm. À quelle distance du sommet se trouve le centre de gravité G ?",
+            "answerLatex": "d = \\frac{2}{3} \\times 9 = 6\\text{ cm}",
+            "hint": "Le centre de gravité est aux 2/3 de la médiane depuis le sommet."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fractions-5e",
+    "title": "Les fractions - 5e",
+    "shortTitle": "Les fractions",
+    "category": "Activités numériques",
+    "icon": "Divide",
+    "description": "Écritures fractionnaires, quotient, égalité de fractions, simplification, comparaison et opérations (addition, soustraction, multiplication).",
+    "demos": [
+      {
+        "id": "fractions-egalite-simplification-5e",
+        "title": "Égalité et Simplification de fractions",
+        "badge": "Fondement numérique",
+        "defaultLatex": "\\frac{a}{b} = \\frac{a \\times k}{b \\times k} = \\frac{a \\div d}{b \\div d} \\quad (b, k, d \\neq 0)",
+        "ruleSummary": "On ne change pas la valeur d'une fraction en multipliant ou en divisant son numérateur et son dénominateur par un même nombre non nul.",
+        "teacherGoal": "Apprendre à rendre une fraction irréductible en divisant par un diviseur commun ou le PGCD.",
+        "interactiveType": "fractions-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Règle fondamentale d'invariance",
+            "rule": "Multiplication ou division conjointe",
+            "latex": "\\frac{2}{3} = \\frac{2 \\times 4}{3 \\times 4} = \\frac{8}{12}",
+            "explanation": "2/3 et 8/12 représentent exactement la même quantité (le même quotient).",
+            "teacherTip": "Montrer le découpage visuel d'une bande ou d'un gâteau."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Simplification vers la fraction irréductible",
+            "rule": "Diviser par le plus grand diviseur commun",
+            "latex": "\\frac{24}{36} = \\frac{24 \\div 12}{36 \\div 12} = \\frac{2}{3}",
+            "explanation": "Une fraction est irréductible quand son numérateur et son dénominateur n'ont pas d'autre diviseur commun que 1.",
+            "teacherTip": "Si on ne voit pas 12 d'un coup, simplifier par 2, puis par 2, puis par 3."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Égalité des produits en croix",
+            "rule": "Reconnaître deux fractions égales",
+            "latex": "\\frac{a}{b} = \\frac{c}{d} \\iff a \\times d = b \\times c",
+            "explanation": "Exemple : 3/5 et 6/10 sont égales car 3 × 10 = 30 et 5 × 6 = 30.",
+            "teacherTip": "C'est l'outil universel pour tester l'égalité ou trouver une inconnue."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Simplifier au maximum la fraction 18 / 24.",
+            "answerLatex": "\\frac{18}{24} = \\frac{18 \\div 6}{24 \\div 6} = \\frac{3}{4}",
+            "hint": "Le PGCD de 18 et 24 est 6."
+          },
+          {
+            "question": "Compléter pour que les fractions soient égales : 5 / 7 = ... / 35.",
+            "answerLatex": "\\frac{5 \\times 5}{7 \\times 5} = \\frac{25}{35}",
+            "hint": "7 × 5 = 35, donc multiplie aussi 5 par 5."
+          }
+        ]
+      },
+      {
+        "id": "fractions-operations-5e",
+        "title": "Opérations : Addition, Soustraction et Multiplication",
+        "badge": "Calcul fractionnaire",
+        "defaultLatex": "\\frac{a}{d} + \\frac{b}{d} = \\frac{a+b}{d}, \\quad \\frac{a}{b} \\times \\frac{c}{d} = \\frac{a \\times c}{b \\times d}",
+        "ruleSummary": "Pour additionner ou soustraire deux fractions, on les réduit au même dénominateur. Pour multiplier, on multiplie les numérateurs entre eux et les dénominateurs entre eux.",
+        "teacherGoal": "Éradiquer l'erreur n°1 : on n'additionne JAMAIS les dénominateurs entre eux !",
+        "interactiveType": "fractions-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Même dénominateur (Cas immédiat)",
+            "rule": "On conserve le dénominateur commun",
+            "latex": "\\frac{3}{7} + \\frac{2}{7} = \\frac{3 + 2}{7} = \\frac{5}{7}",
+            "explanation": "On additionne uniquement les numérateurs.",
+            "teacherTip": "Insister : 3 septièmes + 2 septièmes = 5 septièmes."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Dénominateurs différents (Mise au même dénominateur)",
+            "rule": "Transformer l'une ou les deux fractions",
+            "latex": "\\frac{1}{4} + \\frac{3}{8} = \\frac{1 \\times 2}{4 \\times 2} + \\frac{3}{8} = \\frac{2}{8} + \\frac{3}{8} = \\frac{5}{8}",
+            "explanation": "Puisque 8 est multiple de 4, on multiplie le numérateur et le dénominateur de 1/4 par 2.",
+            "teacherTip": "En 5e, un dénominateur est le plus souvent un multiple de l'autre."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Multiplication de fractions",
+            "rule": "Produit direct des numérateurs et dénominateurs",
+            "latex": "\\frac{2}{5} \\times \\frac{3}{7} = \\frac{2 \\times 3}{5 \\times 7} = \\frac{6}{35}",
+            "explanation": "Pas besoin de mettre au même dénominateur pour la multiplication !",
+            "teacherTip": "Penser à simplifier avant d'effectuer les multiplications si possible."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Calculer : 2/5 + 1/10",
+            "answerLatex": "\\frac{2 \\times 2}{5 \\times 2} + \\frac{1}{10} = \\frac{4}{10} + \\frac{1}{10} = \\frac{5}{10} = \\frac{1}{2}",
+            "hint": "Mets au dénominateur 10, puis simplifie le résultat."
+          },
+          {
+            "question": "Calculer : 3/4 × 5/7",
+            "answerLatex": "\\frac{3 \\times 5}{4 \\times 7} = \\frac{15}{28}",
+            "hint": "Multiplie en haut (3×5) et en bas (4×7)."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "angles-5e",
+    "title": "Les angles - 5e",
+    "shortTitle": "Les angles",
+    "category": "Activités géométriques",
+    "icon": "Maximize2",
+    "description": "Angles adjacents, complémentaires, supplémentaires, opposés par le sommet, alternes-internes et correspondants.",
+    "demos": [
+      {
+        "id": "angles-vocabulaire-5e",
+        "title": "Angles complémentaires, supplémentaires et opposés par le sommet",
+        "badge": "Vocabulaire géométrique",
+        "defaultLatex": "\\alpha + \\beta = 90^\\circ \\; (\\text{complémentaires}), \\quad \\alpha + \\beta = 180^\\circ \\; (\\text{supplémentaires})",
+        "ruleSummary": "Deux angles sont complémentaires si leur somme vaut 90°. Ils sont supplémentaires si leur somme vaut 180°. Deux angles opposés par le sommet ont la même mesure.",
+        "teacherGoal": "Identifier les configurations d'angles et calculer un angle manquant.",
+        "interactiveType": "angles-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Angles adjacents",
+            "rule": "Sommet commun et côté commun situé entre les deux",
+            "latex": "\\text{Sommet commun, un côté commun, situés de part et d'autre}",
+            "explanation": "Deux angles adjacents se touchent sans se chevaucher.",
+            "teacherTip": "Montrer deux parts de tarte voisines."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Angles complémentaires et supplémentaires",
+            "rule": "Somme égale à 90° ou 180°",
+            "latex": "\\alpha + \\beta = 90^\\circ \\quad \\text{et} \\quad \\gamma + \\delta = 180^\\circ",
+            "explanation": "Deux angles droits forment 180°. Deux angles aigus d'un triangle rectangle sont complémentaires.",
+            "teacherTip": "Astuce mémoire : C vient avant S dans l'alphabet, comme 90 vient avant 180."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Angles opposés par le sommet",
+            "rule": "Côtés dans le prolongement l'un de l'autre",
+            "latex": "\\widehat{AOB} = \\widehat{COD}",
+            "explanation": "L'intersection de deux droites sécantes forme deux paires d'angles opposés par le sommet de même mesure.",
+            "teacherTip": "La symétrie centrale de centre O prouve immédiatement l'égalité des mesures."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "L'angle Â mesure 34°. Quel est son angle complémentaire ?",
+            "answerLatex": "90^\\circ - 34^\\circ = 56^\\circ",
+            "hint": "Deux angles complémentaires ont pour somme 90°."
+          },
+          {
+            "question": "L'angle B̂ mesure 115°. Quel est son angle supplémentaire ?",
+            "answerLatex": "180^\\circ - 115^\\circ = 65^\\circ",
+            "hint": "Deux angles supplémentaires ont pour somme 180°."
+          }
+        ]
+      },
+      {
+        "id": "angles-paralleles-secante-5e",
+        "title": "Angles alternes-internes et correspondants",
+        "badge": "Parallélisme & Angles",
+        "defaultLatex": "(d_1) \\parallel (d_2) \\iff \\text{angles alternes-internes de même mesure}",
+        "ruleSummary": "Deux droites parallèles coupées par une sécante forment des angles alternes-internes de même mesure et des angles correspondants de même mesure.",
+        "teacherGoal": "Utiliser cette propriété soit pour calculer des angles, soit pour prouver que deux droites sont parallèles.",
+        "interactiveType": "angles-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Angles alternes-internes",
+            "rule": "Entre les deux droites, de part et d'autre de la sécante (forme en Z)",
+            "latex": "(d_1) \\parallel (d_2) \\implies \\widehat{\\text{alt-int}}_1 = \\widehat{\\text{alt-int}}_2",
+            "explanation": "Ils ont la même mesure grâce à la symétrie centrale de centre le milieu du segment joignant les sommets.",
+            "teacherTip": "Faire surligner la lettre 'Z' dans la figure."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Angles correspondants",
+            "rule": "Du même côté de la sécante, l'un intérieur, l'un extérieur (forme en F)",
+            "latex": "(d_1) \\parallel (d_2) \\implies \\widehat{\\text{corresp}}_1 = \\widehat{\\text{corresp}}_2",
+            "explanation": "Ils ont la même mesure grâce à la translation le long de la sécante.",
+            "teacherTip": "Faire repérer la lettre 'F'."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Réciproque pour prouver le parallélisme",
+            "rule": "Si deux angles alternes-internes sont égaux, alors les droites sont parallèles",
+            "latex": "\\widehat{\\text{alt-int}}_1 = \\widehat{\\text{alt-int}}_2 \\implies (d_1) \\parallel (d_2)",
+            "explanation": "C'est une méthode fondamentale pour démontrer que deux droites sont parallèles.",
+            "teacherTip": "Réciproque très utile dans les devoirs et examens."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Deux droites (d) et (d') sont parallèles et coupées par une sécante. Un angle alterne-interne mesure 48°. Combien mesure l'autre ?",
+            "answerLatex": "48^\\circ \\text{ car deux droites parallèles coupées par une sécante forment des angles alternes-internes de même mesure.}",
+            "hint": "Les angles alternes-internes formés par deux parallèles sont égaux."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "symetrie-centrale-5e",
+    "title": "La symétrie centrale - 5e",
+    "shortTitle": "Symétrie centrale",
+    "category": "Activités géométriques",
+    "icon": "RefreshCw",
+    "description": "Transformation par demi-tour autour d'un point O, constructions géométriques et propriétés de conservation (longueurs, angles, aires).",
+    "demos": [
+      {
+        "id": "symetrie-centrale-definition-5e",
+        "title": "Définition : Demi-tour et Milieu",
+        "badge": "Transformation du plan",
+        "defaultLatex": "M' = S_O(M) \\iff O \\text{ est le milieu du segment } [MM']",
+        "ruleSummary": "Le symétrique d'un point M par rapport au point O est le point M' tel que O soit le milieu du segment [MM']. Le point O est son propre symétrique.",
+        "teacherGoal": "Construire le symétrique d'un point à la règle et au compas, et comprendre le demi-tour de 180°.",
+        "interactiveType": "symetrie-centrale-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Construction du symétrique d'un point",
+            "rule": "Tracer la demi-droite [MO) et reporter la distance OM",
+            "latex": "M, O, M' \\text{ sont alignés dans cet ordre et } OM = OM'",
+            "explanation": "On trace la droite (MO), puis avec le compas centré en O, on reporte la longueur OM de l'autre côté de O.",
+            "teacherTip": "Vérifier que les élèves mettent bien le centre du compas en O et pas en M."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Propriétés de conservation fondamentales",
+            "rule": "L'isométrie conserve toutes les grandeurs",
+            "latex": "AB = A'B', \\quad \\widehat{ABC} = \\widehat{A'B'C'}, \\quad \\text{Aire}(F) = \\text{Aire}(F')",
+            "explanation": "La symétrie centrale conserve les longueurs, les mesures des angles, l'alignement des points et les aires.",
+            "teacherTip": "Une figure et son symétrique sont superposables par un demi-tour."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Conservation du parallélisme",
+            "rule": "L'image d'une droite est une droite parallèle",
+            "latex": "(AB) \\parallel (A'B')",
+            "explanation": "Le symétrique d'une droite (d) par rapport à O est une droite (d') qui lui est strictement parallèle.",
+            "teacherTip": "Propriété majeure pour démontrer les parallélogrammes."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Le segment [AB] mesure 6 cm. Quelle est la longueur de son symétrique [A'B'] par rapport à un point O ?",
+            "answerLatex": "A'B' = 6\\text{ cm} \\text{ car la symétrie centrale conserve les longueurs.}",
+            "hint": "La symétrie centrale est une isométrie : elle conserve les distances."
+          },
+          {
+            "question": "Le point O est le milieu du segment [CD]. Quel est le symétrique de C par rapport à O ?",
+            "answerLatex": "S_O(C) = D",
+            "hint": "Par définition, si O est le milieu de [CD], alors D est le symétrique de C par rapport à O."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "multiples-diviseurs-5e",
+    "title": "Multiples et diviseurs - 5e",
+    "shortTitle": "Multiples & diviseurs",
+    "category": "Activités numériques",
+    "icon": "Hash",
+    "description": "Arithmétique dans N : division euclidienne, critères de divisibilité, nombres premiers, décomposition en facteurs premiers, PGCD et PPCM.",
+    "demos": [
+      {
+        "id": "division-criteres-5e",
+        "title": "Division euclidienne et Critères de divisibilité",
+        "badge": "Arithmétique élémentaire",
+        "defaultLatex": "a = b \\times q + r \\quad (0 \\le r < b)",
+        "ruleSummary": "Dans une division euclidienne d'un entier a par un entier non nul b, il existe un unique quotient q et un reste r vérifiant 0 ≤ r < b.",
+        "teacherGoal": "Maîtriser les critères de divisibilité par 2, 3, 4, 5, 9 et 10 sans poser la division.",
+        "interactiveType": "multiples-diviseurs-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Égalité euclidienne fondamentale",
+            "rule": "Dividende = (Diviseur × Quotient) + Reste",
+            "latex": "a = b \\cdot q + r \\quad \\text{avec } 0 \\le r < b",
+            "explanation": "Si le reste r = 0, on dit que b divise a (ou que a est multiple de b).",
+            "teacherTip": "Toujours vérifier que le reste r est strictement inférieur au diviseur b."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Critères de divisibilité rapides",
+            "rule": "Par 2, 3, 4, 5, 9, 10",
+            "latex": "\\text{Par 2, 5, 10 (dernier chiffre) ; Par 3, 9 (somme des chiffres) ; Par 4 (2 derniers chiffres)}",
+            "explanation": "Un nombre est divisible par 3 si la somme de ses chiffres est un multiple de 3. Par 9 si la somme est un multiple de 9.",
+            "teacherTip": "Exemple : 477 -> 4+7+7 = 18 (divisible par 9 et par 3)."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Effectuer la division euclidienne de 89 par 7 (donner le quotient et le reste).",
+            "answerLatex": "89 = 7 \\times 12 + 5 \\quad (\\text{quotient } q = 12, \\text{ reste } r = 5)",
+            "hint": "7 × 12 = 84, et 89 - 84 = 5."
+          },
+          {
+            "question": "Le nombre 2538 est-il divisible par 9 ?",
+            "answerLatex": "\\text{Oui, car } 2 + 5 + 3 + 8 = 18, \\text{ et 18 est un multiple de 9.}",
+            "hint": "Calcule la somme de ses chiffres."
+          }
+        ]
+      },
+      {
+        "id": "nombres-premiers-pgcd-5e",
+        "title": "Nombres premiers et Décomposition (PGCD, PPCM)",
+        "badge": "Décomposition",
+        "defaultLatex": "\\text{PGCD}(a, b) = \\text{Plus Grand Commun Diviseur}, \\quad \\text{PPCM}(a, b) = \\text{Plus Petit Commun Multiple}",
+        "ruleSummary": "Un nombre premier n'admet que deux diviseurs distincts : 1 et lui-même (2, 3, 5, 7, 11, 13, 17, 19, 23...). Tout entier se décompose de manière unique en produit de facteurs premiers.",
+        "teacherGoal": "Apprendre à décomposer un nombre en produit de facteurs premiers pour calculer facilement PGCD et simplifier des fractions.",
+        "interactiveType": "multiples-diviseurs-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Liste des premiers nombres premiers",
+            "rule": "Entiers premiers inférieurs à 30",
+            "latex": "2, \\; 3, \\; 5, \\; 7, \\; 11, \\; 13, \\; 17, \\; 19, \\; 23, \\; 29",
+            "explanation": "Attention : 1 n'est pas un nombre premier (il n'a qu'un seul diviseur). 2 est le seul nombre premier pair.",
+            "teacherTip": "Faire apprendre par cœur les nombres premiers jusqu'à 23."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Décomposition en facteurs premiers",
+            "rule": "Divisions successives par les nombres premiers",
+            "latex": "60 = 2^2 \\times 3 \\times 5, \\quad 84 = 2^2 \\times 3 \\times 7",
+            "explanation": "60 = 2 × 30 = 2 × 2 × 15 = 2² × 3 × 5.",
+            "teacherTip": "Disposer les calculs en colonne avec la barre verticale de division."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Calcul du PGCD",
+            "rule": "Produit des facteurs communs affectés du plus petit exposant",
+            "latex": "\\text{PGCD}(60, 84) = 2^2 \\times 3 = 12",
+            "explanation": "Les facteurs communs sont 2 (au carré) et 3. Donc PGCD = 4 × 3 = 12.",
+            "teacherTip": "Permet de simplifier la fraction 60/84 en 5/7 en une seule étape !"
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Décomposer 36 en produit de facteurs premiers.",
+            "answerLatex": "36 = 2^2 \\times 3^2 = 4 \\times 9",
+            "hint": "36 = 2 × 18 = 2 × 2 × 9 = 2² × 3²."
+          },
+          {
+            "question": "Calculer le PGCD de 24 et 36.",
+            "answerLatex": "\\text{PGCD}(24, 36) = 12",
+            "hint": "24 = 2³ × 3 et 36 = 2² × 3². Facteurs communs : 2² × 3 = 12."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "calcul-dans-d-5e",
+    "title": "Calcul dans D - 5e",
+    "shortTitle": "Calcul dans D",
+    "category": "Activités numériques",
+    "icon": "Calculator",
+    "description": "Priorités des opérations, parenthèses, distributivité de la multiplication par rapport à l'addition et la soustraction, factorisation simple.",
+    "demos": [
+      {
+        "id": "priorites-operatoires-5e",
+        "title": "Priorités opératoires et Distributivité",
+        "badge": "Règles de calcul",
+        "defaultLatex": "k(a + b) = ka + kb, \\quad k(a - b) = ka - kb",
+        "ruleSummary": "Dans une suite d'opérations, on effectue d'abord les calculs entre parenthèses, puis les multiplications et divisions, et enfin les additions et soustractions de gauche à droite.",
+        "teacherGoal": "Apprendre à structurer une expression et développer ou factoriser avec la distributivité.",
+        "interactiveType": "calcul-dans-d-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Ordre de priorité des opérations",
+            "rule": "Parenthèses > Multiplications / Divisions > Additions / Soustractions",
+            "latex": "A = 20 - 3 \\times 4 = 20 - 12 = 8",
+            "explanation": "La multiplication 3 × 4 est prioritaire sur la soustraction 20 - 3.",
+            "teacherTip": "Insister sur la règle PEMDAS / parenthèses d'abord."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Développement par distributivité",
+            "rule": "Distribuer le facteur k à chaque terme de la parenthèse",
+            "latex": "k \\times (a + b) = k \\times a + k \\times b",
+            "explanation": "Exemple : 4 × (10 + 3) = 4 × 10 + 4 × 3 = 40 + 12 = 52.",
+            "teacherTip": "Très utile pour le calcul mental rapide (ex: 7 × 102 = 7 × 100 + 7 × 2 = 714)."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Factorisation simple",
+            "rule": "Mettre le facteur commun k en évidence",
+            "latex": "k \\times a + k \\times b = k \\times (a + b)",
+            "explanation": "Exemple : 15 × 7 + 15 × 3 = 15 × (7 + 3) = 15 × 10 = 150.",
+            "teacherTip": "Souligner le nombre identique qui apparaît dans chaque terme."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Calculer en respectant les priorités : A = 35 - 5 × 4 + 2",
+            "answerLatex": "A = 35 - 20 + 2 = 15 + 2 = 17",
+            "hint": "Effectue d'abord la multiplication 5 × 4 = 20."
+          },
+          {
+            "question": "Calculer astucieusement grâce à la distributivité : B = 28 × 17 + 28 × 83",
+            "answerLatex": "B = 28 \\times (17 + 83) = 28 \\times 100 = 2800",
+            "hint": "Mets 28 en facteur commun : 28 × (17 + 83)."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "nombres-decimaux-relatifs-5e",
+    "title": "Les nombres décimaux relatifs - 5e",
+    "shortTitle": "Décimaux relatifs",
+    "category": "Activités numériques",
+    "icon": "PlusMinus",
+    "description": "Nombres positifs et négatifs, notion d'opposé, comparaison, addition et soustraction dans l'ensemble des décimaux relatifs.",
+    "demos": [
+      {
+        "id": "relatifs-definition-comparaison-5e",
+        "title": "Définition, Opposé et Comparaison des relatifs",
+        "badge": "Nombres relatifs",
+        "defaultLatex": "-a < 0 < +b, \\quad \\text{Opposé de } (+5) = -5",
+        "ruleSummary": "Les nombres relatifs sont formés des nombres positifs et des nombres négatifs précédés du signe -. Deux nombres opposés ont la même distance à zéro mais des signes contraires.",
+        "teacherGoal": "Comprendre le rangement des nombres négatifs : entre deux négatifs, le plus grand est celui qui a la plus petite distance à zéro (le plus proche de zéro).",
+        "interactiveType": "nombres-decimaux-relatifs-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Notions de nombres relatifs",
+            "rule": "Signe et distance à zéro",
+            "latex": "+7,5 \\quad (\\text{positif}), \\quad -3,2 \\quad (\\text{négatif}), \\quad 0 \\quad (\\text{à la fois positif et nul})",
+            "explanation": "Un nombre négatif est toujours strictement inférieur à un nombre positif.",
+            "teacherTip": "Utiliser l'analogie de la température (en dessous de zéro) ou de l'ascenseur (sous-sols)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Comparaison de deux nombres négatifs",
+            "rule": "Le plus grand est le plus proche de 0",
+            "latex": "-2 > -7, \\quad -0,5 > -5",
+            "explanation": "Avoir une dette de 2 est préférable à une dette de 7 : -2 est donc plus grand que -7.",
+            "teacherTip": "Faire visualiser la position sur la droite graduée : le nombre le plus à droite est le plus grand."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Ranger dans l'ordre croissant : +3 ; -8 ; 0 ; -2 ; +7 ; -5",
+            "answerLatex": "-8 < -5 < -2 < 0 < +3 < +7",
+            "hint": "Place les négatifs d'abord (du plus éloigné de 0 au plus proche), puis 0, puis les positifs."
+          },
+          {
+            "question": "Quel est l'opposé de -14,5 ?",
+            "answerLatex": "+14,5",
+            "hint": "L'opposé a la même valeur absolue avec un signe inverse."
+          }
+        ]
+      },
+      {
+        "id": "relatifs-addition-soustraction-5e",
+        "title": "Addition et Soustraction des nombres relatifs",
+        "badge": "Opérations relatives",
+        "defaultLatex": "(+a) + (+b) = +(a+b), \\quad (-a) + (-b) = -(a+b), \\quad a - b = a + (-b)",
+        "ruleSummary": "Pour additionner deux relatifs de même signe, on garde le signe et on additionne les distances à zéro. De signes contraires, on prend le signe de celui qui a la plus grande distance à zéro et on soustrait. Soustraire revient à ajouter l'opposé.",
+        "teacherGoal": "Automatiser la règle fondamentale : soustraire un nombre, c'est ajouter son opposé.",
+        "interactiveType": "nombres-decimaux-relatifs-5e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Addition de deux nombres de même signe",
+            "rule": "On conserve le signe commun et on additionne les distances",
+            "latex": "(+4) + (+3) = +7, \\quad (-4) + (-3) = -7",
+            "explanation": "Deux pertes s'accumulent : perdre 4 puis perdre 3 équivaut à perdre 7.",
+            "teacherTip": "Insister sur la différence entre le signe du nombre et le signe de l'opération."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Addition de deux nombres de signes contraires",
+            "rule": "Signe du plus fort, et différence des distances à zéro",
+            "latex": "(+8) + (-3) = +5, \\quad (-9) + (+4) = -5",
+            "explanation": "Dans (-9) + (+4), 9 > 4 donc le résultat est négatif : 9 - 4 = 5, soit -5.",
+            "teacherTip": "Le signe du résultat est celui qui a la plus grande distance à zéro."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Soustraction : Transformer en addition de l'opposé",
+            "rule": "a - b = a + (-b)",
+            "latex": "(+5) - (+8) = (+5) + (-8) = -3, \\quad (+4) - (-7) = (+4) + (+7) = +11",
+            "explanation": "Soustraire un nombre négatif équivaut à ajouter un nombre positif : deux signes - consécutifs deviennent un +.",
+            "teacherTip": "La soustraction n'existe plus en tant que telle : elle se transforme TOUJOURS en addition."
+          }
+        ],
+        "exercises": [
+          {
+            "question": "Calculer : (-6) + (-9)",
+            "answerLatex": "-(6 + 9) = -15",
+            "hint": "Même signe négatif : on garde le signe - et on fait 6 + 9."
+          },
+          {
+            "question": "Calculer : (+12) + (-17)",
+            "answerLatex": "-5",
+            "hint": "Signes contraires : 17 > 12 donc résultat négatif, puis 17 - 12 = 5."
+          },
+          {
+            "question": "Calculer : (+7) - (-5)",
+            "answerLatex": "(+7) + (+5) = +12",
+            "hint": "Soustraire (-5) revient à ajouter son opposé (+5) : 7 + 5 = 12."
+          }
+        ]
+      }
+    ]
+  }
+]

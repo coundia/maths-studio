@@ -3,6 +3,7 @@ import { CourseChapter, CourseDemo, CourseStep } from '../coursesData';
 import { MathView } from './MathView';
 import { CalculAlgebriqueCourse } from './CalculAlgebriqueCourse';
 import { GeometryVisualizers3e } from './GeometryVisualizers3e';
+import { GeometryVisualizers5e } from './GeometryVisualizers5e';
 import { VideoLessonPlayer } from './VideoLessonPlayer';
 import { StudentExercisesSection } from './StudentExercisesSection';
 import { QuickQuiz } from './QuickQuiz';
@@ -885,65 +886,271 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
             )}
 
             {/* 7. FRACTIONS RATIONNELLES */}
-            {currentDemo.interactiveType === 'rationals-fraction' && (
-              <div className="w-full flex flex-col items-center space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-md">
-                  {/* Fraction 1: 3/4 -> 15/20 */}
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
-                    <span className="text-xs text-slate-400 mb-1">Première fraction</span>
-                    <span className="text-lg font-bold font-mono text-sky-400">3 / 4</span>
-                    <div className="w-full bg-slate-800 h-5 rounded-md overflow-hidden flex mt-2 border border-slate-700">
-                      {[1, 2, 3, 4].map((i) => (
-                        <div
-                          key={i}
-                          className={`flex-1 border-r border-slate-900 ${
-                            i <= 3 ? 'bg-sky-500' : 'bg-transparent'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    {currentStepIdx >= 2 && (
-                      <span className="text-[11px] text-sky-300 font-mono mt-1.5 font-bold">
-                        = 15 / 20 (× 5)
+            {currentDemo.interactiveType === 'rationals-fraction' && (() => {
+              const params = (currentDemo.demoParams || {}) as Record<string, any>;
+              const type = params.type || 'addition';
+
+              if (type === 'simplification') {
+                const num = params.num ?? -42;
+                const den = params.den ?? 70;
+                const simpNum = params.simpNum ?? -3;
+                const simpDen = params.simpDen ?? 5;
+                const pgcd = params.pgcd ?? 14;
+                return (
+                  <div className="w-full flex flex-col items-center space-y-3 max-w-lg">
+                    <div className="w-full p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center space-y-3">
+                      <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+                        Décomposition & Recherche du PGCD
                       </span>
-                    )}
+                      <div className="flex items-center space-x-4 text-base sm:text-lg font-mono font-bold">
+                        <div className="flex flex-col items-center">
+                          <span className="text-sky-400">{num}</span>
+                          <div className="w-12 h-0.5 bg-slate-400 my-0.5" />
+                          <span className="text-sky-400">{den}</span>
+                        </div>
+                        <span className="text-slate-500">=</span>
+                        <div className="flex flex-col items-center">
+                          <span className="text-emerald-400">
+                            {currentStepIdx >= 2 ? `(-1) × (${pgcd} × ${Math.abs(simpNum)})` : num}
+                          </span>
+                          <div className="w-24 h-0.5 bg-slate-400 my-0.5" />
+                          <span className="text-emerald-400">
+                            {currentStepIdx >= 2 ? `${pgcd} × ${simpDen}` : den}
+                          </span>
+                        </div>
+                        {currentStepIdx >= 3 && (
+                          <>
+                            <span className="text-slate-500">=</span>
+                            <div className="flex flex-col items-center text-emerald-400 font-extrabold text-xl">
+                              <span>{simpNum}</span>
+                              <div className="w-10 h-0.5 bg-emerald-400 my-0.5" />
+                              <span>{simpDen}</span>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      {currentStepIdx >= 2 && (
+                        <div className="text-xs text-amber-300 font-medium px-3 py-1 bg-amber-500/10 rounded-lg border border-amber-500/30">
+                          Facteur commun maximal simplifié : {pgcd}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              }
+
+              if (type === 'produit-croix') {
+                const a = params.a ?? 6;
+                const b = params.b ?? 8;
+                const c = params.c ?? 15;
+                const d = params.d ?? 20;
+                const prod1 = a * d;
+                const prod2 = b * c;
+                return (
+                  <div className="w-full flex flex-col items-center space-y-3 max-w-lg">
+                    <div className="w-full p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center space-y-4">
+                      <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                        Schéma du Produit en Croix
+                      </div>
+                      <div className="flex items-center space-x-6 text-xl font-mono font-bold">
+                        {/* Fraction 1 */}
+                        <div className="flex flex-col items-center p-2 rounded-lg bg-sky-950/40 border border-sky-500/30">
+                          <span className="text-sky-400">{a}</span>
+                          <div className="w-10 h-0.5 bg-sky-400 my-1" />
+                          <span className="text-amber-400">{b}</span>
+                        </div>
+                        <span className="text-slate-400 text-2xl font-sans">=</span>
+                        {/* Fraction 2 */}
+                        <div className="flex flex-col items-center p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30">
+                          <span className="text-amber-400">{c}</span>
+                          <div className="w-10 h-0.5 bg-emerald-400 my-1" />
+                          <span className="text-sky-400">{d}</span>
+                        </div>
+                      </div>
+
+                      {/* Diagonales */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full text-xs font-mono">
+                        <div className="p-2.5 rounded-lg bg-sky-950/50 border border-sky-500/40 text-center">
+                          <div className="text-sky-300 font-semibold mb-1">1ère diagonale :</div>
+                          <span className="text-white font-bold">{a} × {d} = </span>
+                          <span className="text-sky-400 font-extrabold text-sm">{prod1}</span>
+                        </div>
+                        <div className="p-2.5 rounded-lg bg-amber-950/50 border border-amber-500/40 text-center">
+                          <div className="text-amber-300 font-semibold mb-1">2ème diagonale :</div>
+                          <span className="text-white font-bold">{b} × {c} = </span>
+                          <span className="text-amber-400 font-extrabold text-sm">{prod2}</span>
+                        </div>
+                      </div>
+
+                      {currentStepIdx >= 3 && (
+                        <div className="w-full p-2.5 rounded-lg bg-emerald-950/50 border border-emerald-500/50 text-center text-xs font-semibold text-emerald-300">
+                          Puisque {prod1} = {prod2}, l'égalité des deux rationnels est rigoureusement prouvée !
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              }
+
+              if (type === 'multiplication') {
+                const a = params.a ?? -4;
+                const b = params.b ?? 15;
+                const c = params.c ?? 25;
+                const d = params.d ?? -8;
+                return (
+                  <div className="w-full flex flex-col items-center space-y-3 max-w-lg">
+                    <div className="w-full p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center space-y-3 font-mono">
+                      <div className="text-xs font-semibold text-slate-400 font-sans uppercase tracking-wider">
+                        Règle du Produit : Numérateurs × Numérateurs / Dénominateurs × Dénominateurs
+                      </div>
+                      <div className="flex items-center space-x-3 text-lg font-bold">
+                        <div className="flex flex-col items-center">
+                          <span className="text-sky-400">{a}</span>
+                          <div className="w-8 h-0.5 bg-slate-500 my-0.5" />
+                          <span className="text-sky-400">{b}</span>
+                        </div>
+                        <span className="text-slate-400">×</span>
+                        <div className="flex flex-col items-center">
+                          <span className="text-amber-400">{c}</span>
+                          <div className="w-8 h-0.5 bg-slate-500 my-0.5" />
+                          <span className="text-amber-400">{d}</span>
+                        </div>
+                        <span className="text-slate-400">=</span>
+                        <div className="flex flex-col items-center">
+                          <span className="text-emerald-400">{Math.abs(a)} × {c}</span>
+                          <div className="w-20 h-0.5 bg-emerald-400 my-0.5" />
+                          <span className="text-emerald-400">{b} × {Math.abs(d)}</span>
+                        </div>
+                      </div>
+                      {currentStepIdx >= 2 && (
+                        <div className="w-full text-center text-xs text-slate-300 bg-slate-800/80 p-2.5 rounded-lg border border-slate-700 font-sans">
+                          <span className="text-emerald-400 font-bold">Règle des signes :</span> (-) × (-) = (+) résultat positif.
+                          <div className="mt-1 text-slate-400">Simplification avant calcul : (4 × 25) / (15 × 8) = (1 × 5) / (3 × 2) = <strong className="text-white">5/6</strong></div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              }
+
+              if (type === 'division') {
+                const a = params.a ?? 7;
+                const b = params.b ?? 12;
+                const c = params.c ?? 14;
+                const d = params.d ?? 9;
+                return (
+                  <div className="w-full flex flex-col items-center space-y-3 max-w-lg">
+                    <div className="w-full p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center space-y-3 font-mono">
+                      <div className="text-xs font-semibold text-slate-400 font-sans uppercase tracking-wider">
+                        Diviser revient à multiplier par l'inverse
+                      </div>
+                      <div className="flex items-center space-x-3 text-lg font-bold">
+                        <div className="flex flex-col items-center">
+                          <span className="text-sky-400">{a}</span>
+                          <div className="w-8 h-0.5 bg-slate-500 my-0.5" />
+                          <span className="text-sky-400">{b}</span>
+                        </div>
+                        <span className="text-rose-400 font-sans">÷</span>
+                        <div className="flex flex-col items-center">
+                          <span className="text-amber-400">{c}</span>
+                          <div className="w-8 h-0.5 bg-slate-500 my-0.5" />
+                          <span className="text-amber-400">{d}</span>
+                        </div>
+                        <span className="text-slate-400">➔</span>
+                        <div className="flex flex-col items-center">
+                          <span className="text-sky-400">{a}</span>
+                          <div className="w-8 h-0.5 bg-slate-500 my-0.5" />
+                          <span className="text-sky-400">{b}</span>
+                        </div>
+                        <span className="text-emerald-400">×</span>
+                        <div className="flex flex-col items-center p-1 rounded-md bg-amber-500/20 border border-amber-500/40">
+                          <span className="text-amber-300 font-extrabold">{d}</span>
+                          <div className="w-8 h-0.5 bg-amber-400 my-0.5" />
+                          <span className="text-amber-300 font-extrabold">{c}</span>
+                        </div>
+                      </div>
+                      {currentStepIdx >= 2 && (
+                        <div className="w-full text-center text-xs text-amber-300 bg-amber-500/10 p-2 rounded-lg border border-amber-500/30 font-sans">
+                          Inverse de la 2nde fraction ({c}/{d}) = <strong>{d}/{c}</strong>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              }
+
+              // Default: Addition or Subtraction
+              const a = params.a ?? 3;
+              const b = params.b ?? 4;
+              const c = params.c ?? 2;
+              const d = params.d ?? 5;
+              const common = params.common ?? 20;
+              const isSub = type === 'soustraction';
+              const mult1 = Math.round(common / b) || 1;
+              const mult2 = Math.round(common / d) || 1;
+              const resNum = isSub ? (a * mult1) - (c * mult2) : (a * mult1) + (c * mult2);
+
+              return (
+                <div className="w-full flex flex-col items-center space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-md">
+                    {/* Fraction 1 */}
+                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
+                      <span className="text-xs text-slate-400 mb-1">Première fraction</span>
+                      <span className="text-lg font-bold font-mono text-sky-400">{a} / {b}</span>
+                      <div className="w-full bg-slate-800 h-5 rounded-md overflow-hidden flex mt-2 border border-slate-700">
+                        {Array.from({ length: Math.min(b, 10) }).map((_, i) => (
+                          <div
+                            key={i}
+                            className={`flex-1 border-r border-slate-900 ${
+                              i < Math.min(a, b) ? 'bg-sky-500' : 'bg-transparent'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      {currentStepIdx >= 2 && (
+                        <span className="text-[11px] text-sky-300 font-mono mt-1.5 font-bold">
+                          = {a * mult1} / {common} (× {mult1})
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Fraction 2 */}
+                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
+                      <span className="text-xs text-slate-400 mb-1">Deuxième fraction</span>
+                      <span className="text-lg font-bold font-mono text-amber-400">{c} / {d}</span>
+                      <div className="w-full bg-slate-800 h-5 rounded-md overflow-hidden flex mt-2 border border-slate-700">
+                        {Array.from({ length: Math.min(d, 10) }).map((_, i) => (
+                          <div
+                            key={i}
+                            className={`flex-1 border-r border-slate-900 ${
+                              i < Math.min(c, d) ? 'bg-amber-500' : 'bg-transparent'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      {currentStepIdx >= 2 && (
+                        <span className="text-[11px] text-amber-300 font-mono mt-1.5 font-bold">
+                          = {c * mult2} / {common} (× {mult2})
+                        </span>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Fraction 2: 2/5 -> 8/20 */}
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
-                    <span className="text-xs text-slate-400 mb-1">Deuxième fraction</span>
-                    <span className="text-lg font-bold font-mono text-amber-400">2 / 5</span>
-                    <div className="w-full bg-slate-800 h-5 rounded-md overflow-hidden flex mt-2 border border-slate-700">
-                      {[1, 2, 3, 4, 5].map((i) => (
-                        <div
-                          key={i}
-                          className={`flex-1 border-r border-slate-900 ${
-                            i <= 2 ? 'bg-amber-500' : 'bg-transparent'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    {currentStepIdx >= 2 && (
-                      <span className="text-[11px] text-amber-300 font-mono mt-1.5 font-bold">
-                        = 8 / 20 (× 4)
+                  {/* Common denominator result */}
+                  {currentStepIdx >= 3 && (
+                    <div className="w-full max-w-md p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/50 flex flex-col items-center animate-fade-in">
+                      <span className="text-xs text-emerald-300 font-bold mb-1">
+                        {isSub ? 'Soustraction' : 'Addition'} sur le même dénominateur ({common}) :
                       </span>
-                    )}
-                  </div>
+                      <div className="text-base font-mono font-extrabold text-black dark:text-white">
+                        {a * mult1}/{common} {isSub ? '-' : '+'} {c * mult2}/{common} ={' '}
+                        <span className="text-emerald-600 dark:text-emerald-400 text-lg">{resNum}/{common}</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-
-                {/* Common denominator 20 */}
-                {currentStepIdx >= 3 && (
-                  <div className="w-full max-w-md p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/50 flex flex-col items-center animate-fade-in">
-                    <span className="text-xs text-emerald-300 font-bold mb-1">
-                      Addition sur le même dénominateur (20) :
-                    </span>
-                    <div className="text-base font-mono font-extrabold text-black dark:text-white">
-                      15/20 + 8/20 = <span className="text-emerald-600 dark:text-emerald-400 text-lg">23/20</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
+              );
+            })()}
 
             {/* 8. COSINUS D'UN ANGLE AIGU */}
             {currentDemo.interactiveType === 'cosinus-svg' && (
@@ -1154,6 +1361,25 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
               currentDemo.interactiveType === 'geometrie-espace' ||
               currentDemo.interactiveType === 'triangle-construction') && (
               <GeometryVisualizers3e
+                interactiveType={currentDemo.interactiveType}
+                currentStepIdx={currentStepIdx}
+                currentStep={currentStep}
+              />
+            )}
+
+            {/* 13.b VISUALISATIONS SPÉCIFIQUES 5E */}
+            {(currentDemo.interactiveType === 'geometrie-espace-5e' ||
+              currentDemo.interactiveType === 'quadrilatere-5e' ||
+              currentDemo.interactiveType === 'proportionnalite-5e' ||
+              currentDemo.interactiveType === 'triangles-5e' ||
+              currentDemo.interactiveType === 'fractions-5e' ||
+              currentDemo.interactiveType === 'angles-5e' ||
+              currentDemo.interactiveType === 'symetrie-centrale-5e' ||
+              currentDemo.interactiveType === 'multiples-diviseurs-5e' ||
+              currentDemo.interactiveType === 'calcul-dans-d-5e' ||
+              currentDemo.interactiveType === 'nombres-decimaux-relatifs-5e' ||
+              currentDemo.interactiveType === 'reperage-5e') && (
+              <GeometryVisualizers5e
                 interactiveType={currentDemo.interactiveType}
                 currentStepIdx={currentStepIdx}
                 currentStep={currentStep}

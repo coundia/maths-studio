@@ -825,6 +825,287 @@ export const CHAPTERS_FULL_CONTENT: Record<string, ChapterFullContent> = {
       'Ce théorème est en réalité un cas particulier du théorème de Thalès avec un rapport k = 1/2 !',
     ],
   },
+
+  // =========================================================================
+  // 7. ENSEMBLE DES NOMBRES RATIONNELS : PRÉSENTATION ET OPÉRATIONS - 4E
+  // =========================================================================
+  'nombres-rationnels-operations': {
+    chapterId: 'nombres-rationnels-operations',
+    essentialSummary:
+      "L'ensemble ℚ des nombres rationnels regroupe tous les nombres pouvant s'écrire sous la forme d'un quotient a/b d'un entier relatif a par un entier relatif non nul b (b ∈ ℤ*). En classe de 4ème au Sénégal, ce chapitre pose les bases fondamentales du calcul algébrique : règle des signes, produit en croix pour l'égalité et la comparaison, réduction au plus petit dénominateur commun (PPCM), produit avec simplifications préalables, division par multiplication avec l'inverse, et respect rigoureux des priorités opératoires.",
+    keyFormulas: [
+      { label: 'Définition d\'un rationnel', latex: 'x \\in \\mathbb{Q} \\iff x = \\frac{a}{b} \\quad (a \\in \\mathbb{Z}, \\, b \\in \\mathbb{Z}^*)' },
+      { label: 'Inclusions d\'ensembles', latex: '\\mathbb{N} \\subset \\mathbb{Z} \\subset \\mathbb{D} \\subset \\mathbb{Q}' },
+      { label: 'Produit en croix', latex: '\\frac{a}{b} = \\frac{c}{d} \\iff a \\times d = b \\times c \\quad (b \\neq 0, \\, d \\neq 0)' },
+      { label: 'Addition (même dénominateur)', latex: '\\frac{a}{b} + \\frac{c}{b} = \\frac{a + c}{b}' },
+      { label: 'Addition (dénominateurs distincts)', latex: '\\frac{a}{b} + \\frac{c}{d} = \\frac{ad + bc}{bd}' },
+      { label: 'Soustraction & Opposé', latex: '\\frac{a}{b} - \\frac{c}{d} = \\frac{a}{b} + \\left(-\\frac{c}{d}\\right) = \\frac{ad - bc}{bd}' },
+      { label: 'Multiplication dans ℚ', latex: '\\frac{a}{b} \\times \\frac{c}{d} = \\frac{a \\times c}{b \\times d}' },
+      { label: 'Inverse d\'un rationnel', latex: '\\left(\\frac{c}{d}\\right)^{-1} = \\frac{d}{c} \\quad (c \\neq 0, \\, d \\neq 0)' },
+      { label: 'Division dans ℚ', latex: '\\frac{a}{b} \\div \\frac{c}{d} = \\frac{a}{b} \\times \\frac{d}{c} = \\frac{ad}{bc}' },
+    ],
+    sections: [
+      {
+        sectionTitle: '1. Présentation de l\'ensemble ℚ des nombres rationnels',
+        intro: 'Un nombre rationnel est un nombre qui peut s\'écrire sous la forme d\'une fraction d\'entiers. Tout entier relatif et tout décimal relatif est aussi un rationnel.',
+        definitions: [
+          {
+            term: 'Nombre rationnel',
+            definition: 'Tout nombre qui peut s\'exprimer sous la forme a/b où a est un entier relatif (numérateur) et b un entier relatif non nul (dénominateur). L\'ensemble des nombres rationnels se note ℚ.',
+            latex: '\\mathbb{Q} = \\left\\{ \\frac{a}{b} \\;\\middle|\\; a \\in \\mathbb{Z}, \\, b \\in \\mathbb{Z}^* \\right\\}',
+            example: '3/4 ∈ ℚ, -7/5 ∈ ℚ, 0 = 0/1 ∈ ℚ, 2 = 2/1 ∈ ℚ, 0,25 = 1/4 ∈ ℚ, 1/3 = 0,333... ∈ ℚ.',
+          },
+          {
+            term: 'Gestion du signe d\'un rationnel',
+            definition: 'Pour tout entier a et tout entier non nul b, le signe négatif peut se placer indifféremment au numérateur, au dénominateur ou devant la barre de fraction.',
+            latex: '\\frac{-a}{b} = \\frac{a}{-b} = -\\frac{a}{b} \\quad \\text{et} \\quad \\frac{-a}{-b} = \\frac{a}{b}',
+            example: '(-3)/4 = 3/(-4) = -(3/4), et (-5)/(-7) = 5/7.',
+          },
+          {
+            term: 'Fraction irréductible',
+            definition: 'Une fraction a/b est dite irréductible lorsque son numérateur et son dénominateur sont premiers entre eux, c\'est-à-dire que PGCD(|a|, |b|) = 1.',
+            latex: '\\text{PGCD}(|a|, |b|) = 1 \\iff \\frac{a}{b} \\text{ est irréductible}',
+            example: '23/20 est irréductible car 23 est premier. 42/70 n\'est pas irréductible car 42 et 70 sont divisibles par 14.',
+          },
+        ],
+        theorems: [
+          {
+            name: 'Propriété fondamentale des quotients égaux',
+            statement: 'La valeur d\'un nombre rationnel ne change pas si l\'on multiplie ou divise son numérateur et son dénominateur par un même nombre entier non nul k.',
+            formulaLatex: '\\frac{a}{b} = \\frac{a \\times k}{b \\times k} \\quad \\text{et} \\quad \\frac{a}{b} = \\frac{a \\div k}{b \\div k} \\quad (k \\neq 0)',
+            conditions: ['b ≠ 0', 'k ≠ 0'],
+          },
+        ],
+      },
+      {
+        sectionTitle: '2. Égalité et comparaison de deux rationnels (Produit en croix)',
+        intro: 'Le produit en croix est l\'outil central pour tester l\'égalité de deux fractions, trouver une quatrième proportionnelle ou comparer deux nombres rationnels.',
+        theorems: [
+          {
+            name: 'Théorème du produit en croix',
+            statement: 'Deux nombres rationnels a/b et c/d sont égaux si et seulement si leurs produits en croix sont égaux.',
+            formulaLatex: '\\frac{a}{b} = \\frac{c}{d} \\iff a \\times d = b \\times c',
+            conditions: ['b ≠ 0', 'd ≠ 0'],
+            corollary: 'Pour trouver une inconnue x : x/b = c/d ⟺ x = (b × c) / d.',
+          },
+          {
+            name: 'Comparaison de deux rationnels',
+            statement: 'Pour comparer deux nombres rationnels, on commence par s\'assurer que leurs dénominateurs sont strictement positifs, puis on les réduit au même dénominateur commun positif : la fraction ayant le plus grand numérateur est la plus grande.',
+            formulaLatex: '\\text{Si } b > 0 \\text{ et } a < c, \\text{ alors } \\frac{a}{b} < \\frac{c}{b}',
+          },
+        ],
+      },
+      {
+        sectionTitle: '3. Addition et Soustraction dans ℚ',
+        intro: 'L\'addition et la soustraction de rationnels nécessitent impérativement d\'avoir un dénominateur commun.',
+        theorems: [
+          {
+            name: 'Addition avec même dénominateur',
+            statement: 'Pour additionner (ou soustraire) deux rationnels ayant le même dénominateur, on additionne (ou soustrait) les numérateurs et on conserve le dénominateur commun.',
+            formulaLatex: '\\frac{a}{b} + \\frac{c}{b} = \\frac{a + c}{b} \\quad \\text{et} \\quad \\frac{a}{b} - \\frac{c}{b} = \\frac{a - c}{b}',
+            conditions: ['b ≠ 0'],
+          },
+          {
+            name: 'Addition avec dénominateurs différents (Recherche du PPCM)',
+            statement: 'On cherche le plus petit multiple commun non nul (PPCM) des dénominateurs, on amplifie chaque fraction pour obtenir ce dénominateur commun, puis on applique la règle de l\'addition.',
+            formulaLatex: '\\frac{a}{b} + \\frac{c}{d} = \\frac{a \\times d\'}{M} + \\frac{c \\times b\'}{M} \\quad \\text{où } M = \\text{PPCM}(b, d)',
+          },
+        ],
+      },
+      {
+        sectionTitle: '4. Multiplication et Inverse dans ℚ',
+        intro: 'Contrairement à l\'addition, la multiplication ne nécessite aucun dénominateur commun. Il est crucial de simplifier avant de calculer les produits.',
+        definitions: [
+          {
+            term: 'Inverse d\'un nombre rationnel',
+            definition: 'Deux nombres sont dits inverses l\'un de l\'autre lorsque leur produit est égal à 1. Tout nombre rationnel non nul a/b admet pour inverse le rationnel b/a.',
+            latex: '\\frac{a}{b} \\times \\frac{b}{a} = 1 \\implies \\left(\\frac{a}{b}\\right)^{-1} = \\frac{b}{a} \\quad (a \\neq 0, \\, b \\neq 0)',
+            example: 'L\'inverse de 3/4 est 4/3. L\'inverse de -5 est -1/5. Le nombre 0 n\'a pas d\'inverse.',
+          },
+        ],
+        theorems: [
+          {
+            name: 'Règle de la multiplication dans ℚ',
+            statement: 'Pour multiplier deux fractions, on applique la règle des signes, puis on multiplie les numérateurs entre eux et les dénominateurs entre eux.',
+            formulaLatex: '\\frac{a}{b} \\times \\frac{c}{d} = \\frac{a \\times c}{b \\times d}',
+            conditions: ['b ≠ 0', 'd ≠ 0'],
+            corollary: 'Toujours décomposer les facteurs pour simplifier au maximum avant de multiplier !',
+          },
+        ],
+      },
+      {
+        sectionTitle: '5. Division et Priorités opératoires dans ℚ',
+        intro: 'Diviser par un rationnel non nul équivaut à multiplier par son inverse. Les règles de priorités s\'appliquent avec rigueur.',
+        theorems: [
+          {
+            name: 'Règle de la division dans ℚ',
+            statement: 'Diviser un rationnel a/b par un rationnel non nul c/d revient à multiplier a/b par l\'inverse de c/d.',
+            formulaLatex: '\\frac{a}{b} \\div \\frac{c}{d} = \\frac{\\frac{a}{b}}{\\frac{c}{d}} = \\frac{a}{b} \\times \\frac{d}{c} = \\frac{a \\times d}{b \\times c}',
+            conditions: ['b ≠ 0', 'c ≠ 0', 'd ≠ 0'],
+          },
+        ],
+      },
+    ],
+    methods: [
+      {
+        id: 'methode-simplification-pgcd',
+        title: 'Méthode 1 : Rendre une fraction irréductible',
+        badge: 'Simplification & PGCD',
+        statement: 'Rendre la fraction suivante irréductible : A = -84 / 126.',
+        strategy: '1. Isoler le signe négatif devant la fraction ; 2. Décomposer 84 et 126 en facteurs premiers ; 3. Identifier les facteurs communs (PGCD) ; 4. Simplifier les facteurs identiques.',
+        solutionSteps: [
+          {
+            title: 'Étape 1 : Gestion du signe',
+            explanation: 'Le quotient est négatif car le numérateur est négatif et le dénominateur positif : A = -(84 / 126).',
+          },
+          {
+            title: 'Étape 2 : Décomposition en facteurs premiers',
+            explanation: '84 = 2² × 3 × 7 = 4 × 21 et 126 = 2 × 3² × 7 = 2 × 9 × 7.',
+            latex: '84 = 2 \\times 2 \\times 3 \\times 7, \\quad 126 = 2 \\times 3 \\times 3 \\times 7',
+          },
+          {
+            title: 'Étape 3 : Identification du PGCD',
+            explanation: 'Facteurs communs : 2, 3 et 7. Donc PGCD(84, 126) = 2 × 3 × 7 = 42.',
+            latex: '\\text{PGCD}(84, 126) = 42',
+          },
+          {
+            title: 'Étape 4 : Simplification finale',
+            explanation: 'On divise le numérateur et le dénominateur par 42 : 84 / 42 = 2 et 126 / 42 = 3.',
+            latex: 'A = -\\frac{84 \\div 42}{126 \\div 42} = -\\frac{2}{3}',
+          },
+        ],
+        conclusion: 'La forme irréductible de A est -2/3.',
+        teacherNote: 'On peut aussi procéder par simplifications successives (par 2, puis par 3, puis par 7).',
+      },
+      {
+        id: 'methode-addition-soustraction-ppcm',
+        title: 'Méthode 2 : Additionner ou soustraire deux rationnels (PPCM)',
+        badge: 'Addition & Soustraction',
+        statement: 'Calculer et donner sous forme irréductible : B = 5/12 - 7/18 + 1/4.',
+        strategy: '1. Décomposer les dénominateurs 12, 18 et 4 pour trouver leur PPCM ; 2. Réduire chaque fraction à ce dénominateur commun ; 3. Additionner et soustraire les numérateurs ; 4. Simplifier si nécessaire.',
+        solutionSteps: [
+          {
+            title: 'Étape 1 : Recherche du PPCM(12, 18, 4)',
+            explanation: '12 = 2² × 3, 18 = 2 × 3², 4 = 2². Le PPCM prend chaque facteur avec sa plus grande puissance : PPCM = 2² × 3² = 4 × 9 = 36.',
+            latex: '\\text{Dénominateur commun} = 36',
+          },
+          {
+            title: 'Étape 2 : Réduction au même dénominateur 36',
+            explanation: '36 / 12 = 3 (on amplifie par 3). 36 / 18 = 2 (on amplifie par 2). 36 / 4 = 9 (on amplifie par 9).',
+            latex: 'B = \\frac{5 \\times 3}{12 \\times 3} - \\frac{7 \\times 2}{18 \\times 2} + \\frac{1 \\times 9}{4 \\times 9} = \\frac{15}{36} - \\frac{14}{36} + \\frac{9}{36}',
+          },
+          {
+            title: 'Étape 3 : Calcul sur les numérateurs',
+            explanation: 'On effectue les opérations de gauche à droite : 15 - 14 = 1, puis 1 + 9 = 10.',
+            latex: 'B = \\frac{15 - 14 + 9}{36} = \\frac{10}{36}',
+          },
+          {
+            title: 'Étape 4 : Simplification',
+            explanation: '10 et 36 sont pairs, on simplifie par 2.',
+            latex: 'B = \\frac{10 \\div 2}{36 \\div 2} = \\frac{5}{18}',
+          },
+        ],
+        conclusion: 'Le résultat est 5/18 (fraction irréductible).',
+      },
+      {
+        id: 'methode-multiplication-division-avancee',
+        title: 'Méthode 3 : Enchaînement de multiplication et division de fractions',
+        badge: 'Produit & Quotient',
+        statement: 'Calculer et simplifier : C = ( -15 / 28 ) × ( 14 / 25 ) ÷ ( 9 / 10 ).',
+        strategy: '1. Transformer la division en multiplication par l\'inverse de 9/10 ; 2. Déterminer le signe global du produit ; 3. Décomposer tous les nombres en facteurs premiers ; 4. Simplifier les facteurs identiques avant tout calcul.',
+        solutionSteps: [
+          {
+            title: 'Étape 1 : Transformer la division en multiplication par l\'inverse',
+            explanation: 'L\'inverse de 9/10 est 10/9. On remplace ÷ (9/10) par × (10/9).',
+            latex: 'C = \\left(-\\frac{15}{28}\\right) \\times \\frac{14}{25} \\times \\frac{10}{9}',
+          },
+          {
+            title: 'Étape 2 : Règle des signes',
+            explanation: 'Il y a un seul facteur négatif, le produit final sera donc négatif.',
+            latex: 'C = -\\left( \\frac{15 \\times 14 \\times 10}{28 \\times 25 \\times 9} \\right)',
+          },
+          {
+            title: 'Étape 3 : Décomposition en facteurs premiers',
+            explanation: '15 = 3 × 5, 14 = 2 × 7, 10 = 2 × 5. Et 28 = 4 × 7 = 2 × 2 × 7, 25 = 5 × 5, 9 = 3 × 3.',
+            latex: 'C = -\\frac{(3 \\times 5) \\times (2 \\times 7) \\times (2 \\times 5)}{(2 \\times 2 \\times 7) \\times (5 \\times 5) \\times (3 \\times 3)}',
+          },
+          {
+            title: 'Étape 4 : Simplification des facteurs communs',
+            explanation: 'On simplifie les facteurs 2×2, 7, 5×5, et 3. Il ne reste que 1 au numérateur et 3 au dénominateur !',
+            latex: 'C = -\\frac{1}{3}',
+          },
+        ],
+        conclusion: 'Le résultat est C = -1/3.',
+        teacherNote: 'Ne calculez JAMAIS 15 × 14 × 10 = 2100 et 28 × 25 × 9 = 6300, vous perdriez un temps précieux !',
+      },
+      {
+        id: 'methode-priorites-operatoires-fractions',
+        title: 'Méthode 4 : Calcul complexe avec parenthèses et priorités',
+        badge: 'Priorités Opératoires',
+        statement: 'Calculer : D = 2/3 - 5/3 × [ 1/2 - ( 3/4 + 1/8 ) ].',
+        strategy: '1. Calculer l\'intérieur des parenthèses les plus imbriquées (3/4 + 1/8) ; 2. Effectuer la soustraction dans les crochets ; 3. Respecter la priorité de la multiplication sur la soustraction ; 4. Soustraire enfin.',
+        solutionSteps: [
+          {
+            title: 'Étape 1 : Parenthèse la plus intérieure (3/4 + 1/8)',
+            explanation: 'Dénominateur commun 8 : 3/4 = 6/8. Donc 6/8 + 1/8 = 7/8.',
+            latex: '\\frac{3}{4} + \\frac{1}{8} = \\frac{6}{8} + \\frac{1}{8} = \\frac{7}{8}',
+          },
+          {
+            title: 'Étape 2 : Calcul de l\'expression entre crochets',
+            explanation: '1/2 - 7/8. Dénominateur commun 8 : 1/2 = 4/8. 4/8 - 7/8 = -3/8.',
+            latex: '\\frac{1}{2} - \\frac{7}{8} = \\frac{4}{8} - \\frac{7}{8} = -\\frac{3}{8}',
+          },
+          {
+            title: 'Étape 3 : Multiplication prioritaire',
+            explanation: 'D = 2/3 - 5/3 × (-3/8). On multiplie 5/3 par (-3/8) : le signe moins par moins donne plus, et le 3 se simplifie !',
+            latex: '-\\frac{5}{3} \\times \\left(-\\frac{3}{8}\\right) = +\\frac{5 \\times 3}{3 \\times 8} = +\\frac{5}{8}',
+          },
+          {
+            title: 'Étape 4 : Addition finale',
+            explanation: 'D = 2/3 + 5/8. Dénominateur commun 24 : 2/3 = 16/24 et 5/8 = 15/24. Donc 16/24 + 15/24 = 31/24.',
+            latex: 'D = \\frac{2 \\times 8}{3 \\times 8} + \\frac{5 \\times 3}{8 \\times 3} = \\frac{16 + 15}{24} = \\frac{31}{24}',
+          },
+        ],
+        conclusion: 'D = 31/24 (irréductible car 31 est premier).',
+      },
+    ],
+    pitfalls: [
+      {
+        trap: 'Additionner les numérateurs ET les dénominateurs',
+        badPracticeLatex: '\\frac{1}{2} + \\frac{1}{3} = \\frac{1 + 1}{2 + 3} = \\frac{2}{5} \\quad (GRAVE ERREUR !)',
+        correctRule: 'Toujours réduire au même dénominateur avant d\'additionner : 1/2 + 1/3 = 3/6 + 2/6 = 5/6.',
+        correctLatex: '\\frac{1}{2} + \\frac{1}{3} = \\frac{3}{6} + \\frac{2}{6} = \\frac{5}{6}',
+        explanation: 'Additionner les dénominateurs n\'a aucun sens mathématique car une fraction représente une part d\'un tout découpé.',
+      },
+      {
+        trap: 'Inverser la mauvaise fraction lors d\'une division',
+        badPracticeLatex: '\\frac{a}{b} \\div \\frac{c}{d} = \\frac{b}{a} \\times \\frac{c}{d} \\quad (FAUX !)',
+        correctRule: 'On conserve la première fraction et on inverse UNIQUEMENT la deuxième fraction (le diviseur).',
+        correctLatex: '\\frac{a}{b} \\div \\frac{c}{d} = \\frac{a}{b} \\times \\frac{d}{c}',
+        explanation: 'Seul le diviseur passe à l\'inverse.',
+      },
+      {
+        trap: 'Oublier la priorité de la multiplication sur la soustraction',
+        badPracticeLatex: '\\frac{5}{4} - \\frac{3}{4} \\times \\frac{2}{3} = \\frac{2}{4} \\times \\frac{2}{3} = \\frac{1}{3} \\quad (FAUX !)',
+        correctRule: 'La multiplication doit impérativement être calculée avant la soustraction.',
+        correctLatex: '\\frac{5}{4} - \\left(\\frac{3}{4} \\times \\frac{2}{3}\\right) = \\frac{5}{4} - \\frac{1}{2} = \\frac{5}{4} - \\frac{2}{4} = \\frac{3}{4}',
+        explanation: 'Respectez toujours l\'ordre PEMDAS : parenthèses, exposants, multiplications/divisions, additions/soustractions.',
+      },
+      {
+        trap: 'Erreur de signe avec le signe "moins" devant une barre de fraction',
+        badPracticeLatex: '-\\frac{a - b}{c} = \\frac{-a - b}{c} \\quad (FAUX !)',
+        correctRule: 'Le signe moins devant la barre s\'applique à TOUT le numérateur : -(a - b) = -a + b.',
+        correctLatex: '-\\frac{a - b}{c} = \\frac{-(a - b)}{c} = \\frac{-a + b}{c}',
+        explanation: 'La barre de fraction agit comme une parenthèse invisible.',
+      },
+    ],
+    bfemTips: [
+      'Simplifiez TOUJOURS vos fractions dès les étapes intermédiaires en décomposant les facteurs au lieu d\'effectuer de gros calculs.',
+      'Pour toute division de fractions, écrivez explicitement l\'étape de transformation en multiplication par l\'inverse pour sécuriser les points du barème.',
+      'Présentez systématiquement votre résultat final sous la forme d\'une fraction irréductible avec un dénominateur strictement positif.',
+      'En devoir et à l\'examen, encadrez toujours votre résultat final avec sa forme la plus simple.',
+    ],
+  },
 };
 
 /**

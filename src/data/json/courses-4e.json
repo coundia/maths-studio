@@ -602,53 +602,287 @@
   {
     "id": "nombres-rationnels-operations",
     "title": "Ensemble des nombres rationnels : Présentation et Opérations - 4e",
-    "shortTitle": "Opérations sur les rationnels",
+    "shortTitle": "Nombres rationnels & Opérations",
     "category": "Activités numériques",
     "icon": "Percent",
-    "description": "Définition de Q, fractions irréductibles, addition et soustraction au même dénominateur, multiplication et division.",
+    "description": "Définition rigoureuse de l'ensemble Q, fractions irréductibles, égalité et produit en croix, addition, soustraction, multiplication et division.",
     "demos": [
       {
-        "id": "rationnels-addition",
-        "title": "Addition de fractions : 3/4 + 2/5 (Même dénominateur)",
-        "badge": "Calcul fractionnaire",
-        "defaultLatex": "\\frac{3}{4} + \\frac{2}{5} = \\frac{23}{20}",
-        "ruleSummary": "Pour additionner deux nombres rationnels de dénominateurs différents, on cherche le plus petit dénominateur commun, on met les deux fractions au même dénominateur, puis on additionne les numérateurs.",
-        "teacherGoal": "Décomposer l'étape de mise au même dénominateur qui bloque souvent les élèves.",
+        "id": "rationnels-simplification",
+        "title": "1. Présentation de Q et Forme irréductible",
+        "badge": "Définition & Simplification",
+        "defaultLatex": "\\frac{-42}{70} = -\\frac{42 \\div 14}{70 \\div 14} = -\\frac{3}{5}",
+        "ruleSummary": "Un nombre rationnel est un quotient a/b d'entiers avec b ≠ 0. On simplifie par le PGCD des deux termes pour trouver la fraction irréductible.",
+        "teacherGoal": "Montrer que le signe négatif se factorise devant la barre et que la décomposition en facteurs premiers révèle le PGCD.",
         "interactiveType": "rationals-fraction",
         "demoParams": {
-          "a": 3,
-          "b": 4,
-          "c": 2,
-          "d": 5
+          "type": "simplification",
+          "num": -42,
+          "den": 70,
+          "simpNum": -3,
+          "simpDen": 5,
+          "pgcd": 14
         },
         "steps": [
           {
             "stepNumber": 1,
-            "title": "1. Fractions à additionner",
-            "rule": "Dénominateurs différents : 4 et 5",
-            "latex": "\\frac{3}{4} + \\frac{2}{5}",
-            "explanation": "On ne peut pas additionner directement car les dénominateurs sont différents."
+            "title": "1. Identification du rationnel et de son signe",
+            "rule": "-a/b = -(a/b)",
+            "latex": "\\frac{-42}{70} = -\\frac{42}{70}",
+            "explanation": "Le numérateur est -42 (entier relatif) et le dénominateur est 70 (entier non nul). Le rationnel est négatif."
           },
           {
             "stepNumber": 2,
-            "title": "2. Recherche du dénominateur commun",
-            "rule": "PPCM(4, 5) = 4 × 5 = 20",
+            "title": "2. Décomposition en facteurs premiers",
+            "rule": "Recherche des diviseurs communs",
+            "latex": "42 = 2 \\times 3 \\times 7 \\quad \\text{et} \\quad 70 = 2 \\times 5 \\times 7",
+            "explanation": "Les facteurs communs sont 2 et 7. Leur produit donne le PGCD = 2 × 7 = 14."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Simplification par le PGCD (14)",
+            "rule": "Division du numérateur et du dénominateur par 14",
+            "latex": "= -\\frac{14 \\times 3}{14 \\times 5}",
+            "explanation": "On divise le haut et le bas par 14 sans modifier la valeur du nombre rationnel."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Forme irréductible finale",
+            "rule": "3 et 5 sont premiers entre eux",
+            "latex": "= -\\frac{3}{5}",
+            "explanation": "La fraction -3/5 est irréductible car le PGCD de 3 et 5 est 1."
+          }
+        ]
+      },
+      {
+        "id": "rationnels-produit-croix",
+        "title": "2. Égalité de deux rationnels & Produit en croix",
+        "badge": "Propriété Fondamentale",
+        "defaultLatex": "\\frac{6}{8} = \\frac{15}{20} \\iff 6 \\times 20 = 8 \\times 15 = 120",
+        "ruleSummary": "Deux nombres rationnels a/b et c/d sont égaux si et seulement si leurs produits en croix sont égaux : a × d = b × c.",
+        "teacherGoal": "Illustrer le produit en croix pour tester l'égalité, comparer des rationnels ou calculer une valeur manquante.",
+        "interactiveType": "rationals-fraction",
+        "demoParams": {
+          "type": "produit-croix",
+          "a": 6,
+          "b": 8,
+          "c": 15,
+          "d": 20
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Énoncé des deux rationnels",
+            "rule": "Comparer a/b et c/d",
+            "latex": "\\frac{6}{8} \\quad \\text{et} \\quad \\frac{15}{20}",
+            "explanation": "On souhaite vérifier si 6/8 et 15/20 représentent exactement le même nombre rationnel."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Calcul du premier produit diagonal (a × d)",
+            "rule": "Produit des extrêmes",
+            "latex": "6 \\times 20 = 120",
+            "explanation": "On multiplie le numérateur de la première par le dénominateur de la seconde."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Calcul du second produit diagonal (b × c)",
+            "rule": "Produit des moyens",
+            "latex": "8 \\times 15 = 120",
+            "explanation": "On multiplie le dénominateur de la première par le numérateur de la seconde."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Conclusion par égalité",
+            "rule": "a × d = b × c",
+            "latex": "120 = 120 \\implies \\frac{6}{8} = \\frac{15}{20} = \\frac{3}{4}",
+            "explanation": "Puisque les deux produits en croix sont rigoureusement égaux, les deux rationnels sont égaux."
+          }
+        ]
+      },
+      {
+        "id": "rationnels-addition",
+        "title": "3. Addition de deux rationnels (PPCM)",
+        "badge": "Addition & Dénominateur commun",
+        "defaultLatex": "\\frac{3}{4} + \\frac{2}{5} = \\frac{15}{20} + \\frac{8}{20} = \\frac{23}{20}",
+        "ruleSummary": "Pour additionner deux nombres rationnels de dénominateurs différents, on cherche le PPCM des dénominateurs, on amplifie les fractions, puis on additionne les numérateurs.",
+        "teacherGoal": "Visualiser la mise au même dénominateur sans jamais additionner les dénominateurs entre eux.",
+        "interactiveType": "rationals-fraction",
+        "demoParams": {
+          "type": "addition",
+          "a": 3,
+          "b": 4,
+          "c": 2,
+          "d": 5,
+          "common": 20
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Analyse des dénominateurs",
+            "rule": "Dénominateurs distincts : 4 et 5",
+            "latex": "\\frac{3}{4} + \\frac{2}{5}",
+            "explanation": "Les dénominateurs sont 4 et 5. On ne peut pas additionner directement."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Recherche du dénominateur commun optimal",
+            "rule": "PPCM(4, 5) = 20",
             "latex": "\\text{Dénominateur commun} = 4 \\times 5 = 20",
-            "explanation": "Le plus petit multiple commun à 4 et 5 est 20."
+            "explanation": "Le plus petit multiple commun non nul de 4 et 5 est 20."
           },
           {
             "stepNumber": 3,
             "title": "3. Mise au même dénominateur",
             "rule": "Multiplication en haut et en bas",
             "latex": "= \\frac{3 \\times 5}{4 \\times 5} + \\frac{2 \\times 4}{5 \\times 4} = \\frac{15}{20} + \\frac{8}{20}",
-            "explanation": "On multiplie 3/4 par 5/5 pour obtenir 15/20, et 2/5 par 4/4 pour obtenir 8/20."
+            "explanation": "On multiplie 3/4 par 5/5 et 2/5 par 4/4."
           },
           {
             "stepNumber": 4,
             "title": "4. Addition des numérateurs",
-            "rule": "Conservation du dénominateur commun",
+            "rule": "Conservation du dénominateur commun 20",
             "latex": "= \\frac{15 + 8}{20} = \\frac{23}{20}",
-            "explanation": "15 + 8 = 23. La fraction 23/20 est irréductible car 23 est premier."
+            "explanation": "15 + 8 = 23. La fraction 23/20 est irréductible car 23 est un nombre premier."
+          }
+        ]
+      },
+      {
+        "id": "rationnels-soustraction",
+        "title": "4. Soustraction & Opposé d'un rationnel",
+        "badge": "Soustraction dans Q",
+        "defaultLatex": "\\frac{7}{6} - \\frac{4}{9} = \\frac{21}{18} - \\frac{8}{18} = \\frac{13}{18}",
+        "ruleSummary": "Soustraire un nombre rationnel revient à additionner son opposé : a/b - c/d = a/b + (-c/d). On cherche le PPCM(6, 9) = 18.",
+        "teacherGoal": "Démontrer que le PPCM de 6 et 9 est 18 (et non 54), ce qui simplifie grandement les calculs.",
+        "interactiveType": "rationals-fraction",
+        "demoParams": {
+          "type": "soustraction",
+          "a": 7,
+          "b": 6,
+          "c": 4,
+          "d": 9,
+          "common": 18
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Pose de la soustraction",
+            "rule": "a/b - c/d",
+            "latex": "\\frac{7}{6} - \\frac{4}{9}",
+            "explanation": "Dénominateurs 6 et 9. Il faut chercher le plus petit dénominateur commun."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Détermination du PPCM(6, 9)",
+            "rule": "Multiples communs : 18, 36...",
+            "latex": "6 = 2 \\times 3, \\quad 9 = 3^2 \\implies \\text{PPCM} = 2 \\times 3^2 = 18",
+            "explanation": "18 est multiple de 6 (6 × 3 = 18) et multiple de 9 (9 × 2 = 18)."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Réduction au dénominateur 18",
+            "rule": "Amplification par 3 et par 2",
+            "latex": "= \\frac{7 \\times 3}{6 \\times 3} - \\frac{4 \\times 2}{9 \\times 2} = \\frac{21}{18} - \\frac{8}{18}",
+            "explanation": "On obtient deux fractions de même dénominateur 18."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Calcul de la différence",
+            "rule": "(a - c) / b",
+            "latex": "= \\frac{21 - 8}{18} = \\frac{13}{18}",
+            "explanation": "21 - 8 = 13. Le résultat 13/18 est irréductible."
+          }
+        ]
+      },
+      {
+        "id": "rationnels-multiplication",
+        "title": "5. Multiplication dans Q & Simplification préalable",
+        "badge": "Produit de rationnels",
+        "defaultLatex": "\\frac{-4}{15} \\times \\frac{25}{-8} = \\frac{4 \\times 25}{15 \\times 8} = \\frac{5}{6}",
+        "ruleSummary": "Pour multiplier deux rationnels, on applique la règle des signes, puis on multiplie numérateurs entre eux et dénominateurs entre eux : a/b × c/d = (ac)/(bd). On simplifie toujours AVANT de calculer.",
+        "teacherGoal": "Apprendre à décomposer en facteurs premiers avant d'effectuer les produits pour éviter des nombres énormes.",
+        "interactiveType": "rationals-fraction",
+        "demoParams": {
+          "type": "multiplication",
+          "a": -4,
+          "b": 15,
+          "c": 25,
+          "d": -8
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Règle des signes globale",
+            "rule": "(-) × (-) = (+)",
+            "latex": "\\frac{-4}{15} \\times \\frac{25}{-8} = +\\left(\\frac{4 \\times 25}{15 \\times 8}\\right)",
+            "explanation": "Deux facteurs négatifs donnent un produit positif. On élimine immédiatement les signes moins."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Décomposition en facteurs avant de multiplier",
+            "rule": "Ne pas calculer 100/120 immédiatement",
+            "latex": "= \\frac{(4 \\times 1) \\times (5 \\times 5)}{(3 \\times 5) \\times (4 \\times 2)}",
+            "explanation": "On fait apparaître les facteurs communs 4 et 5 au numérateur et au dénominateur."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Simplification des facteurs communs",
+            "rule": "Barre des facteurs identiques",
+            "latex": "= \\frac{1 \\times 5}{3 \\times 2}",
+            "explanation": "On simplifie par 4 et par 5. Il reste 5 au numérateur et 3 × 2 au dénominateur."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Résultat irréductible",
+            "rule": "Calcul direct",
+            "latex": "= \\frac{5}{6}",
+            "explanation": "La fraction 5/6 est irréductible et exacte."
+          }
+        ]
+      },
+      {
+        "id": "rationnels-division",
+        "title": "6. Inverse et Division de deux rationnels",
+        "badge": "Division & Inverse",
+        "defaultLatex": "\\frac{7}{12} \\div \\frac{14}{9} = \\frac{7}{12} \\times \\frac{9}{14} = \\frac{3}{8}",
+        "ruleSummary": "L'inverse d'un rationnel non nul c/d est d/c. Diviser par un nombre rationnel non nul revient à multiplier par son inverse : (a/b) ÷ (c/d) = (a/b) × (d/c).",
+        "teacherGoal": "Insister sur le fait que seule la deuxième fraction (le diviseur) est inversée, et que l'opération devient une multiplication.",
+        "interactiveType": "rationals-fraction",
+        "demoParams": {
+          "type": "division",
+          "a": 7,
+          "b": 12,
+          "c": 14,
+          "d": 9
+        },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "1. Expression de la division",
+            "rule": "Quotient de deux rationnels",
+            "latex": "\\frac{7}{12} \\div \\frac{14}{9} = \\frac{\\frac{7}{12}}{\\frac{14}{9}}",
+            "explanation": "On divise la fraction 7/12 par le diviseur 14/9."
+          },
+          {
+            "stepNumber": 2,
+            "title": "2. Multiplication par l'inverse du diviseur",
+            "rule": "Inverse de 14/9 est 9/14",
+            "latex": "= \\frac{7}{12} \\times \\frac{9}{14}",
+            "explanation": "On conserve la 1ère fraction, on transforme le signe '÷' en '×' et on inverse la 2nde fraction."
+          },
+          {
+            "stepNumber": 3,
+            "title": "3. Décomposition et simplification",
+            "rule": "Facteurs communs 7 et 3",
+            "latex": "= \\frac{7 \\times (3 \\times 3)}{(3 \\times 4) \\times (2 \\times 7)}",
+            "explanation": "On simplifie 7 avec 14 (reste 2) et 9 avec 12 (reste 3 et 4)."
+          },
+          {
+            "stepNumber": 4,
+            "title": "4. Résultat final irréductible",
+            "rule": "Produit restant",
+            "latex": "= \\frac{1 \\times 3}{4 \\times 2} = \\frac{3}{8}",
+            "explanation": "Le résultat obtenu est 3/8."
           }
         ]
       }

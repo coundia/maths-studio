@@ -14,13 +14,14 @@ import {
   ALL_SENEGAL_COURSES,
   SENEGAL_COURSES_3E,
   SENEGAL_COURSES_4E,
+  SENEGAL_COURSES_5E,
   CourseChapter,
 } from './coursesData';
 import { Sparkles, BookOpen, GraduationCap, ArrowRight } from 'lucide-react';
 
 export default function App() {
-  // Grade Level Filter ('3e' | '4e' | 'all') - Defaults to 3e per user request
-  const [selectedGrade, setSelectedGrade] = useState<'all' | '3e' | '4e'>('3e');
+  // Grade Level Filter ('3e' | '4e' | '5e' | 'all') - Defaults to 3e per user request
+  const [selectedGrade, setSelectedGrade] = useState<'all' | '3e' | '4e' | '5e'>('3e');
 
   // Navigation State
   const [activeTab, setActiveTab] = useState<'courses' | 'algebra-sandbox'>('courses');
@@ -44,12 +45,14 @@ export default function App() {
   }, []);
 
   // Handle changing grade level
-  const handleSelectGrade = (grade: 'all' | '3e' | '4e') => {
+  const handleSelectGrade = (grade: 'all' | '3e' | '4e' | '5e') => {
     setSelectedGrade(grade);
-    if (grade === '3e') {
-      setActiveChapterId(SENEGAL_COURSES_3E[0].id);
+    if (grade === '5e') {
+      setActiveChapterId(SENEGAL_COURSES_5E[0].id);
     } else if (grade === '4e') {
       setActiveChapterId(SENEGAL_COURSES_4E[0].id);
+    } else if (grade === '3e') {
+      setActiveChapterId(SENEGAL_COURSES_3E[0].id);
     }
   };
 

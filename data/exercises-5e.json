@@ -1,0 +1,636 @@
+{
+  "geometrie-espace-5e": [
+    {
+      "id": "prisme-droit-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Le Prisme droit : Patron, Aire latérale et Volume - Exercice 1",
+      "question": "Un prisme droit a pour base un triangle d'aire 15 cm² et pour hauteur 7 cm. Calculer son volume.",
+      "answerLatex": "\\mathcal{V} = 15 \\times 7 = 105\\text{ cm}^3",
+      "hint": "Applique la formule V = B × h.",
+      "detailedSolution": [
+        "1. La formule du volume d'un prisme droit est V = B × h.",
+        "2. On remplace par les valeurs données : B = 15 cm² et h = 7 cm.",
+        "3. V = 15 × 7 = 105 cm³."
+      ]
+    },
+    {
+      "id": "prisme-droit-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Le Prisme droit : Patron, Aire latérale et Volume - Exercice 2",
+      "question": "La base d'un prisme droit a un périmètre de 24 cm et sa hauteur mesure 10 cm. Calculer son aire latérale.",
+      "answerLatex": "\\mathcal{A}_L = 24 \\times 10 = 240\\text{ cm}^2",
+      "hint": "Aire latérale = Périmètre de la base × Hauteur.",
+      "detailedSolution": [
+        "1. La formule est A_L = P_base × h.",
+        "2. A_L = 24 cm × 10 cm = 240 cm²."
+      ]
+    },
+    {
+      "id": "prisme-droit-5e-ex-3",
+      "difficulty": "difficile",
+      "title": "Le Prisme droit : Patron, Aire latérale et Volume - Exercice 3",
+      "question": "Un prisme droit de volume 180 cm³ a une hauteur de 9 cm. Quelle est l'aire de sa base ?",
+      "answerLatex": "\\mathcal{B} = \\frac{\\mathcal{V}}{h} = \\frac{180}{9} = 20\\text{ cm}^2",
+      "hint": "Puisque V = B × h, alors B = V / h.",
+      "detailedSolution": [
+        "1. On sait que V = B × h.",
+        "2. Donc B = V / h = 180 / 9 = 20 cm²."
+      ]
+    },
+    {
+      "id": "cylindre-revolution-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Le Cylindre de révolution : Aire latérale et Volume - Exercice 1",
+      "question": "Calculer le volume d'un cylindre de rayon r = 3 cm et de hauteur h = 10 cm (en valeur exacte avec π, puis approchée).",
+      "answerLatex": "\\mathcal{V} = \\pi \\times 3^2 \\times 10 = 90\\pi\\text{ cm}^3 \\approx 282,74\\text{ cm}^3",
+      "hint": "V = π × r² × h = π × 9 × 10.",
+      "detailedSolution": [
+        "1. V = π × r² × h.",
+        "2. V = π × 3² × 10 = π × 9 × 10 = 90π cm³.",
+        "3. En prenant π ≈ 3,1416, on obtient environ 282,74 cm³."
+      ]
+    },
+    {
+      "id": "cylindre-revolution-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Le Cylindre de révolution : Aire latérale et Volume - Exercice 2",
+      "question": "Un cylindre a un rayon de 5 cm et une hauteur de 8 cm. Calculer son aire latérale exacte en fonction de π.",
+      "answerLatex": "\\mathcal{A}_L = 2\\pi \\times 5 \\times 8 = 80\\pi\\text{ cm}^2",
+      "hint": "A_L = 2 × π × r × h.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\mathcal{V} = \\pi r^2 \\times h, \\quad \\mathcal{A}_L = 2\\pi r \\times h.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : \\mathcal{A}_L = 2\\pi \\times 5 \\times 8 = 80\\pi\\text{ cm}^2."
+      ]
+    }
+  ],
+  "quadrilatere-5e": [
+    {
+      "id": "parallelogramme-prop-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Le Parallélogramme : Définition et Propriétés - Exercice 1",
+      "question": "Dans un quadrilatère MNPQ, les diagonales [MP] et [NQ] se coupent en un point O tel que OM = OP = 4 cm et ON = OQ = 3 cm. Quelle est la nature de MNPQ ?",
+      "answerLatex": "MNPQ \\text{ est un parallélogramme car ses diagonales ont le même milieu } O.",
+      "hint": "Que représente le point O pour les segments [MP] et [NQ] ?",
+      "detailedSolution": [
+        "1. Puisque OM = OP, O est le milieu de [MP].",
+        "2. Puisque ON = OQ, O est le milieu de [NQ].",
+        "3. Un quadrilatère dont les diagonales se coupent en leur milieu est un parallélogramme.",
+        "4. Donc MNPQ est un parallélogramme."
+      ]
+    },
+    {
+      "id": "parallelogramme-prop-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Le Parallélogramme : Définition et Propriétés - Exercice 2",
+      "question": "Un parallélogramme a une base de 8 cm et une hauteur relative de 5 cm. Calculer son aire.",
+      "answerLatex": "\\text{Aire} = 8 \\times 5 = 40\\text{ cm}^2",
+      "hint": "Aire = base × hauteur.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : ABCD \\text{ parallélogramme} \\iff [AC] \\text{ et } [BD] \\text{ ont même milieu}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : \\text{Aire} = 8 \\times 5 = 40\\text{ cm}^2."
+      ]
+    },
+    {
+      "id": "quadrilateres-particuliers-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Rectangle, Losange et Carré - Exercice 1",
+      "question": "Un parallélogramme ABCD a des diagonales qui mesurent toutes deux 10 cm. De quel quadrilatère particulier s'agit-il ?",
+      "answerLatex": "ABCD \\text{ est un rectangle car c'est un parallélogramme dont les diagonales ont la même longueur.}",
+      "hint": "Quelle propriété sur les diagonales caractérise le rectangle ?",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\text{Rectangle: 4 angles droits} \\quad \\text{Losange: 4 côtés égaux} \\quad \\text{Carré: les deux}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : ABCD \\text{ est un rectangle car c'est un parallélogramme dont les diagonales ont la même longueur.}."
+      ]
+    },
+    {
+      "id": "quadrilateres-particuliers-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Rectangle, Losange et Carré - Exercice 2",
+      "question": "Un parallélogramme dont les diagonales sont perpendiculaires et de même longueur est un...",
+      "answerLatex": "\\text{Carré (car perpendiculaires } \\implies \\text{losange et égales } \\implies \\text{rectangle)}",
+      "hint": "Réfléchis à la combinaison losange + rectangle.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\text{Rectangle: 4 angles droits} \\quad \\text{Losange: 4 côtés égaux} \\quad \\text{Carré: les deux}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : \\text{Carré (car perpendiculaires } \\implies \\text{losange et égales } \\implies \\text{rectangle)}."
+      ]
+    }
+  ],
+  "proportionnalite-5e": [
+    {
+      "id": "tableau-proportionnalite-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Tableau de proportionnalité et Coefficient - Exercice 1",
+      "question": "4 cahiers coûtent 1200 FCFA. Combien coûtent 9 cahiers ?",
+      "answerLatex": "x = \\frac{1200 \\times 9}{4} = 300 \\times 9 = 2700\\text{ FCFA}",
+      "hint": "Utilise le produit en croix ou calcule d'abord le prix d'un seul cahier.",
+      "detailedSolution": [
+        "1. Prix d'un cahier : 1200 / 4 = 300 FCFA.",
+        "2. Prix de 9 cahiers : 9 × 300 = 2700 FCFA."
+      ]
+    },
+    {
+      "id": "tableau-proportionnalite-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Tableau de proportionnalité et Coefficient - Exercice 2",
+      "question": "Une voiture consomme 6 litres d'essence pour 100 km. Combien consomme-t-elle pour 350 km ?",
+      "answerLatex": "x = \\frac{6 \\times 350}{100} = \\frac{2100}{100} = 21\\text{ litres}",
+      "hint": "Produit en croix : x = (6 × 350) / 100.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : y = k \\times x \\iff k = \\frac{y}{x}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : x = \\frac{6 \\times 350}{100} = \\frac{2100}{100} = 21\\text{ litres}."
+      ]
+    },
+    {
+      "id": "pourcentages-echelles-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Pourcentages et Échelles - Exercice 1",
+      "question": "Dans une classe de 40 élèves de 5e, 60% sont des filles. Combien y a-t-il de filles ?",
+      "answerLatex": "N = \\frac{60}{100} \\times 40 = 0,6 \\times 40 = 24\\text{ filles}",
+      "hint": "Calcule (60 / 100) × 40.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : P = \\frac{t}{100} \\times V, \\quad \\text{Échelle} = \\frac{\\text{Distance sur plan}}{\\text{Distance réelle}}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : N = \\frac{60}{100} \\times 40 = 0,6 \\times 40 = 24\\text{ filles}."
+      ]
+    },
+    {
+      "id": "pourcentages-echelles-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Pourcentages et Échelles - Exercice 2",
+      "question": "Sur une carte à l'échelle 1/200 000, deux villes sont distantes de 4 cm. Quelle est la distance réelle en kilomètres ?",
+      "answerLatex": "D = 4 \\times 200\\,000\\text{ cm} = 800\\,000\\text{ cm} = 8\\text{ km}",
+      "hint": "Multiplie 4 par 200 000 cm, puis convertis en kilomètres (1 km = 100 000 cm).",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : P = \\frac{t}{100} \\times V, \\quad \\text{Échelle} = \\frac{\\text{Distance sur plan}}{\\text{Distance réelle}}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : D = 4 \\times 200\\,000\\text{ cm} = 800\\,000\\text{ cm} = 8\\text{ km}."
+      ]
+    }
+  ],
+  "equations-inequations-5e": [
+    {
+      "id": "equations-base-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Résolution d'équations : x + a = b et ax = b - Exercice 1",
+      "question": "Résoudre l'équation : x + 9 = 24",
+      "answerLatex": "x = 24 - 9 = 15",
+      "hint": "Soustrait 9 de chaque côté : x = 24 - 9.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : x + a = b \\iff x = b - a, \\quad a \\cdot x = b \\iff x = \\frac{b}{a}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : x = 24 - 9 = 15."
+      ]
+    },
+    {
+      "id": "equations-base-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Résolution d'équations : x + a = b et ax = b - Exercice 2",
+      "question": "Résoudre l'équation : 5x = 45",
+      "answerLatex": "x = \\frac{45}{5} = 9",
+      "hint": "Divise par 5 : x = 45 / 5.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : x + a = b \\iff x = b - a, \\quad a \\cdot x = b \\iff x = \\frac{b}{a}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : x = \\frac{45}{5} = 9."
+      ]
+    },
+    {
+      "id": "equations-base-5e-ex-3",
+      "difficulty": "difficile",
+      "title": "Résolution d'équations : x + a = b et ax = b - Exercice 3",
+      "question": "Résoudre l'équation : 3x - 4 = 11",
+      "answerLatex": "3x = 11 + 4 = 15 \\implies x = \\frac{15}{3} = 5",
+      "hint": "Ajoute 4 des deux côtés, puis divise par 3.",
+      "detailedSolution": [
+        "1. On ajoute 4 aux deux membres : 3x = 11 + 4 = 15.",
+        "2. On divise par 3 : x = 15 / 3 = 5.",
+        "3. Vérification : 3×5 - 4 = 15 - 4 = 11. La solution est 5."
+      ]
+    }
+  ],
+  "reperage-5e": [
+    {
+      "id": "reperage-droite-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Repérage sur la droite graduée - Exercice 1",
+      "question": "Sur une droite graduée, on a A(-5) et B(3). Calculer la distance AB.",
+      "answerLatex": "AB = 3 - (-5) = 3 + 5 = 8",
+      "hint": "Distance = plus grande abscisse - plus petite abscisse = 3 - (-5).",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : d(A, B) = AB = x_B - x_A \\quad (x_B \\ge x_A).",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : AB = 3 - (-5) = 3 + 5 = 8."
+      ]
+    },
+    {
+      "id": "reperage-droite-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Repérage sur la droite graduée - Exercice 2",
+      "question": "Quel est le milieu M du segment [AB] avec A(-4) et B(6) ?",
+      "answerLatex": "x_M = \\frac{-4 + 6}{2} = \\frac{2}{2} = 1",
+      "hint": "L'abscisse du milieu est la demi-somme : (x_A + x_B) / 2.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : d(A, B) = AB = x_B - x_A \\quad (x_B \\ge x_A).",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : x_M = \\frac{-4 + 6}{2} = \\frac{2}{2} = 1."
+      ]
+    },
+    {
+      "id": "reperage-plan-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Repérage dans le plan (Coordonnées) - Exercice 1",
+      "question": "Dans quel quadrant se trouve le point P(-3 ; -4) ?",
+      "answerLatex": "\\text{En bas à gauche (quadrant où } x < 0 \\text{ et } y < 0)",
+      "hint": "L'abscisse est négative (gauche) et l'ordonnée est négative (bas).",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : M(x ,;\\, y) \\iff x = \\text{abscisse (axe horizontal)}, \\; y = \\text{ordonnée (axe vertical)}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : \\text{En bas à gauche (quadrant où } x < 0 \\text{ et } y < 0)."
+      ]
+    },
+    {
+      "id": "reperage-plan-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Repérage dans le plan (Coordonnées) - Exercice 2",
+      "question": "Quelles sont les coordonnées du point situé sur l'axe des ordonnées à 5 unités au-dessus de l'origine ?",
+      "answerLatex": "(0 \\,;\\, 5)",
+      "hint": "Tout point sur l'axe des ordonnées a une abscisse x = 0.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : M(x ,;\\, y) \\iff x = \\text{abscisse (axe horizontal)}, \\; y = \\text{ordonnée (axe vertical)}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : (0 \\,;\\, 5)."
+      ]
+    }
+  ],
+  "puissance-d-5e": [
+    {
+      "id": "puissances-regles-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Définition et Règles de calcul des puissances - Exercice 1",
+      "question": "Calculer : 4³",
+      "answerLatex": "4^3 = 4 \\times 4 \\times 4 = 16 \\times 4 = 64",
+      "hint": "4 × 4 = 16, puis 16 × 4 = 64.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : a^n \\times a^p = a^{n+p}, \\quad (a^n)^p = a^{n \\times p}, \\quad \\frac{a^n}{a^p} = a^{n-p}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : 4^3 = 4 \\times 4 \\times 4 = 16 \\times 4 = 64."
+      ]
+    },
+    {
+      "id": "puissances-regles-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Définition et Règles de calcul des puissances - Exercice 2",
+      "question": "Écrire sous la forme d'une seule puissance : 7⁴ × 7³",
+      "answerLatex": "7^{4+3} = 7^7",
+      "hint": "Additionne les exposants : 4 + 3 = 7.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : a^n \\times a^p = a^{n+p}, \\quad (a^n)^p = a^{n \\times p}, \\quad \\frac{a^n}{a^p} = a^{n-p}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : 7^{4+3} = 7^7."
+      ]
+    },
+    {
+      "id": "puissances-regles-5e-ex-3",
+      "difficulty": "difficile",
+      "title": "Définition et Règles de calcul des puissances - Exercice 3",
+      "question": "Écrire 100 000 sous forme de puissance de 10.",
+      "answerLatex": "10^5",
+      "hint": "Compte le nombre de zéros : il y a 5 zéros après le 1.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : a^n \\times a^p = a^{n+p}, \\quad (a^n)^p = a^{n \\times p}, \\quad \\frac{a^n}{a^p} = a^{n-p}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : 10^5."
+      ]
+    }
+  ],
+  "triangles-5e": [
+    {
+      "id": "somme-angles-inegalite-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Somme des angles et Inégalité triangulaire - Exercice 1",
+      "question": "Dans un triangle ABC, on donne Â = 50° et B̂ = 70°. Calculer la mesure de l'angle Ĉ.",
+      "answerLatex": "\\widehat{C} = 180^\\circ - (50^\\circ + 70^\\circ) = 180^\\circ - 120^\\circ = 60^\\circ",
+      "hint": "La somme des angles vaut 180°.",
+      "detailedSolution": [
+        "1. Â + B̂ + Ĉ = 180°.",
+        "2. Ĉ = 180° - (50° + 70°) = 180° - 120° = 60°."
+      ]
+    },
+    {
+      "id": "somme-angles-inegalite-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Somme des angles et Inégalité triangulaire - Exercice 2",
+      "question": "Peut-on construire un triangle avec des côtés mesurant 3 cm, 4 cm et 8 cm ?",
+      "answerLatex": "\\text{Non, car } 8 > 3 + 4 = 7 \\text{ (le plus grand côté est supérieur à la somme des deux autres).}",
+      "hint": "Compare 8 avec 3 + 4.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\widehat{A} + \\widehat{B} + \\widehat{C} = 180^\\circ, \\quad BC < AB + AC.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : \\text{Non, car } 8 > 3 + 4 = 7 \\text{ (le plus grand côté est supérieur à la somme des deux autres).}."
+      ]
+    },
+    {
+      "id": "droites-remarquables-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Les 4 Droites remarquables du triangle - Exercice 1",
+      "question": "Quel est le point de concours des trois médiatrices d'un triangle ?",
+      "answerLatex": "\\text{Le centre du cercle circonscrit au triangle.}",
+      "hint": "Ce point passe par les trois sommets du triangle.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\text{Médiatrices (Cercle circonscrit), Hauteurs (Orthocentre), Bissectrices (Inscrit), Médianes (Gravité)}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : \\text{Le centre du cercle circonscrit au triangle.}."
+      ]
+    },
+    {
+      "id": "droites-remarquables-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Les 4 Droites remarquables du triangle - Exercice 2",
+      "question": "Une médiane mesure 9 cm. À quelle distance du sommet se trouve le centre de gravité G ?",
+      "answerLatex": "d = \\frac{2}{3} \\times 9 = 6\\text{ cm}",
+      "hint": "Le centre de gravité est aux 2/3 de la médiane depuis le sommet.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\text{Médiatrices (Cercle circonscrit), Hauteurs (Orthocentre), Bissectrices (Inscrit), Médianes (Gravité)}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : d = \\frac{2}{3} \\times 9 = 6\\text{ cm}."
+      ]
+    }
+  ],
+  "fractions-5e": [
+    {
+      "id": "fractions-egalite-simplification-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Égalité et Simplification de fractions - Exercice 1",
+      "question": "Simplifier au maximum la fraction 18 / 24.",
+      "answerLatex": "\\frac{18}{24} = \\frac{18 \\div 6}{24 \\div 6} = \\frac{3}{4}",
+      "hint": "Le PGCD de 18 et 24 est 6.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\frac{a}{b} = \\frac{a \\times k}{b \\times k} = \\frac{a \\div d}{b \\div d} \\quad (b, k, d \\neq 0).",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : \\frac{18}{24} = \\frac{18 \\div 6}{24 \\div 6} = \\frac{3}{4}."
+      ]
+    },
+    {
+      "id": "fractions-egalite-simplification-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Égalité et Simplification de fractions - Exercice 2",
+      "question": "Compléter pour que les fractions soient égales : 5 / 7 = ... / 35.",
+      "answerLatex": "\\frac{5 \\times 5}{7 \\times 5} = \\frac{25}{35}",
+      "hint": "7 × 5 = 35, donc multiplie aussi 5 par 5.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\frac{a}{b} = \\frac{a \\times k}{b \\times k} = \\frac{a \\div d}{b \\div d} \\quad (b, k, d \\neq 0).",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : \\frac{5 \\times 5}{7 \\times 5} = \\frac{25}{35}."
+      ]
+    },
+    {
+      "id": "fractions-operations-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Opérations : Addition, Soustraction et Multiplication - Exercice 1",
+      "question": "Calculer : 2/5 + 1/10",
+      "answerLatex": "\\frac{2 \\times 2}{5 \\times 2} + \\frac{1}{10} = \\frac{4}{10} + \\frac{1}{10} = \\frac{5}{10} = \\frac{1}{2}",
+      "hint": "Mets au dénominateur 10, puis simplifie le résultat.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\frac{a}{d} + \\frac{b}{d} = \\frac{a+b}{d}, \\quad \\frac{a}{b} \\times \\frac{c}{d} = \\frac{a \\times c}{b \\times d}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : \\frac{2 \\times 2}{5 \\times 2} + \\frac{1}{10} = \\frac{4}{10} + \\frac{1}{10} = \\frac{5}{10} = \\frac{1}{2}."
+      ]
+    },
+    {
+      "id": "fractions-operations-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Opérations : Addition, Soustraction et Multiplication - Exercice 2",
+      "question": "Calculer : 3/4 × 5/7",
+      "answerLatex": "\\frac{3 \\times 5}{4 \\times 7} = \\frac{15}{28}",
+      "hint": "Multiplie en haut (3×5) et en bas (4×7).",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\frac{a}{d} + \\frac{b}{d} = \\frac{a+b}{d}, \\quad \\frac{a}{b} \\times \\frac{c}{d} = \\frac{a \\times c}{b \\times d}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : \\frac{3 \\times 5}{4 \\times 7} = \\frac{15}{28}."
+      ]
+    }
+  ],
+  "angles-5e": [
+    {
+      "id": "angles-vocabulaire-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Angles complémentaires, supplémentaires et opposés par le sommet - Exercice 1",
+      "question": "L'angle Â mesure 34°. Quel est son angle complémentaire ?",
+      "answerLatex": "90^\\circ - 34^\\circ = 56^\\circ",
+      "hint": "Deux angles complémentaires ont pour somme 90°.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\alpha + \\beta = 90^\\circ \\; (\\text{complémentaires}), \\quad \\alpha + \\beta = 180^\\circ \\; (\\text{supplémentaires}).",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : 90^\\circ - 34^\\circ = 56^\\circ."
+      ]
+    },
+    {
+      "id": "angles-vocabulaire-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Angles complémentaires, supplémentaires et opposés par le sommet - Exercice 2",
+      "question": "L'angle B̂ mesure 115°. Quel est son angle supplémentaire ?",
+      "answerLatex": "180^\\circ - 115^\\circ = 65^\\circ",
+      "hint": "Deux angles supplémentaires ont pour somme 180°.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\alpha + \\beta = 90^\\circ \\; (\\text{complémentaires}), \\quad \\alpha + \\beta = 180^\\circ \\; (\\text{supplémentaires}).",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : 180^\\circ - 115^\\circ = 65^\\circ."
+      ]
+    },
+    {
+      "id": "angles-paralleles-secante-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Angles alternes-internes et correspondants - Exercice 1",
+      "question": "Deux droites (d) et (d') sont parallèles et coupées par une sécante. Un angle alterne-interne mesure 48°. Combien mesure l'autre ?",
+      "answerLatex": "48^\\circ \\text{ car deux droites parallèles coupées par une sécante forment des angles alternes-internes de même mesure.}",
+      "hint": "Les angles alternes-internes formés par deux parallèles sont égaux.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : (d_1) \\parallel (d_2) \\iff \\text{angles alternes-internes de même mesure}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : 48^\\circ \\text{ car deux droites parallèles coupées par une sécante forment des angles alternes-internes de même mesure.}."
+      ]
+    }
+  ],
+  "symetrie-centrale-5e": [
+    {
+      "id": "symetrie-centrale-definition-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Définition : Demi-tour et Milieu - Exercice 1",
+      "question": "Le segment [AB] mesure 6 cm. Quelle est la longueur de son symétrique [A'B'] par rapport à un point O ?",
+      "answerLatex": "A'B' = 6\\text{ cm} \\text{ car la symétrie centrale conserve les longueurs.}",
+      "hint": "La symétrie centrale est une isométrie : elle conserve les distances.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : M' = S_O(M) \\iff O \\text{ est le milieu du segment } [MM'].",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : A'B' = 6\\text{ cm} \\text{ car la symétrie centrale conserve les longueurs.}."
+      ]
+    },
+    {
+      "id": "symetrie-centrale-definition-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Définition : Demi-tour et Milieu - Exercice 2",
+      "question": "Le point O est le milieu du segment [CD]. Quel est le symétrique de C par rapport à O ?",
+      "answerLatex": "S_O(C) = D",
+      "hint": "Par définition, si O est le milieu de [CD], alors D est le symétrique de C par rapport à O.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : M' = S_O(M) \\iff O \\text{ est le milieu du segment } [MM'].",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : S_O(C) = D."
+      ]
+    }
+  ],
+  "multiples-diviseurs-5e": [
+    {
+      "id": "division-criteres-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Division euclidienne et Critères de divisibilité - Exercice 1",
+      "question": "Effectuer la division euclidienne de 89 par 7 (donner le quotient et le reste).",
+      "answerLatex": "89 = 7 \\times 12 + 5 \\quad (\\text{quotient } q = 12, \\text{ reste } r = 5)",
+      "hint": "7 × 12 = 84, et 89 - 84 = 5.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : a = b \\times q + r \\quad (0 \\le r < b).",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : 89 = 7 \\times 12 + 5 \\quad (\\text{quotient } q = 12, \\text{ reste } r = 5)."
+      ]
+    },
+    {
+      "id": "division-criteres-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Division euclidienne et Critères de divisibilité - Exercice 2",
+      "question": "Le nombre 2538 est-il divisible par 9 ?",
+      "answerLatex": "\\text{Oui, car } 2 + 5 + 3 + 8 = 18, \\text{ et 18 est un multiple de 9.}",
+      "hint": "Calcule la somme de ses chiffres.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : a = b \\times q + r \\quad (0 \\le r < b).",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : \\text{Oui, car } 2 + 5 + 3 + 8 = 18, \\text{ et 18 est un multiple de 9.}."
+      ]
+    },
+    {
+      "id": "nombres-premiers-pgcd-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Nombres premiers et Décomposition (PGCD, PPCM) - Exercice 1",
+      "question": "Décomposer 36 en produit de facteurs premiers.",
+      "answerLatex": "36 = 2^2 \\times 3^2 = 4 \\times 9",
+      "hint": "36 = 2 × 18 = 2 × 2 × 9 = 2² × 3².",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\text{PGCD}(a, b) = \\text{Plus Grand Commun Diviseur}, \\quad \\text{PPCM}(a, b) = \\text{Plus Petit Commun Multiple}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : 36 = 2^2 \\times 3^2 = 4 \\times 9."
+      ]
+    },
+    {
+      "id": "nombres-premiers-pgcd-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Nombres premiers et Décomposition (PGCD, PPCM) - Exercice 2",
+      "question": "Calculer le PGCD de 24 et 36.",
+      "answerLatex": "\\text{PGCD}(24, 36) = 12",
+      "hint": "24 = 2³ × 3 et 36 = 2² × 3². Facteurs communs : 2² × 3 = 12.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : \\text{PGCD}(a, b) = \\text{Plus Grand Commun Diviseur}, \\quad \\text{PPCM}(a, b) = \\text{Plus Petit Commun Multiple}.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : \\text{PGCD}(24, 36) = 12."
+      ]
+    }
+  ],
+  "calcul-dans-d-5e": [
+    {
+      "id": "priorites-operatoires-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Priorités opératoires et Distributivité - Exercice 1",
+      "question": "Calculer en respectant les priorités : A = 35 - 5 × 4 + 2",
+      "answerLatex": "A = 35 - 20 + 2 = 15 + 2 = 17",
+      "hint": "Effectue d'abord la multiplication 5 × 4 = 20.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : k(a + b) = ka + kb, \\quad k(a - b) = ka - kb.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : A = 35 - 20 + 2 = 15 + 2 = 17."
+      ]
+    },
+    {
+      "id": "priorites-operatoires-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Priorités opératoires et Distributivité - Exercice 2",
+      "question": "Calculer astucieusement grâce à la distributivité : B = 28 × 17 + 28 × 83",
+      "answerLatex": "B = 28 \\times (17 + 83) = 28 \\times 100 = 2800",
+      "hint": "Mets 28 en facteur commun : 28 × (17 + 83).",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : k(a + b) = ka + kb, \\quad k(a - b) = ka - kb.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : B = 28 \\times (17 + 83) = 28 \\times 100 = 2800."
+      ]
+    }
+  ],
+  "nombres-decimaux-relatifs-5e": [
+    {
+      "id": "relatifs-definition-comparaison-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Définition, Opposé et Comparaison des relatifs - Exercice 1",
+      "question": "Ranger dans l'ordre croissant : +3 ; -8 ; 0 ; -2 ; +7 ; -5",
+      "answerLatex": "-8 < -5 < -2 < 0 < +3 < +7",
+      "hint": "Place les négatifs d'abord (du plus éloigné de 0 au plus proche), puis 0, puis les positifs.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : -a < 0 < +b, \\quad \\text{Opposé de } (+5) = -5.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : -8 < -5 < -2 < 0 < +3 < +7."
+      ]
+    },
+    {
+      "id": "relatifs-definition-comparaison-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Définition, Opposé et Comparaison des relatifs - Exercice 2",
+      "question": "Quel est l'opposé de -14,5 ?",
+      "answerLatex": "+14,5",
+      "hint": "L'opposé a la même valeur absolue avec un signe inverse.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : -a < 0 < +b, \\quad \\text{Opposé de } (+5) = -5.",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : +14,5."
+      ]
+    },
+    {
+      "id": "relatifs-addition-soustraction-5e-ex-1",
+      "difficulty": "facile",
+      "title": "Addition et Soustraction des nombres relatifs - Exercice 1",
+      "question": "Calculer : (-6) + (-9)",
+      "answerLatex": "-(6 + 9) = -15",
+      "hint": "Même signe négatif : on garde le signe - et on fait 6 + 9.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : (+a) + (+b) = +(a+b), \\quad (-a) + (-b) = -(a+b), \\quad a - b = a + (-b).",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : -(6 + 9) = -15."
+      ]
+    },
+    {
+      "id": "relatifs-addition-soustraction-5e-ex-2",
+      "difficulty": "moyen",
+      "title": "Addition et Soustraction des nombres relatifs - Exercice 2",
+      "question": "Calculer : (+12) + (-17)",
+      "answerLatex": "-5",
+      "hint": "Signes contraires : 17 > 12 donc résultat négatif, puis 17 - 12 = 5.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : (+a) + (+b) = +(a+b), \\quad (-a) + (-b) = -(a+b), \\quad a - b = a + (-b).",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : -5."
+      ]
+    },
+    {
+      "id": "relatifs-addition-soustraction-5e-ex-3",
+      "difficulty": "difficile",
+      "title": "Addition et Soustraction des nombres relatifs - Exercice 3",
+      "question": "Calculer : (+7) - (-5)",
+      "answerLatex": "(+7) + (+5) = +12",
+      "hint": "Soustraire (-5) revient à ajouter son opposé (+5) : 7 + 5 = 12.",
+      "detailedSolution": [
+        "1. Appliquer la formule du cours : (+a) + (+b) = +(a+b), \\quad (-a) + (-b) = -(a+b), \\quad a - b = a + (-b).",
+        "2. Effectuer les calculs étape par étape.",
+        "3. La réponse est : (+7) + (+5) = +12."
+      ]
+    }
+  ]
+}

@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
-  Menu,
+  PanelLeft,
   GraduationCap,
   BookOpen,
-  Hash,
-  Box,
-  Tv,
-  Sparkles,
+  Calculator,
   ChevronDown,
   Sun,
   Moon,
   Edit3,
+  Check,
 } from 'lucide-react';
 import { ALL_SENEGAL_COURSES } from '../coursesData';
 import { useTheme } from '../context/ThemeContext';
@@ -19,14 +17,14 @@ interface HeaderProps {
   onToggleSidebar: () => void;
   activeTab: 'courses' | 'algebra-sandbox';
   onSelectTab: (tab: 'courses' | 'algebra-sandbox') => void;
-  activeChapterId: string;
-  onSelectChapter: (chapterId: string) => void;
+  activeChapterId?: string;
+  onSelectChapter?: (chapterId: string) => void;
   isClassroomMode: boolean;
   onToggleClassroomMode: () => void;
   activeMode: 'algebra' | 'geometry';
   onSelectMode: (mode: 'algebra' | 'geometry') => void;
-  selectedGrade?: 'all' | '3e' | '4e';
-  onSelectGrade?: (grade: 'all' | '3e' | '4e') => void;
+  selectedGrade?: 'all' | '3e' | '4e' | '5e';
+  onSelectGrade?: (grade: 'all' | '3e' | '4e' | '5e') => void;
   onOpenBlackboard?: () => void;
 }
 
@@ -34,8 +32,6 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleSidebar,
   activeTab,
   onSelectTab,
-  activeChapterId,
-  onSelectChapter,
   isClassroomMode,
   onToggleClassroomMode,
   activeMode,
@@ -45,178 +41,215 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenBlackboard,
 }) => {
   const { theme, toggleTheme } = useTheme();
-  const currentChapter = ALL_SENEGAL_COURSES.find((c) => c.id === activeChapterId);
+  const [isGradeDropdownOpen, setIsGradeDropdownOpen] = useState(false);
+  const gradeDropdownRef = useRef<HTMLDivElement>(null);
 
-  const visibleCourses = ALL_SENEGAL_COURSES.filter((c) => {
-    const is3e = c.gradeLevel === '3e' || c.id.endsWith('-3e') || c.id.startsWith('video-');
-    if (selectedGrade === '3e') return is3e;
-    if (selectedGrade === '4e') return !is3e;
-    return true;
-  });
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (gradeDropdownRef.current && !gradeDropdownRef.current.contains(e.target as Node)) {
+        setIsGradeDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
+
+  const gradeLabel =
+    selectedGrade === '5e'
+      ? '5ème'
+      : selectedGrade === '4e'
+      ? '4ème'
+      : selectedGrade === '3e'
+      ? '3ème BFEM'
+      : 'Collège (Tout)';
+
+  const gradeOptions: Array<{ id: 'all' | '3e' | '4e' | '5e'; label: string; desc: string }> = [
+    { id: '5e', label: '5ème', desc: '13 chapitres' },
+    { id: '4e', label: '4ème', desc: '14 chapitres' },
+    { id: '3e', label: '3ème BFEM', desc: '20 chapitres' },
+    { id: 'all', label: 'Tout le Collège', desc: '47 chapitres (5e, 4e, 3e)' },
+  ];
 
   return (
-    <header className="w-full border-b border-slate-200/50 dark:border-slate-800/80 bg-white/70 dark:bg-[#0B1120]/70 backdrop-blur-xl px-2.5 sm:px-6 py-3 sticky top-0 z-40 transition-colors duration-200 shadow-sm shadow-slate-200/20 dark:shadow-none">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
-        {/* Left: Hamburger + Brand */}
-        <div className="flex items-center space-x-2">
-          {/* Menu button for chapters */}
+    <header className="w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-xl px-3 sm:px-5 py-2.5 sticky top-0 z-40 transition-colors duration-200 shadow-xs">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
+        {/* Left: Sidebar Toggle + Clean Brand + Level Selector */}
+        <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
+          {/* Sidebar Toggle */}
           <button
             id="toggle-sidebar-btn"
             onClick={onToggleSidebar}
-            className="min-h-[38px] px-2.5 py-1.5 rounded-xl bg-white hover:bg-neutral-100 text-black hover:text-neutral-900 border border-neutral-300 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-300 dark:hover:text-white dark:border-slate-800 transition-colors flex items-center space-x-1.5 shrink-0"
-            title="Ouvrir le menu des cours (Collège Sénégal)"
+            className="h-9 w-9 rounded-xl flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-800/80 dark:hover:bg-slate-700 dark:text-slate-300 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+            title="Ouvrir / Fermer le sommaire des cours"
+            aria-label="Sommaire des cours"
           >
-            <Menu className="w-4 h-4 text-red-600 dark:text-emerald-400" />
-            <span className="hidden sm:inline text-xs font-bold">
-              Cours ({visibleCourses.length})
-            </span>
-            <span className="sm:hidden text-xs font-bold font-mono">
-              {visibleCourses.length}
-            </span>
+            <PanelLeft className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </button>
 
           {/* Logo & Title */}
           <div className="flex items-center space-x-2">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-emerald-500 p-[2px] shadow-lg shadow-emerald-500/20 shrink-0 flex items-center justify-center">
-              <div className="w-full h-full bg-white dark:bg-slate-950 rounded-[10px] flex items-center justify-center text-slate-800 dark:text-emerald-400 font-extrabold text-[11px] sm:text-xs font-mono">
-                {selectedGrade === 'all' ? '3e/4e' : selectedGrade}
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-indigo-600 p-[2px] shadow-sm shrink-0 flex items-center justify-center">
+              <div className="w-full h-full bg-white dark:bg-slate-950 rounded-[10px] flex items-center justify-center text-slate-900 dark:text-emerald-400 font-extrabold text-xs font-mono">
+                π
               </div>
             </div>
-            <div className="hidden min-[380px]:block">
-              <div className="flex items-center space-x-1.5">
-                <h1 className="font-extrabold text-slate-900 dark:text-white text-xs sm:text-base tracking-tight leading-tight">
-                  Maths <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-indigo-500">Sénégal</span>
-                </h1>
-                <span className="hidden md:inline-block text-[10px] font-bold px-1.5 py-0.5 bg-neutral-100 text-black border border-neutral-300 dark:bg-amber-500/10 dark:text-amber-300 dark:border-amber-500/30 rounded-full">
-                  {selectedGrade === '3e' ? '3ème BFEM' : selectedGrade === '4e' ? '4ème' : '3e & 4e'}
-                </span>
-              </div>
+
+            <div className="hidden sm:block">
+              <h1 className="font-extrabold text-slate-900 dark:text-white text-sm tracking-tight leading-tight">
+                Maths <span className="text-emerald-600 dark:text-emerald-400">Sénégal</span>
+              </h1>
             </div>
           </div>
+
+          {/* Compact Interactive Grade Pill */}
+          {onSelectGrade && (
+            <div className="relative" ref={gradeDropdownRef}>
+              <button
+                id="header-grade-selector-btn"
+                onClick={() => setIsGradeDropdownOpen(!isGradeDropdownOpen)}
+                className="h-8 px-2.5 rounded-lg text-xs font-semibold flex items-center space-x-1 bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-slate-800/90 dark:hover:bg-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700/80 transition-colors"
+                title="Changer de niveau (5e, 4e, 3e)"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                <span className="truncate max-w-[90px] sm:max-w-none">{gradeLabel}</span>
+                <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform ${isGradeDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Dropdown Menu */}
+              {isGradeDropdownOpen && (
+                <div className="absolute left-0 mt-1.5 w-52 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl py-1 z-50 text-xs animate-in fade-in zoom-in-95">
+                  <div className="px-3 py-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
+                    Sélectionner la classe
+                  </div>
+                  {gradeOptions.map((opt) => {
+                    const isSelected = selectedGrade === opt.id;
+                    return (
+                      <button
+                        key={opt.id}
+                        onClick={() => {
+                          onSelectGrade(opt.id);
+                          setIsGradeDropdownOpen(false);
+                        }}
+                        className={`w-full text-left px-3 py-2 flex items-center justify-between transition-colors ${
+                          isSelected
+                            ? 'bg-emerald-50 text-emerald-800 font-bold dark:bg-emerald-950/50 dark:text-emerald-300'
+                            : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80'
+                        }`}
+                      >
+                        <div>
+                          <div className="font-semibold">{opt.label}</div>
+                          <div className="text-[10px] text-slate-400 font-normal">{opt.desc}</div>
+                        </div>
+                        {isSelected && <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
-        {/* Center: Main View Tabs */}
-        <div className="flex items-center bg-neutral-100 dark:bg-slate-900/90 border border-neutral-300 dark:border-slate-800 p-0.5 sm:p-1 rounded-xl text-xs shrink-0">
+        {/* Center: Main View Segmented Control */}
+        <div className="flex items-center bg-slate-100/90 dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800 p-0.5 sm:p-1 rounded-xl text-xs shrink-0 shadow-inner">
           <button
             id="tab-courses-btn"
             onClick={() => onSelectTab('courses')}
-            className={`flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-4 py-1.5 rounded-lg transition-all font-semibold min-h-[34px] hover:scale-105 active:scale-95 ${
+            className={`flex items-center space-x-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-lg transition-all font-semibold h-7 sm:h-8 ${
               activeTab === 'courses'
-                ? 'bg-white text-slate-900 shadow-md border border-slate-200 dark:bg-emerald-600 dark:border-emerald-500 dark:text-white'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-white/50 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/50'
+                ? 'bg-white text-slate-900 shadow-sm border border-slate-200/60 dark:bg-emerald-600 dark:border-emerald-500 dark:text-white'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/40 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/50'
             }`}
           >
             <BookOpen className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">
-              Programme Officiel ({visibleCourses.length})
-            </span>
-            <span className="sm:hidden text-xs">Cours ({visibleCourses.length})</span>
+            <span>Cours</span>
           </button>
 
           <button
             id="tab-algebra-btn"
             onClick={() => onSelectTab('algebra-sandbox')}
-            className={`flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-4 py-1.5 rounded-lg transition-all font-semibold min-h-[34px] hover:scale-105 active:scale-95 ${
+            className={`flex items-center space-x-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-lg transition-all font-semibold h-7 sm:h-8 ${
               activeTab === 'algebra-sandbox'
-                ? 'bg-white text-slate-900 shadow-md border border-slate-200 dark:bg-indigo-600 dark:border-indigo-500 dark:text-white'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-white/50 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/50'
+                ? 'bg-white text-slate-900 shadow-sm border border-slate-200/60 dark:bg-indigo-600 dark:border-indigo-500 dark:text-white'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/40 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/50'
             }`}
           >
-            <Hash className="w-3.5 h-3.5 text-red-600 dark:text-amber-400" />
-            <span className="hidden sm:inline">Calcul Algébrique Libre</span>
-            <span className="sm:hidden text-xs">Calcul Libre</span>
+            <Calculator className="w-3.5 h-3.5" />
+            <span>Calcul Libre</span>
           </button>
         </div>
 
-        {/* Right: Quick Chapter Switcher + Classroom Mode + Theme Toggle */}
-        <div className="flex items-center space-x-1.5 shrink-0">
-          {/* Quick chapter dropdown */}
-          {activeTab === 'courses' && (
-            <div className="relative hidden md:block">
-              <select
-                value={activeChapterId}
-                onChange={(e) => onSelectChapter(e.target.value)}
-                className="bg-white border border-neutral-300 text-black text-xs py-1.5 px-2.5 rounded-xl font-medium focus:outline-none focus:border-red-600 dark:bg-slate-900 dark:border-slate-700/80 dark:text-slate-200 dark:focus:border-emerald-500 max-w-[200px] truncate"
-              >
-                {visibleCourses.map((ch, i) => (
-                  <option key={ch.id} value={ch.id}>
-                    {i + 1}. {ch.shortTitle}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          {/* If in algebra sandbox: toggle algebra vs 3D */}
+        {/* Right: Essential Tools (Tableau + Prof + Thème) */}
+        <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
+          {/* If in Algebra tab: mini 2D / 3D toggle */}
           {activeTab === 'algebra-sandbox' && (
-            <div className="bg-neutral-100 border border-neutral-300 dark:bg-slate-900 dark:border-slate-800 p-0.5 rounded-xl flex text-xs">
+            <div className="hidden md:flex items-center bg-slate-100 dark:bg-slate-800/90 p-0.5 rounded-lg border border-slate-200 dark:border-slate-700/80 text-xs">
               <button
                 onClick={() => onSelectMode('algebra')}
-                className={`px-2 py-1 rounded-lg transition-colors font-medium ${
+                className={`px-2 py-1 rounded-md text-xs font-semibold transition-all ${
                   activeMode === 'algebra'
-                    ? 'bg-white text-black border-2 border-black dark:bg-indigo-600 dark:text-white font-semibold'
-                    : 'text-neutral-700 hover:text-black dark:text-slate-400 dark:hover:text-white'
+                    ? 'bg-white text-indigo-700 shadow-xs dark:bg-indigo-600 dark:text-white'
+                    : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                 }`}
+                title="Mode 2D Décomposition"
               >
-                Chiffres & Flèches
+                2D
               </button>
               <button
                 onClick={() => onSelectMode('geometry')}
-                className={`px-2 py-1 rounded-lg transition-colors font-medium ${
+                className={`px-2 py-1 rounded-md text-xs font-semibold transition-all ${
                   activeMode === 'geometry'
-                    ? 'bg-white text-black border-2 border-black dark:bg-indigo-600 dark:text-white font-semibold'
-                    : 'text-neutral-700 hover:text-black dark:text-slate-400 dark:hover:text-white'
+                    ? 'bg-white text-indigo-700 shadow-xs dark:bg-indigo-600 dark:text-white'
+                    : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                 }`}
+                title="Mode 3D Géométrie"
               >
                 3D
               </button>
             </div>
           )}
 
-          {/* Classroom Mode button */}
-          <button
-            onClick={onToggleClassroomMode}
-            className={`min-h-[38px] px-2.5 py-1.5 rounded-xl text-xs flex items-center space-x-1.5 border transition-all ${
-              isClassroomMode
-                ? 'bg-white text-red-600 font-bold border-2 border-red-600 shadow-xs dark:bg-emerald-500 dark:text-slate-950 dark:border-emerald-400'
-                : 'bg-white hover:bg-neutral-100 text-black border-neutral-300 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-800'
-            }`}
-            title="Mode Démo Classe pour le professeur"
-          >
-            <GraduationCap className="w-4 h-4" />
-            <span className="hidden xl:inline font-semibold">Démo Professeur</span>
-          </button>
-
-          {/* Blackboard Toggle */}
+          {/* Blackboard / Tableau Interactif */}
           {onOpenBlackboard && (
             <button
+              id="open-blackboard-btn"
               onClick={onOpenBlackboard}
-              className="min-h-[38px] px-2 sm:px-2.5 py-1.5 rounded-xl text-xs flex items-center space-x-1.5 border transition-all bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/60 dark:text-indigo-300 dark:border-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 shadow-sm"
-              title="Ouvrir le Tableau Interactif"
+              className="h-8 sm:h-9 px-2.5 sm:px-3 rounded-xl text-xs flex items-center space-x-1.5 font-medium transition-all bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 dark:bg-indigo-950/50 dark:hover:bg-indigo-900/60 dark:text-indigo-300 dark:border-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+              title="Ouvrir le Tableau interactif (brouillon & calculs)"
             >
-              <Edit3 className="w-4 h-4" />
+              <Edit3 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-600 dark:text-indigo-400" />
               <span className="hidden sm:inline font-semibold">Tableau</span>
             </button>
           )}
 
-          {/* Theme Toggle Button (Clair / Sombre) */}
+          {/* Classroom Mode Toggle */}
+          <button
+            id="toggle-classroom-mode-btn"
+            onClick={onToggleClassroomMode}
+            className={`h-8 sm:h-9 px-2 sm:px-2.5 rounded-xl text-xs flex items-center space-x-1.5 border transition-all ${
+              isClassroomMode
+                ? 'bg-emerald-50 text-emerald-700 border-emerald-300 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-700 font-semibold'
+                : 'bg-white hover:bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-400 dark:border-slate-800'
+            }`}
+            title={isClassroomMode ? "Mode Démo Classe actif (cliquer pour masquer)" : "Activer le Mode Démo Classe"}
+          >
+            <GraduationCap className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isClassroomMode ? 'text-emerald-600 dark:text-emerald-400' : ''}`} />
+            <span className="hidden lg:inline font-medium">Prof</span>
+          </button>
+
+          {/* Theme Toggle Button */}
           <button
             id="theme-toggle-btn"
             onClick={toggleTheme}
-            className="min-h-[38px] px-2 sm:px-2.5 py-1.5 rounded-xl text-xs flex items-center space-x-1.5 border transition-all duration-200 bg-white hover:bg-neutral-100 text-black border-neutral-300 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-300 dark:hover:text-white dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500/40 dark:focus:ring-emerald-500/40"
-            title={theme === 'dark' ? "Passer au thème clair (Noir & Blanc + Rouge)" : "Passer au thème sombre"}
-            aria-label={theme === 'dark' ? "Passer au thème clair" : "Passer au thème sombre"}
+            className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl flex items-center justify-center border transition-all bg-white hover:bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400/20"
+            title={theme === 'dark' ? "Passer au thème clair" : "Passer au thème sombre"}
+            aria-label="Basculer le thème"
           >
             {theme === 'dark' ? (
-              <>
-                <Sun className="w-4 h-4 text-amber-400 transition-transform hover:rotate-45" />
-                <span className="hidden sm:inline font-semibold">Clair</span>
-              </>
+              <Sun className="w-4 h-4 text-amber-400 transition-transform hover:rotate-45" />
             ) : (
-              <>
-                <Moon className="w-4 h-4 text-red-600 transition-transform hover:-rotate-12" />
-                <span className="hidden sm:inline font-semibold">Sombre</span>
-              </>
+              <Moon className="w-4 h-4 text-slate-700 transition-transform hover:-rotate-12" />
             )}
           </button>
         </div>

@@ -67,7 +67,19 @@ export interface CourseDemo {
     | 'parallelogramme-guide'
     | 'geometrie-espace'
     | 'reperage-plan'
-    | 'video-lesson';
+    | 'geometrie-espace-5e'
+    | 'quadrilatere-5e'
+    | 'proportionnalite-5e'
+    | 'triangles-5e'
+    | 'fractions-5e'
+    | 'angles-5e'
+    | 'symetrie-centrale-5e'
+    | 'multiples-diviseurs-5e'
+    | 'calcul-dans-d-5e'
+    | 'nombres-decimaux-relatifs-5e'
+    | 'reperage-5e'
+    | 'video-lesson'
+    | (string & {});
   demoParams?: Record<string, any>;
   videoInfo?: CourseVideoInfo;
   exercises?: CourseExercise[];
@@ -77,7 +89,7 @@ export interface CourseChapter {
   id: string;
   title: string;
   shortTitle: string;
-  gradeLevel?: '4e' | '3e';
+  gradeLevel?: '5e' | '4e' | '3e';
   category: 'Activités numériques' | 'Activités géométriques' | 'Synthèse & Révision' | 'Cours Vidéos BFEM';
   icon: string;
   description: string;
@@ -91,7 +103,11 @@ export const SENEGAL_COURSES_4E: CourseChapter[] = courses4eJson as unknown as C
 export { SENEGAL_COURSES_3E } from './coursesData3e';
 import { SENEGAL_COURSES_3E } from './coursesData3e';
 
+export { SENEGAL_COURSES_5E } from './coursesData5e';
+import { SENEGAL_COURSES_5E } from './coursesData5e';
+
 export const ALL_SENEGAL_COURSES: CourseChapter[] = [
   ...SENEGAL_COURSES_3E,
   ...SENEGAL_COURSES_4E.map((c) => ({ ...c, gradeLevel: '4e' as const })),
+  ...SENEGAL_COURSES_5E,
 ];

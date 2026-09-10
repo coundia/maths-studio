@@ -81,9 +81,11 @@ export function extractCommentText(input: string): string {
 export function formatMathExpression(input: string): string {
   if (!input) return '';
   if (isCommentLine(input)) {
-    return '#' + extractCommentText(input);
+    return extractCommentText(input);
   }
   let str = input;
+  // Masquer le dièse (diez / # / \#) dans le rendu
+  str = str.replace(/\\#/g, '').replace(/(?<![a-zA-Z0-9])#(?![\?])/g, '');
   str = str.replace(/\\\$/g, '');
   str = str.replace(/\*\*([0-9]+)/g, '^{$1}');
   str = str.replace(/\\cdot\b/g, '\\times ');

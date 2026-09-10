@@ -29,7 +29,7 @@ interface CourseChapter {
   id: string;
   title: string;
   shortTitle: string;
-  gradeLevel?: '4e' | '3e';
+  gradeLevel?: '5e' | '4e' | '3e';
   category: string;
   icon: string;
   description: string;
@@ -49,10 +49,22 @@ function loadJson<T>(filename: string): T {
 }
 
 // In-memory cached data
+let cachedCourses5e: CourseChapter[] | null = null;
 let cachedCourses4e: CourseChapter[] | null = null;
 let cachedCourses3e: CourseChapter[] | null = null;
+let cachedExercises5e: Record<string, any[]> | null = null;
 let cachedExercises4e: Record<string, any[]> | null = null;
 let cachedExercises3e: Record<string, any[]> | null = null;
+
+function getCourses5e(): CourseChapter[] {
+  if (!cachedCourses5e) {
+    cachedCourses5e = loadJson<CourseChapter[]>('courses-5e.json').map((c) => ({
+      ...c,
+      gradeLevel: '5e',
+    }));
+  }
+  return cachedCourses5e;
+}
 
 function getCourses4e(): CourseChapter[] {
   if (!cachedCourses4e) {
@@ -75,7 +87,14 @@ function getCourses3e(): CourseChapter[] {
 }
 
 function getAllCourses(): CourseChapter[] {
-  return [...getCourses3e(), ...getCourses4e()];
+  return [...getCourses3e(), ...getCourses4e(), ...getCourses5e()];
+}
+
+function getExercises5e(): Record<string, any[]> {
+  if (!cachedExercises5e) {
+    cachedExercises5e = loadJson<Record<string, any[]>>('exercises-5e.json');
+  }
+  return cachedExercises5e;
 }
 
 function getExercises4e(): Record<string, any[]> {
@@ -95,7 +114,7 @@ function getExercises3e(): Record<string, any[]> {
 /**
  * GET /api/courses
  * Optional query params:
- * - grade: '4e' | '3e'
+ * - grade: '5e' | '4e' | '3e'
  * - category: string
  */
 export function getCoursesHandler(req: Request, res: Response) {
@@ -103,7 +122,9 @@ export function getCoursesHandler(req: Request, res: Response) {
     const { grade, category } = req.query;
     let list: CourseChapter[] = [];
 
-    if (grade === '4e') {
+    if (grade === '5e') {
+      list = getCourses5e();
+    } else if (grade === '4e') {
       list = getCourses4e();
     } else if (grade === '3e') {
       list = getCourses3e();
@@ -170,6 +191,11 @@ export function getChapterExercisesHandler(req: Request, res: Response) {
     const ex4 = getExercises4e();
     if (ex4[chapterId] && ex4[chapterId].length > 0) {
       return res.json(ex4[chapterId]);
+    }
+
+    const ex5 = getExercises5e();
+    if (ex5[chapterId] && ex5[chapterId].length > 0) {
+      return res.json(ex5[chapterId]);
     }
 
     // Check if course exists to create standard fallback exercises

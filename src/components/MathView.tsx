@@ -20,6 +20,10 @@ export const MathView: React.FC<MathViewProps> = ({
       // Remove accidental $ if present
       let cleanLatex = latex.replace(/^\$+|\$+$/g, '').trim();
 
+      // Masquer le dièse (diez / # / \#) dans le rendu
+      cleanLatex = cleanLatex.replace(/^(\{\\\#\}|\\\#|#+)\s*/, '');
+      cleanLatex = cleanLatex.replace(/\\#/g, '').replace(/(?<![a-zA-Z0-9])#(?![\?])/g, '');
+
       // Interpréter la multiplication comme '×' (\times) au lieu de '.' (\cdot) à l'affichage
       cleanLatex = cleanLatex
         .replace(/\\cdot\b/g, '\\times')

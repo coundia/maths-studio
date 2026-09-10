@@ -18,7 +18,7 @@ export interface QuickQuizQuestion {
 export interface QuickQuizData {
   chapterId: string;
   chapterTitle: string;
-  gradeLevel: '4e' | '3e';
+  gradeLevel: '5e' | '4e' | '3e';
   badge: string;
   questions: QuickQuizQuestion[];
 }
@@ -692,13 +692,13 @@ export const COURSES_QUIZZES_BANK: Record<string, QuickQuizData> = {
 
   'nombres-rationnels-operations': {
     chapterId: 'nombres-rationnels-operations',
-    chapterTitle: 'Nombres Rationnels : Opérations - 4e',
+    chapterTitle: 'Ensemble des nombres rationnels : Présentation et Opérations - 4e',
     gradeLevel: '4e',
-    badge: 'Quiz Spécifique 4e',
+    badge: 'Quiz Officiel 4e',
     questions: [
       {
         id: 'rat-1',
-        question: "Calculer 2/5 + 3/10 en réduisant au même dénominateur.",
+        question: "Calculer 2/5 + 3/10 en réduisant au plus petit dénominateur commun.",
         questionLatex: "\\frac{2}{5} + \\frac{3}{10} = \\frac{4}{10} + \\frac{3}{10}",
         options: [
           {
@@ -710,7 +710,7 @@ export const COURSES_QUIZZES_BANK: Record<string, QuickQuizData> = {
           {
             text: "5/15 = 1/3",
             isCorrect: false,
-            feedback: "GRAVE ERREUR : on n'additionne jamais les dénominateurs entre eux !"
+            feedback: "GRAVE ERREUR : on n'additionne JAMAIS les dénominateurs entre eux !"
           },
           {
             text: "6/50",
@@ -719,23 +719,23 @@ export const COURSES_QUIZZES_BANK: Record<string, QuickQuizData> = {
           }
         ],
         explanation: "Pour additionner deux fractions de dénominateurs différents, on cherche le dénominateur commun : 2/5 = 4/10, donc 4/10 + 3/10 = 7/10.",
-        ruleReminder: "Ne JAMAIS additionner les dénominateurs entre eux : a/c + b/c = (a+b)/c."
+        ruleReminder: "Ne JAMAIS additionner les dénominateurs entre eux : a/b + c/b = (a+c)/b."
       },
       {
         id: 'rat-2',
-        question: "Comment effectue-t-on la division de deux fractions : (a/b) ÷ (c/d) ?",
+        question: "Comment effectue-t-on la division de deux fractions : (a/b) ÷ (c/d) avec c ≠ 0 et d ≠ 0 ?",
         questionLatex: "\\frac{a}{b} \\div \\frac{c}{d} = \\, ?",
         options: [
           {
             text: "On multiplie la première par l'inverse de la seconde : (a/b) × (d/c)",
             latex: "\\frac{a}{b} \\times \\frac{d}{c}",
             isCorrect: true,
-            feedback: "Exactement ! Diviser revient à multiplier par l'inverse."
+            feedback: "Exactement ! Diviser revient à multiplier par l'inverse du diviseur."
           },
           {
-            text: "On divise les numérateurs et les dénominateurs",
+            text: "On divise les numérateurs et les dénominateurs directement",
             isCorrect: false,
-            feedback: "Faux : cette technique est source d'erreurs majeures."
+            feedback: "Faux : cette technique n'est pas la règle mathématique générale."
           },
           {
             text: "On inverse les deux fractions",
@@ -745,6 +745,81 @@ export const COURSES_QUIZZES_BANK: Record<string, QuickQuizData> = {
         ],
         explanation: "Diviser par un nombre non nul revient à multiplier par son inverse : (a/b) ÷ (c/d) = (a/b) × (d/c).",
         ruleReminder: "L'inverse de c/d est d/c (avec c et d non nuls)."
+      },
+      {
+        id: 'rat-3',
+        question: "D'après la règle du produit en croix, les rationnels 6/8 et 15/20 sont-ils égaux ?",
+        questionLatex: "6 \\times 20 = \\, ? \\quad \\text{et} \\quad 8 \\times 15 = \\, ?",
+        options: [
+          {
+            text: "Oui, car 6 × 20 = 120 et 8 × 15 = 120 (produits égaux)",
+            latex: "6 \\times 20 = 8 \\times 15 = 120",
+            isCorrect: true,
+            feedback: "Bravo ! Les deux produits en croix sont égaux à 120, donc les deux rationnels sont égaux."
+          },
+          {
+            text: "Non, car les numérateurs 6 et 15 sont différents",
+            isCorrect: false,
+            feedback: "Faux : deux fractions peuvent avoir des termes différents et représenter la même valeur (ex: 1/2 = 2/4)."
+          },
+          {
+            text: "Non, car 20 - 8 ≠ 15 - 6",
+            isCorrect: false,
+            feedback: "Faux : la différence n'intervient pas, seul le produit en croix compte !"
+          }
+        ],
+        explanation: "a/b = c/d si et seulement si a × d = b × c. Ici 6 × 20 = 120 et 8 × 15 = 120, l'égalité est donc vérifiée.",
+        ruleReminder: "Produit en croix : a/b = c/d ⟺ ad = bc."
+      },
+      {
+        id: 'rat-4',
+        question: "Quelle est la forme irréductible du nombre rationnel -42/70 ?",
+        questionLatex: "\\frac{-42}{70} = -\\frac{42 \\div 14}{70 \\div 14}",
+        options: [
+          {
+            text: "-3/5",
+            latex: "-\\frac{3}{5}",
+            isCorrect: true,
+            feedback: "Excellent ! Le PGCD de 42 et 70 est 14. 42 ÷ 14 = 3 et 70 ÷ 14 = 5."
+          },
+          {
+            text: "-21/35",
+            isCorrect: false,
+            feedback: "Incomplet : 21 et 35 sont encore divisibles par 7 !"
+          },
+          {
+            text: "3/5",
+            isCorrect: false,
+            feedback: "Attention : il y a un signe moins, le résultat doit rester négatif !"
+          }
+        ],
+        explanation: "En divisant le numérateur et le dénominateur par leur PGCD qui vaut 14, on obtient -3/5, qui est irréductible car 3 et 5 sont premiers entre eux.",
+        ruleReminder: "Une fraction est irréductible lorsque PGCD(|numérateur|, |dénominateur|) = 1."
+      },
+      {
+        id: 'rat-5',
+        question: "Priorités opératoires : quelle est la valeur exacte de 1/2 + 3/4 × 2/3 ?",
+        questionLatex: "\\frac{1}{2} + \\left(\\frac{3}{4} \\times \\frac{2}{3}\\right)",
+        options: [
+          {
+            text: "1",
+            latex: "\\frac{1}{2} + \\frac{1}{2} = 1",
+            isCorrect: true,
+            feedback: "Magnifique ! La multiplication est prioritaire : (3/4) × (2/3) = 6/12 = 1/2. Puis 1/2 + 1/2 = 1."
+          },
+          {
+            text: "5/6",
+            isCorrect: false,
+            feedback: "Erreur de priorité : vous avez additionné 1/2 + 3/4 avant de multiplier !"
+          },
+          {
+            text: "2/3",
+            isCorrect: false,
+            feedback: "Erreur de calcul dans la simplification."
+          }
+        ],
+        explanation: "La multiplication s'effectue d'abord : 3/4 × 2/3 = (3×2)/(4×3) = 1/2. Ensuite, 1/2 + 1/2 = 2/2 = 1.",
+        ruleReminder: "Toujours respecter la priorité des multiplications et divisions sur les additions et soustractions !"
       }
     ]
   },
