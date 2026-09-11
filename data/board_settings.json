@@ -2,7 +2,7 @@
   "themeStyle": "classic-slate",
   "gridPattern": "grid-small",
   "gridOpacity": 0.15,
-  "fontSize": 5,
+  "fontSize": 2,
   "zoomStep": 0.2,
   "alignment": "center",
   "showLineNumbers": true,
@@ -18,5 +18,16 @@
     "#84cc16",
     "#f97316"
   ],
-  "aiToken": "AQ.Ab8RN6IQhIl7XHq_vbzERfjf2o7TEIj94kCaIExUug_TEjDPCw"
+  "aiToken": "AQ.Ab8RN6IQhIl7XHq_vbzERfjf2o7TEIj94kCaIExUug_TEjDPCw",
+  "aiIncludeComments": true,
+  "customOperations": [
+    "Factorisation",
+    "Développement",
+    "Réduction",
+    "Résolution",
+    "Mise au même dénominateur",
+    "Dérivation",
+    "Intégration",
+    "Calcul"
+  ]
 }
