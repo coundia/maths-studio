@@ -246,23 +246,23 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
   };
 
   return (
-    <div className="flex flex-col space-y-4 bg-slate-900/95 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-2xl backdrop-blur-md">
+    <div className="flex flex-col space-y-4 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-6 shadow-2xl backdrop-blur-md">
       {/* Engine Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200 dark:border-slate-800">
         <div>
           <div className="flex items-center space-x-2">
-            <span className="px-2.5 py-1 rounded-md bg-red-500/20 text-red-400 font-mono text-xs font-bold uppercase tracking-wider border border-red-500/40 flex items-center shadow-sm">
-              <Zap className="w-3.5 h-3.5 mr-1 text-red-400 animate-pulse" />
+            <span className="px-2.5 py-1 rounded-md bg-red-500/20 text-red-600 dark:text-red-400 font-mono text-xs font-bold uppercase tracking-wider border border-red-500/40 flex items-center shadow-sm">
+              <Zap className="w-3.5 h-3.5 mr-1 text-red-600 dark:text-red-400 animate-pulse" />
               Moteur de Déplacement & Facteur Commun Rouge
             </span>
-            <span className="text-slate-400 text-xs font-medium">
+            <span className="text-slate-600 dark:text-slate-400 text-xs font-medium">
               Étape {currentStage} / 5
             </span>
           </div>
           <h3 className="text-base sm:text-lg font-bold text-black dark:text-white mt-1">
             Visualisation Dynamique : Extraction du Facteur Commun
           </h3>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-slate-600 dark:text-slate-400">
             Regardez les chiffres et expressions glisser physiquement vers l'avant pour former le produit factorisé.
           </p>
         </div>
@@ -270,7 +270,7 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
         {/* Speed & Playback Controls */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Speed Selector */}
-          <div className="flex items-center bg-slate-950/80 rounded-lg p-0.5 border border-slate-800 text-xs shrink-0">
+          <div className="flex items-center bg-slate-100/80 dark:bg-slate-950/80 rounded-lg p-0.5 border border-slate-200 dark:border-slate-800 text-xs shrink-0">
             {[0.5, 1, 1.5].map((speed) => (
               <button
                 key={speed}
@@ -278,7 +278,7 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
                 className={`px-2 py-1 rounded text-[11px] font-mono transition-colors min-h-[32px] ${
                   playbackSpeed === speed
                     ? 'bg-red-600 text-white font-bold shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
                 }`}
                 title={`Vitesse d'animation x${speed}`}
               >
@@ -290,7 +290,7 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
           {/* Replay */}
           <button
             onClick={handleReplay}
-            className="min-h-[36px] min-w-[36px] p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors flex items-center justify-center shrink-0"
+            className="min-h-[36px] min-w-[36px] p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 transition-colors flex items-center justify-center shrink-0"
             title="Rejouer l'animation depuis le début"
           >
             <RotateCcw className="w-4 h-4" />
@@ -322,7 +322,7 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
 
       {/* Preset Problem Selector Tabs */}
       <div className="flex overflow-x-auto sm:flex-wrap gap-2 pt-1 pb-1 sm:pb-0 scrollbar-thin">
-        <span className="text-xs text-slate-400 font-semibold self-center mr-1 shrink-0">
+        <span className="text-xs text-slate-600 dark:text-slate-400 font-semibold self-center mr-1 shrink-0">
           Exemples types 4e :
         </span>
         {FACTORIZATION_PRESETS.map((preset) => {
@@ -333,12 +333,12 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
               onClick={() => handleSelectPreset(preset.id)}
               className={`shrink-0 sm:shrink px-3 py-2 rounded-xl text-xs font-mono font-medium transition-all border min-h-[42px] text-left ${
                 isSelected
-                  ? 'bg-red-950/60 border-red-500 text-red-200 font-bold shadow-md shadow-red-950/50'
-                  : 'bg-slate-950/70 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white'
+                  ? 'bg-red-50/60 dark:bg-red-950/60 border-red-500 text-red-800 dark:text-red-200 font-bold shadow-md shadow-red-950/50'
+                  : 'bg-slate-100/70 dark:bg-slate-950/70 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <span className="block font-bold">{preset.expressionLatex}</span>
-              <span className="text-[10px] text-slate-400 block font-sans truncate max-w-[120px]">
+              <span className="text-[10px] text-slate-600 dark:text-slate-400 block font-sans truncate max-w-[120px]">
                 {preset.categoryLabel}
               </span>
             </button>
@@ -347,20 +347,20 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
       </div>
 
       {/* STAGE SCRUBBER BAR (1 to 5) */}
-      <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80 flex flex-col space-y-2">
+      <div className="bg-slate-100/80 dark:bg-slate-950/80 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800/80 flex flex-col space-y-2">
         {/* Desktop Stage Labels */}
-        <div className="hidden sm:flex items-center justify-between text-xs text-slate-400 px-1 font-medium gap-1">
-          <span className={currentStage === 1 ? 'text-white font-bold' : ''}>1. Brute</span>
-          <span className={currentStage === 2 ? 'text-red-400 font-bold' : ''}>2. Facteur Rouge</span>
-          <span className={currentStage === 3 ? 'text-amber-400 font-bold' : ''}>3. Déplacement</span>
-          <span className={currentStage === 4 ? 'text-indigo-400 font-bold' : ''}>4. Crochets</span>
-          <span className={currentStage === 5 ? 'text-emerald-400 font-bold' : ''}>5. Factorisé !</span>
+        <div className="hidden sm:flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 px-1 font-medium gap-1">
+          <span className={currentStage === 1 ? 'text-slate-900 dark:text-white font-bold' : ''}>1. Brute</span>
+          <span className={currentStage === 2 ? 'text-red-600 dark:text-red-400 font-bold' : ''}>2. Facteur Rouge</span>
+          <span className={currentStage === 3 ? 'text-amber-600 dark:text-amber-400 font-bold' : ''}>3. Déplacement</span>
+          <span className={currentStage === 4 ? 'text-indigo-600 dark:text-indigo-400 font-bold' : ''}>4. Crochets</span>
+          <span className={currentStage === 5 ? 'text-emerald-600 dark:text-emerald-400 font-bold' : ''}>5. Factorisé !</span>
         </div>
 
         {/* Mobile Active Stage Indicator */}
-        <div className="sm:hidden flex items-center justify-between text-xs font-bold px-1 text-white">
-          <span className="text-slate-400">Étape {currentStage}/5</span>
-          <span className="text-red-400 font-mono text-[11px] truncate max-w-[200px]">
+        <div className="sm:hidden flex items-center justify-between text-xs font-bold px-1 text-slate-900 dark:text-white">
+          <span className="text-slate-600 dark:text-slate-400">Étape {currentStage}/5</span>
+          <span className="text-red-600 dark:text-red-400 font-mono text-[11px] truncate max-w-[200px]">
             {currentStage === 1 && '1. Expression brute'}
             {currentStage === 2 && '2. Facteur commun en ROUGE'}
             {currentStage === 3 && '3. Déplacement physique'}
@@ -382,7 +382,7 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
                   ? 'bg-red-500 ring-2 ring-red-400/60 scale-y-125'
                   : currentStage > stepNum
                   ? 'bg-emerald-500'
-                  : 'bg-slate-800 hover:bg-slate-700'
+                  : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700'
               }`}
               title={`Étape ${stepNum}`}
             />
@@ -391,7 +391,7 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
       </div>
 
       {/* MAIN DYNAMIC ANIMATION ARENA */}
-      <div className="relative min-h-[340px] sm:min-h-[380px] bg-slate-950/90 rounded-2xl border border-slate-800/80 p-3 sm:p-6 flex flex-col items-center justify-center overflow-hidden shadow-inner w-full">
+      <div className="relative min-h-[340px] sm:min-h-[380px] bg-slate-100/90 dark:bg-slate-950/90 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 p-3 sm:p-6 flex flex-col items-center justify-center overflow-hidden shadow-inner w-full">
         {/* Decorative background grid */}
         <div
           className="absolute inset-0 opacity-10 pointer-events-none"
@@ -414,7 +414,7 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
           >
             {/* STAGE BADGE INDICATOR */}
             <div className="flex items-center space-x-2">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-slate-300">
+              <span className="text-xs font-mono font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300">
                 Étape {currentStage} :{' '}
                 {currentStage === 1 && 'Expression brute'}
                 {currentStage === 2 && 'Mise en ROUGE du Facteur Commun'}
@@ -426,18 +426,18 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
 
             {/* --- VISUAL STAGE 1: RAW EXPRESSION BLOCKS --- */}
             {currentStage === 1 && (
-              <div className="flex items-center justify-center gap-3 p-4 bg-slate-900/90 rounded-2xl border border-slate-800 shadow-xl">
+              <div className="flex items-center justify-center gap-3 p-4 bg-white/90 dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl">
                 {/* Term 1 */}
                 <motion.div
                   initial={{ y: 15, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  className="px-4 py-3 rounded-xl bg-slate-800 text-slate-100 font-mono text-lg sm:text-2xl font-bold border border-slate-700 shadow-md"
+                  className="px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-mono text-lg sm:text-2xl font-bold border border-slate-300 dark:border-slate-700 shadow-md"
                 >
                   {activeProblem.term1Original}
                 </motion.div>
 
                 {/* Operator */}
-                <span className="text-xl sm:text-2xl font-bold text-slate-400 font-mono">
+                <span className="text-xl sm:text-2xl font-bold text-slate-600 dark:text-slate-400 font-mono">
                   {activeProblem.operator}
                 </span>
 
@@ -446,7 +446,7 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
                   initial={{ y: 15, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.15 }}
-                  className="px-4 py-3 rounded-xl bg-slate-800 text-slate-100 font-mono text-lg sm:text-2xl font-bold border border-slate-700 shadow-md"
+                  className="px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-mono text-lg sm:text-2xl font-bold border border-slate-300 dark:border-slate-700 shadow-md"
                 >
                   {activeProblem.term2Original}
                 </motion.div>
@@ -456,47 +456,47 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
             {/* --- VISUAL STAGE 2: FACTOR REVEALED IN RED --- */}
             {currentStage === 2 && (
               <div className="flex flex-col items-center space-y-3">
-                <div className="flex flex-wrap items-center justify-center gap-3 p-4 bg-slate-900/90 rounded-2xl border border-slate-800 shadow-xl">
+                <div className="flex flex-wrap items-center justify-center gap-3 p-4 bg-white/90 dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl">
                   {/* Term 1 Decomposed */}
-                  <div className="flex items-center space-x-1.5 p-2 rounded-xl bg-slate-950 border border-slate-800">
+                  <div className="flex items-center space-x-1.5 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800">
                     <motion.div
                       initial={{ scale: 0.8, backgroundColor: '#1e293b' }}
                       animate={{ scale: [1, 1.15, 1], backgroundColor: '#ef4444' }}
                       transition={{ duration: 0.6, repeat: 1 }}
-                      className="px-3 py-2 rounded-lg font-mono text-lg sm:text-2xl font-extrabold text-white shadow-lg ring-4 ring-red-500/40"
+                      className="px-3 py-2 rounded-lg font-mono text-lg sm:text-2xl font-extrabold text-slate-900 dark:text-white shadow-lg ring-4 ring-red-500/40"
                     >
                       {activeProblem.term1FactorRed}
                     </motion.div>
-                    <span className="text-slate-500 font-mono text-lg">×</span>
-                    <div className="px-3 py-2 rounded-lg bg-slate-800 font-mono text-lg sm:text-2xl font-bold text-slate-200 border border-slate-700">
+                    <span className="text-slate-500 dark:text-slate-400 font-mono text-lg">×</span>
+                    <div className="px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 font-mono text-lg sm:text-2xl font-bold text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700">
                       {activeProblem.term1Remaining}
                     </div>
                   </div>
 
                   {/* Operator */}
-                  <span className="text-xl sm:text-2xl font-bold text-slate-400 font-mono">
+                  <span className="text-xl sm:text-2xl font-bold text-slate-600 dark:text-slate-400 font-mono">
                     {activeProblem.operator}
                   </span>
 
                   {/* Term 2 Decomposed */}
-                  <div className="flex items-center space-x-1.5 p-2 rounded-xl bg-slate-950 border border-slate-800">
+                  <div className="flex items-center space-x-1.5 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800">
                     <motion.div
                       initial={{ scale: 0.8, backgroundColor: '#1e293b' }}
                       animate={{ scale: [1, 1.15, 1], backgroundColor: '#ef4444' }}
                       transition={{ duration: 0.6, delay: 0.2, repeat: 1 }}
-                      className="px-3 py-2 rounded-lg font-mono text-lg sm:text-2xl font-extrabold text-white shadow-lg ring-4 ring-red-500/40"
+                      className="px-3 py-2 rounded-lg font-mono text-lg sm:text-2xl font-extrabold text-slate-900 dark:text-white shadow-lg ring-4 ring-red-500/40"
                     >
                       {activeProblem.term2FactorRed}
                     </motion.div>
-                    <span className="text-slate-500 font-mono text-lg">×</span>
-                    <div className="px-3 py-2 rounded-lg bg-slate-800 font-mono text-lg sm:text-2xl font-bold text-slate-200 border border-slate-700">
+                    <span className="text-slate-500 dark:text-slate-400 font-mono text-lg">×</span>
+                    <div className="px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 font-mono text-lg sm:text-2xl font-bold text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700">
                       {activeProblem.term2Remaining}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-2 text-xs text-red-400 font-semibold bg-red-950/40 px-3 py-1 rounded-full border border-red-500/30">
-                  <Sparkles className="w-3.5 h-3.5 text-red-400" />
+                <div className="flex items-center space-x-2 text-xs text-red-600 dark:text-red-400 font-semibold bg-red-50/40 dark:bg-red-950/40 px-3 py-1 rounded-full border border-red-500/30">
+                  <Sparkles className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
                   <span>Facteur commun détecté : </span>
                   <span className="font-mono font-bold text-white bg-red-600 px-2 py-0.5 rounded">
                     {activeProblem.commonFactor}
@@ -509,34 +509,34 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
             {currentStage === 3 && (
               <div className="flex flex-col items-center space-y-2 w-full max-w-xl mx-auto">
                 {/* 1. ORIGIN TIER: The decomposed expression showing both red factors */}
-                <div className="w-full bg-slate-900/90 rounded-xl border border-slate-800 p-3 shadow-md">
-                  <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider text-center mb-2">
+                <div className="w-full bg-white/90 dark:bg-slate-900/90 rounded-xl border border-slate-200 dark:border-slate-800 p-3 shadow-md">
+                  <div className="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider text-center mb-2">
                     Position de départ : facteur rouge présent dans chaque terme
                   </div>
                   <div className="flex items-center justify-between sm:justify-around px-2 sm:px-6">
                     {/* Term 1 Decomposed */}
-                    <div className="flex items-center space-x-1 p-1.5 sm:p-2 rounded-lg bg-slate-950 border border-red-500/40 shadow">
+                    <div className="flex items-center space-x-1 p-1.5 sm:p-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-red-500/40 shadow">
                       <span className="px-2.5 py-1 rounded bg-red-600 font-mono text-base sm:text-xl font-black text-white shadow ring-2 ring-red-400">
                         {activeProblem.term1FactorRed}
                       </span>
-                      <span className="text-slate-500 font-mono text-sm">×</span>
-                      <span className="px-2 py-1 rounded bg-slate-800 font-mono text-sm sm:text-base text-slate-300">
+                      <span className="text-slate-500 dark:text-slate-400 font-mono text-sm">×</span>
+                      <span className="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 font-mono text-sm sm:text-base text-slate-700 dark:text-slate-300">
                         {activeProblem.term1Remaining}
                       </span>
                     </div>
 
                     {/* Operator */}
-                    <span className="text-xl font-black font-mono text-slate-400 px-2">
+                    <span className="text-xl font-black font-mono text-slate-600 dark:text-slate-400 px-2">
                       {activeProblem.operator}
                     </span>
 
                     {/* Term 2 Decomposed */}
-                    <div className="flex items-center space-x-1 p-1.5 sm:p-2 rounded-lg bg-slate-950 border border-red-500/40 shadow">
+                    <div className="flex items-center space-x-1 p-1.5 sm:p-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-red-500/40 shadow">
                       <span className="px-2.5 py-1 rounded bg-red-600 font-mono text-base sm:text-xl font-black text-white shadow ring-2 ring-red-400">
                         {activeProblem.term2FactorRed}
                       </span>
-                      <span className="text-slate-500 font-mono text-sm">×</span>
-                      <span className="px-2 py-1 rounded bg-slate-800 font-mono text-sm sm:text-base text-slate-300">
+                      <span className="text-slate-500 dark:text-slate-400 font-mono text-sm">×</span>
+                      <span className="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 font-mono text-sm sm:text-base text-slate-700 dark:text-slate-300">
                         {activeProblem.term2Remaining}
                       </span>
                     </div>
@@ -594,8 +594,8 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
                 </div>
 
                 {/* 3. DESTINATION TIER: United common factor at front with remaining elements grouped */}
-                <div className="w-full bg-slate-900/90 rounded-2xl border-2 border-red-500/50 p-3 sm:p-4 shadow-xl shadow-red-950/40">
-                  <div className="text-[11px] font-bold text-red-300 uppercase tracking-wider text-center mb-2">
+                <div className="w-full bg-white/90 dark:bg-slate-900/90 rounded-2xl border-2 border-red-500/50 p-3 sm:p-4 shadow-xl shadow-red-950/40">
+                  <div className="text-[11px] font-bold text-red-700 dark:text-red-300 uppercase tracking-wider text-center mb-2">
                     Position d'arrivée : le facteur rouge est extrait en tête
                   </div>
                   <div className="flex flex-wrap items-center justify-center gap-2.5">
@@ -607,34 +607,34 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
                       className="px-3.5 py-1.5 sm:py-2 rounded-xl bg-red-600 text-white font-mono text-lg sm:text-2xl font-black shadow-lg ring-4 ring-red-400/50 flex items-center space-x-1.5 shrink-0"
                     >
                       <span>{activeProblem.commonFactor}</span>
-                      <span className="text-[10px] bg-red-950/80 px-2 py-0.5 rounded text-red-200 uppercase font-sans font-bold">
+                      <span className="text-[10px] bg-red-50/80 dark:bg-red-950/80 px-2 py-0.5 rounded text-red-800 dark:text-red-200 uppercase font-sans font-bold">
                         En tête
                       </span>
                     </motion.div>
 
                     {/* Multiplication symbol */}
-                    <span className="text-xl sm:text-2xl font-mono text-slate-400 font-bold">×</span>
+                    <span className="text-xl sm:text-2xl font-mono text-slate-600 dark:text-slate-400 font-bold">×</span>
 
                     {/* Grouped leftovers */}
-                    <div className="flex items-center space-x-1.5 p-1.5 sm:p-2 bg-slate-950 rounded-xl border border-dashed border-slate-700">
-                      <span className="font-mono text-base sm:text-xl font-bold text-slate-400">[</span>
-                      <span className="font-mono text-sm sm:text-lg text-slate-200 font-semibold px-2 py-0.5 rounded bg-slate-800">
+                    <div className="flex items-center space-x-1.5 p-1.5 sm:p-2 bg-slate-100 dark:bg-slate-800 rounded-xl border border-dashed border-slate-300 dark:border-slate-700">
+                      <span className="font-mono text-base sm:text-xl font-bold text-slate-600 dark:text-slate-400">[</span>
+                      <span className="font-mono text-sm sm:text-lg text-slate-800 dark:text-slate-200 font-semibold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800">
                         {activeProblem.term1Remaining}
                       </span>
-                      <span className="font-mono text-base sm:text-xl font-bold text-slate-400">
+                      <span className="font-mono text-base sm:text-xl font-bold text-slate-600 dark:text-slate-400">
                         {activeProblem.operator}
                       </span>
-                      <span className="font-mono text-sm sm:text-lg text-slate-200 font-semibold px-2 py-0.5 rounded bg-slate-800">
+                      <span className="font-mono text-sm sm:text-lg text-slate-800 dark:text-slate-200 font-semibold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800">
                         {activeProblem.term2Remaining}
                       </span>
-                      <span className="font-mono text-base sm:text-xl font-bold text-slate-400">]</span>
+                      <span className="font-mono text-base sm:text-xl font-bold text-slate-600 dark:text-slate-400">]</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Educational Banner */}
-                <div className="text-xs text-amber-300 font-medium bg-amber-950/40 px-3.5 py-1.5 rounded-full border border-amber-500/30 flex items-center space-x-2 shadow mt-1">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <div className="text-xs text-amber-700 dark:text-amber-300 font-medium bg-amber-50/40 dark:bg-amber-950/40 px-3.5 py-1.5 rounded-full border border-amber-500/30 flex items-center space-x-2 shadow mt-1">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>
                     Les facteurs rouges ont quitté chaque terme pour se réunir en un unique facteur devant !
                   </span>
@@ -645,7 +645,7 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
             {/* --- VISUAL STAGE 4: CROCHETS WRAPPING REMAINING TERMS --- */}
             {currentStage === 4 && (
               <div className="flex flex-col items-center space-y-3">
-                <div className="flex items-center justify-center gap-2 p-4 bg-slate-900/90 rounded-2xl border border-indigo-500/40 shadow-2xl">
+                <div className="flex items-center justify-center gap-2 p-4 bg-white/90 dark:bg-slate-900/90 rounded-2xl border border-indigo-500/40 shadow-2xl">
                   {/* Common Factor in Red */}
                   <div className="px-4 py-2.5 rounded-xl bg-red-600 text-white font-mono text-xl sm:text-3xl font-extrabold shadow-lg">
                     {activeProblem.commonFactor}
@@ -655,20 +655,20 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="text-3xl sm:text-4xl font-extrabold text-indigo-400 font-mono"
+                    className="text-3xl sm:text-4xl font-extrabold text-indigo-600 dark:text-indigo-400 font-mono"
                   >
                     [
                   </motion.span>
 
                   {/* Remaining Terms in Bracket */}
                   <div className="flex items-center space-x-2 px-2">
-                    <span className="font-mono text-lg sm:text-2xl font-bold text-slate-100">
+                    <span className="font-mono text-lg sm:text-2xl font-bold text-slate-900 dark:text-slate-100">
                       {activeProblem.term1Remaining}
                     </span>
-                    <span className="font-mono text-lg sm:text-2xl font-bold text-indigo-300">
+                    <span className="font-mono text-lg sm:text-2xl font-bold text-indigo-700 dark:text-indigo-300">
                       {activeProblem.operator}
                     </span>
-                    <span className="font-mono text-lg sm:text-2xl font-bold text-slate-100">
+                    <span className="font-mono text-lg sm:text-2xl font-bold text-slate-900 dark:text-slate-100">
                       {activeProblem.term2Remaining}
                     </span>
                   </div>
@@ -677,13 +677,13 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="text-3xl sm:text-4xl font-extrabold text-indigo-400 font-mono"
+                    className="text-3xl sm:text-4xl font-extrabold text-indigo-600 dark:text-indigo-400 font-mono"
                   >
                     ]
                   </motion.span>
                 </div>
 
-                <p className="text-xs text-slate-300">
+                <p className="text-xs text-slate-700 dark:text-slate-300">
                   Les termes restants sont enfermés dans les crochets : <MathView latex={activeProblem.groupedBracketLatex} display={false} />
                 </p>
               </div>
@@ -696,21 +696,21 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: 'spring', stiffness: 150 }}
-                  className="p-5 rounded-2xl bg-gradient-to-r from-red-950/60 via-slate-900 to-emerald-950/60 border border-emerald-500/50 shadow-2xl text-center flex flex-col items-center"
+                  className="p-5 rounded-2xl bg-gradient-to-r from-red-50/60 dark:from-red-950/60 via-slate-100 dark:via-slate-900 to-emerald-50/60 dark:to-emerald-950/60 border border-emerald-500/50 shadow-2xl text-center flex flex-col items-center"
                 >
-                  <span className="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     Forme factorisée finale
                   </span>
-                  <div className="text-2xl sm:text-4xl font-extrabold text-white font-mono py-2">
+                  <div className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-mono py-2">
                     <MathView latex={activeProblem.finalSimplifiedLatex} display={true} />
                   </div>
                 </motion.div>
 
                 {/* Verification card */}
-                <div className="p-3 rounded-xl bg-slate-950/90 border border-slate-800 text-xs text-slate-300 space-y-1 text-center">
-                  <span className="font-bold text-emerald-400">Vérification par développement :</span>
-                  <div className="font-mono text-slate-200">
+                <div className="p-3 rounded-xl bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 space-y-1 text-center">
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400">Vérification par développement :</span>
+                  <div className="font-mono text-slate-800 dark:text-slate-200">
                     <MathView latex={activeProblem.verificationLatex} display={false} />
                   </div>
                 </div>
@@ -718,11 +718,11 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
             )}
 
             {/* LaTeX Mathematical Formula Sync */}
-            <div className="w-full max-w-xl p-3 rounded-xl bg-slate-950/90 border border-slate-800 text-center">
-              <div className="text-[11px] font-mono uppercase text-slate-400 mb-1">
+            <div className="w-full max-w-xl p-3 rounded-xl bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-800 text-center">
+              <div className="text-[11px] font-mono uppercase text-slate-600 dark:text-slate-400 mb-1">
                 Écriture algébrique rigoureuse
               </div>
-              <div className="text-lg sm:text-xl font-bold text-white overflow-x-auto">
+              <div className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white overflow-x-auto">
                 {currentStage === 1 && <MathView latex={activeProblem.expressionLatex} display={false} />}
                 {currentStage === 2 && (
                   <MathView
@@ -742,8 +742,8 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
             </div>
 
             {/* Pedagogical Step Explanation */}
-            <div className="max-w-xl text-center px-4 bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium">
+            <div className="max-w-xl text-center px-4 bg-white/60 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+              <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed font-medium">
                 {getExplanationForStage(currentStage)}
               </p>
             </div>
@@ -761,8 +761,8 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
           disabled={currentStage === 1}
           className={`flex-1 flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl font-medium text-xs sm:text-sm transition-colors ${
             currentStage === 1
-              ? 'bg-slate-800/40 text-slate-600 cursor-not-allowed border border-slate-800/50'
-              : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
+              ? 'bg-slate-100/40 dark:bg-slate-800/40 text-slate-600 dark:text-slate-400 cursor-not-allowed border border-slate-200/50 dark:border-slate-800/50'
+              : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700'
           }`}
         >
           <ChevronLeft className="w-4 h-4" />
@@ -791,7 +791,7 @@ export const FactorizationEngine: React.FC<FactorizationEngineProps> = ({
         <div className="pt-2 flex justify-end">
           <button
             onClick={() => onOpenAlgebraSolver(activeProblem.expressionLatex)}
-            className="text-xs text-red-400 hover:text-red-300 font-semibold underline flex items-center space-x-1"
+            className="text-xs text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-semibold underline flex items-center space-x-1"
           >
             <span>Ouvrir cette factorisation dans le bac à sable de calcul complet</span>
             <ArrowRight className="w-3.5 h-3.5" />

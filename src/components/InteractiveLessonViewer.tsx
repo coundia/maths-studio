@@ -9,7 +9,10 @@ import { StudentExercisesSection } from './StudentExercisesSection';
 import { QuickQuiz } from './QuickQuiz';
 import { getExercisesForChapter } from '../data/getCourseExercises';
 import { CoursePrerequisitesDrawer } from './CoursePrerequisitesDrawer';
+import { LessonSummaryDrawer } from './LessonSummaryDrawer';
 import { getChapterPrerequisites } from '../data/coursePrerequisites';
+import { getGradeLevel, GRADE_LABEL, GradeLevel } from '../data/gradeLevel';
+import { GeometryVisualizers6e } from './GeometryVisualizers6e';
 import {
   Play,
   Pause,
@@ -29,10 +32,19 @@ import {
   BookOpen,
   Award,
   Layers,
+  ClipboardList,
 } from 'lucide-react';
 import { CourseSheetViewer } from './CourseSheetViewer';
 
 export type LessonTabMode = 'animation' | 'cours-complet' | 'methodes-bfem' | 'exercices';
+
+/** Couleur du badge de classe, cohérente avec les onglets de niveau du sommaire. */
+const GRADE_BADGE_STYLE: Record<GradeLevel, string> = {
+  '6e': 'bg-rose-500/20 text-rose-700 dark:text-rose-300 border-rose-500/40',
+  '5e': 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/40',
+  '4e': 'bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border-indigo-500/40',
+  '3e': 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/40',
+};
 
 interface InteractiveLessonViewerProps {
   chapter: CourseChapter;
@@ -57,6 +69,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
   const [hideSolutionForClass, setHideSolutionForClass] = useState<boolean>(false);
   const [isProjectorMode, setIsProjectorMode] = useState<boolean>(false);
   const [isPrerequisitesOpen, setIsPrerequisitesOpen] = useState<boolean>(false);
+  const [isSummaryOpen, setIsSummaryOpen] = useState<boolean>(false);
 
   // Dynamic state for interactive demos
   const [pythagoreSides, setPythagoreSides] = useState<{ ab: number; ac: number }>({
@@ -75,6 +88,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
     setIsPlaying(false);
     setHideSolutionForClass(false);
     setIsPrerequisitesOpen(false);
+    setIsSummaryOpen(false);
     setActiveTabMode('animation');
   }, [chapter.id]);
 
@@ -113,27 +127,49 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
           onOpenPrerequisites={() => setIsPrerequisitesOpen(true)}
         />
 
-        {/* Floating Quick-Access Right Drawer Trigger */}
-        <button
-          onClick={() => setIsPrerequisitesOpen(true)}
-          className="fixed right-0 top-1/2 -translate-y-1/2 z-30 flex items-center px-2 py-3 rounded-l-2xl shadow-xl border-y border-l bg-white text-black hover:bg-neutral-50 border-neutral-300 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-slate-800 transition-all group"
-          title="Ouvrir les prérequis du cours (Rappels de 5e)"
-          aria-label="Ouvrir les prérequis"
-        >
-          <div className="flex flex-col items-center space-y-1">
-            <BookOpenCheck className="w-4 h-4 text-red-600 dark:text-amber-400 group-hover:scale-110 transition-transform" />
-            <span className="text-[10px] font-bold [writing-mode:vertical-rl] rotate-180 uppercase tracking-wider py-0.5">
-              Prérequis ({prerequisites.length})
-            </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-red-600 dark:bg-amber-400 animate-pulse" />
-          </div>
-        </button>
+        {/* Floating Quick-Access Right Drawer Triggers */}
+        <div className="fixed right-0 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col gap-2">
+          <button
+            onClick={() => setIsPrerequisitesOpen(true)}
+            className="flex items-center px-2 py-3 rounded-l-2xl shadow-xl border-y border-l bg-white text-black hover:bg-neutral-50 border-neutral-300 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-slate-800 transition-all group"
+            title="Ouvrir les prérequis du cours (Rappels de 5e)"
+            aria-label="Ouvrir les prérequis"
+          >
+            <div className="flex flex-col items-center space-y-1">
+              <BookOpenCheck className="w-4 h-4 text-red-600 dark:text-amber-400 group-hover:scale-110 transition-transform" />
+              <span className="text-[10px] font-bold [writing-mode:vertical-rl] rotate-180 uppercase tracking-wider py-0.5">
+                Prérequis ({prerequisites.length})
+              </span>
+              <span className="w-1.5 h-1.5 rounded-full bg-red-600 dark:bg-amber-400 animate-pulse" />
+            </div>
+          </button>
+
+          <button
+            onClick={() => setIsSummaryOpen(true)}
+            className="flex items-center px-2 py-3 rounded-l-2xl shadow-xl border-y border-l bg-white text-black hover:bg-neutral-50 border-neutral-300 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-slate-800 transition-all group"
+            title="Ouvrir la synthèse des formules à retenir"
+            aria-label="Ouvrir la synthèse"
+          >
+            <div className="flex flex-col items-center space-y-1">
+              <ClipboardList className="w-4 h-4 text-indigo-600 dark:text-sky-400 group-hover:scale-110 transition-transform" />
+              <span className="text-[10px] font-bold [writing-mode:vertical-rl] rotate-180 uppercase tracking-wider py-0.5">
+                Synthèse
+              </span>
+            </div>
+          </button>
+        </div>
 
         <CoursePrerequisitesDrawer
           isOpen={isPrerequisitesOpen}
           onClose={() => setIsPrerequisitesOpen(false)}
           chapter={chapter}
           onNavigateToChapter={onSelectChapter}
+        />
+
+        <LessonSummaryDrawer
+          isOpen={isSummaryOpen}
+          onClose={() => setIsSummaryOpen(false)}
+          chapter={chapter}
         />
       </>
     );
@@ -147,21 +183,18 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
       }`}
     >
       {/* Chapter Banner & Teacher Command Bar */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg backdrop-blur-sm">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-800/80">
+      <div className="bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg backdrop-blur-sm">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-200/80 dark:border-slate-800/80">
           <div>
             <div className="flex items-center space-x-2">
-              <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${
-                chapter.gradeLevel === '3e' || chapter.id.endsWith('-3e')
-                  ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                  : 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
-              }`}>
-                {chapter.gradeLevel === '3e' || chapter.id.endsWith('-3e') ? ' Classe de 3e (BFEM)' : ' Classe de 4e'}
+              <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${GRADE_BADGE_STYLE[getGradeLevel(chapter)]}`}>
+                {' '}Classe de {GRADE_LABEL[getGradeLevel(chapter)]}
+                {getGradeLevel(chapter) === '3e' ? ' (BFEM)' : ''}
               </span>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
                 {chapter.category}
               </span>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-mono bg-slate-800 text-slate-300">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
                 {currentDemo.badge}
               </span>
             </div>
@@ -175,13 +208,25 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
 
           {/* Teacher Quick Tools */}
           <div className="flex items-center flex-wrap gap-2">
+            {/* Pas de prérequis pour la 6e : c'est le premier niveau du catalogue. */}
+            {prerequisites.length > 0 && (
+              <button
+                onClick={() => setIsPrerequisitesOpen(true)}
+                title="Consulter les prérequis et rappels pour ce cours"
+                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border border-red-300/50 hover:border-red-300 dark:hover:border-red-600 bg-white hover:bg-neutral-100 text-black shadow-xs dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-amber-300 dark:border-amber-500/40"
+              >
+                <BookOpenCheck className="w-3.5 h-3.5 text-red-600 dark:text-amber-400" />
+                <span>Prérequis ({prerequisites.length})</span>
+              </button>
+            )}
+
             <button
-              onClick={() => setIsPrerequisitesOpen(true)}
-              title="Consulter les prérequis et rappels pour ce cours"
-              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border border-red-600/50 hover:border-red-600 bg-white hover:bg-neutral-100 text-black shadow-xs dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-amber-300 dark:border-amber-500/40"
+              onClick={() => setIsSummaryOpen(true)}
+              title="Ouvrir la synthèse des formules à retenir de ce cours"
+              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border border-indigo-300/50 hover:border-indigo-300 dark:hover:border-sky-600 bg-white hover:bg-neutral-100 text-black shadow-xs dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-sky-300 dark:border-sky-500/40"
             >
-              <BookOpenCheck className="w-3.5 h-3.5 text-red-600 dark:text-amber-400" />
-              <span>Prérequis ({prerequisites.length})</span>
+              <ClipboardList className="w-3.5 h-3.5 text-indigo-600 dark:text-sky-400" />
+              <span>Synthèse</span>
             </button>
 
             <button
@@ -221,18 +266,20 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
               <span className="text-emerald-900 dark:text-emerald-200 font-medium">{currentDemo.ruleSummary}</span>
             </div>
           </div>
-          <div className="pt-2 border-t border-emerald-300 dark:border-emerald-500/20 flex items-center justify-between text-xs flex-wrap gap-2">
-            <span className="text-emerald-800/80 dark:text-slate-300">
-              Des doutes sur les notions préalables ?
-            </span>
-            <button
-              onClick={() => setIsPrerequisitesOpen(true)}
-              className="text-emerald-700 hover:text-emerald-800 dark:text-amber-400 font-bold hover:underline flex items-center gap-1.5"
-            >
-              <BookOpenCheck className="w-3.5 h-3.5" />
-              <span>Ouvrir les prérequis indispensables ({prerequisites.length})</span>
-            </button>
-          </div>
+          {prerequisites.length > 0 && (
+            <div className="pt-2 border-t border-emerald-300 dark:border-emerald-500/20 flex items-center justify-between text-xs flex-wrap gap-2">
+              <span className="text-emerald-800/80 dark:text-slate-300">
+                Des doutes sur les notions préalables ?
+              </span>
+              <button
+                onClick={() => setIsPrerequisitesOpen(true)}
+                className="text-emerald-700 hover:text-emerald-800 dark:hover:text-emerald-200 dark:text-amber-400 font-bold hover:underline flex items-center gap-1.5"
+              >
+                <BookOpenCheck className="w-3.5 h-3.5" />
+                <span>Ouvrir les prérequis indispensables ({prerequisites.length})</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -291,7 +338,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
       {(activeTabMode === 'cours-complet' || activeTabMode === 'methodes-bfem') && (
         <CourseSheetViewer
           chapter={chapter}
-          onOpenPrerequisites={() => setIsPrerequisitesOpen(true)}
+          onOpenPrerequisites={prerequisites.length > 0 ? () => setIsPrerequisitesOpen(true) : undefined}
           onOpenAlgebraSolver={onOpenAlgebraSolver}
         />
       )}
@@ -322,9 +369,9 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
         <>
           {/* Multi-part Sub-Lessons Selector if Chapter has multiple demos */}
           {chapter.demos.length > 1 && (
-            <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-900/80 border border-slate-800 overflow-x-auto scrollbar-thin">
-              <span className="text-xs font-bold text-slate-400 flex items-center gap-1.5 whitespace-nowrap">
-                <Layers className="w-4 h-4 text-emerald-400" />
+            <div className="flex items-center gap-2 p-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 overflow-x-auto scrollbar-thin">
+              <span className="text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center gap-1.5 whitespace-nowrap">
+                <Layers className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 Parties du cours :
               </span>
               {chapter.demos.map((d, dIdx) => (
@@ -337,8 +384,8 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                   }}
                   className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border ${
                     activeDemoIdx === dIdx
-                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-sm font-bold'
-                      : 'bg-slate-800/80 hover:bg-slate-800 text-slate-400 border-transparent hover:text-slate-200'
+                      ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/50 shadow-sm font-bold'
+                      : 'bg-slate-100/80 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 border-transparent hover:text-slate-800 dark:hover:text-slate-200'
                   }`}
                 >
                   Partie {dIdx + 1} : {d.title}
@@ -350,18 +397,18 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
           {/* Main Split: Left = Heuristic Animated Stage, Right = Step-by-Step Derivation */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
         {/* Left Column: Visual Heuristic Interactive Stage (7 cols) */}
-        <div className="lg:col-span-7 flex flex-col bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl relative min-h-[460px] overflow-hidden">
+        <div className="lg:col-span-7 flex flex-col bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl relative min-h-[460px] overflow-hidden">
           {/* Header of Stage */}
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
             <div className="flex items-center space-x-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+              <span className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider">
                 Animation Heuristique : {currentDemo.title}
               </span>
             </div>
 
             {/* Step indicator */}
-            <div className="text-xs font-mono text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-lg border border-emerald-500/30">
+            <div className="text-xs font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-50/60 dark:bg-emerald-950/60 px-2.5 py-1 rounded-lg border border-emerald-500/30">
               Étape {currentStepIdx + 1} / {totalSteps}
             </div>
           </div>
@@ -491,22 +538,22 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
 
                 {/* Preset switcher for teacher */}
                 <div className="flex items-center space-x-2 mt-3 text-xs">
-                  <span className="text-slate-400">Tester d'autres triplets :</span>
+                  <span className="text-slate-600 dark:text-slate-400">Tester d'autres triplets :</span>
                   <button
                     onClick={() => setPythagoreSides({ ab: 3, ac: 4 })}
-                    className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 font-mono text-[11px] border border-slate-700"
+                    className="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-mono text-[11px] border border-slate-300 dark:border-slate-700"
                   >
                     3 - 4 - 5 cm
                   </button>
                   <button
                     onClick={() => setPythagoreSides({ ab: 6, ac: 8 })}
-                    className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 font-mono text-[11px] border border-slate-700"
+                    className="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-mono text-[11px] border border-slate-300 dark:border-slate-700"
                   >
                     6 - 8 - 10 cm
                   </button>
                   <button
                     onClick={() => setPythagoreSides({ ab: 5, ac: 12 })}
-                    className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 font-mono text-[11px] border border-slate-700"
+                    className="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-mono text-[11px] border border-slate-300 dark:border-slate-700"
                   >
                     5 - 12 - 13 cm
                   </button>
@@ -657,8 +704,8 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                 </svg>
 
                 {/* Slider to move M */}
-                <div className="w-full max-w-sm flex items-center space-x-3 mt-2 bg-slate-950/80 p-2.5 rounded-xl border border-slate-800">
-                  <span className="text-xs text-slate-300 whitespace-nowrap">Déplacer le point M :</span>
+                <div className="w-full max-w-sm flex items-center space-x-3 mt-2 bg-slate-100/80 dark:bg-slate-950/80 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
+                  <span className="text-xs text-slate-700 dark:text-slate-300 whitespace-nowrap">Déplacer le point M :</span>
                   <input
                     type="range"
                     min="1"
@@ -668,7 +715,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                     onChange={(e) => setMovingPointM(parseFloat(e.target.value))}
                     className="flex-1 accent-amber-500"
                   />
-                  <span className="text-xs font-mono text-amber-400 font-bold">HM = {movingPointM} cm</span>
+                  <span className="text-xs font-mono text-amber-600 dark:text-amber-400 font-bold">HM = {movingPointM} cm</span>
                 </div>
               </div>
             )}
@@ -678,8 +725,8 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
               <div className="w-full flex flex-col items-center">
                 {/* Visual warning on negative division */}
                 {currentStepIdx >= 2 && (
-                  <div className="mb-4 p-3 rounded-xl bg-rose-950/60 border border-rose-600 text-rose-200 text-xs sm:text-sm font-bold animate-bounce flex items-center space-x-2">
-                    <Zap className="w-4 h-4 text-rose-400 shrink-0" />
+                  <div className="mb-4 p-3 rounded-xl bg-rose-50/60 dark:bg-rose-950/60 border border-rose-300 dark:border-rose-600 text-rose-800 dark:text-rose-200 text-xs sm:text-sm font-bold animate-bounce flex items-center space-x-2">
+                    <Zap className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
                     <span>RÈGLE D'OR : Division par -2 (négatif) → Le signe s'inverse : ≤ devient ≥ !</span>
                   </div>
                 )}
@@ -744,9 +791,9 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                   )}
                 </svg>
 
-                <div className="text-xs text-slate-300 mt-2 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-center">
+                <div className="text-xs text-slate-700 dark:text-slate-300 mt-2 bg-slate-100 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
                   L'ensemble des solutions est l'intervalle :{' '}
-                  <span className="font-mono text-emerald-400 font-bold text-sm">S = [-3 ; +∞[</span>
+                  <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold text-sm">S = [-3 ; +∞[</span>
                 </div>
               </div>
             )}
@@ -817,8 +864,8 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                   )}
                 </svg>
 
-                <div className="text-xs text-slate-300 mt-2 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-center">
-                  Relation de Chasles : le point intermédiaire <span className="text-amber-400 font-bold">B</span> s'efface pour aller directement de <span className="text-sky-400 font-bold">A</span> à <span className="text-emerald-400 font-bold">C</span> !
+                <div className="text-xs text-slate-700 dark:text-slate-300 mt-2 bg-slate-100 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
+                  Relation de Chasles : le point intermédiaire <span className="text-amber-600 dark:text-amber-400 font-bold">B</span> s'efface pour aller directement de <span className="text-sky-600 dark:text-sky-400 font-bold">A</span> à <span className="text-emerald-600 dark:text-emerald-400 font-bold">C</span> !
                 </div>
               </div>
             )}
@@ -862,8 +909,8 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                 </svg>
 
                 {/* Interactive Slider */}
-                <div className="w-full max-w-sm flex items-center space-x-3 bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                  <span className="text-xs text-slate-300">Quantité de mangues :</span>
+                <div className="w-full max-w-sm flex items-center space-x-3 bg-slate-100 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
+                  <span className="text-xs text-slate-700 dark:text-slate-300">Quantité de mangues :</span>
                   <input
                     type="range"
                     min="1"
@@ -873,12 +920,12 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                     onChange={(e) => setLinearX(parseInt(e.target.value, 10))}
                     className="flex-1 accent-emerald-500"
                   />
-                  <span className="text-xs font-mono text-emerald-400 font-bold">{linearX} kg</span>
+                  <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">{linearX} kg</span>
                 </div>
 
-                <div className="text-xs text-slate-300 font-mono">
+                <div className="text-xs text-slate-700 dark:text-slate-300 font-mono">
                   Prix = f({linearX}) = 500 × {linearX} ={' '}
-                  <span className="text-emerald-400 font-bold text-sm">
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold text-sm">
                     {(linearX * 500).toLocaleString()} FCFA
                   </span>
                 </div>
@@ -898,30 +945,30 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                 const pgcd = params.pgcd ?? 14;
                 return (
                   <div className="w-full flex flex-col items-center space-y-3 max-w-lg">
-                    <div className="w-full p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center space-y-3">
-                      <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+                    <div className="w-full p-4 rounded-xl bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 flex flex-col items-center space-y-3">
+                      <span className="text-xs text-slate-600 dark:text-slate-400 font-semibold uppercase tracking-wider">
                         Décomposition & Recherche du PGCD
                       </span>
                       <div className="flex items-center space-x-4 text-base sm:text-lg font-mono font-bold">
                         <div className="flex flex-col items-center">
-                          <span className="text-sky-400">{num}</span>
+                          <span className="text-sky-600 dark:text-sky-400">{num}</span>
                           <div className="w-12 h-0.5 bg-slate-400 my-0.5" />
-                          <span className="text-sky-400">{den}</span>
+                          <span className="text-sky-600 dark:text-sky-400">{den}</span>
                         </div>
-                        <span className="text-slate-500">=</span>
+                        <span className="text-slate-500 dark:text-slate-400">=</span>
                         <div className="flex flex-col items-center">
-                          <span className="text-emerald-400">
+                          <span className="text-emerald-600 dark:text-emerald-400">
                             {currentStepIdx >= 2 ? `(-1) × (${pgcd} × ${Math.abs(simpNum)})` : num}
                           </span>
                           <div className="w-24 h-0.5 bg-slate-400 my-0.5" />
-                          <span className="text-emerald-400">
+                          <span className="text-emerald-600 dark:text-emerald-400">
                             {currentStepIdx >= 2 ? `${pgcd} × ${simpDen}` : den}
                           </span>
                         </div>
                         {currentStepIdx >= 3 && (
                           <>
-                            <span className="text-slate-500">=</span>
-                            <div className="flex flex-col items-center text-emerald-400 font-extrabold text-xl">
+                            <span className="text-slate-500 dark:text-slate-400">=</span>
+                            <div className="flex flex-col items-center text-emerald-600 dark:text-emerald-400 font-extrabold text-xl">
                               <span>{simpNum}</span>
                               <div className="w-10 h-0.5 bg-emerald-400 my-0.5" />
                               <span>{simpDen}</span>
@@ -930,7 +977,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                         )}
                       </div>
                       {currentStepIdx >= 2 && (
-                        <div className="text-xs text-amber-300 font-medium px-3 py-1 bg-amber-500/10 rounded-lg border border-amber-500/30">
+                        <div className="text-xs text-amber-700 dark:text-amber-300 font-medium px-3 py-1 bg-amber-500/10 rounded-lg border border-amber-500/30">
                           Facteur commun maximal simplifié : {pgcd}
                         </div>
                       )}
@@ -948,42 +995,42 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                 const prod2 = b * c;
                 return (
                   <div className="w-full flex flex-col items-center space-y-3 max-w-lg">
-                    <div className="w-full p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center space-y-4">
-                      <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                    <div className="w-full p-4 rounded-xl bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 flex flex-col items-center space-y-4">
+                      <div className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                         Schéma du Produit en Croix
                       </div>
                       <div className="flex items-center space-x-6 text-xl font-mono font-bold">
                         {/* Fraction 1 */}
-                        <div className="flex flex-col items-center p-2 rounded-lg bg-sky-950/40 border border-sky-500/30">
-                          <span className="text-sky-400">{a}</span>
+                        <div className="flex flex-col items-center p-2 rounded-lg bg-sky-50/40 dark:bg-sky-950/40 border border-sky-500/30">
+                          <span className="text-sky-600 dark:text-sky-400">{a}</span>
                           <div className="w-10 h-0.5 bg-sky-400 my-1" />
-                          <span className="text-amber-400">{b}</span>
+                          <span className="text-amber-600 dark:text-amber-400">{b}</span>
                         </div>
-                        <span className="text-slate-400 text-2xl font-sans">=</span>
+                        <span className="text-slate-600 dark:text-slate-400 text-2xl font-sans">=</span>
                         {/* Fraction 2 */}
-                        <div className="flex flex-col items-center p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30">
-                          <span className="text-amber-400">{c}</span>
+                        <div className="flex flex-col items-center p-2 rounded-lg bg-emerald-50/40 dark:bg-emerald-950/40 border border-emerald-500/30">
+                          <span className="text-amber-600 dark:text-amber-400">{c}</span>
                           <div className="w-10 h-0.5 bg-emerald-400 my-1" />
-                          <span className="text-sky-400">{d}</span>
+                          <span className="text-sky-600 dark:text-sky-400">{d}</span>
                         </div>
                       </div>
 
                       {/* Diagonales */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full text-xs font-mono">
-                        <div className="p-2.5 rounded-lg bg-sky-950/50 border border-sky-500/40 text-center">
-                          <div className="text-sky-300 font-semibold mb-1">1ère diagonale :</div>
-                          <span className="text-white font-bold">{a} × {d} = </span>
-                          <span className="text-sky-400 font-extrabold text-sm">{prod1}</span>
+                        <div className="p-2.5 rounded-lg bg-sky-50/50 dark:bg-sky-950/50 border border-sky-500/40 text-center">
+                          <div className="text-sky-700 dark:text-sky-300 font-semibold mb-1">1ère diagonale :</div>
+                          <span className="text-slate-900 dark:text-white font-bold">{a} × {d} = </span>
+                          <span className="text-sky-600 dark:text-sky-400 font-extrabold text-sm">{prod1}</span>
                         </div>
-                        <div className="p-2.5 rounded-lg bg-amber-950/50 border border-amber-500/40 text-center">
-                          <div className="text-amber-300 font-semibold mb-1">2ème diagonale :</div>
-                          <span className="text-white font-bold">{b} × {c} = </span>
-                          <span className="text-amber-400 font-extrabold text-sm">{prod2}</span>
+                        <div className="p-2.5 rounded-lg bg-amber-50/50 dark:bg-amber-950/50 border border-amber-500/40 text-center">
+                          <div className="text-amber-700 dark:text-amber-300 font-semibold mb-1">2ème diagonale :</div>
+                          <span className="text-slate-900 dark:text-white font-bold">{b} × {c} = </span>
+                          <span className="text-amber-600 dark:text-amber-400 font-extrabold text-sm">{prod2}</span>
                         </div>
                       </div>
 
                       {currentStepIdx >= 3 && (
-                        <div className="w-full p-2.5 rounded-lg bg-emerald-950/50 border border-emerald-500/50 text-center text-xs font-semibold text-emerald-300">
+                        <div className="w-full p-2.5 rounded-lg bg-emerald-50/50 dark:bg-emerald-950/50 border border-emerald-500/50 text-center text-xs font-semibold text-emerald-700 dark:text-emerald-300">
                           Puisque {prod1} = {prod2}, l'égalité des deux rationnels est rigoureusement prouvée !
                         </div>
                       )}
@@ -999,33 +1046,33 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                 const d = params.d ?? -8;
                 return (
                   <div className="w-full flex flex-col items-center space-y-3 max-w-lg">
-                    <div className="w-full p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center space-y-3 font-mono">
-                      <div className="text-xs font-semibold text-slate-400 font-sans uppercase tracking-wider">
+                    <div className="w-full p-4 rounded-xl bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 flex flex-col items-center space-y-3 font-mono">
+                      <div className="text-xs font-semibold text-slate-600 dark:text-slate-400 font-sans uppercase tracking-wider">
                         Règle du Produit : Numérateurs × Numérateurs / Dénominateurs × Dénominateurs
                       </div>
                       <div className="flex items-center space-x-3 text-lg font-bold">
                         <div className="flex flex-col items-center">
-                          <span className="text-sky-400">{a}</span>
+                          <span className="text-sky-600 dark:text-sky-400">{a}</span>
                           <div className="w-8 h-0.5 bg-slate-500 my-0.5" />
-                          <span className="text-sky-400">{b}</span>
+                          <span className="text-sky-600 dark:text-sky-400">{b}</span>
                         </div>
-                        <span className="text-slate-400">×</span>
+                        <span className="text-slate-600 dark:text-slate-400">×</span>
                         <div className="flex flex-col items-center">
-                          <span className="text-amber-400">{c}</span>
+                          <span className="text-amber-600 dark:text-amber-400">{c}</span>
                           <div className="w-8 h-0.5 bg-slate-500 my-0.5" />
-                          <span className="text-amber-400">{d}</span>
+                          <span className="text-amber-600 dark:text-amber-400">{d}</span>
                         </div>
-                        <span className="text-slate-400">=</span>
+                        <span className="text-slate-600 dark:text-slate-400">=</span>
                         <div className="flex flex-col items-center">
-                          <span className="text-emerald-400">{Math.abs(a)} × {c}</span>
+                          <span className="text-emerald-600 dark:text-emerald-400">{Math.abs(a)} × {c}</span>
                           <div className="w-20 h-0.5 bg-emerald-400 my-0.5" />
-                          <span className="text-emerald-400">{b} × {Math.abs(d)}</span>
+                          <span className="text-emerald-600 dark:text-emerald-400">{b} × {Math.abs(d)}</span>
                         </div>
                       </div>
                       {currentStepIdx >= 2 && (
-                        <div className="w-full text-center text-xs text-slate-300 bg-slate-800/80 p-2.5 rounded-lg border border-slate-700 font-sans">
-                          <span className="text-emerald-400 font-bold">Règle des signes :</span> (-) × (-) = (+) résultat positif.
-                          <div className="mt-1 text-slate-400">Simplification avant calcul : (4 × 25) / (15 × 8) = (1 × 5) / (3 × 2) = <strong className="text-white">5/6</strong></div>
+                        <div className="w-full text-center text-xs text-slate-700 dark:text-slate-300 bg-slate-100/80 dark:bg-slate-800/80 p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 font-sans">
+                          <span className="text-emerald-600 dark:text-emerald-400 font-bold">Règle des signes :</span> (-) × (-) = (+) résultat positif.
+                          <div className="mt-1 text-slate-600 dark:text-slate-400">Simplification avant calcul : (4 × 25) / (15 × 8) = (1 × 5) / (3 × 2) = <strong className="text-slate-900 dark:text-white">5/6</strong></div>
                         </div>
                       )}
                     </div>
@@ -1040,37 +1087,37 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                 const d = params.d ?? 9;
                 return (
                   <div className="w-full flex flex-col items-center space-y-3 max-w-lg">
-                    <div className="w-full p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center space-y-3 font-mono">
-                      <div className="text-xs font-semibold text-slate-400 font-sans uppercase tracking-wider">
+                    <div className="w-full p-4 rounded-xl bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 flex flex-col items-center space-y-3 font-mono">
+                      <div className="text-xs font-semibold text-slate-600 dark:text-slate-400 font-sans uppercase tracking-wider">
                         Diviser revient à multiplier par l'inverse
                       </div>
                       <div className="flex items-center space-x-3 text-lg font-bold">
                         <div className="flex flex-col items-center">
-                          <span className="text-sky-400">{a}</span>
+                          <span className="text-sky-600 dark:text-sky-400">{a}</span>
                           <div className="w-8 h-0.5 bg-slate-500 my-0.5" />
-                          <span className="text-sky-400">{b}</span>
+                          <span className="text-sky-600 dark:text-sky-400">{b}</span>
                         </div>
-                        <span className="text-rose-400 font-sans">÷</span>
+                        <span className="text-rose-600 dark:text-rose-400 font-sans">÷</span>
                         <div className="flex flex-col items-center">
-                          <span className="text-amber-400">{c}</span>
+                          <span className="text-amber-600 dark:text-amber-400">{c}</span>
                           <div className="w-8 h-0.5 bg-slate-500 my-0.5" />
-                          <span className="text-amber-400">{d}</span>
+                          <span className="text-amber-600 dark:text-amber-400">{d}</span>
                         </div>
-                        <span className="text-slate-400"></span>
+                        <span className="text-slate-600 dark:text-slate-400"></span>
                         <div className="flex flex-col items-center">
-                          <span className="text-sky-400">{a}</span>
+                          <span className="text-sky-600 dark:text-sky-400">{a}</span>
                           <div className="w-8 h-0.5 bg-slate-500 my-0.5" />
-                          <span className="text-sky-400">{b}</span>
+                          <span className="text-sky-600 dark:text-sky-400">{b}</span>
                         </div>
-                        <span className="text-emerald-400">×</span>
+                        <span className="text-emerald-600 dark:text-emerald-400">×</span>
                         <div className="flex flex-col items-center p-1 rounded-md bg-amber-500/20 border border-amber-500/40">
-                          <span className="text-amber-300 font-extrabold">{d}</span>
+                          <span className="text-amber-700 dark:text-amber-300 font-extrabold">{d}</span>
                           <div className="w-8 h-0.5 bg-amber-400 my-0.5" />
-                          <span className="text-amber-300 font-extrabold">{c}</span>
+                          <span className="text-amber-700 dark:text-amber-300 font-extrabold">{c}</span>
                         </div>
                       </div>
                       {currentStepIdx >= 2 && (
-                        <div className="w-full text-center text-xs text-amber-300 bg-amber-500/10 p-2 rounded-lg border border-amber-500/30 font-sans">
+                        <div className="w-full text-center text-xs text-amber-700 dark:text-amber-300 bg-amber-500/10 p-2 rounded-lg border border-amber-500/30 font-sans">
                           Inverse de la 2nde fraction ({c}/{d}) = <strong>{d}/{c}</strong>
                         </div>
                       )}
@@ -1094,42 +1141,42 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                 <div className="w-full flex flex-col items-center space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-md">
                     {/* Fraction 1 */}
-                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
-                      <span className="text-xs text-slate-400 mb-1">Première fraction</span>
-                      <span className="text-lg font-bold font-mono text-sky-400">{a} / {b}</span>
-                      <div className="w-full bg-slate-800 h-5 rounded-md overflow-hidden flex mt-2 border border-slate-700">
+                    <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex flex-col items-center">
+                      <span className="text-xs text-slate-600 dark:text-slate-400 mb-1">Première fraction</span>
+                      <span className="text-lg font-bold font-mono text-sky-600 dark:text-sky-400">{a} / {b}</span>
+                      <div className="w-full bg-slate-100 dark:bg-slate-800 h-5 rounded-md overflow-hidden flex mt-2 border border-slate-300 dark:border-slate-700">
                         {Array.from({ length: Math.min(b, 10) }).map((_, i) => (
                           <div
                             key={i}
-                            className={`flex-1 border-r border-slate-900 ${
+                            className={`flex-1 border-r border-slate-200 dark:border-slate-800 ${
                               i < Math.min(a, b) ? 'bg-sky-500' : 'bg-transparent'
                             }`}
                           />
                         ))}
                       </div>
                       {currentStepIdx >= 2 && (
-                        <span className="text-[11px] text-sky-300 font-mono mt-1.5 font-bold">
+                        <span className="text-[11px] text-sky-700 dark:text-sky-300 font-mono mt-1.5 font-bold">
                           = {a * mult1} / {common} (× {mult1})
                         </span>
                       )}
                     </div>
 
                     {/* Fraction 2 */}
-                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
-                      <span className="text-xs text-slate-400 mb-1">Deuxième fraction</span>
-                      <span className="text-lg font-bold font-mono text-amber-400">{c} / {d}</span>
-                      <div className="w-full bg-slate-800 h-5 rounded-md overflow-hidden flex mt-2 border border-slate-700">
+                    <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex flex-col items-center">
+                      <span className="text-xs text-slate-600 dark:text-slate-400 mb-1">Deuxième fraction</span>
+                      <span className="text-lg font-bold font-mono text-amber-600 dark:text-amber-400">{c} / {d}</span>
+                      <div className="w-full bg-slate-100 dark:bg-slate-800 h-5 rounded-md overflow-hidden flex mt-2 border border-slate-300 dark:border-slate-700">
                         {Array.from({ length: Math.min(d, 10) }).map((_, i) => (
                           <div
                             key={i}
-                            className={`flex-1 border-r border-slate-900 ${
+                            className={`flex-1 border-r border-slate-200 dark:border-slate-800 ${
                               i < Math.min(c, d) ? 'bg-amber-500' : 'bg-transparent'
                             }`}
                           />
                         ))}
                       </div>
                       {currentStepIdx >= 2 && (
-                        <span className="text-[11px] text-amber-300 font-mono mt-1.5 font-bold">
+                        <span className="text-[11px] text-amber-700 dark:text-amber-300 font-mono mt-1.5 font-bold">
                           = {c * mult2} / {common} (× {mult2})
                         </span>
                       )}
@@ -1138,8 +1185,8 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
 
                   {/* Common denominator result */}
                   {currentStepIdx >= 3 && (
-                    <div className="w-full max-w-md p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/50 flex flex-col items-center animate-fade-in">
-                      <span className="text-xs text-emerald-300 font-bold mb-1">
+                    <div className="w-full max-w-md p-3.5 rounded-xl bg-emerald-50/40 dark:bg-emerald-950/40 border border-emerald-500/50 flex flex-col items-center animate-fade-in">
+                      <span className="text-xs text-emerald-700 dark:text-emerald-300 font-bold mb-1">
                         {isSub ? 'Soustraction' : 'Addition'} sur le même dénominateur ({common}) :
                       </span>
                       <div className="text-base font-mono font-extrabold text-black dark:text-white">
@@ -1193,10 +1240,10 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                   </text>
                 </svg>
 
-                <div className="text-xs sm:text-sm font-mono text-slate-200 mt-2 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-center">
-                  cos(60°) = <span className="text-sky-400 font-bold">AB</span> /{' '}
-                  <span className="text-pink-400 font-bold">BC</span> = 5 / 10 ={' '}
-                  <span className="text-emerald-400 font-bold text-base">0,5</span>
+                <div className="text-xs sm:text-sm font-mono text-slate-800 dark:text-slate-200 mt-2 bg-slate-100 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
+                  cos(60°) = <span className="text-sky-600 dark:text-sky-400 font-bold">AB</span> /{' '}
+                  <span className="text-pink-600 dark:text-pink-400 font-bold">BC</span> = 5 / 10 ={' '}
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold text-base">0,5</span>
                 </div>
               </div>
             )}
@@ -1258,9 +1305,9 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                   </text>
                 </svg>
 
-                <div className="mt-2 text-xs sm:text-sm font-mono text-emerald-300 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-center">
+                <div className="mt-2 text-xs sm:text-sm font-mono text-emerald-700 dark:text-emerald-300 bg-slate-100 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
                   Volume = (1/3) × Aire de base × h = (1/3) × 36 × 10 ={' '}
-                  <span className="text-emerald-400 font-bold text-base">120 cm³</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold text-base">120 cm³</span>
                 </div>
               </div>
             )}
@@ -1269,21 +1316,21 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
             {currentDemo.interactiveType === 'equations-steps' && (
               <div className="w-full flex flex-col items-center space-y-3">
                 {/* Visual balance */}
-                <div className="w-full max-w-md p-4 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-between">
+                <div className="w-full max-w-md p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
                   <div className="text-center flex-1">
-                    <span className="text-xs text-slate-400 block mb-1">Membre de Gauche</span>
-                    <span className="text-base sm:text-lg font-mono font-bold text-sky-400">
+                    <span className="text-xs text-slate-600 dark:text-slate-400 block mb-1">Membre de Gauche</span>
+                    <span className="text-base sm:text-lg font-mono font-bold text-sky-600 dark:text-sky-400">
                       {currentStepIdx === 0 && '3x - 5'}
                       {currentStepIdx === 1 && '3x - x - 5'}
                       {currentStepIdx >= 2 && '3x - x'}
                     </span>
                   </div>
 
-                  <div className="text-xl font-extrabold text-amber-400 px-3">=</div>
+                  <div className="text-xl font-extrabold text-amber-600 dark:text-amber-400 px-3">=</div>
 
                   <div className="text-center flex-1">
-                    <span className="text-xs text-slate-400 block mb-1">Membre de Droite</span>
-                    <span className="text-base sm:text-lg font-mono font-bold text-pink-400">
+                    <span className="text-xs text-slate-600 dark:text-slate-400 block mb-1">Membre de Droite</span>
+                    <span className="text-base sm:text-lg font-mono font-bold text-pink-600 dark:text-pink-400">
                       {currentStepIdx === 0 && 'x + 7'}
                       {currentStepIdx === 1 && '7'}
                       {currentStepIdx >= 2 && '7 + 5'}
@@ -1292,7 +1339,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                 </div>
 
                 {/* Animation notification */}
-                <div className="p-3 rounded-xl bg-indigo-950/40 border border-indigo-500/40 text-xs sm:text-sm text-indigo-200 text-center max-w-md">
+                <div className="p-3 rounded-xl bg-indigo-50/40 dark:bg-indigo-950/40 border border-indigo-500/40 text-xs sm:text-sm text-indigo-800 dark:text-indigo-200 text-center max-w-md">
                   {currentStepIdx === 0 && 'Étape 1 : On identifie les termes avec x et les constantes.'}
                   {currentStepIdx === 1 && 'Le terme (+x) passe à gauche et devient (-x).'}
                   {currentStepIdx === 2 && 'Le terme (-5) passe à droite et devient (+5).'}
@@ -1306,7 +1353,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
             {currentDemo.interactiveType === 'stats-chart' && (
               <div className="w-full flex flex-col items-center space-y-3">
                 {/* Bar chart */}
-                <div className="w-full max-w-md flex items-end justify-between h-40 pt-6 px-4 bg-slate-950 rounded-xl border border-slate-800">
+                <div className="w-full max-w-md flex items-end justify-between h-40 pt-6 px-4 bg-slate-100 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800">
                   {[
                     { note: '8/20', eff: 4, height: '40%' },
                     { note: '10/20', eff: 8, height: '80%' },
@@ -1315,23 +1362,23 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                     { note: '18/20', eff: 2, height: '20%' },
                   ].map((item, idx) => (
                     <div key={idx} className="flex flex-col items-center flex-1 mx-1.5 h-full justify-end">
-                      <span className="text-[11px] font-mono text-emerald-400 font-bold mb-1">
+                      <span className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-bold mb-1">
                         {item.eff}
                       </span>
                       <div
                         style={{ height: item.height }}
                         className="w-full bg-emerald-500/80 rounded-t-lg transition-all duration-500 hover:bg-emerald-400"
                       />
-                      <span className="text-[10px] text-slate-300 font-mono mt-1.5">
+                      <span className="text-[10px] text-slate-700 dark:text-slate-300 font-mono mt-1.5">
                         {item.note}
                       </span>
                     </div>
                   ))}
                 </div>
 
-                <div className="text-xs text-slate-300 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-center font-mono">
+                <div className="text-xs text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-center font-mono">
                   Moyenne pondérée x̄ = (32 + 80 + 120 + 90 + 36) / 30 ={' '}
-                  <span className="text-emerald-400 font-bold text-sm">11,93 / 20</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold text-sm">11,93 / 20</span>
                 </div>
               </div>
             )}
@@ -1386,13 +1433,34 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
               />
             )}
 
-            {/* 14. CALCUL ALGEBRIQUE OU AUTRES */}
+            {/* 13.c VISUALISATIONS SPÉCIFIQUES 6E (géométrie) */}
+            {(currentDemo.interactiveType === 'geometrie-intro-6e' ||
+              currentDemo.interactiveType === 'symetrie-axiale-6e' ||
+              currentDemo.interactiveType === 'cercle-6e' ||
+              currentDemo.interactiveType === 'angles-6e' ||
+              currentDemo.interactiveType === 'droites-perp-parall-6e') && (
+              <GeometryVisualizers6e
+                interactiveType={currentDemo.interactiveType}
+                currentStepIdx={currentStepIdx}
+                currentStep={currentStep}
+              />
+            )}
+
+            {/* 14. CALCUL ALGEBRIQUE OU AUTRES (formule + règle + explication, sans visuel dédié) */}
             {(currentDemo.interactiveType === 'algebra-arrows' ||
               currentDemo.interactiveType === 'powers-steps' ||
-              currentDemo.interactiveType === 'revision-quiz') && (
+              currentDemo.interactiveType === 'revision-quiz' ||
+              currentDemo.interactiveType === 'decimaux-lecture-6e' ||
+              currentDemo.interactiveType === 'decimaux-addition-6e' ||
+              currentDemo.interactiveType === 'decimaux-soustraction-6e' ||
+              currentDemo.interactiveType === 'decimaux-multiplication-6e' ||
+              currentDemo.interactiveType === 'decimaux-division-6e' ||
+              currentDemo.interactiveType === 'decimaux-rangement-6e' ||
+              currentDemo.interactiveType === 'decimaux-priorites-6e' ||
+              currentDemo.interactiveType === 'decimaux-relatifs-6e') && (
               <div className="w-full flex flex-col items-center space-y-4">
-                <div className="p-4 sm:p-6 rounded-2xl bg-slate-950 border border-slate-800 text-center max-w-lg w-full">
-                  <div className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2">
+                <div className="p-4 sm:p-6 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center max-w-lg w-full">
+                  <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-2">
                     {currentStep.rule}
                   </div>
                   <div className="my-3 text-lg sm:text-2xl font-mono font-bold text-black dark:text-white">
@@ -1407,9 +1475,9 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                 {currentDemo.interactiveType === 'algebra-arrows' && onOpenAlgebraSolver && (
                   <button
                     onClick={() => onOpenAlgebraSolver('(x+1)(x+2)')}
-                    className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 border border-indigo-500/40 text-xs font-medium transition-colors"
+                    className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-800 dark:text-indigo-200 border border-indigo-500/40 text-xs font-medium transition-colors"
                   >
-                    <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+                    <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                     <span>Ouvrir l'éditeur de calcul algébrique libre</span>
                   </button>
                 )}
@@ -1418,13 +1486,13 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
           </div>
 
           {/* Teacher Playback Controls Bar */}
-          <div className="pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2">
+          <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
             {/* Step Controls */}
             <div className="flex items-center space-x-1 sm:space-x-2">
               <button
                 onClick={handlePrev}
                 disabled={currentStepIdx === 0}
-                className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-30 text-slate-200 transition-colors"
+                className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-30 text-slate-800 dark:text-slate-200 transition-colors"
                 title="Étape précédente"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -1432,7 +1500,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
 
               <button
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs transition-colors shadow-md"
+                className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-colors shadow-md"
               >
                 {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                 <span>{isPlaying ? 'Pause' : 'Animer'}</span>
@@ -1441,7 +1509,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
               <button
                 onClick={handleNext}
                 disabled={currentStepIdx === totalSteps - 1}
-                className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-30 text-slate-200 transition-colors"
+                className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-30 text-slate-800 dark:text-slate-200 transition-colors"
                 title="Étape suivante"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -1449,7 +1517,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
 
               <button
                 onClick={handleReset}
-                className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 transition-colors"
+                className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors"
                 title="Recommencer"
               >
                 <RotateCcw className="w-4 h-4" />
@@ -1466,7 +1534,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                   className={`px-2 py-0.5 rounded-lg font-mono text-[11px] transition-colors border ${
                     speed === s
                       ? 'bg-white text-black border-2 border-black font-bold shadow-xs dark:bg-emerald-600/30 dark:text-emerald-300 dark:border-emerald-500/40'
-                      : 'bg-white text-neutral-700 hover:bg-neutral-100 border-neutral-300 dark:bg-slate-800/80 dark:text-slate-400 dark:hover:text-slate-200 dark:border-transparent'
+                      : 'bg-white text-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 border-neutral-300 dark:border-neutral-700 dark:bg-slate-800/80 dark:text-slate-400 dark:hover:text-slate-200 dark:border-transparent'
                   }`}
                 >
                   {s}x
@@ -1500,11 +1568,11 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                   className={`p-3 rounded-xl border transition-all cursor-pointer ${
                     isActive
                       ? isGreen
-                        ? 'bg-emerald-50 text-emerald-950 border-2 border-emerald-600 shadow-md ring-2 ring-emerald-500/20 dark:bg-emerald-950/70 dark:border-emerald-500 dark:text-slate-100 dark:ring-emerald-500/40'
-                        : 'bg-sky-50 text-sky-950 border-2 border-sky-600 shadow-md ring-2 ring-sky-500/20 dark:bg-indigo-950/70 dark:border-indigo-500 dark:text-slate-100 dark:ring-indigo-500/40'
+                        ? 'bg-emerald-50 text-emerald-950 border-2 border-emerald-300 shadow-md ring-2 ring-emerald-500/20 dark:bg-emerald-950/70 dark:border-emerald-500 dark:text-slate-100 dark:ring-emerald-500/40'
+                        : 'bg-sky-50 text-sky-950 border-2 border-sky-300 shadow-md ring-2 ring-sky-500/20 dark:bg-indigo-950/70 dark:border-indigo-500 dark:text-slate-100 dark:ring-indigo-500/40'
                       : isPast
-                      ? 'bg-white border-neutral-200 text-neutral-700 hover:bg-neutral-50 dark:bg-slate-950/40 dark:border-slate-800 dark:text-slate-400 dark:hover:border-slate-700'
-                      : 'bg-white border-neutral-200 text-neutral-400 hover:bg-neutral-50 dark:bg-slate-950/20 dark:border-slate-900 dark:text-slate-500 opacity-60'
+                      ? 'bg-white border-neutral-200 text-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-900 dark:bg-slate-950/40 dark:border-slate-800 dark:text-slate-400 dark:hover:border-slate-700'
+                      : 'bg-white border-neutral-200 text-neutral-600 hover:bg-neutral-50 dark:hover:bg-neutral-900 dark:bg-slate-950/20 dark:border-slate-900 dark:text-slate-400 opacity-60'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
@@ -1519,11 +1587,11 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                       className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
                         isActive
                           ? isGreen
-                            ? 'bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold dark:bg-emerald-500/30 dark:text-emerald-300 dark:border-transparent'
-                            : 'bg-sky-100 text-sky-800 border border-sky-300 font-bold dark:bg-sky-500/30 dark:text-sky-300 dark:border-transparent'
+                            ? 'bg-emerald-100 text-emerald-800 border border-emerald-300 dark:border-emerald-700 font-bold dark:bg-emerald-500/30 dark:text-emerald-300 dark:border-transparent'
+                            : 'bg-sky-100 text-sky-800 border border-sky-300 dark:border-sky-700 font-bold dark:bg-sky-500/30 dark:text-sky-300 dark:border-transparent'
                           : isPast
                           ? 'bg-neutral-100 text-neutral-800 dark:bg-slate-800 dark:text-slate-400'
-                          : 'bg-neutral-100 text-neutral-600 dark:bg-slate-900 dark:text-slate-600'
+                          : 'bg-neutral-100 text-neutral-600 dark:bg-slate-900 dark:text-slate-400'
                       }`}
                     >
                       Étape {idx + 1}
@@ -1578,7 +1646,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
 
           {/* Quick Class Question / Reveal Button */}
           {hideSolutionForClass && (
-            <div className="pt-3 border-t border-slate-800">
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-800">
               <button
                 onClick={() => setHideSolutionForClass(false)}
                 className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition-colors flex items-center justify-center space-x-2 shadow-lg"
@@ -1616,21 +1684,39 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
         </>
       )}
 
-      {/* Floating Quick-Access Right Drawer Trigger */}
-      <button
-        onClick={() => setIsPrerequisitesOpen(true)}
-        className="fixed right-0 top-1/2 -translate-y-1/2 z-30 flex items-center px-2 py-3 rounded-l-2xl shadow-xl border-y border-l bg-white text-black hover:bg-neutral-50 border-neutral-300 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-slate-800 transition-all group"
-        title="Ouvrir les prérequis du cours (Rappels)"
-        aria-label="Ouvrir les prérequis"
-      >
-        <div className="flex flex-col items-center space-y-1">
-          <BookOpenCheck className="w-4 h-4 text-red-600 dark:text-amber-400 group-hover:scale-110 transition-transform" />
-          <span className="text-[10px] font-bold [writing-mode:vertical-rl] rotate-180 uppercase tracking-wider py-0.5">
-            Prérequis ({prerequisites.length})
-          </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-red-600 dark:bg-amber-400 animate-pulse" />
-        </div>
-      </button>
+      {/* Floating Quick-Access Right Drawer Triggers */}
+      <div className="fixed right-0 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col gap-2">
+        {prerequisites.length > 0 && (
+          <button
+            onClick={() => setIsPrerequisitesOpen(true)}
+            className="flex items-center px-2 py-3 rounded-l-2xl shadow-xl border-y border-l bg-white text-black hover:bg-neutral-50 border-neutral-300 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-slate-800 transition-all group"
+            title="Ouvrir les prérequis du cours (Rappels)"
+            aria-label="Ouvrir les prérequis"
+          >
+            <div className="flex flex-col items-center space-y-1">
+              <BookOpenCheck className="w-4 h-4 text-red-600 dark:text-amber-400 group-hover:scale-110 transition-transform" />
+              <span className="text-[10px] font-bold [writing-mode:vertical-rl] rotate-180 uppercase tracking-wider py-0.5">
+                Prérequis ({prerequisites.length})
+              </span>
+              <span className="w-1.5 h-1.5 rounded-full bg-red-600 dark:bg-amber-400 animate-pulse" />
+            </div>
+          </button>
+        )}
+
+        <button
+          onClick={() => setIsSummaryOpen(true)}
+          className="flex items-center px-2 py-3 rounded-l-2xl shadow-xl border-y border-l bg-white text-black hover:bg-neutral-50 border-neutral-300 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-slate-800 transition-all group"
+          title="Ouvrir la synthèse des formules à retenir"
+          aria-label="Ouvrir la synthèse"
+        >
+          <div className="flex flex-col items-center space-y-1">
+            <ClipboardList className="w-4 h-4 text-indigo-600 dark:text-sky-400 group-hover:scale-110 transition-transform" />
+            <span className="text-[10px] font-bold [writing-mode:vertical-rl] rotate-180 uppercase tracking-wider py-0.5">
+              Synthèse
+            </span>
+          </div>
+        </button>
+      </div>
 
       {/* Course Prerequisites Right Drawer */}
       <CoursePrerequisitesDrawer
@@ -1638,6 +1724,14 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
         onClose={() => setIsPrerequisitesOpen(false)}
         chapter={chapter}
         onNavigateToChapter={onSelectChapter}
+      />
+
+      {/* Lesson Summary Right Drawer */}
+      <LessonSummaryDrawer
+        isOpen={isSummaryOpen}
+        onClose={() => setIsSummaryOpen(false)}
+        chapter={chapter}
+        onOpenFullSheet={() => setActiveTabMode('cours-complet')}
       />
     </div>
   );

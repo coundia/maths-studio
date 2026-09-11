@@ -18,7 +18,7 @@ export interface QuickQuizQuestion {
 export interface QuickQuizData {
   chapterId: string;
   chapterTitle: string;
-  gradeLevel: '5e' | '4e' | '3e';
+  gradeLevel: '6e' | '5e' | '4e' | '3e';
   badge: string;
   questions: QuickQuizQuestion[];
 }

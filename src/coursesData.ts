@@ -79,6 +79,19 @@ export interface CourseDemo {
     | 'nombres-decimaux-relatifs-5e'
     | 'reperage-5e'
     | 'video-lesson'
+    | 'geometrie-intro-6e'
+    | 'symetrie-axiale-6e'
+    | 'cercle-6e'
+    | 'angles-6e'
+    | 'droites-perp-parall-6e'
+    | 'decimaux-lecture-6e'
+    | 'decimaux-addition-6e'
+    | 'decimaux-soustraction-6e'
+    | 'decimaux-multiplication-6e'
+    | 'decimaux-division-6e'
+    | 'decimaux-rangement-6e'
+    | 'decimaux-priorites-6e'
+    | 'decimaux-relatifs-6e'
     | (string & {});
   demoParams?: Record<string, any>;
   videoInfo?: CourseVideoInfo;
@@ -89,7 +102,7 @@ export interface CourseChapter {
   id: string;
   title: string;
   shortTitle: string;
-  gradeLevel?: '5e' | '4e' | '3e';
+  gradeLevel?: '6e' | '5e' | '4e' | '3e';
   category: 'Activités numériques' | 'Activités géométriques' | 'Synthèse & Révision' | 'Cours Vidéos BFEM';
   icon: string;
   description: string;
@@ -106,8 +119,12 @@ import { SENEGAL_COURSES_3E } from './coursesData3e';
 export { SENEGAL_COURSES_5E } from './coursesData5e';
 import { SENEGAL_COURSES_5E } from './coursesData5e';
 
+export { SENEGAL_COURSES_6E } from './coursesData6e';
+import { SENEGAL_COURSES_6E } from './coursesData6e';
+
 export const ALL_SENEGAL_COURSES: CourseChapter[] = [
   ...SENEGAL_COURSES_3E,
   ...SENEGAL_COURSES_4E.map((c) => ({ ...c, gradeLevel: '4e' as const })),
   ...SENEGAL_COURSES_5E,
+  ...SENEGAL_COURSES_6E,
 ];

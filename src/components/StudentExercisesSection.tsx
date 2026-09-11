@@ -193,7 +193,7 @@ export const StudentExercisesSection: React.FC<StudentExercisesSectionProps> = (
             onClick={() => setActiveTab('all')}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activeTab === 'all'
-                ? 'bg-black text-white dark:bg-slate-700 shadow-xs'
+                ? 'bg-black text-white dark:bg-slate-700 dark:text-white shadow-xs'
                 : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 dark:bg-slate-800/60 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800'
             }`}
           >
@@ -226,7 +226,7 @@ export const StudentExercisesSection: React.FC<StudentExercisesSectionProps> = (
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all ${
               activeTab === 'difficile'
                 ? 'bg-black text-white dark:bg-rose-600 shadow-xs'
-                : 'bg-white text-black hover:bg-neutral-100 border border-neutral-300 dark:bg-slate-800/60 dark:text-rose-400 dark:hover:bg-rose-950/40'
+                : 'bg-white text-black hover:bg-neutral-100 border border-neutral-300 dark:border-neutral-700 dark:bg-slate-800/60 dark:text-rose-400 dark:hover:bg-rose-950/40'
             }`}
           >
             <span className="w-2 h-2 rounded-full bg-red-600 dark:bg-rose-400" />
@@ -258,7 +258,7 @@ export const StudentExercisesSection: React.FC<StudentExercisesSectionProps> = (
                     <Icon className="w-3.5 h-3.5" />
                     <span>{config.label}</span>
                   </span>
-                  <span className="text-xs text-neutral-400 dark:text-slate-400 hidden sm:inline">•</span>
+                  <span className="text-xs text-neutral-600 dark:text-slate-400 hidden sm:inline">•</span>
                   <span className="text-xs text-neutral-600 dark:text-slate-300 font-medium">
                     {config.desc}
                   </span>
@@ -305,7 +305,7 @@ export const StudentExercisesSection: React.FC<StudentExercisesSectionProps> = (
                       if (isSelected) {
                         btnStyle = opt.isCorrect
                           ? 'bg-white border-2 border-black text-black font-bold dark:bg-emerald-950/80 dark:border-emerald-500 dark:text-emerald-100 shadow-md'
-                          : 'bg-white border-2 border-red-600 text-red-600 font-bold dark:bg-rose-950/80 dark:border-rose-500 dark:text-rose-100 shadow-md';
+                          : 'bg-white border-2 border-red-300 text-red-600 font-bold dark:bg-rose-950/80 dark:border-rose-500 dark:text-rose-100 shadow-md';
                       }
 
                       return (
@@ -316,7 +316,7 @@ export const StudentExercisesSection: React.FC<StudentExercisesSectionProps> = (
                         >
                           <div className="flex items-start space-x-2">
                             <span className={`w-4 h-4 rounded-full border flex items-center justify-center text-[10px] shrink-0 mt-0.5 ${
-                              isSelected ? 'bg-white text-black border-2 border-black font-bold' : 'border-current'
+                              isSelected ? 'bg-slate-900 text-white border-2 border-slate-900 dark:bg-slate-100 dark:text-slate-900 dark:border-slate-100 font-bold' : 'border-current'
                             }`}>
                               {String.fromCharCode(65 + optIdx)}
                             </span>

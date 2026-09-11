@@ -1,4 +1,5 @@
 import { CourseChapter } from '../coursesData';
+import { getGradeLevel } from './gradeLevel';
 
 export interface PrerequisiteQuizOption {
   text: string;
@@ -591,6 +592,13 @@ export const COURSE_PREREQUISITES: Record<string, CoursePrerequisite[]> = {
  * Récupère les prérequis pour un cours donné, avec génération de prérequis génériques si besoin
  */
 export function getChapterPrerequisites(chapter: CourseChapter): CoursePrerequisite[] {
+  // 0. La 6e est le premier niveau de ce catalogue : il n'existe aucune classe
+  // antérieure dont rappeler les notions. On evite ainsi que le fallback
+  // generique ci-dessous n'affiche a tort des « rappels de 5e ».
+  if (getGradeLevel(chapter) === '6e') {
+    return [];
+  }
+
   // 1. Recherche par ID direct
   if (COURSE_PREREQUISITES[chapter.id] && COURSE_PREREQUISITES[chapter.id].length > 0) {
     return COURSE_PREREQUISITES[chapter.id];

@@ -29,7 +29,7 @@ interface CourseChapter {
   id: string;
   title: string;
   shortTitle: string;
-  gradeLevel?: '5e' | '4e' | '3e';
+  gradeLevel?: '6e' | '5e' | '4e' | '3e';
   category: string;
   icon: string;
   description: string;
@@ -49,12 +49,23 @@ function loadJson<T>(filename: string): T {
 }
 
 // In-memory cached data
+let cachedCourses6e: CourseChapter[] | null = null;
 let cachedCourses5e: CourseChapter[] | null = null;
 let cachedCourses4e: CourseChapter[] | null = null;
 let cachedCourses3e: CourseChapter[] | null = null;
 let cachedExercises5e: Record<string, any[]> | null = null;
 let cachedExercises4e: Record<string, any[]> | null = null;
 let cachedExercises3e: Record<string, any[]> | null = null;
+
+function getCourses6e(): CourseChapter[] {
+  if (!cachedCourses6e) {
+    cachedCourses6e = loadJson<CourseChapter[]>('courses-6e.json').map((c) => ({
+      ...c,
+      gradeLevel: '6e',
+    }));
+  }
+  return cachedCourses6e;
+}
 
 function getCourses5e(): CourseChapter[] {
   if (!cachedCourses5e) {
@@ -87,7 +98,7 @@ function getCourses3e(): CourseChapter[] {
 }
 
 function getAllCourses(): CourseChapter[] {
-  return [...getCourses3e(), ...getCourses4e(), ...getCourses5e()];
+  return [...getCourses3e(), ...getCourses4e(), ...getCourses5e(), ...getCourses6e()];
 }
 
 function getExercises5e(): Record<string, any[]> {
@@ -114,7 +125,7 @@ function getExercises3e(): Record<string, any[]> {
 /**
  * GET /api/courses
  * Optional query params:
- * - grade: '5e' | '4e' | '3e'
+ * - grade: '6e' | '5e' | '4e' | '3e'
  * - category: string
  */
 export function getCoursesHandler(req: Request, res: Response) {
@@ -122,7 +133,9 @@ export function getCoursesHandler(req: Request, res: Response) {
     const { grade, category } = req.query;
     let list: CourseChapter[] = [];
 
-    if (grade === '5e') {
+    if (grade === '6e') {
+      list = getCourses6e();
+    } else if (grade === '5e') {
       list = getCourses5e();
     } else if (grade === '4e') {
       list = getCourses4e();

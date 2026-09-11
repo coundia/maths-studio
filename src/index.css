@@ -2,13 +2,125 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * Jetons semantiques de la palette.
+ *
+ * Les valeurs declarees ici ne sont que des valeurs de repli : elles sont
+ * ecrasees au chargement par `virtual:theme.css`, genere depuis les variables
+ * VITE_THEME_* du fichier `.env` (voir src/theme/). Les declarer dans `@theme`
+ * sert a creer les classes utilitaires correspondantes :
+ *   bg-canvas, bg-surface, bg-surface-muted, bg-surface-strong
+ *   border-line, border-line-strong
+ *   text-ink, text-ink-muted, text-ink-subtle, text-ink-invert
+ *   bg-primary, text-on-primary, text-primary-ink, bg-primary-soft, border-primary-line
+ *   (idem pour accent, info, warning, danger, highlight)
+ */
+@theme {
+  --color-canvas: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f1f5f9;
+  --color-surface-strong: #e2e8f0;
+  --color-line: #e2e8f0;
+  --color-line-strong: #cbd5e1;
+  --color-ink: #0f172a;
+  --color-ink-muted: #475569;
+  --color-ink-subtle: #64748b;
+  --color-ink-invert: #f8fafc;
+
+  --color-primary: #059669;
+  --color-on-primary: #ffffff;
+  --color-primary-ink: #047857;
+  --color-primary-soft: #ecfdf5;
+  --color-primary-line: #a7f3d0;
+  --color-on-primary-soft: #065f46;
+
+  --color-accent: #4f46e5;
+  --color-on-accent: #ffffff;
+  --color-accent-ink: #4338ca;
+  --color-accent-soft: #eef2ff;
+  --color-accent-line: #c7d2fe;
+  --color-on-accent-soft: #3730a3;
+
+  --color-info: #0284c7;
+  --color-on-info: #ffffff;
+  --color-info-ink: #0369a1;
+  --color-info-soft: #f0f9ff;
+  --color-info-line: #bae6fd;
+  --color-on-info-soft: #075985;
+
+  --color-warning: #d97706;
+  --color-on-warning: #ffffff;
+  --color-warning-ink: #b45309;
+  --color-warning-soft: #fffbeb;
+  --color-warning-line: #fde68a;
+  --color-on-warning-soft: #92400e;
+
+  --color-danger: #dc2626;
+  --color-on-danger: #ffffff;
+  --color-danger-ink: #b91c1c;
+  --color-danger-soft: #fef2f2;
+  --color-danger-line: #fecaca;
+  --color-on-danger-soft: #991b1b;
+
+  --color-highlight: #c026d3;
+  --color-on-highlight: #ffffff;
+  --color-highlight-ink: #a21caf;
+  --color-highlight-soft: #fdf4ff;
+  --color-highlight-line: #f5d0fe;
+  --color-on-highlight-soft: #86198f;
+}
+
 @layer base {
   html {
     font-family: 'Outfit', sans-serif;
+    /* Indique au navigateur la polarite reelle : ascenseurs, champs de
+       formulaire et menus natifs suivent alors le theme. */
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+  }
+
+  ::selection {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+
+  /* Les champs natifs heritent du theme au lieu du blanc par defaut. */
+  input,
+  textarea,
+  select {
+    color-scheme: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  hr {
+    border-color: var(--color-line);
   }
 }
 
-/* KaTeX Responsive Fixes */
+/* KaTeX : le rendu mathematique doit suivre la couleur du texte courant. */
+.katex,
+.katex .mord,
+.katex .mbin,
+.katex .mrel,
+.katex .mopen,
+.katex .mclose,
+.katex .mpunct,
+.katex .minner {
+  color: inherit;
+}
+
 .katex-display {
   margin: 0.5em 0 !important;
   max-width: 100% !important;
@@ -23,7 +135,7 @@
   max-width: 100%;
 }
 
-/* Custom smooth scrollbars */
+/* Ascenseurs personnalises, derives de la palette. */
 .scrollbar-thin::-webkit-scrollbar {
   height: 6px;
   width: 6px;
@@ -33,16 +145,13 @@
   border-radius: 9999px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.3);
+  background: color-mix(in oklab, var(--color-ink-subtle) 45%, transparent);
   border-radius: 9999px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.6);
+  background: color-mix(in oklab, var(--color-ink-subtle) 80%, transparent);
 }
-
-.dark .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(71, 85, 105, 0.4);
-}
-.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: rgba(71, 85, 105, 0.8);
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--color-ink-subtle) 45%, transparent) transparent;
 }

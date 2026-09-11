@@ -103,7 +103,7 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
           {onOpenAlgebraSolver && (
             <button
               onClick={() => onOpenAlgebraSolver('(x+3)(2x-5)')}
-              className="flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all shadow-xs shrink-0 dark:bg-indigo-600 dark:hover:bg-indigo-500"
+              className="flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-black hover:bg-neutral-100 text-white font-bold text-xs transition-all shadow-xs shrink-0 dark:bg-indigo-600 dark:hover:bg-indigo-500"
             >
               <Sparkles className="w-4 h-4 text-red-500 dark:text-amber-300" />
               <span>Tester le Calculateur Libre</span>
@@ -130,11 +130,11 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
             onClick={() => setActiveSubTab('moteur-developpement')}
             className={`shrink-0 flex items-center space-x-2 px-3 py-2 rounded-xl text-xs font-bold transition-all min-h-[40px] ${
               activeSubTab === 'moteur-developpement'
-                ? 'bg-red-600 text-white shadow-xs ring-2 ring-red-600/30'
+                ? 'bg-red-600 text-white shadow-xs ring-2 ring-red-300/30 dark:ring-red-600/30'
                 : 'bg-white hover:bg-neutral-100 text-black border border-neutral-300 dark:bg-slate-800/70 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-700/60'
             }`}
           >
-            <Zap className="w-4 h-4 text-white dark:text-red-400 animate-pulse shrink-0" />
+            <Zap className="w-4 h-4 text-slate-900 dark:text-red-400 animate-pulse shrink-0" />
             <span className="flex items-center gap-1.5">
               <span className="hidden sm:inline">2. Moteur Développement (Termes Rouges)</span>
               <span className="sm:hidden">2. Développer (Rouge)</span>
@@ -148,11 +148,11 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
             onClick={() => setActiveSubTab('moteur-factorisation')}
             className={`shrink-0 flex items-center space-x-2 px-3 py-2 rounded-xl text-xs font-bold transition-all min-h-[40px] ${
               activeSubTab === 'moteur-factorisation'
-                ? 'bg-red-600 text-white shadow-xs ring-2 ring-red-600/30'
+                ? 'bg-red-600 text-white shadow-xs ring-2 ring-red-300/30 dark:ring-red-600/30'
                 : 'bg-white hover:bg-neutral-100 text-black border border-neutral-300 dark:bg-slate-800/70 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-700/60'
             }`}
           >
-            <Zap className="w-4 h-4 text-white dark:text-red-400 animate-pulse shrink-0" />
+            <Zap className="w-4 h-4 text-slate-900 dark:text-red-400 animate-pulse shrink-0" />
             <span className="flex items-center gap-1.5">
               <span className="hidden sm:inline">3. Moteur Factorisation (Facteur Rouge)</span>
               <span className="sm:hidden">3. Factoriser (Rouge)</span>
@@ -204,7 +204,7 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
           {onOpenPrerequisites && (
             <button
               onClick={onOpenPrerequisites}
-              className="shrink-0 flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all min-h-[40px] bg-white hover:bg-neutral-100 text-black border-2 border-red-600/50 hover:border-red-600 shadow-xs dark:bg-slate-800/80 dark:text-amber-300 dark:border-amber-500/40"
+              className="shrink-0 flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all min-h-[40px] bg-white hover:bg-neutral-100 dark:hover:bg-neutral-800 text-black border-2 border-red-300/50 hover:border-red-300 dark:hover:border-red-600 shadow-xs dark:bg-slate-800/80 dark:text-amber-300 dark:border-amber-500/40"
               title="Ouvrir le panneau des prérequis et rappels de 5e/4e pour ce cours"
             >
               <BookOpenCheck className="w-4 h-4 text-red-600 dark:text-amber-400 shrink-0" />
@@ -270,8 +270,8 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                     onClick={() => setActiveSection(sec.id)}
                     className={`shrink-0 px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 min-h-[36px] transition-all border ${
                       activeSection === sec.id
-                        ? 'bg-neutral-900 text-white border-neutral-900 dark:bg-emerald-500 dark:text-slate-950 font-bold shadow-xs'
-                        : 'bg-white text-neutral-800 border-neutral-300 hover:bg-neutral-100 dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-700/50'
+                        ? 'bg-white text-white border-neutral-200 dark:border-neutral-900 dark:bg-emerald-500 dark:text-slate-950 font-bold shadow-xs'
+                        : 'bg-white text-neutral-800 border-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-700/50'
                     }`}
                   >
                     <span className="font-mono text-[11px] font-bold">{sec.number}</span>
@@ -325,7 +325,7 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                         onClick={() => setActiveSection(sec.id)}
                         className={`flex items-center justify-between p-2.5 rounded-xl text-left transition-all text-xs group ${
                           activeSection === sec.id
-                            ? 'bg-neutral-900 border border-neutral-900 border-l-4 border-l-red-600 text-white font-semibold shadow-md dark:bg-emerald-500/15 dark:border-emerald-500/40 dark:border-l-emerald-500 dark:text-emerald-200'
+                            ? 'bg-white border border-neutral-200 border-l-4 border-l-red-600 text-slate-900 font-semibold shadow-md dark:bg-emerald-500/15 dark:border-emerald-500/40 dark:border-l-emerald-500 dark:text-emerald-200'
                             : 'hover:bg-neutral-100 text-neutral-700 hover:text-black dark:hover:bg-slate-800/70 dark:text-slate-400 dark:hover:text-slate-200 border border-transparent'
                         }`}
                       >
@@ -339,10 +339,10 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                           >
                             {sec.number}
                           </span>
-                          <span className={`truncate ${activeSection === sec.id ? 'text-white' : ''}`}>{sec.title}</span>
+                          <span className={`truncate ${activeSection === sec.id ? 'text-slate-900 dark:text-white' : ''}`}>{sec.title}</span>
                         </div>
                         <ChevronRight className={`w-3.5 h-3.5 shrink-0 ml-1 transition-transform ${
-                          activeSection === sec.id ? 'text-red-500 translate-x-0.5' : 'text-neutral-400 dark:text-slate-500'
+                          activeSection === sec.id ? 'text-red-500 dark:text-red-400 translate-x-0.5' : 'text-neutral-600 dark:text-slate-400'
                         }`} />
                       </button>
                     ))}
@@ -367,7 +367,7 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
           {!isSidebarOpen && (
             <button
               onClick={() => setIsSidebarOpen(true)}
-              className="hidden lg:flex fixed bottom-6 right-6 z-40 items-center space-x-2 px-3.5 py-2.5 rounded-full bg-black hover:bg-neutral-800 text-white dark:bg-emerald-500 dark:hover:bg-emerald-400 dark:text-slate-950 font-bold text-xs shadow-xl transition-all hover:scale-105"
+              className="hidden lg:flex fixed bottom-6 right-6 z-40 items-center space-x-2 px-3.5 py-2.5 rounded-full bg-black hover:bg-neutral-100 text-white dark:bg-emerald-500 dark:hover:bg-emerald-400 dark:text-slate-950 font-bold text-xs shadow-xl transition-all hover:scale-105"
               title="Afficher le sommaire des sections"
             >
               <PanelRightOpen className="w-4 h-4 text-red-500 dark:text-slate-950" />
@@ -396,21 +396,21 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
           {/* Top Banners pointing to the Development & Factorization Engines */}
           <div className="lg:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="p-3.5 rounded-2xl bg-gradient-to-r from-red-950/60 via-slate-900 to-amber-950/60 border border-red-500/30 flex flex-wrap items-center justify-between gap-3 shadow-md">
+            <div className="p-3.5 rounded-2xl bg-gradient-to-r from-red-50/60 dark:from-red-950/60 via-slate-100 dark:via-slate-900 to-amber-50/60 dark:to-amber-950/60 border border-red-500/30 flex flex-wrap items-center justify-between gap-3 shadow-md">
               <div className="flex items-center space-x-3">
-                <Zap className="w-5 h-5 text-red-400 animate-pulse" />
+                <Zap className="w-5 h-5 text-red-600 dark:text-red-400 animate-pulse" />
                 <div>
-                  <span className="text-xs font-bold text-white block">
+                  <span className="text-xs font-bold text-slate-900 dark:text-white block">
                     Développement avec élément en ROUGE & déplacement animé
                   </span>
-                  <span className="text-[11px] text-slate-400">
+                  <span className="text-[11px] text-slate-600 dark:text-slate-400">
                     Zéro disparition : termes distribués et remplacés explicites.
                   </span>
                 </div>
               </div>
               <button
                 onClick={() => setActiveSubTab('moteur-developpement')}
-                className="px-3.5 py-1.5 rounded-xl bg-black hover:bg-neutral-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white font-bold text-xs flex items-center space-x-1.5 transition-all shadow-xs"
+                className="px-3.5 py-1.5 rounded-xl bg-black hover:bg-neutral-100 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white font-bold text-xs flex items-center space-x-1.5 transition-all shadow-xs"
               >
                 <span>Moteur de développement</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -431,7 +431,7 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
               </div>
               <button
                 onClick={() => setActiveSubTab('moteur-factorisation')}
-                className="px-3.5 py-1.5 rounded-xl bg-black hover:bg-neutral-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white font-bold text-xs flex items-center space-x-1.5 transition-all shadow-xs"
+                className="px-3.5 py-1.5 rounded-xl bg-black hover:bg-neutral-100 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white font-bold text-xs flex items-center space-x-1.5 transition-all shadow-xs"
               >
                 <span>Moteur de factorisation</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -439,9 +439,9 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
             </div>
           </div>
           {/* Visual 1: Geometric Area of (a+b)^2 */}
-          <div className="lg:col-span-6 bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col space-y-4">
-            <div className="border-b border-slate-800 pb-2">
-              <span className="text-xs font-mono text-indigo-400 font-bold uppercase tracking-wider">
+          <div className="lg:col-span-6 bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col space-y-4">
+            <div className="border-b border-slate-200 dark:border-slate-800 pb-2">
+              <span className="text-xs font-mono text-indigo-600 dark:text-indigo-400 font-bold uppercase tracking-wider">
                 Interprétation Géométrique
               </span>
               <h3 className="text-base sm:text-lg font-bold text-black dark:text-white mt-0.5">
@@ -449,7 +449,7 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
               </h3>
             </div>
 
-            <p className="text-xs text-slate-300">
+            <p className="text-xs text-slate-700 dark:text-slate-300">
               Un carré de côté <MathView latex="(a + b)" display={false} /> se découpe en 4 aires : 1 carré d'aire <MathView latex="a^2" display={false} />, 1 carré d'aire <MathView latex="b^2" display={false} /> et 2 rectangles d'aire <MathView latex="ab" display={false} /> !
             </p>
 
@@ -577,9 +577,9 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
             </div>
 
             {/* Slider controls */}
-            <div className="bg-slate-950/80 p-3 rounded-xl border border-slate-800 space-y-2 text-xs">
+            <div className="bg-slate-100/80 dark:bg-slate-950/80 p-3 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2 text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-sky-300 font-bold">Valeur de a : {geomA}</span>
+                <span className="text-sky-700 dark:text-sky-300 font-bold">Valeur de a : {geomA}</span>
                 <input
                   type="range"
                   min="2"
@@ -590,7 +590,7 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                 />
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-amber-300 font-bold">Valeur de b : {geomB}</span>
+                <span className="text-amber-700 dark:text-amber-300 font-bold">Valeur de b : {geomB}</span>
                 <input
                   type="range"
                   min="1"
@@ -603,20 +603,20 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
             </div>
 
             {/* Total Area readout */}
-            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs sm:text-sm font-mono text-center text-slate-200">
-              Aire totale = <span className="text-emerald-400 font-bold">({geomA} + {geomB})²</span> = {geomA + geomB}² ={' '}
-              <span className="text-white font-extrabold text-base">{(geomA + geomB) ** 2}</span>
+            <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs sm:text-sm font-mono text-center text-slate-800 dark:text-slate-200">
+              Aire totale = <span className="text-emerald-600 dark:text-emerald-400 font-bold">({geomA} + {geomB})²</span> = {geomA + geomB}² ={' '}
+              <span className="text-slate-900 dark:text-white font-extrabold text-base">{(geomA + geomB) ** 2}</span>
               <br />
-              <span className="text-[11px] text-slate-400">
+              <span className="text-[11px] text-slate-600 dark:text-slate-400">
                 Décomposition : {geomA * geomA} (a²) + 2×{geomA * geomB} (2ab) + {geomB * geomB} (b²) = {(geomA + geomB) ** 2}
               </span>
             </div>
           </div>
 
           {/* Visual 2: The 4 Arrows of Double Distributivity */}
-          <div className="lg:col-span-6 bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col space-y-4">
-            <div className="border-b border-slate-800 pb-2">
-              <span className="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider">
+          <div className="lg:col-span-6 bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col space-y-4">
+            <div className="border-b border-slate-200 dark:border-slate-800 pb-2">
+              <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider">
                 Simulateur Dynamique
               </span>
               <h3 className="text-base sm:text-lg font-bold text-black dark:text-white mt-0.5">
@@ -624,13 +624,13 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
               </h3>
             </div>
 
-            <p className="text-xs text-slate-300">
+            <p className="text-xs text-slate-700 dark:text-slate-300">
               Observez chaque flèche de multiplication avec le signe associé :
             </p>
 
             {/* Presets */}
             <div className="flex flex-wrap gap-1.5 text-xs">
-              <span className="text-slate-400 text-[11px] self-center">Exemples types :</span>
+              <span className="text-slate-600 dark:text-slate-400 text-[11px] self-center">Exemples types :</span>
               <button
                 onClick={() => {
                   setArrowA(1);
@@ -638,7 +638,7 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                   setArrowC(1);
                   setArrowD(3);
                 }}
-                className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono border border-slate-700"
+                className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-mono border border-slate-300 dark:border-slate-700"
               >
                 (x + 2)(x + 3)
               </button>
@@ -649,7 +649,7 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                   setArrowC(1);
                   setArrowD(4);
                 }}
-                className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono border border-slate-700"
+                className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-mono border border-slate-300 dark:border-slate-700"
               >
                 (2x - 3)(x + 4)
               </button>
@@ -660,60 +660,60 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                   setArrowC(2);
                   setArrowD(-5);
                 }}
-                className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono border border-slate-700"
+                className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-mono border border-slate-300 dark:border-slate-700"
               >
                 (3x - 2)(2x - 5)
               </button>
             </div>
 
             {/* Diagram with 4 arrows */}
-            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
+            <div className="bg-slate-100 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col items-center">
               {/* Formula display with color highlights */}
               <div className="text-xl sm:text-2xl font-mono font-bold text-black dark:text-white my-3 flex items-center space-x-1">
                 <span>(</span>
-                <span className="text-sky-400">{arrowA === 1 ? 'x' : `${arrowA}x`}</span>
+                <span className="text-sky-600 dark:text-sky-400">{arrowA === 1 ? 'x' : `${arrowA}x`}</span>
                 <span>{arrowB >= 0 ? ` + ${arrowB}` : ` - ${Math.abs(arrowB)}`}</span>
                 <span>)(</span>
-                <span className="text-indigo-400">{arrowC === 1 ? 'x' : `${arrowC}x`}</span>
+                <span className="text-indigo-600 dark:text-indigo-400">{arrowC === 1 ? 'x' : `${arrowC}x`}</span>
                 <span>{arrowD >= 0 ? ` + ${arrowD}` : ` - ${Math.abs(arrowD)}`}</span>
                 <span>)</span>
               </div>
 
               {/* The 4 Arrow Breakdown */}
               <div className="w-full space-y-2 mt-2">
-                <div className="p-2 rounded-lg bg-slate-900 border border-sky-500/30 text-xs flex items-center justify-between">
-                  <span className="text-sky-300 font-bold">1ère flèche (Haut-Gauche vers Haut-Gauche) :</span>
-                  <span className="font-mono text-white">
+                <div className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-sky-500/30 text-xs flex items-center justify-between">
+                  <span className="text-sky-700 dark:text-sky-300 font-bold">1ère flèche (Haut-Gauche vers Haut-Gauche) :</span>
+                  <span className="font-mono text-slate-900 dark:text-white">
                     ({arrowA}x) × ({arrowC}x) ={' '}
-                    <strong className="text-sky-400">{arrowA * arrowC}x²</strong>
+                    <strong className="text-sky-600 dark:text-sky-400">{arrowA * arrowC}x²</strong>
                   </span>
                 </div>
 
-                <div className="p-2 rounded-lg bg-slate-900 border border-indigo-500/30 text-xs flex items-center justify-between">
-                  <span className="text-indigo-300 font-bold">2ème flèche (Haut-Gauche vers Haut-Droite) :</span>
-                  <span className="font-mono text-white">
+                <div className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-indigo-500/30 text-xs flex items-center justify-between">
+                  <span className="text-indigo-700 dark:text-indigo-300 font-bold">2ème flèche (Haut-Gauche vers Haut-Droite) :</span>
+                  <span className="font-mono text-slate-900 dark:text-white">
                     ({arrowA}x) × ({arrowD}) ={' '}
-                    <strong className="text-indigo-400">
+                    <strong className="text-indigo-600 dark:text-indigo-400">
                       {arrowA * arrowD >= 0 ? `+${arrowA * arrowD}x` : `${arrowA * arrowD}x`}
                     </strong>
                   </span>
                 </div>
 
-                <div className="p-2 rounded-lg bg-slate-900 border border-amber-500/30 text-xs flex items-center justify-between">
-                  <span className="text-amber-300 font-bold">3ème flèche (Bas-Droite vers Bas-Gauche) :</span>
-                  <span className="font-mono text-white">
+                <div className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-amber-500/30 text-xs flex items-center justify-between">
+                  <span className="text-amber-700 dark:text-amber-300 font-bold">3ème flèche (Bas-Droite vers Bas-Gauche) :</span>
+                  <span className="font-mono text-slate-900 dark:text-white">
                     ({arrowB}) × ({arrowC}x) ={' '}
-                    <strong className="text-amber-400">
+                    <strong className="text-amber-600 dark:text-amber-400">
                       {arrowB * arrowC >= 0 ? `+${arrowB * arrowC}x` : `${arrowB * arrowC}x`}
                     </strong>
                   </span>
                 </div>
 
-                <div className="p-2 rounded-lg bg-slate-900 border border-pink-500/30 text-xs flex items-center justify-between">
-                  <span className="text-pink-300 font-bold">4ème flèche (Bas-Droite vers Bas-Droite) :</span>
-                  <span className="font-mono text-white">
+                <div className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-pink-500/30 text-xs flex items-center justify-between">
+                  <span className="text-pink-700 dark:text-pink-300 font-bold">4ème flèche (Bas-Droite vers Bas-Droite) :</span>
+                  <span className="font-mono text-slate-900 dark:text-white">
                     ({arrowB}) × ({arrowD}) ={' '}
-                    <strong className="text-pink-400">
+                    <strong className="text-pink-600 dark:text-pink-400">
                       {arrowB * arrowD >= 0 ? `+${arrowB * arrowD}` : `${arrowB * arrowD}`}
                     </strong>
                   </span>
@@ -727,8 +727,8 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
               const midTerm = arrowA * arrowD + arrowB * arrowC;
               const constTerm = arrowB * arrowD;
               return (
-                <div className="p-3.5 bg-emerald-950/40 border border-emerald-500/40 rounded-xl text-center space-y-1">
-                  <span className="text-xs text-emerald-300 font-semibold uppercase tracking-wider block">
+                <div className="p-3.5 bg-emerald-50/40 dark:bg-emerald-950/40 border border-emerald-500/40 rounded-xl text-center space-y-1">
+                  <span className="text-xs text-emerald-700 dark:text-emerald-300 font-semibold uppercase tracking-wider block">
                     Forme Développée et Réduite Finale :
                   </span>
                   <div className="text-lg sm:text-xl font-mono font-bold text-black dark:text-white">
@@ -745,29 +745,29 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
 
       {/* TAB 3: CALCULATEUR DE VALEUR NUMERIQUE */}
       {activeSubTab === 'calculateur-valeur' && (
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-xl flex flex-col space-y-5">
-          <div className="border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono text-amber-400 font-bold uppercase tracking-wider">
+        <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-6 shadow-xl flex flex-col space-y-5">
+          <div className="border-b border-slate-200 dark:border-slate-800 pb-3">
+            <span className="text-xs font-mono text-amber-600 dark:text-amber-400 font-bold uppercase tracking-wider">
               Outil Pédagogique Interactif
             </span>
             <h3 className="text-lg sm:text-xl font-bold text-black dark:text-white mt-1">
               Calculateur Pas-à-Pas de Valeur Numérique
             </h3>
-            <p className="text-xs sm:text-sm text-slate-300 mt-1">
+            <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mt-1">
               Observez comment les parenthèses de remplacement sont appliquées et comment les priorités opératoires sont strictement respectées.
             </p>
           </div>
 
           {/* Configuration Controls */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800 space-y-2">
-              <label className="text-xs font-bold text-slate-300 block">
+            <div className="bg-slate-100/80 dark:bg-slate-950/80 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2">
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block">
                 1. Choisir l'expression littérale :
               </label>
               <select
                 value={evalExprType}
                 onChange={(e) => setEvalExprType(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-2 text-xs font-mono focus:outline-none focus:border-amber-400"
+                className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl p-2 text-xs font-mono focus:outline-none focus:border-amber-400 dark:focus:border-amber-700"
               >
                 <option value="polynome">E(x) = 2x² - 5x + 3</option>
                 <option value="identite">F(x) = (x + 3)² - 4</option>
@@ -776,8 +776,8 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
               </select>
             </div>
 
-            <div className="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800 space-y-2">
-              <label className="text-xs font-bold text-slate-300 block">
+            <div className="bg-slate-100/80 dark:bg-slate-950/80 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2">
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block">
                 2. Choisir la valeur de x :
               </label>
               <div className="flex flex-wrap gap-1.5">
@@ -788,7 +788,7 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                     className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
                       evalXVal === val
                         ? 'bg-amber-500 text-slate-950 shadow-md'
-                        : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700'
+                        : 'bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700'
                     }`}
                   >
                     x = {val}
@@ -839,49 +839,49 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
             }
 
             return (
-              <div className="bg-slate-950 p-4 sm:p-5 rounded-xl border border-amber-500/30 space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
-                  <span className="text-xs font-bold text-amber-400">
+              <div className="bg-slate-100 dark:bg-slate-950 p-4 sm:p-5 rounded-xl border border-amber-500/30 space-y-4">
+                <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2.5">
+                  <span className="text-xs font-bold text-amber-600 dark:text-amber-400">
                     Déroulement du calcul pour x = {evalXVal} :
                   </span>
-                  <span className="text-xs font-mono text-slate-400">
+                  <span className="text-xs font-mono text-slate-600 dark:text-slate-400">
                     <MathView latex={exprTitle} display={false} />
                   </span>
                 </div>
 
                 <div className="space-y-3 font-mono text-xs sm:text-sm pl-2 border-l-2 border-amber-500">
                   <div className="space-y-1">
-                    <span className="text-[11px] text-slate-400 block font-sans">
+                    <span className="text-[11px] text-slate-600 dark:text-slate-400 block font-sans">
                       1. Remplacement de x par ({evalXVal}) :
                     </span>
-                    <div className="text-amber-200">
+                    <div className="text-amber-800 dark:text-amber-200">
                       <MathView latex={step1} display={false} />
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <span className="text-[11px] text-slate-400 block font-sans">
+                    <span className="text-[11px] text-slate-600 dark:text-slate-400 block font-sans">
                       2. Calcul des puissances et parenthèses :
                     </span>
-                    <div className="text-amber-300">
+                    <div className="text-amber-700 dark:text-amber-300">
                       <MathView latex={step2} display={false} />
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <span className="text-[11px] text-slate-400 block font-sans">
+                    <span className="text-[11px] text-slate-600 dark:text-slate-400 block font-sans">
                       3. Calcul des multiplications :
                     </span>
-                    <div className="text-amber-300">
+                    <div className="text-amber-700 dark:text-amber-300">
                       <MathView latex={step3} display={false} />
                     </div>
                   </div>
 
                   <div className="pt-2">
-                    <span className="text-[11px] text-emerald-400 block font-sans font-bold">
+                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 block font-sans font-bold">
                       Résultat final :
                     </span>
-                    <div className="text-emerald-400 font-extrabold text-base sm:text-lg">
+                    <div className="text-emerald-600 dark:text-emerald-400 font-extrabold text-base sm:text-lg">
                       = {finalResult}
                     </div>
                   </div>
@@ -902,46 +902,46 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
             exercises={getExercisesForChapter('calcul-algebrique')}
           />
 
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
+          <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
             <h3 className="text-lg font-bold text-black dark:text-white flex items-center gap-2">
-              <FileText className="w-5 h-5 text-rose-400" />
+              <FileText className="w-5 h-5 text-rose-600 dark:text-rose-400" />
               <span>Série d'Exercices d'Application & Devoirs Types (Programme Sénégal 4e)</span>
             </h3>
-            <p className="text-xs text-slate-300 mt-1">
+            <p className="text-xs text-slate-700 dark:text-slate-300 mt-1">
               Travaillez d'abord sur votre cahier de brouillon, puis cliquez sur « Voir l'indice » ou « Solution rédigée » pour comparer votre rédaction avec celle attendue par le professeur.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* EXERCICE 1 */}
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col justify-between space-y-3">
+            <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col justify-between space-y-3">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-500/20 text-sky-700 dark:text-sky-300 border border-sky-500/30">
                     Exercice 1 : Réduction
                   </span>
-                  <span className="text-xs text-slate-400">Niveau : Facile</span>
+                  <span className="text-xs text-slate-600 dark:text-slate-400">Niveau : Facile</span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-200 font-medium">
+                <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium">
                   Réduire et ordonner l'expression suivante suivant les puissances décroissantes de x :
                 </p>
-                <div className="p-2.5 bg-slate-950 rounded-xl my-2 text-center font-mono text-black dark:text-white text-sm">
+                <div className="p-2.5 bg-slate-100 dark:bg-slate-950 rounded-xl my-2 text-center font-mono text-black dark:text-white text-sm">
                   <MathView latex="A(x) = 5x^2 - 3x + 7 - 2x^2 + 8x - 11" display={true} />
                 </div>
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+              <div className="space-y-2 pt-2 border-t border-slate-200/80 dark:border-slate-800/80">
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => toggleHint(1)}
-                    className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs flex items-center space-x-1"
+                    className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs flex items-center space-x-1"
                   >
-                    <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
+                    <HelpCircle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                     <span>{openExerciseHint[1] ? 'Masquer indice' : 'Indice'}</span>
                   </button>
                   <button
                     onClick={() => toggleSolution(1)}
-                    className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs flex items-center space-x-1"
+                    className="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center space-x-1"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>{openExerciseSolution[1] ? 'Masquer solution' : 'Solution rédigée'}</span>
@@ -949,49 +949,49 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                 </div>
 
                 {openExerciseHint[1] && (
-                  <div className="p-2.5 rounded-lg bg-amber-950/40 border border-amber-500/30 text-xs text-amber-200">
+                  <div className="p-2.5 rounded-lg bg-amber-50/40 dark:bg-amber-950/40 border border-amber-500/30 text-xs text-amber-800 dark:text-amber-200">
                     Regroupez les termes en x², puis les termes en x, puis les constantes.
                   </div>
                 )}
 
                 {openExerciseSolution[1] && (
-                  <div className="p-3 rounded-xl bg-slate-950 border border-emerald-500/40 text-xs text-slate-200 space-y-1 font-mono">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-emerald-500/40 text-xs text-slate-800 dark:text-slate-200 space-y-1 font-mono">
                     <div>A(x) = (5x² - 2x²) + (-3x + 8x) + (7 - 11)</div>
-                    <div className="text-emerald-400 font-bold">A(x) = 3x² + 5x - 4</div>
+                    <div className="text-emerald-600 dark:text-emerald-400 font-bold">A(x) = 3x² + 5x - 4</div>
                   </div>
                 )}
               </div>
             </div>
 
             {/* EXERCICE 2 */}
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col justify-between space-y-3">
+            <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col justify-between space-y-3">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30">
                     Exercice 2 : Double Distributivité
                   </span>
-                  <span className="text-xs text-slate-400">Niveau : Moyen</span>
+                  <span className="text-xs text-slate-600 dark:text-slate-400">Niveau : Moyen</span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-200 font-medium">
+                <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium">
                   Développer, réduire et ordonner l'expression :
                 </p>
-                <div className="p-2.5 bg-slate-950 rounded-xl my-2 text-center font-mono text-white text-sm">
+                <div className="p-2.5 bg-slate-100 dark:bg-slate-950 rounded-xl my-2 text-center font-mono text-slate-900 dark:text-white text-sm">
                   <MathView latex="B(x) = (2x - 3)(4x + 5)" display={true} />
                 </div>
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+              <div className="space-y-2 pt-2 border-t border-slate-200/80 dark:border-slate-800/80">
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => toggleHint(2)}
-                    className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs flex items-center space-x-1"
+                    className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs flex items-center space-x-1"
                   >
-                    <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
+                    <HelpCircle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                     <span>{openExerciseHint[2] ? 'Masquer indice' : 'Indice'}</span>
                   </button>
                   <button
                     onClick={() => toggleSolution(2)}
-                    className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs flex items-center space-x-1"
+                    className="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center space-x-1"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>{openExerciseSolution[2] ? 'Masquer solution' : 'Solution rédigée'}</span>
@@ -999,49 +999,49 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                 </div>
 
                 {openExerciseHint[2] && (
-                  <div className="p-2.5 rounded-lg bg-amber-950/40 border border-amber-500/30 text-xs text-amber-200">
+                  <div className="p-2.5 rounded-lg bg-amber-50/40 dark:bg-amber-950/40 border border-amber-500/30 text-xs text-amber-800 dark:text-amber-200">
                     Appliquez les 4 flèches : (2x)×(4x) + (2x)×(5) - (3)×(4x) - (3)×(5).
                   </div>
                 )}
 
                 {openExerciseSolution[2] && (
-                  <div className="p-3 rounded-xl bg-slate-950 border border-emerald-500/40 text-xs text-slate-200 space-y-1 font-mono">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-950 border border-emerald-500/40 text-xs text-slate-800 dark:text-slate-200 space-y-1 font-mono">
                     <div>B(x) = 8x² + 10x - 12x - 15</div>
-                    <div className="text-emerald-400 font-bold">B(x) = 8x² - 2x - 15</div>
+                    <div className="text-emerald-600 dark:text-emerald-400 font-bold">B(x) = 8x² - 2x - 15</div>
                   </div>
                 )}
               </div>
             </div>
 
             {/* EXERCICE 3 */}
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col justify-between space-y-3">
+            <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col justify-between space-y-3">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-pink-500/20 text-pink-300 border border-pink-500/30">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-pink-500/20 text-pink-700 dark:text-pink-300 border border-pink-500/30">
                     Exercice 3 : Identités Remarquables
                   </span>
-                  <span className="text-xs text-slate-400">Niveau : Moyen</span>
+                  <span className="text-xs text-slate-600 dark:text-slate-400">Niveau : Moyen</span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-200 font-medium">
+                <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium">
                   Développer directement à l'aide des identités remarquables :
                 </p>
-                <div className="p-2.5 bg-slate-950 rounded-xl my-2 text-center font-mono text-white text-sm">
+                <div className="p-2.5 bg-slate-100 dark:bg-slate-950 rounded-xl my-2 text-center font-mono text-slate-900 dark:text-white text-sm">
                   <MathView latex="C(x) = (3x - 4)^2" display={true} />
                 </div>
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+              <div className="space-y-2 pt-2 border-t border-slate-200/80 dark:border-slate-800/80">
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => toggleHint(3)}
-                    className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs flex items-center space-x-1"
+                    className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs flex items-center space-x-1"
                   >
-                    <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
+                    <HelpCircle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                     <span>{openExerciseHint[3] ? 'Masquer indice' : 'Indice'}</span>
                   </button>
                   <button
                     onClick={() => toggleSolution(3)}
-                    className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs flex items-center space-x-1"
+                    className="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center space-x-1"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>{openExerciseSolution[3] ? 'Masquer solution' : 'Solution rédigée'}</span>
@@ -1049,49 +1049,49 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                 </div>
 
                 {openExerciseHint[3] && (
-                  <div className="p-2.5 rounded-lg bg-amber-950/40 border border-amber-500/30 text-xs text-amber-200">
+                  <div className="p-2.5 rounded-lg bg-amber-50/40 dark:bg-amber-950/40 border border-amber-500/30 text-xs text-amber-800 dark:text-amber-200">
                     Formule (a - b)² = a² - 2ab + b² avec a = 3x et b = 4. Attention : (3x)² = 9x².
                   </div>
                 )}
 
                 {openExerciseSolution[3] && (
-                  <div className="p-3 rounded-xl bg-slate-950 border border-emerald-500/40 text-xs text-slate-200 space-y-1 font-mono">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-emerald-500/40 text-xs text-slate-800 dark:text-slate-200 space-y-1 font-mono">
                     <div>C(x) = (3x)² - 2 × (3x) × (4) + (4)²</div>
-                    <div className="text-emerald-400 font-bold">C(x) = 9x² - 24x + 16</div>
+                    <div className="text-emerald-600 dark:text-emerald-400 font-bold">C(x) = 9x² - 24x + 16</div>
                   </div>
                 )}
               </div>
             </div>
 
             {/* EXERCICE 4 */}
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col justify-between space-y-3">
+            <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col justify-between space-y-3">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30">
                     Exercice 4 : Factorisation (Facteur commun)
                   </span>
-                  <span className="text-xs text-slate-400">Niveau : Moyen</span>
+                  <span className="text-xs text-slate-600 dark:text-slate-400">Niveau : Moyen</span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-200 font-medium">
+                <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium">
                   Factoriser l'expression suivante en trouvant le facteur commun :
                 </p>
-                <div className="p-2.5 bg-slate-950 rounded-xl my-2 text-center font-mono text-white text-sm">
+                <div className="p-2.5 bg-slate-100 dark:bg-slate-950 rounded-xl my-2 text-center font-mono text-slate-900 dark:text-white text-sm">
                   <MathView latex="D(x) = (2x - 5)(x + 3) + (2x - 5)(3x - 1)" display={true} />
                 </div>
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+              <div className="space-y-2 pt-2 border-t border-slate-200/80 dark:border-slate-800/80">
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => toggleHint(4)}
-                    className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs flex items-center space-x-1"
+                    className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs flex items-center space-x-1"
                   >
-                    <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
+                    <HelpCircle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                     <span>{openExerciseHint[4] ? 'Masquer indice' : 'Indice'}</span>
                   </button>
                   <button
                     onClick={() => toggleSolution(4)}
-                    className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs flex items-center space-x-1"
+                    className="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center space-x-1"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>{openExerciseSolution[4] ? 'Masquer solution' : 'Solution rédigée'}</span>
@@ -1099,50 +1099,50 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                 </div>
 
                 {openExerciseHint[4] && (
-                  <div className="p-2.5 rounded-lg bg-amber-950/40 border border-amber-500/30 text-xs text-amber-200">
+                  <div className="p-2.5 rounded-lg bg-amber-50/40 dark:bg-amber-950/40 border border-amber-500/30 text-xs text-amber-800 dark:text-amber-200">
                     Mettre en facteur (2x - 5), puis additionner les deux termes restants entre crochets.
                   </div>
                 )}
 
                 {openExerciseSolution[4] && (
-                  <div className="p-3 rounded-xl bg-slate-950 border border-emerald-500/40 text-xs text-slate-200 space-y-1 font-mono">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-950 border border-emerald-500/40 text-xs text-slate-800 dark:text-slate-200 space-y-1 font-mono">
                     <div>D(x) = (2x - 5) [ (x + 3) + (3x - 1) ]</div>
                     <div>D(x) = (2x - 5) (x + 3 + 3x - 1)</div>
-                    <div className="text-emerald-400 font-bold">D(x) = (2x - 5)(4x + 2) = 2(2x - 5)(2x + 1)</div>
+                    <div className="text-emerald-600 dark:text-emerald-400 font-bold">D(x) = (2x - 5)(4x + 2) = 2(2x - 5)(2x + 1)</div>
                   </div>
                 )}
               </div>
             </div>
 
             {/* EXERCICE 5 */}
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col justify-between space-y-3">
+            <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col justify-between space-y-3">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
                     Exercice 5 : Factorisation a² - b²
                   </span>
-                  <span className="text-xs text-slate-400">Niveau : Moyen</span>
+                  <span className="text-xs text-slate-600 dark:text-slate-400">Niveau : Moyen</span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-200 font-medium">
+                <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium">
                   Factoriser en utilisant l'identité remarquable <MathView latex="a^2 - b^2" display={false} /> :
                 </p>
-                <div className="p-2.5 bg-slate-950 rounded-xl my-2 text-center font-mono text-white text-sm">
+                <div className="p-2.5 bg-slate-100 dark:bg-slate-950 rounded-xl my-2 text-center font-mono text-slate-900 dark:text-white text-sm">
                   <MathView latex="E(x) = 25x^2 - 36" display={true} />
                 </div>
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+              <div className="space-y-2 pt-2 border-t border-slate-200/80 dark:border-slate-800/80">
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => toggleHint(5)}
-                    className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs flex items-center space-x-1"
+                    className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs flex items-center space-x-1"
                   >
-                    <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
+                    <HelpCircle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                     <span>{openExerciseHint[5] ? 'Masquer indice' : 'Indice'}</span>
                   </button>
                   <button
                     onClick={() => toggleSolution(5)}
-                    className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs flex items-center space-x-1"
+                    className="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center space-x-1"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>{openExerciseSolution[5] ? 'Masquer solution' : 'Solution rédigée'}</span>
@@ -1150,54 +1150,54 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                 </div>
 
                 {openExerciseHint[5] && (
-                  <div className="p-2.5 rounded-lg bg-amber-950/40 border border-amber-500/30 text-xs text-amber-200">
+                  <div className="p-2.5 rounded-lg bg-amber-50/40 dark:bg-amber-950/40 border border-amber-500/30 text-xs text-amber-800 dark:text-amber-200">
                     Écrire 25x² sous la forme (5x)² et 36 sous la forme 6².
                   </div>
                 )}
 
                 {openExerciseSolution[5] && (
-                  <div className="p-3 rounded-xl bg-slate-950 border border-emerald-500/40 text-xs text-slate-200 space-y-1 font-mono">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-emerald-500/40 text-xs text-slate-800 dark:text-slate-200 space-y-1 font-mono">
                     <div>E(x) = (5x)² - 6²</div>
-                    <div className="text-emerald-400 font-bold">E(x) = (5x - 6)(5x + 6)</div>
+                    <div className="text-emerald-600 dark:text-emerald-400 font-bold">E(x) = (5x - 6)(5x + 6)</div>
                   </div>
                 )}
               </div>
             </div>
 
             {/* EXERCICE 6: SYNTHESE COMPLETE TYPE DEVOIR DE 4E */}
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col justify-between space-y-3">
+            <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col justify-between space-y-3">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/20 text-rose-700 dark:text-rose-300 border border-rose-500/30">
                     Exercice 6 : Problème Synthèse (Type Devoir / BFEM)
                   </span>
-                  <span className="text-xs text-rose-400 font-semibold">Examen 4e</span>
+                  <span className="text-xs text-rose-600 dark:text-rose-400 font-semibold">Examen 4e</span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-200 font-medium">
+                <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium">
                   On donne l'expression algébrique :
                 </p>
-                <div className="p-2 bg-slate-950 rounded-xl my-1.5 text-center font-mono text-white text-xs sm:text-sm">
+                <div className="p-2 bg-slate-100 dark:bg-slate-950 rounded-xl my-1.5 text-center font-mono text-slate-900 dark:text-white text-xs sm:text-sm">
                   <MathView latex="P(x) = (2x - 3)^2 - (2x - 3)(x + 1)" display={true} />
                 </div>
-                <ol className="list-decimal list-inside text-xs text-slate-300 space-y-0.5 pl-1">
+                <ol className="list-decimal list-inside text-xs text-slate-700 dark:text-slate-300 space-y-0.5 pl-1">
                   <li>Développer et réduire P(x).</li>
                   <li>Factoriser P(x).</li>
                   <li>Calculer la valeur numérique de P(x) pour x = 2.</li>
                 </ol>
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+              <div className="space-y-2 pt-2 border-t border-slate-200/80 dark:border-slate-800/80">
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => toggleHint(6)}
-                    className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs flex items-center space-x-1"
+                    className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs flex items-center space-x-1"
                   >
-                    <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
+                    <HelpCircle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                     <span>{openExerciseHint[6] ? 'Masquer indice' : 'Indice'}</span>
                   </button>
                   <button
                     onClick={() => toggleSolution(6)}
-                    className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs flex items-center space-x-1"
+                    className="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center space-x-1"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>{openExerciseSolution[6] ? 'Masquer solution' : 'Solution rédigée'}</span>
@@ -1205,35 +1205,35 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
                 </div>
 
                 {openExerciseHint[6] && (
-                  <div className="p-2.5 rounded-lg bg-amber-950/40 border border-amber-500/30 text-xs text-amber-200">
+                  <div className="p-2.5 rounded-lg bg-amber-50/40 dark:bg-amber-950/40 border border-amber-500/30 text-xs text-amber-800 dark:text-amber-200">
                     Pour la factorisation, observez que (2x - 3)² = (2x - 3)(2x - 3). Le facteur commun est (2x - 3).
                   </div>
                 )}
 
                 {openExerciseSolution[6] && (
-                  <div className="p-3 rounded-xl bg-slate-950 border border-emerald-500/40 text-xs text-slate-200 space-y-1.5 font-mono">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-950 border border-emerald-500/40 text-xs text-slate-800 dark:text-slate-200 space-y-1.5 font-mono">
                     <div>
-                      <strong className="text-white block font-sans text-[11px]">1. Développement :</strong>
+                      <strong className="text-slate-900 dark:text-white block font-sans text-[11px]">1. Développement :</strong>
                       P(x) = (4x² - 12x + 9) - (2x² + 2x - 3x - 3)
                       <br />
                       P(x) = 4x² - 12x + 9 - 2x² + x + 3
                       <br />
-                      <span className="text-emerald-400 font-bold">P(x) = 2x² - 11x + 12</span>
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">P(x) = 2x² - 11x + 12</span>
                     </div>
 
                     <div>
-                      <strong className="text-white block font-sans text-[11px]">2. Factorisation :</strong>
+                      <strong className="text-slate-900 dark:text-white block font-sans text-[11px]">2. Factorisation :</strong>
                       P(x) = (2x - 3) [ (2x - 3) - (x + 1) ]
                       <br />
                       P(x) = (2x - 3) (2x - 3 - x - 1)
                       <br />
-                      <span className="text-emerald-400 font-bold">P(x) = (2x - 3)(x - 4)</span>
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">P(x) = (2x - 3)(x - 4)</span>
                     </div>
 
                     <div>
-                      <strong className="text-white block font-sans text-[11px]">3. Valeur pour x = 2 :</strong>
+                      <strong className="text-slate-900 dark:text-white block font-sans text-[11px]">3. Valeur pour x = 2 :</strong>
                       Dans la forme factorisée : P(2) = (2×2 - 3)(2 - 4) = (1) × (-2) ={' '}
-                      <span className="text-emerald-400 font-bold">-2</span>.
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">-2</span>.
                     </div>
                   </div>
                 )}

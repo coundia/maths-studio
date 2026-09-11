@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CourseChapter, ALL_SENEGAL_COURSES } from '../coursesData';
+import { getGradeLevel } from '../data/gradeLevel';
 import {
   BookOpen,
   Search,
@@ -19,8 +20,8 @@ interface CourseSidebarProps {
   onSelectChapter: (chapterId: string) => void;
   isOpen: boolean;
   onCloseMobile?: () => void;
-  selectedGrade?: 'all' | '3e' | '4e' | '5e';
-  onSelectGrade?: (grade: 'all' | '3e' | '4e' | '5e') => void;
+  selectedGrade?: 'all' | '6e' | '5e' | '4e' | '3e';
+  onSelectGrade?: (grade: 'all' | '6e' | '5e' | '4e' | '3e') => void;
 }
 
 export const CourseSidebar: React.FC<CourseSidebarProps> = ({
@@ -35,15 +36,9 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   const filteredChapters = ALL_SENEGAL_COURSES.filter((chapter) => {
-    // Filter by grade level (3e / 4e / 5e / all)
-    const is3e = chapter.gradeLevel === '3e' || chapter.id.endsWith('-3e') || chapter.id.startsWith('video-');
-    const is5e = chapter.gradeLevel === '5e' || chapter.id.endsWith('-5e');
-    const is4e = !is3e && !is5e;
-    const matchesGrade =
-      selectedGrade === 'all' ||
-      (selectedGrade === '3e' && is3e) ||
-      (selectedGrade === '4e' && is4e) ||
-      (selectedGrade === '5e' && is5e);
+    // Filter by grade level (6e / 5e / 4e / 3e / all), via l'unique point de
+    // classification getGradeLevel (voir data/gradeLevel.ts).
+    const matchesGrade = selectedGrade === 'all' || getGradeLevel(chapter) === selectedGrade;
 
     const matchesSearch =
       chapter.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -70,15 +65,15 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
       {isOpen && (
         <div
           onClick={onCloseMobile}
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
         />
       )}
 
       {/* Sidebar Container */}
       <aside
         id="senegal-courses-sidebar"
-        className={`fixed md:static top-0 bottom-0 left-0 z-50 w-80 sm:w-88 md:w-76 lg:w-84 shrink-0 bg-white/70 dark:bg-[#0B1120]/70 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-800/80 flex flex-col transition-all duration-300 ease-in-out ${
-          isOpen ? 'translate-x-0' : '-translate-x-full md:hidden'
+        className={`fixed lg:static top-0 bottom-0 left-0 z-50 w-80 sm:w-88 lg:w-84 shrink-0 bg-surface/70 dark:bg-canvas/70 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-800/80 flex flex-col transition-all duration-300 ease-in-out ${
+          isOpen ? 'translate-x-0' : '-translate-x-full lg:hidden'
         }`}
       >
         {/* Header Branding */}
@@ -93,29 +88,41 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
                   Programme Collège Sénégal
                 </h2>
                 <p className="text-[11px] text-red-600 dark:text-emerald-400 font-medium">
-                  {selectedGrade === '5e'
+                  {selectedGrade === '6e'
+                    ? 'Classe de 6ème • 13 cours'
+                    : selectedGrade === '5e'
                     ? 'Classe de 5ème • 13 cours'
                     : selectedGrade === '4e'
                     ? 'Classe de 4ème • 14 cours'
                     : selectedGrade === '3e'
                     ? 'Classe de 3ème (BFEM) • 20 cours'
-                    : 'Classes de 5e, 4e & 3e • 47 cours'}
+                    : 'Classes de 6e, 5e, 4e & 3e • 60 cours'}
                 </p>
               </div>
             </div>
             {onCloseMobile && (
               <button
                 onClick={onCloseMobile}
-                className="md:hidden text-black hover:text-neutral-700 dark:text-slate-400 dark:hover:text-white text-xs px-2.5 py-1 rounded-lg bg-neutral-100 dark:bg-slate-800 border border-neutral-300 dark:border-slate-700"
+                className="lg:hidden text-black hover:text-neutral-700 dark:text-slate-400 dark:hover:text-white text-xs px-2.5 py-1 rounded-lg bg-neutral-100 dark:bg-slate-800 border border-neutral-300 dark:border-slate-700"
               >
                 Fermer
               </button>
             )}
           </div>
 
-          {/* Grade Level Selector Tabs (5e / 4e / 3e / Tous) */}
+          {/* Grade Level Selector Tabs (6e / 5e / 4e / 3e / Tous) */}
           {onSelectGrade && (
-            <div className="grid grid-cols-4 gap-1 bg-neutral-100 dark:bg-slate-950 p-1 rounded-xl border border-neutral-300 dark:border-slate-800 my-2">
+            <div className="grid grid-cols-5 gap-1 bg-neutral-100 dark:bg-slate-950 p-1 rounded-xl border border-neutral-300 dark:border-slate-800 my-2">
+              <button
+                onClick={() => onSelectGrade('6e')}
+                className={`py-1.5 px-1 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center space-x-1 ${
+                  selectedGrade === '6e'
+                    ? 'bg-white text-black border-2 border-black font-extrabold dark:bg-rose-600 dark:text-white shadow-xs'
+                    : 'text-neutral-700 dark:text-slate-400 hover:text-black dark:hover:text-white'
+                }`}
+              >
+                <span>6ème</span>
+              </button>
               <button
                 onClick={() => onSelectGrade('5e')}
                 className={`py-1.5 px-1 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center space-x-1 ${
@@ -161,18 +168,18 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
 
           {/* Search Bar */}
           <div className="relative mt-2">
-            <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-neutral-600 dark:text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Rechercher (Thalès, Racine carrée, Vidéo...)"
-              className="w-full pl-8.5 pr-3 py-1.5 bg-white border border-neutral-300 rounded-lg text-xs text-black placeholder-neutral-400 focus:outline-none focus:border-red-600 dark:bg-slate-950/90 dark:border-slate-700/80 dark:text-slate-200 dark:placeholder-slate-500 dark:focus:border-emerald-500 transition-colors"
+              className="w-full pl-8.5 pr-3 py-1.5 bg-white border border-neutral-300 rounded-lg text-xs text-black placeholder-neutral-600 focus:outline-none focus:border-red-300 dark:bg-slate-950/90 dark:border-slate-700/80 dark:text-slate-200 dark:placeholder-slate-500 dark:focus:border-emerald-500 transition-colors"
             />
           </div>
 
           {/* Category Tabs */}
-          <div className="flex space-x-1 mt-2.5 overflow-x-auto pb-1 scrollbar-none">
+          <div className="flex flex-wrap gap-1 mt-2.5 pb-1">
             {categories.map((cat) => {
               const Icon = cat.icon;
               const active = selectedCategory === cat.id;
@@ -183,7 +190,7 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
                   className={`flex items-center space-x-1 px-2 py-1 rounded-md text-[10px] font-semibold whitespace-nowrap transition-colors ${
                     active
                       ? 'bg-white text-black border-2 border-black font-bold dark:bg-emerald-600 dark:text-white shadow-xs'
-                      : 'text-neutral-700 dark:text-slate-400 hover:text-black dark:hover:text-slate-200 hover:bg-neutral-200/70 bg-neutral-100 dark:hover:bg-slate-800/60'
+                      : 'text-neutral-700 dark:text-slate-400 hover:text-black dark:hover:text-slate-200 hover:bg-neutral-200/70 bg-neutral-100 dark:bg-neutral-800 dark:hover:bg-slate-800/60'
                   }`}
                 >
                   <Icon className="w-3 h-3" />
@@ -203,8 +210,9 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
 
           {filteredChapters.map((chapter, idx) => {
             const isActive = activeChapterId === chapter.id;
-            const is3e = chapter.gradeLevel === '3e' || chapter.id.endsWith('-3e') || chapter.id.startsWith('video-');
-            const is5e = chapter.gradeLevel === '5e' || chapter.id.endsWith('-5e');
+            const is6e = getGradeLevel(chapter) === '6e';
+            const is3e = getGradeLevel(chapter) === '3e';
+            const is5e = getGradeLevel(chapter) === '5e';
             const isVideo = chapter.category === 'Cours Vidéos BFEM';
 
             return (
@@ -227,17 +235,19 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
                 <div
                   className={`w-6 h-6 rounded-lg shrink-0 flex items-center justify-center text-[11px] font-mono font-bold mt-0.5 transition-colors ${
                     isActive
-                      ? 'bg-white text-red-600 font-extrabold border-2 border-red-600 dark:bg-emerald-500 dark:text-slate-950'
+                      ? 'bg-white text-red-600 font-extrabold border-2 border-red-300 dark:border-red-600 dark:bg-emerald-500 dark:text-slate-950'
                       : isVideo
                       ? 'bg-white text-black border border-neutral-300 dark:bg-red-950 dark:text-red-400 dark:border-red-800/40'
+                      : is6e
+                      ? 'bg-neutral-100 text-neutral-900 border border-neutral-200 dark:bg-rose-950/80 dark:text-rose-300 dark:border-rose-800/40'
                       : is5e
                       ? 'bg-neutral-100 text-neutral-900 border border-neutral-200 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/40'
                       : is3e
                       ? 'bg-neutral-100 text-neutral-900 border border-neutral-200 dark:bg-amber-950/80 dark:text-amber-300 dark:border-amber-800/40'
-                      : 'bg-neutral-100 text-neutral-900 border border-neutral-200 dark:bg-slate-800 dark:text-slate-400 group-hover:text-black dark:group-hover:text-slate-200'
+                      : 'bg-neutral-100 text-neutral-900 border border-neutral-200 dark:border-neutral-800 dark:bg-slate-800 dark:text-slate-400 group-hover:text-black dark:group-hover:text-slate-200'
                   }`}
                 >
-                  {isVideo ? <Video className={`w-3 h-3 ${isActive ? 'text-red-600' : 'text-red-600 dark:text-red-400'}`} /> : idx + 1}
+                  {isVideo ? <Video className={`w-3 h-3 ${isActive ? 'text-red-600 dark:text-red-400' : 'text-red-600 dark:text-red-400'}`} /> : idx + 1}
                 </div>
 
                 {/* Content */}
@@ -256,6 +266,8 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
                           ? 'bg-white text-black border border-black dark:bg-neutral-800 dark:text-white'
                           : isVideo
                           ? 'bg-white text-black border border-neutral-300 dark:bg-red-950 dark:text-red-300 dark:border-red-800/50'
+                          : is6e
+                          ? 'bg-neutral-100 text-neutral-900 border border-neutral-300 dark:bg-rose-950 dark:text-rose-300 dark:border-rose-800/50'
                           : is5e
                           ? 'bg-neutral-100 text-neutral-900 border border-neutral-300 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-800/50'
                           : is3e
@@ -263,7 +275,7 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
                           : 'bg-neutral-100 text-neutral-900 border border-neutral-300 dark:bg-indigo-950 dark:text-indigo-300 dark:border-indigo-800/50'
                       }`}
                     >
-                      {isVideo ? 'Vidéo' : is5e ? '5e' : is3e ? '3e' : '4e'}
+                      {isVideo ? 'Vidéo' : is6e ? '6e' : is5e ? '5e' : is3e ? '3e' : '4e'}
                     </span>
                   </div>
                   <p className={`text-[11px] line-clamp-1 mt-0.5 leading-tight ${
@@ -277,7 +289,7 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
                   className={`w-4 h-4 shrink-0 transition-transform mt-1 ${
                     isActive
                       ? 'text-red-500 dark:text-emerald-400 translate-x-0.5 font-bold'
-                      : 'text-neutral-400 dark:text-slate-600 group-hover:text-black dark:group-hover:text-slate-400'
+                      : 'text-neutral-600 dark:text-slate-400 group-hover:text-black dark:group-hover:text-slate-200'
                   }`}
                 />
               </button>
@@ -285,7 +297,7 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
           })}
 
           {filteredChapters.length === 0 && (
-            <div className="text-center py-8 text-xs text-neutral-500">
+            <div className="text-center py-8 text-xs text-neutral-500 dark:text-neutral-400">
               Aucun cours ne correspond à votre recherche.
             </div>
           )}

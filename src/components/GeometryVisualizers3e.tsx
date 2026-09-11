@@ -30,13 +30,13 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
     return (
       <div className="w-full flex flex-col items-center space-y-3">
         {/* Toggle between Triangle and Butterfly configuration */}
-        <div className="flex items-center space-x-2 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+        <div className="flex items-center space-x-2 bg-slate-100 dark:bg-slate-950 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
           <button
             onClick={() => setThalesConfig('triangle')}
             className={`px-3 py-1 rounded-lg font-semibold transition-all ${
               isTriangle
-                ? 'bg-emerald-600 text-slate-950 shadow-md font-bold'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-emerald-500 text-slate-950 shadow-md font-bold'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             Configuration Triangle (Emboîtée)
@@ -45,8 +45,8 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
             onClick={() => setThalesConfig('papillon')}
             className={`px-3 py-1 rounded-lg font-semibold transition-all ${
               !isTriangle
-                ? 'bg-emerald-600 text-slate-950 shadow-md font-bold'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-emerald-500 text-slate-950 shadow-md font-bold'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             Configuration Papillon (Croisée)
@@ -200,14 +200,14 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
         </svg>
 
         {/* Ratio Formula Card */}
-        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center text-xs font-mono">
-          <span className="text-emerald-400 font-bold">Égalité fondamentale des 3 rapports :</span>
+        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center text-xs font-mono">
+          <span className="text-emerald-600 dark:text-emerald-400 font-bold">Égalité fondamentale des 3 rapports :</span>
           <div className="my-1 text-sm sm:text-base font-extrabold text-black dark:text-white">
-            <span className="text-emerald-300">AM / AB</span> ={' '}
-            <span className="text-sky-300">AN / AC</span> ={' '}
-            <span className="text-amber-300">MN / BC</span>
+            <span className="text-emerald-700 dark:text-emerald-300">AM / AB</span> ={' '}
+            <span className="text-sky-700 dark:text-sky-300">AN / AC</span> ={' '}
+            <span className="text-amber-700 dark:text-amber-300">MN / BC</span>
           </div>
-          <span className="text-slate-400 text-[11px]">
+          <span className="text-slate-600 dark:text-slate-400 text-[11px]">
             {isTriangle ? 'Petit triangle AMN / Grand triangle ABC' : 'Rapports en nœud papillon'}
           </span>
         </div>
@@ -238,8 +238,8 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
     return (
       <div className="w-full flex flex-col items-center space-y-3">
         {/* Slider to slide M along the circle */}
-        <div className="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 text-xs">
-          <span className="text-slate-300">Déplacer le point M sur l'arc :</span>
+        <div className="flex items-center space-x-2 bg-slate-100 dark:bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+          <span className="text-slate-700 dark:text-slate-300">Déplacer le point M sur l'arc :</span>
           <input
             type="range"
             min="-2"
@@ -249,7 +249,7 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
             onChange={(e) => setPointMOffset(Number(e.target.value))}
             className="w-24 accent-emerald-500 cursor-pointer"
           />
-          <span className="font-mono text-emerald-400 text-[11px]">Position {pointMOffset + 3}/5</span>
+          <span className="font-mono text-emerald-600 dark:text-emerald-400 text-[11px]">Position {pointMOffset + 3}/5</span>
         </div>
 
         <svg viewBox="0 0 440 260" className="w-full max-w-[420px] h-auto drop-shadow-md select-none">
@@ -305,13 +305,13 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
         </svg>
 
         {/* Dynamic Inscribed Angle Formula Card */}
-        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center text-xs font-mono">
+        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center text-xs font-mono">
           <div className="text-sm font-bold text-black dark:text-white flex items-center justify-center gap-2">
-            <span className="text-emerald-400">AMB (inscrit) = 40°</span>
-            <span className="text-slate-400">=</span>
-            <span className="text-red-400">AOB (centre) / 2 = 80° / 2</span>
+            <span className="text-emerald-600 dark:text-emerald-400">AMB (inscrit) = 40°</span>
+            <span className="text-slate-600 dark:text-slate-400">=</span>
+            <span className="text-red-600 dark:text-red-400">AOB (centre) / 2 = 80° / 2</span>
           </div>
-          <p className="text-[11px] text-slate-300 mt-1">
+          <p className="text-[11px] text-slate-700 dark:text-slate-300 mt-1">
             Déplacez le point M : l'angle reste rigoureusement invariant à 40° !
           </p>
         </div>
@@ -419,8 +419,8 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
           )}
         </svg>
 
-        <div className="text-xs text-slate-300 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-center font-mono">
-          Théorème de Thalès : <span className="text-emerald-400 font-bold">AP = PQ = QB = AB / 3</span>
+        <div className="text-xs text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-center font-mono">
+          Théorème de Thalès : <span className="text-emerald-600 dark:text-emerald-400 font-bold">AP = PQ = QB = AB / 3</span>
         </div>
       </div>
     );
@@ -445,8 +445,8 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
               onClick={() => setActiveParallelogramMethod(m.id)}
               className={`p-2 rounded-xl text-[11px] font-semibold text-center transition-all ${
                 activeParallelogramMethod === m.id
-                  ? 'bg-emerald-600 text-slate-950 font-bold shadow-md'
-                  : 'bg-slate-950 text-slate-400 border border-slate-800 hover:text-white'
+                  ? 'bg-emerald-500 text-slate-950 font-bold shadow-md'
+                  : 'bg-slate-100 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Méthode {m.id}
@@ -508,9 +508,9 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
           )}
         </svg>
 
-        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center text-xs font-mono">
-          <span className="text-emerald-400 font-bold">Règle BFEM appliquée : </span>
-          <span className="text-white">
+        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center text-xs font-mono">
+          <span className="text-emerald-600 dark:text-emerald-400 font-bold">Règle BFEM appliquée : </span>
+          <span className="text-slate-900 dark:text-white">
             {methods.find((m) => m.id === activeParallelogramMethod)?.rule}
           </span>
         </div>
@@ -583,8 +583,8 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
           </text>
         </svg>
 
-        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center text-xs font-mono">
-          <div className="text-emerald-400 font-bold">Distance AB = √(3² + 4²) = √25 = 5</div>
+        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center text-xs font-mono">
+          <div className="text-emerald-600 dark:text-emerald-400 font-bold">Distance AB = √(3² + 4²) = √25 = 5</div>
         </div>
       </div>
     );
@@ -594,18 +594,18 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
   if (interactiveType === 'racine-carree') {
     return (
       <div className="w-full flex flex-col items-center space-y-4 max-w-lg">
-        <div className="w-full p-4 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-3">
-          <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
+        <div className="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center space-y-3">
+          <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
             Extraction du plus grand carré parfait
           </span>
           <div className="text-2xl font-bold font-mono text-black dark:text-white">
             <MathView latex="\sqrt{72} = \sqrt{36 \times 2} = \sqrt{36} \times \sqrt{2} = 6\sqrt{2}" display={true} />
           </div>
-          <div className="grid grid-cols-4 gap-2 pt-2 border-t border-slate-900 text-xs">
-            <div className="p-2 rounded-lg bg-slate-900 text-slate-300 font-mono">4 = 2²</div>
-            <div className="p-2 rounded-lg bg-slate-900 text-slate-300 font-mono">9 = 3²</div>
-            <div className="p-2 rounded-lg bg-slate-900 text-slate-300 font-mono">16 = 4²</div>
-            <div className="p-2 rounded-lg bg-emerald-950 text-emerald-300 font-mono font-bold border border-emerald-500/40">36 = 6²</div>
+          <div className="grid grid-cols-4 gap-2 pt-2 border-t border-slate-200 dark:border-slate-800 text-xs">
+            <div className="p-2 rounded-lg bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-mono">4 = 2²</div>
+            <div className="p-2 rounded-lg bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-mono">9 = 3²</div>
+            <div className="p-2 rounded-lg bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-mono">16 = 4²</div>
+            <div className="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-mono font-bold border border-emerald-500/40">36 = 6²</div>
           </div>
         </div>
       </div>
@@ -616,14 +616,14 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
   if (interactiveType === 'systemes-2-inconnues') {
     return (
       <div className="w-full flex flex-col items-center space-y-3">
-        <div className="w-full max-w-md p-4 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-2.5">
-          <span className="text-xs font-bold text-sky-400 uppercase tracking-wider">
+        <div className="w-full max-w-md p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center space-y-2.5">
+          <span className="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider">
             Point d'intersection des deux droites
           </span>
           <div className="text-lg sm:text-xl font-bold font-mono text-black dark:text-white">
             <MathView latex="M(x \,;\, y) = (3 \,;\, 2)" display={true} />
           </div>
-          <p className="text-xs text-slate-300">
+          <p className="text-xs text-slate-700 dark:text-slate-300">
             L'équation (D1) : 2x + 3y = 12 et (D2) : 5x - y = 13 se coupent en un point unique M(3, 2).
           </p>
         </div>
@@ -659,8 +659,8 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
           </text>
         </svg>
 
-        <div className="text-xs text-slate-300 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-center font-mono">
-          Rapport de réduction k = 1/2 : <span className="text-emerald-400 font-bold">V' = (1/2)³ × V = 1/8 V</span>
+        <div className="text-xs text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-center font-mono">
+          Rapport de réduction k = 1/2 : <span className="text-emerald-600 dark:text-emerald-400 font-bold">V' = (1/2)³ × V = 1/8 V</span>
         </div>
       </div>
     );
@@ -668,14 +668,14 @@ export const GeometryVisualizers3e: React.FC<GeometryVisualizers3eProps> = ({
 
   // Fallback default formula card
   return (
-    <div className="p-4 sm:p-6 rounded-2xl bg-slate-950 border border-slate-800 text-center max-w-lg w-full">
-      <div className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2">
+    <div className="p-4 sm:p-6 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center max-w-lg w-full">
+      <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-2">
         {currentStep.rule}
       </div>
       <div className="my-3 text-lg sm:text-2xl font-mono font-bold text-black dark:text-white">
         <MathView latex={currentStep.latex} display={true} />
       </div>
-      <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+      <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mt-2 leading-relaxed">
         {currentStep.explanation}
       </p>
     </div>

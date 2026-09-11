@@ -1,0 +1,1121 @@
+[
+  {
+    "id": "introduction-geometrie-6e",
+    "title": "Introduction à la géométrie - 6e",
+    "shortTitle": "Introduction à la géométrie",
+    "category": "Activités géométriques",
+    "icon": "Spline",
+    "description": "Le vocabulaire de base de la géométrie plane : point, droite, segment, demi-droite, appartenance et alignement.",
+    "demos": [
+      {
+        "id": "vocabulaire-geometrie-base",
+        "title": "Point, droite, segment et demi-droite : le vocabulaire de base",
+        "badge": "Fondamentaux",
+        "defaultLatex": "A \\in (D)",
+        "ruleSummary": "Une droite est un ensemble illimité de points alignés ; un segment [AB] est une portion de droite limitée par deux extrémités ; une demi-droite [AB) a une origine mais est illimitée dans l'autre sens.",
+        "teacherGoal": "Installer un vocabulaire rigoureux et les notations (D), [AB], [AB) avant toute construction.",
+        "interactiveType": "geometrie-intro-6e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Le point : la brique de base",
+            "rule": "Un point est repéré par une lettre majuscule",
+            "latex": "A \\quad \\bullet",
+            "explanation": "Un point est laissé par la pointe d'un crayon sur le papier. Il n'a ni longueur, ni largeur : c'est un élément du plan, noté par une lettre majuscule (A, B, C...).",
+            "teacherTip": "Faire remarquer qu'un point seul ne « mesure » rien : c'est une position, pas une longueur."
+          },
+          {
+            "stepNumber": 2,
+            "title": "La droite (D) : un ensemble illimité de points alignés",
+            "rule": "Une droite est illimitée dans les deux sens",
+            "latex": "(D) \\quad \\text{ou} \\quad (AB)",
+            "explanation": "Une droite est un ensemble de points alignés qui s'étend indéfiniment de part et d'autre. On la note (D), (L) ou par deux de ses points : (AB).",
+            "highlightText": "illimitée"
+          },
+          {
+            "stepNumber": 3,
+            "title": "Le segment [AB] : une portion limitée par deux extrémités",
+            "rule": "Un segment est délimité par deux points",
+            "latex": "[AB]",
+            "explanation": "Le segment [AB] est la portion de la droite (AB) comprise entre les points A et B. Contrairement à la droite, il est limité des deux côtés. On note AB (sans crochets) sa longueur."
+          },
+          {
+            "stepNumber": 4,
+            "title": "La demi-droite [AB) : une origine, une direction illimitée",
+            "rule": "Une demi-droite a une seule extrémité",
+            "latex": "[AB)",
+            "explanation": "La demi-droite [AB) a pour origine A et passe par B ; elle est limitée en A mais illimitée dans la direction de B. Attention à l'ordre des lettres : [AB) et [BA) ne sont pas la même demi-droite."
+          },
+          {
+            "stepNumber": 5,
+            "title": "Appartenance, alignement et inégalité triangulaire",
+            "rule": "A ∈ (D) se lit « A appartient à (D) »",
+            "latex": "A \\in (D) \\quad \\text{et} \\quad B \\notin (D)",
+            "explanation": "Des points sont alignés s'ils appartiennent à une même droite. Propriété clé : si M appartient au segment [AB], alors AM + MB = AB ; sinon (M en dehors du segment), AN + NB > AB.",
+            "teacherTip": "Par deux points distincts, il passe une droite et une seule ; par un seul point, il en passe une infinité."
+          }
+        ],
+        "exercises": [
+          {
+            "difficulty": "facile",
+            "title": "Lire une figure",
+            "question": "Sur la droite (D), les points A, B et C sont alignés dans cet ordre. Sachant que AB = 3 cm et BC = 5 cm, calculer AC.",
+            "hint": "B appartient au segment [AC], donc AC = AB + BC.",
+            "answerLatex": "AC = AB + BC = 3 + 5 = 8 \\text{ cm}",
+            "detailedSolution": [
+              "1. B est entre A et C (alignement dans cet ordre).",
+              "2. On applique AM + MB = AB avec M = B : AB + BC = AC.",
+              "3. AC = 3 + 5 = 8 cm."
+            ]
+          },
+          {
+            "difficulty": "moyen",
+            "title": "Notations",
+            "question": "Reproduire une droite (D) et un point A n'appartenant pas à (D). Placer un point B sur (D) et tracer la demi-droite [AB).",
+            "hint": "L'origine de la demi-droite est la première lettre citée.",
+            "answerLatex": "[AB) \\text{ a pour origine } A",
+            "detailedSolution": [
+              "1. Tracer (D) puis placer A en dehors.",
+              "2. Placer B sur (D).",
+              "3. Tracer la demi-droite d'origine A passant par B : c'est [AB)."
+            ]
+          },
+          {
+            "difficulty": "difficile",
+            "title": "Inégalité triangulaire",
+            "question": "M n'appartient pas au segment [AB]. Sachant que AM = 4 cm et MB = 5 cm, que peut-on dire de AB ?",
+            "hint": "Utiliser la propriété AN + NB > AB pour un point N hors du segment.",
+            "answerLatex": "AB < AM + MB = 9 \\text{ cm}",
+            "detailedSolution": [
+              "1. M est en dehors du segment [AB].",
+              "2. La propriété donne AM + MB > AB.",
+              "3. Donc AB < 4 + 5 = 9 cm (sans plus de précision sur la valeur exacte)."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "symetrie-orthogonale-6e",
+    "title": "Symétrie orthogonale par rapport à une droite donnée - 6e",
+    "shortTitle": "Symétrie orthogonale",
+    "category": "Activités géométriques",
+    "icon": "FlipHorizontal",
+    "description": "Définition, constructions (règle-équerre, compas) et propriétés de conservation de la symétrie orthogonale (axiale).",
+    "demos": [
+      {
+        "id": "symetrie-axiale-definition",
+        "title": "Symétrique d'un point par rapport à une droite (D)",
+        "badge": "Transformation",
+        "defaultLatex": "s_{(D)}(M) = M'",
+        "ruleSummary": "M' est le symétrique de M par rapport à (D) lorsque (D) est la médiatrice du segment [MM']. La symétrie orthogonale conserve les distances, les milieux, l'alignement et le parallélisme.",
+        "teacherGoal": "Construire M' par deux méthodes (équerre et compas) et faire découvrir les quatre propriétés conservées.",
+        "interactiveType": "symetrie-axiale-6e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Définition : (D) est la médiatrice de [MM']",
+            "rule": "M' symétrique de M ⟺ (D) médiatrice de [MM']",
+            "latex": "s_{(D)}(M) = M' \\iff (D) \\text{ est la médiatrice de } [MM']",
+            "explanation": "M' est le symétrique orthogonal de M par rapport à la droite (D), appelée axe de symétrie, lorsque (D) coupe [MM'] perpendiculairement en son milieu."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Construction à la règle et à l'équerre",
+            "rule": "On trace la perpendiculaire à (D) passant par M",
+            "latex": "(MI) \\perp (D), \\quad I \\text{ milieu de } [MM']",
+            "explanation": "On trace avec l'équerre la perpendiculaire à (D) passant par M, qui coupe (D) en I. On reporte ensuite avec le compas ou la règle graduée la même longueur MI de l'autre côté de (D) pour obtenir M'."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Construction au compas",
+            "rule": "Deux arcs de même rayon se coupent en M'",
+            "latex": "AM = AM' \\quad \\text{et} \\quad BM = BM'",
+            "explanation": "On choisit deux points A et B sur (D). Avec l'écartement AM, on trace un arc de centre A ; avec l'écartement BM, un arc de centre B. Leur point d'intersection (autre que M) est M'."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Propriétés conservées par la symétrie orthogonale",
+            "rule": "La symétrie orthogonale est une isométrie",
+            "latex": "AB = A'B'",
+            "explanation": "La symétrie orthogonale conserve les longueurs (AB = A'B'), les milieux, l'alignement des points (dans le même ordre) et le parallélisme : deux droites parallèles ont des images parallèles."
+          },
+          {
+            "stepNumber": 5,
+            "title": "Axes de symétrie des figures usuelles",
+            "rule": "Chaque figure usuelle a ses propres axes",
+            "latex": "\\triangle \\text{ isocèle} : 1 \\text{ axe} \\quad \\mathcal{C}(O;r) : \\text{tout diamètre}",
+            "explanation": "Un segment a pour axe sa médiatrice. Un cercle a une infinité d'axes : tous ses diamètres. Un triangle isocèle a un axe (la médiane issue du sommet principal) ; un triangle équilatéral en a trois.",
+            "teacherTip": "Faire plier une figure en papier pour visualiser physiquement l'axe de symétrie."
+          }
+        ],
+        "exercises": [
+          {
+            "difficulty": "facile",
+            "title": "Construire un symétrique",
+            "question": "Tracer une droite (D) et un point M n'appartenant pas à (D). Construire le symétrique M' de M par rapport à (D) à l'équerre.",
+            "hint": "La perpendiculaire à (D) passant par M coupe (D) au milieu de [MM'].",
+            "answerLatex": "(D) \\text{ médiatrice de } [MM']",
+            "detailedSolution": [
+              "1. Tracer la perpendiculaire à (D) passant par M avec l'équerre : elle coupe (D) en I.",
+              "2. Reporter la longueur MI de l'autre côté de (D) sur la même perpendiculaire.",
+              "3. On obtient M' tel que I est le milieu de [MM']."
+            ]
+          },
+          {
+            "difficulty": "moyen",
+            "title": "Longueurs conservées",
+            "question": "A' et B' sont les symétriques de A et B par rapport à (D). Sachant que AB = 6.5 cm, donner A'B'.",
+            "hint": "La symétrie orthogonale est une isométrie : elle conserve les longueurs.",
+            "answerLatex": "A'B' = AB = 6.5 \\text{ cm}",
+            "detailedSolution": [
+              "1. La symétrie orthogonale conserve les distances.",
+              "2. Donc A'B' = AB.",
+              "3. A'B' = 6.5 cm."
+            ]
+          },
+          {
+            "difficulty": "difficile",
+            "title": "Axes d'un triangle équilatéral",
+            "question": "Combien d'axes de symétrie possède un triangle équilatéral ABC ? Les nommer.",
+            "hint": "Chaque médiane est aussi un axe de symétrie dans ce cas particulier.",
+            "answerLatex": "3 \\text{ axes de symétrie}",
+            "detailedSolution": [
+              "1. Un triangle équilatéral a trois sommets jouant un rôle identique.",
+              "2. Chacune de ses trois médianes (issues de A, B et C) est un axe de symétrie.",
+              "3. Il possède donc exactement 3 axes de symétrie."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cercle-6e",
+    "title": "Le Cercle - 6e",
+    "shortTitle": "Le Cercle",
+    "category": "Activités géométriques",
+    "icon": "Circle",
+    "description": "Vocabulaire du cercle (centre, rayon, diamètre, corde, arc), positions d'un point et positions relatives de deux cercles.",
+    "demos": [
+      {
+        "id": "cercle-vocabulaire",
+        "title": "Centre, rayon, diamètre et corde d'un cercle",
+        "badge": "Géométrie",
+        "defaultLatex": "\\mathcal{C}(O; r)",
+        "ruleSummary": "Le cercle C(O ; r) est l'ensemble des points situés à la distance r (le rayon) du centre O. Le diamètre vaut deux fois le rayon : d = 2r.",
+        "teacherGoal": "Faire manipuler le compas et fixer le vocabulaire rayon / diamètre / corde / arc avant les positions relatives.",
+        "interactiveType": "cercle-6e",
+        "demoParams": { "defaultRadius": 3.5 },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Définition : le cercle C(O ; r)",
+            "rule": "Tous les points du cercle sont à la même distance du centre",
+            "latex": "\\mathcal{C}(O; r) = \\{ M \\; / \\; OM = r \\}",
+            "explanation": "Un cercle de centre O et de rayon r est l'ensemble des points M du plan situés à la distance r de O. On le note C(O ; r) et on le trace au compas."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Rayon et diamètre",
+            "rule": "Le diamètre vaut deux fois le rayon",
+            "latex": "d = 2r \\quad \\text{ou} \\quad r = \\frac{d}{2}",
+            "explanation": "Le rayon OA relie le centre à un point du cercle. Le diamètre est une corde passant par le centre : il mesure deux fois le rayon."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Corde et arc",
+            "rule": "Une corde relie deux points du cercle",
+            "latex": "[AB] \\text{ corde}, \\quad \\overset{\\frown}{AB} \\text{ arc}",
+            "explanation": "Une corde est un segment dont les deux extrémités sont sur le cercle (le diamètre en est une particulière). Un arc, noté ⌢AB, est la portion du cercle délimitée par deux points ; on distingue l'arc saillant (le plus court) de l'arc rentrant (le plus long, contenant le point diamétralement opposé)."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Position d'un point par rapport au cercle",
+            "rule": "On compare la distance au centre avec le rayon",
+            "latex": "OM < r \\; (\\text{intérieur}), \\quad OM = r \\; (\\text{sur le cercle}), \\quad OM > r \\; (\\text{extérieur})",
+            "explanation": "Un point est intérieur au disque si sa distance au centre est inférieure au rayon, sur le cercle si elle est égale, extérieur si elle est supérieure."
+          },
+          {
+            "stepNumber": 5,
+            "title": "Périmètre et aire",
+            "rule": "Le périmètre utilise π, pas l'aire directement",
+            "latex": "P = 2\\pi r = \\pi d \\quad \\text{et} \\quad A = \\pi r^2",
+            "explanation": "Le périmètre (la longueur du cercle) vaut 2πr, soit πd. L'aire du disque délimité par le cercle vaut πr². On prend souvent π ≈ 3,14.",
+            "teacherTip": "Deux cercles peuvent être sécants (2 points communs), tangents (1 point commun), disjoints (aucun point commun) ou concentriques (même centre, rayons différents)."
+          }
+        ],
+        "exercises": [
+          {
+            "difficulty": "facile",
+            "title": "Rayon et diamètre",
+            "question": "Un cercle a un diamètre de 9,4 cm. Calculer son rayon.",
+            "hint": "r = d ÷ 2.",
+            "answerLatex": "r = \\frac{9.4}{2} = 4.7 \\text{ cm}",
+            "detailedSolution": ["1. r = d ÷ 2.", "2. r = 9,4 ÷ 2 = 4,7 cm."]
+          },
+          {
+            "difficulty": "moyen",
+            "title": "Périmètre d'un cercle",
+            "question": "Calculer le périmètre d'un cercle de rayon 5 cm (π ≈ 3,14).",
+            "hint": "P = 2 × π × r.",
+            "answerLatex": "P = 2 \\times 3.14 \\times 5 = 31.4 \\text{ cm}",
+            "detailedSolution": ["1. P = 2πr.", "2. P = 2 × 3,14 × 5.", "3. P = 31,4 cm."]
+          },
+          {
+            "difficulty": "difficile",
+            "title": "Position d'un point",
+            "question": "Un cercle a pour rayon 6 cm. Un point M vérifie OM = 6 cm. Où se trouve M ?",
+            "hint": "Comparer OM et r.",
+            "answerLatex": "OM = r \\implies M \\in \\mathcal{C}(O; r)",
+            "detailedSolution": ["1. On compare OM et r : ici OM = r = 6 cm.", "2. Donc M appartient exactement au cercle (ni intérieur, ni extérieur)."]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "les-nombres-decimaux-arithmetiques-6e",
+    "title": "Les nombres décimaux arithmétiques 6e",
+    "shortTitle": "Nombres décimaux arithmétiques",
+    "category": "Activités numériques",
+    "icon": "Hash",
+    "description": "Vocabulaire, écriture et lecture des nombres décimaux : partie entière, partie décimale, dixièmes, centièmes, millièmes.",
+    "demos": [
+      {
+        "id": "decimaux-vocabulaire-lecture",
+        "title": "Partie entière, partie décimale et lecture d'un nombre décimal",
+        "badge": "Notion clé",
+        "defaultLatex": "652.17",
+        "ruleSummary": "Un nombre décimal arithmétique comprend une partie entière et une partie décimale séparées par une virgule. Après la virgule : dixièmes, centièmes, millièmes.",
+        "teacherGoal": "Fixer le vocabulaire et les deux façons de lire un nombre décimal (virgule / fractionnaire).",
+        "interactiveType": "decimaux-lecture-6e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Partie entière et partie décimale",
+            "rule": "La virgule sépare partie entière et partie décimale",
+            "latex": "147.12 = \\underbrace{147}_{\\text{partie entière}} + \\underbrace{0.12}_{\\text{partie décimale}}",
+            "explanation": "Un nombre décimal comprend une partie entière (les chiffres avant la virgule) et une partie décimale (les chiffres après la virgule)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Dixièmes, centièmes, millièmes",
+            "rule": "Chaque rang après la virgule a un nom",
+            "latex": "0.901 : \\; 9 \\text{ dixièmes}, \\; 0 \\text{ centième}, \\; 1 \\text{ millième}",
+            "explanation": "Après la virgule, le premier rang est celui des dixièmes, le second celui des centièmes, le troisième celui des millièmes."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Deux façons de lire un nombre décimal",
+            "rule": "Lecture « virgule » ou lecture fractionnaire",
+            "latex": "55.75 = \\text{« cinquante-cinq virgule soixante-quinze »} = \\text{« 55 unités et 75 centièmes »}",
+            "explanation": "On peut lire un nombre décimal chiffre après chiffre avec « virgule », ou de façon fractionnaire en nommant le dernier rang de la partie décimale : 0,901 se lit « neuf cent un millièmes »."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Valeur positionnelle d'un chiffre",
+            "rule": "Chaque chiffre a une valeur selon sa position",
+            "latex": "652.17 = 6c + 5d + 2u + 1 \\text{ dixième} + 7 \\text{ centièmes}",
+            "explanation": "652,17 se décompose en 6 centaines, 5 dizaines, 2 unités, 1 dixième et 7 centièmes, soit 600 + 50 + 2 + 0,1 + 0,07."
+          },
+          {
+            "stepNumber": 5,
+            "title": "Les zéros inutiles ne changent pas la valeur",
+            "rule": "4,5 = 4,50 = 4,500",
+            "latex": "4.5 = 4.50 = 4.500",
+            "explanation": "Ajouter des zéros à la fin de la partie décimale ne change pas la valeur du nombre : 4,5 ; 4,50 et 4,500 représentent exactement le même nombre.",
+            "teacherTip": "Piège classique : 194 est un nombre décimal dont la partie décimale vaut 0 (194 = 194,0)."
+          }
+        ],
+        "exercises": [
+          {
+            "difficulty": "facile",
+            "title": "Partie entière et décimale",
+            "question": "Donner la partie entière et la partie décimale de 0,901.",
+            "hint": "La partie entière est avant la virgule.",
+            "answerLatex": "0.901 = 0 + 0.901",
+            "detailedSolution": ["1. Partie entière : 0.", "2. Partie décimale : 0,901."]
+          },
+          {
+            "difficulty": "moyen",
+            "title": "Lecture fractionnaire",
+            "question": "Lire le nombre 55,75 de façon fractionnaire.",
+            "hint": "Nommer le dernier rang occupé (ici les centièmes).",
+            "answerLatex": "55.75 = \\text{« 55 unités et 75 centièmes »}",
+            "detailedSolution": ["1. Le dernier chiffre non nul est au rang des centièmes.", "2. On lit donc « 55 unités et 75 centièmes »."]
+          },
+          {
+            "difficulty": "difficile",
+            "title": "Décomposition",
+            "question": "Décomposer 652,17 en centaines, dizaines, unités, dixièmes et centièmes.",
+            "hint": "Reprendre chaque chiffre selon son rang.",
+            "answerLatex": "652.17 = 600 + 50 + 2 + 0.1 + 0.07",
+            "detailedSolution": ["1. 6 → 6 centaines = 600.", "2. 5 → 5 dizaines = 50.", "3. 2 → 2 unités.", "4. 1 → 1 dixième = 0,1.", "5. 7 → 7 centièmes = 0,07."]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "addition-decimaux-6e",
+    "title": "Addition de deux nombres décimaux arithmétiques 6e",
+    "shortTitle": "Addition des décimaux",
+    "category": "Activités numériques",
+    "icon": "Plus",
+    "description": "Vocabulaire de l'addition, alignement des virgules et propriétés (commutativité, associativité, élément neutre).",
+    "demos": [
+      {
+        "id": "addition-decimaux",
+        "title": "Addition de nombres décimaux : technique et propriétés",
+        "badge": "Calcul",
+        "defaultLatex": "14.9 + 8.7 = 23.6",
+        "ruleSummary": "Pour additionner deux nombres décimaux, on aligne les virgules puis on additionne chiffre par chiffre en partant de la droite, avec retenue si besoin.",
+        "teacherGoal": "Automatiser la technique posée et les trois propriétés de l'addition (commutativité, associativité, 0 neutre).",
+        "interactiveType": "decimaux-addition-6e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Vocabulaire : termes et somme",
+            "rule": "Les nombres additionnés sont les termes",
+            "latex": "14.9 + 8.7 = 23.6",
+            "explanation": "Dans 14,9 + 8,7 = 23,6 : 14,9 et 8,7 sont les termes de la somme, 23,6 est la somme (le résultat)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Technique : aligner les virgules",
+            "rule": "On pose l'opération en alignant les virgules",
+            "latex": "25.02 + 12.65 = 37.67",
+            "explanation": "Pour additionner en colonnes, on aligne toujours les virgules les unes sous les autres (donc les chiffres de même rang), puis on additionne de droite à gauche en reportant les retenues."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Commutativité : l'ordre ne change pas le résultat",
+            "rule": "a + b = b + a",
+            "latex": "438.5 + 750 = 750 + 438.5 = 1188.5",
+            "explanation": "Quand on change l'ordre des termes, le résultat de la somme reste inchangé : c'est la commutativité de l'addition."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Associativité : regrouper les termes autrement",
+            "rule": "(a + b) + c = a + (b + c)",
+            "latex": "(16 + 57) + 28.5 = 16 + (57 + 28.5) = 101.5",
+            "explanation": "Pour une somme de plusieurs termes, on peut commencer le calcul par n'importe quel groupement : le résultat final ne change pas."
+          },
+          {
+            "stepNumber": 5,
+            "title": "Élément neutre et ordre de grandeur",
+            "rule": "Ajouter 0 ne change rien",
+            "latex": "95 + 0 = 95",
+            "explanation": "Zéro est l'élément neutre de l'addition. Pour vérifier vite un résultat, on peut arrondir : 987 + 1975 ≈ 1000 + 2000 = 3000 (ordre de grandeur).",
+            "teacherTip": "L'ordre de grandeur permet de détecter une erreur de virgule mal placée."
+          }
+        ],
+        "exercises": [
+          {
+            "difficulty": "facile",
+            "title": "Addition simple",
+            "question": "Calculer 321 + 58,45.",
+            "hint": "Aligner les virgules (321 = 321,00).",
+            "answerLatex": "321 + 58.45 = 379.45",
+            "detailedSolution": ["1. On écrit 321,00 pour aligner les virgules.", "2. 321,00 + 58,45 = 379,45."]
+          },
+          {
+            "difficulty": "moyen",
+            "title": "Commutativité",
+            "question": "Sans calculer 750 + 438,5, donner le résultat de 438,5 + 750.",
+            "hint": "L'addition est commutative.",
+            "answerLatex": "438.5 + 750 = 1188.5",
+            "detailedSolution": ["1. a + b = b + a.", "2. Donc 438,5 + 750 = 750 + 438,5 = 1188,5."]
+          },
+          {
+            "difficulty": "difficile",
+            "title": "Trois termes",
+            "question": "Calculer 561,45 + 655,25 en regroupant judicieusement si possible.",
+            "hint": "L'associativité permet de choisir l'ordre des calculs.",
+            "answerLatex": "561.45 + 655.25 = 1216.7",
+            "detailedSolution": ["1. 561,45 + 655,25.", "2. On aligne les virgules et on additionne : 1216,70.", "3. Soit 1216,7."]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "soustraction-decimaux-6e",
+    "title": "Soustraction de deux nombres décimaux arithmétiques 6e",
+    "shortTitle": "Soustraction des décimaux",
+    "category": "Activités numériques",
+    "icon": "Minus",
+    "description": "Vocabulaire de la soustraction, condition d'existence, et lien avec l'addition.",
+    "demos": [
+      {
+        "id": "soustraction-decimaux",
+        "title": "Soustraction de nombres décimaux : règles et propriétés",
+        "badge": "Calcul",
+        "defaultLatex": "47.5 - 28.5 = 19",
+        "ruleSummary": "Dans D, on ne peut soustraire y à x que si x est supérieur ou égal à y. La soustraction n'est ni commutative ni associative : on calcule de gauche à droite.",
+        "teacherGoal": "Distinguer termes et différence, poser la condition d'existence, relier soustraction et addition.",
+        "interactiveType": "decimaux-soustraction-6e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Vocabulaire : termes et différence",
+            "rule": "x − y : x et y sont les termes, le résultat est la différence",
+            "latex": "47.5 - 28.5 = 19.0",
+            "explanation": "Dans x − y = z, x et y sont les termes de la différence, z est la différence (le résultat). Ici 47,5 et 28,5 sont les termes, 19,0 est la différence."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Condition d'existence dans D",
+            "rule": "Il faut que le premier terme soit ≥ au second",
+            "latex": "x - y \\text{ existe dans } \\mathbb{D} \\iff x \\ge y",
+            "explanation": "Dans l'ensemble des décimaux arithmétiques D, la soustraction x − y n'est possible que si x est supérieur ou égal à y."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Ni commutative, ni associative",
+            "rule": "On calcule strictement de gauche à droite",
+            "latex": "66.45 - 32.5 - 27.5 = 6.45",
+            "explanation": "Contrairement à l'addition, la soustraction n'est pas commutative (x − y ≠ y − x en général) ni associative : dans une chaîne de soustractions, on calcule toujours de gauche à droite."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Lien entre addition et soustraction",
+            "rule": "x + y = z équivaut à z − x = y",
+            "latex": "x + y = z \\iff z - x = y",
+            "explanation": "Soustraire, c'est chercher le terme manquant d'une addition : si x + y = z, alors z − x = y et z − y = x."
+          },
+          {
+            "stepNumber": 5,
+            "title": "Invariance de la différence",
+            "rule": "Ajouter le même nombre aux deux termes ne change pas la différence",
+            "latex": "145.2 - 12.45 = (145.2 + 25) - (12.45 + 25) = 170.2 - 37.45 = 132.75",
+            "explanation": "Si on ajoute (ou on retranche) le même nombre aux deux termes d'une soustraction, la différence ne change pas. Utile pour simplifier un calcul mental.",
+            "teacherTip": "Vérifier un résultat de soustraction en refaisant l'addition correspondante."
+          }
+        ],
+        "exercises": [
+          {
+            "difficulty": "facile",
+            "title": "Soustraction simple",
+            "question": "Calculer 157 − 65,89.",
+            "hint": "Aligner les virgules (157 = 157,00).",
+            "answerLatex": "157 - 65.89 = 91.11",
+            "detailedSolution": ["1. 157,00 − 65,89.", "2. Résultat : 91,11."]
+          },
+          {
+            "difficulty": "moyen",
+            "title": "Vérification par l'addition",
+            "question": "Vérifier que 345,98 − 99,2 = 246,78 en utilisant une addition.",
+            "hint": "x − y = z ⟺ z + y = x.",
+            "answerLatex": "246.78 + 99.2 = 345.98",
+            "detailedSolution": ["1. On applique z + y = x avec z = 246,78 et y = 99,2.", "2. 246,78 + 99,2 = 345,98. ✓"]
+          },
+          {
+            "difficulty": "difficile",
+            "title": "Chaîne de soustractions",
+            "question": "Calculer 268 − 107, en détaillant, puis proposer un exemple de chaîne à trois termes.",
+            "hint": "Une chaîne de soustractions se calcule de gauche à droite.",
+            "answerLatex": "268 - 107 = 161",
+            "detailedSolution": ["1. 268 − 107 = 161.", "2. Pour une chaîne comme 66,45 − 32,5 − 27,5, on calcule d'abord 66,45 − 32,5 = 33,95, puis 33,95 − 27,5 = 6,45."]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "multiplication-decimaux-6e",
+    "title": "Multiplication des nombres décimaux arithmétiques 6e",
+    "shortTitle": "Multiplication des décimaux",
+    "category": "Activités numériques",
+    "icon": "X",
+    "description": "Vocabulaire de la multiplication et ses propriétés : commutativité, associativité, éléments particuliers, distributivité.",
+    "demos": [
+      {
+        "id": "multiplication-decimaux",
+        "title": "Multiplication de nombres décimaux : propriétés",
+        "badge": "Calcul",
+        "defaultLatex": "4 \\times 25 = 100",
+        "ruleSummary": "La multiplication associe à deux décimaux a et b leur produit a × b. Elle est commutative, associative, possède un élément absorbant (0) et un élément neutre (1), et est distributive sur l'addition.",
+        "teacherGoal": "Manipuler chaque propriété sur un exemple chiffré avant de les utiliser pour calculer plus vite.",
+        "interactiveType": "decimaux-multiplication-6e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Vocabulaire : facteurs et produit",
+            "rule": "a × b : a et b sont les facteurs",
+            "latex": "a \\times b, \\; a.b \\; \\text{ou} \\; ab",
+            "explanation": "La multiplication associe à deux décimaux a et b un résultat appelé produit, noté a × b, a.b ou ab. Les nombres a et b sont les facteurs."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Commutativité",
+            "rule": "a × b = b × a",
+            "latex": "4 \\times 25 = 25 \\times 4 = 100",
+            "explanation": "Pour calculer un produit, on peut changer l'ordre des deux facteurs sans modifier le résultat. Exemple : 42 × 0,9 = 0,9 × 42 = 37,8."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Associativité",
+            "rule": "(a × b) × c = a × (b × c)",
+            "latex": "50 \\times 8 \\times 3.4 = (50 \\times 8) \\times 3.4 = 400 \\times 3.4 = 1360",
+            "explanation": "Dans un produit de plusieurs facteurs, on peut les regrouper dans l'ordre le plus pratique : le résultat final ne change pas."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Éléments particuliers : 0 et 1",
+            "rule": "0 est absorbant, 1 est neutre",
+            "latex": "17 \\times 0 = 0 \\quad \\text{et} \\quad 12.5 \\times 1 = 12.5",
+            "explanation": "Multiplier par 0 donne toujours 0 (élément absorbant). Multiplier par 1 ne change pas le nombre (élément neutre)."
+          },
+          {
+            "stepNumber": 5,
+            "title": "Distributivité sur l'addition",
+            "rule": "a × (b + c) = a × b + a × c",
+            "latex": "5 \\times (7.5 + 8.5) = 5 \\times 7.5 + 5 \\times 8.5 = 80",
+            "explanation": "On peut distribuer un facteur sur une somme : a×(b+c) = a×b + a×c. Cette règle prépare le calcul littéral des classes suivantes.",
+            "teacherTip": "Introduire au passage a² (carré, ex : 5² = 25) et a³ (cube, ex : 5³ = 125)."
+          }
+        ],
+        "exercises": [
+          {
+            "difficulty": "facile",
+            "title": "Produit simple",
+            "question": "Calculer 42 × 0,9.",
+            "hint": "Multiplier comme des entiers puis placer la virgule (1 chiffre après la virgule au total).",
+            "answerLatex": "42 \\times 0.9 = 37.8",
+            "detailedSolution": ["1. 42 × 9 = 378.", "2. 0,9 a un chiffre après la virgule, donc 42 × 0,9 = 37,8."]
+          },
+          {
+            "difficulty": "moyen",
+            "title": "Distributivité",
+            "question": "Calculer 5 × (7,5 + 8,5) de deux façons différentes.",
+            "hint": "Soit on additionne d'abord, soit on distribue.",
+            "answerLatex": "5 \\times 16 = 5 \\times 7.5 + 5 \\times 8.5 = 80",
+            "detailedSolution": ["1. Méthode directe : 7,5 + 8,5 = 16, puis 5 × 16 = 80.", "2. Méthode distributive : 5×7,5 + 5×8,5 = 37,5 + 42,5 = 80."]
+          },
+          {
+            "difficulty": "difficile",
+            "title": "Trois facteurs",
+            "question": "Calculer 50 × 8 × 3,4 en choisissant le regroupement le plus simple.",
+            "hint": "L'associativité permet de commencer par (50 × 8).",
+            "answerLatex": "50 \\times 8 \\times 3.4 = 1360",
+            "detailedSolution": ["1. (50 × 8) × 3,4 = 400 × 3,4.", "2. 400 × 3,4 = 1360."]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "division-decimaux-6e",
+    "title": "Division des nombres décimaux arithmétiques 6e",
+    "shortTitle": "Division des décimaux",
+    "category": "Activités numériques",
+    "icon": "Divide",
+    "description": "Vocabulaire de la division, quotient exact ou approché, valeurs par défaut/excès, invariance du quotient.",
+    "demos": [
+      {
+        "id": "division-decimaux",
+        "title": "Division de nombres décimaux : quotient exact et approché",
+        "badge": "Calcul",
+        "defaultLatex": "125.4 \\div 4 = 31.35",
+        "ruleSummary": "Dividende = Diviseur × Quotient (+ Reste). Quand le reste n'est jamais nul, on donne un quotient approché à un rang donné (dixième, centième...), par défaut ou par excès.",
+        "teacherGoal": "Distinguer quotient exact et quotient approché, et savoir encadrer un quotient par défaut/excès.",
+        "interactiveType": "decimaux-division-6e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Vocabulaire : dividende, diviseur, quotient, reste",
+            "rule": "Dividende = Diviseur × Quotient + Reste",
+            "latex": "\\text{Dividende} = \\text{Diviseur} \\times \\text{Quotient} + \\text{Reste}",
+            "explanation": "Diviser le dividende par le diviseur donne un quotient, avec parfois un reste. Quand le reste est nul, Dividende = Diviseur × Quotient."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Quotient exact",
+            "rule": "Le quotient est exact quand le reste est nul",
+            "latex": "125.4 \\div 4 = 31.35",
+            "explanation": "Quand la division décimale se termine avec un reste nul, le quotient obtenu est exact : ici 125,4 ÷ 4 = 31,35 exactement."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Quotient approché : par défaut et par excès",
+            "rule": "On arrondit à un rang donné",
+            "latex": "125 \\div 7 = 17.857142\\ldots \\approx 17.8 \\; (\\text{défaut}) \\; \\text{ou} \\; 17.9 \\; (\\text{excès})",
+            "explanation": "Si la division ne se termine jamais, on donne un quotient approché à un rang choisi : à 0,1 près par défaut (17,8) ou par excès (17,9), à 0,01 près (17,85 ou 17,86), etc."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Encadrement du quotient",
+            "rule": "Le quotient exact est encadré par les deux valeurs approchées",
+            "latex": "17.8 < 17.857142\\ldots < 17.9",
+            "explanation": "La valeur approchée par défaut est toujours inférieure au quotient exact, celle par excès toujours supérieure : elles l'encadrent."
+          },
+          {
+            "stepNumber": 5,
+            "title": "Invariance du quotient",
+            "rule": "Multiplier ou diviser dividende et diviseur par le même nombre",
+            "latex": "150 \\div 3 = 1500 \\div 30 = 50",
+            "explanation": "Si on multiplie (ou on divise) le dividende et le diviseur par un même nombre non nul, le quotient ne change pas. Utile pour se ramener à un diviseur entier.",
+            "teacherTip": "240 ÷ 12 = 40 ÷ 2 = 20 : diviser les deux termes par 6 simplifie le calcul mental."
+          }
+        ],
+        "exercises": [
+          {
+            "difficulty": "facile",
+            "title": "Quotient exact",
+            "question": "Calculer 125,4 ÷ 4.",
+            "hint": "Poser la division décimale.",
+            "answerLatex": "125.4 \\div 4 = 31.35",
+            "detailedSolution": ["1. On pose la division.", "2. Le reste finit par être nul : le quotient exact est 31,35."]
+          },
+          {
+            "difficulty": "moyen",
+            "title": "Quotient approché",
+            "question": "Donner le quotient approché par défaut et par excès de 125 ÷ 7 au dixième près.",
+            "hint": "125 ÷ 7 ≈ 17,857...",
+            "answerLatex": "17.8 < \\frac{125}{7} < 17.9",
+            "detailedSolution": ["1. 125 ÷ 7 = 17,857142...", "2. Valeur par défaut au dixième : 17,8.", "3. Valeur par excès au dixième : 17,9."]
+          },
+          {
+            "difficulty": "difficile",
+            "title": "Invariance du quotient",
+            "question": "Sans poser d'opération, donner 1500 ÷ 30 en utilisant 150 ÷ 3 = 50.",
+            "hint": "Multiplier dividende et diviseur par 10 ne change pas le quotient.",
+            "answerLatex": "1500 \\div 30 = 150 \\div 3 = 50",
+            "detailedSolution": ["1. 1500 = 150 × 10 et 30 = 3 × 10.", "2. On divise les deux termes par 10 : 150 ÷ 3.", "3. Le quotient est inchangé : 50."]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rangement-decimaux-6e",
+    "title": "Rangement des nombres décimaux arithmétiques 6e",
+    "shortTitle": "Rangement des décimaux",
+    "category": "Activités numériques",
+    "icon": "ArrowUpDown",
+    "description": "Comparer deux nombres décimaux, les ranger dans l'ordre croissant ou décroissant, encadrer un nombre.",
+    "demos": [
+      {
+        "id": "rangement-decimaux",
+        "title": "Comparer et ranger des nombres décimaux",
+        "badge": "Comparaison",
+        "defaultLatex": "9.43 > 8.67",
+        "ruleSummary": "Pour comparer deux décimaux, on compare d'abord les parties entières, puis, si elles sont égales, chiffre par chiffre la partie décimale de gauche à droite.",
+        "teacherGoal": "Automatiser la comparaison rang par rang et le vocabulaire croissant / décroissant / encadrement.",
+        "interactiveType": "decimaux-rangement-6e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Les quatre symboles de comparaison",
+            "rule": "<, >, ≤, ≥",
+            "latex": "a < b, \\; a > b, \\; a \\le b, \\; a \\ge b",
+            "explanation": "« < » signifie strictement inférieur, « > » strictement supérieur, « ≤ » inférieur ou égal, « ≥ » supérieur ou égal."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Comparer la partie entière d'abord",
+            "rule": "Si les parties entières diffèrent, elles suffisent à comparer",
+            "latex": "6.89 < 7.9 \\quad \\text{car} \\quad 6 < 7",
+            "explanation": "On compare d'abord les parties entières. Si elles sont différentes, le nombre avec la plus grande partie entière est le plus grand, quelle que soit la partie décimale."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Comparer la partie décimale chiffre à chiffre",
+            "rule": "Piège classique : 0,07 < 0,007 est FAUX",
+            "latex": "0.07 > 0.007 \\quad \\text{car} \\quad 0.070 > 0.007",
+            "explanation": "Si les parties entières sont égales, on complète les parties décimales avec des zéros pour avoir le même nombre de chiffres, puis on compare rang par rang : 0,070 > 0,007."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Ranger dans l'ordre croissant ou décroissant",
+            "rule": "Croissant : du plus petit au plus grand",
+            "latex": "1 < 2 < 3 < 4 < 5 < 5 < 7 < 9 < 12",
+            "explanation": "Ranger dans l'ordre croissant, c'est classer du plus petit au plus grand avec le signe <. Ranger dans l'ordre décroissant, c'est classer du plus grand au plus petit avec le signe >."
+          },
+          {
+            "stepNumber": 5,
+            "title": "Encadrer un nombre décimal",
+            "rule": "Encadrer entre deux valeurs de plus en plus précises",
+            "latex": "21 < 21.5 < 22, \\quad 21.4 < 21.5 < 21.6, \\quad 21.49 < 21.5 < 21.51",
+            "explanation": "Encadrer un nombre, c'est le situer entre deux valeurs. On peut encadrer à l'unité près (21 < 21,5 < 22), au dixième près (21,4 < 21,5 < 21,6), au centième près, etc.",
+            "teacherTip": "Plus l'encadrement est précis, plus l'écart entre les deux bornes est petit."
+          }
+        ],
+        "exercises": [
+          {
+            "difficulty": "facile",
+            "title": "Comparer deux nombres",
+            "question": "Comparer 9,43 et 8,67 avec le symbole qui convient.",
+            "hint": "Comparer d'abord les parties entières.",
+            "answerLatex": "9.43 > 8.67",
+            "detailedSolution": ["1. Partie entière : 9 > 8.", "2. Donc 9,43 > 8,67 directement, sans regarder la partie décimale."]
+          },
+          {
+            "difficulty": "moyen",
+            "title": "Piège des zéros",
+            "question": "Comparer 0,07 et 0,007.",
+            "hint": "Compléter avec des zéros pour avoir le même nombre de décimales : 0,070 et 0,007.",
+            "answerLatex": "0.07 > 0.007",
+            "detailedSolution": ["1. 0,07 = 0,070.", "2. On compare 0,070 et 0,007 chiffre à chiffre : 7 centièmes > 0 centième.", "3. Donc 0,07 > 0,007."]
+          },
+          {
+            "difficulty": "difficile",
+            "title": "Encadrement précis",
+            "question": "Encadrer 21,5 au centième près.",
+            "hint": "Utiliser les deux voisins immédiats à deux décimales.",
+            "answerLatex": "21.49 < 21.50 < 21.51",
+            "detailedSolution": ["1. On cherche les deux décimaux à deux chiffres les plus proches de 21,5 = 21,50.", "2. 21,49 < 21,50 < 21,51."]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "organisation-calcul-6e",
+    "title": "Organisation d'un calcul 6e",
+    "shortTitle": "Organisation d'un calcul",
+    "category": "Activités numériques",
+    "icon": "ListOrdered",
+    "description": "Priorités opératoires : parenthèses, multiplication/division avant addition/soustraction, calculs enchaînés.",
+    "demos": [
+      {
+        "id": "priorites-operatoires",
+        "title": "Les règles de priorité dans un calcul",
+        "badge": "Méthode",
+        "defaultLatex": "3 \\times (4.5 + 7) = 34.5",
+        "ruleSummary": "Les parenthèses sont prioritaires sur tout le reste. Ensuite, multiplications et divisions sont prioritaires sur additions et soustractions.",
+        "teacherGoal": "Faire respecter systématiquement l'ordre : parenthèses, puis × et ÷, puis + et −.",
+        "interactiveType": "decimaux-priorites-6e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Priorité n°1 : les parenthèses",
+            "rule": "Les opérations entre parenthèses sont prioritaires",
+            "latex": "3 \\times (4.5 + 7) = 3 \\times 11.5 = 34.5",
+            "explanation": "Les opérations placées entre parenthèses se calculent toujours en premier, avant toute autre opération du calcul."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Priorité n°2 : multiplication et division",
+            "rule": "× et ÷ passent avant + et −",
+            "latex": "12 + 5 \\times 9 = 12 + 45 = 57",
+            "explanation": "Sans parenthèses, la multiplication et la division sont prioritaires sur l'addition et la soustraction : on les calcule en premier, même si elles sont écrites plus loin dans l'expression."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Opérations de même priorité : sens du calcul",
+            "rule": "− et ÷ : toujours de gauche à droite",
+            "latex": "3468 \\div 6 \\div 16 = 578 \\div 16 = 36.125",
+            "explanation": "Pour une chaîne de multiplications ou d'additions, l'ordre est libre. Mais pour une chaîne de divisions ou de soustractions, il faut impérativement calculer de gauche à droite."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Combiner les deux règles",
+            "rule": "Parenthèses d'abord, puis × / ÷, puis + / −",
+            "latex": "45 + 78 \\div 2 = 45 + 39 = 84",
+            "explanation": "Dans une expression sans parenthèses mélangeant les quatre opérations, on calcule d'abord toutes les multiplications et divisions, puis on termine par les additions et soustractions."
+          },
+          {
+            "stepNumber": 5,
+            "title": "Un calcul complet, étape par étape",
+            "rule": "On applique la hiérarchie complète",
+            "latex": "576 + 36 \\times (127.67 - 25) + 4568 \\div 64 = 4343.495",
+            "explanation": "1) On calcule la parenthèse : 127,67 − 25 = 102,67. 2) On effectue × et ÷ : 36 × 102,67 = 3696,12 et 4568 ÷ 64 = 71,375. 3) On termine par les additions : 576 + 3696,12 + 71,375 = 4343,495.",
+            "teacherTip": "Avec des parenthèses imbriquées, on commence toujours par les plus intérieures."
+          }
+        ],
+        "exercises": [
+          {
+            "difficulty": "facile",
+            "title": "Une seule priorité",
+            "question": "Calculer 12 + 5 × 9.",
+            "hint": "La multiplication passe avant l'addition.",
+            "answerLatex": "12 + 5 \\times 9 = 57",
+            "detailedSolution": ["1. On calcule d'abord 5 × 9 = 45.", "2. Puis 12 + 45 = 57."]
+          },
+          {
+            "difficulty": "moyen",
+            "title": "Avec parenthèses",
+            "question": "Calculer 3 × (4,5 + 7).",
+            "hint": "La parenthèse se calcule en premier.",
+            "answerLatex": "3 \\times (4.5 + 7) = 34.5",
+            "detailedSolution": ["1. 4,5 + 7 = 11,5.", "2. 3 × 11,5 = 34,5."]
+          },
+          {
+            "difficulty": "difficile",
+            "title": "Calcul combiné",
+            "question": "Calculer 576 + 36 × (127,67 − 25) + 4568 ÷ 64.",
+            "hint": "Parenthèse, puis × et ÷, puis +.",
+            "answerLatex": "576 + 36 \\times (127.67 - 25) + 4568 \\div 64 = 4343.495",
+            "detailedSolution": [
+              "1. Parenthèse : 127,67 − 25 = 102,67.",
+              "2. Multiplication : 36 × 102,67 = 3696,12.",
+              "3. Division : 4568 ÷ 64 = 71,375.",
+              "4. Addition finale : 576 + 3696,12 + 71,375 = 4343,495."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "nombres-decimaux-relatifs-6e",
+    "title": "Les nombres décimaux relatifs 6e",
+    "shortTitle": "Nombres décimaux relatifs",
+    "category": "Activités numériques",
+    "icon": "PlusMinus",
+    "description": "Signes, droite graduée, valeur absolue, nombres opposés, addition et soustraction dans D.",
+    "demos": [
+      {
+        "id": "decimaux-relatifs",
+        "title": "Signe, valeur absolue et opérations sur les décimaux relatifs",
+        "badge": "Nouveauté 6e",
+        "defaultLatex": "-15 - (7 - 18) + (14 - 16) = -6",
+        "ruleSummary": "Un nombre décimal relatif est précédé d'un signe + ou −. Pour l'additionner : même signe, on additionne les valeurs absolues ; signes contraires, on soustrait la plus petite valeur absolue de la plus grande et on garde le signe du plus grand.",
+        "teacherGoal": "Introduire ℕ ⊂ ℤ ⊂ ℚ, la droite graduée, et automatiser addition/soustraction.",
+        "interactiveType": "decimaux-relatifs-6e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Définition : nombres positifs et négatifs",
+            "rule": "Un nombre relatif est précédé d'un signe + ou −",
+            "latex": "+3 \\; (\\text{positif}), \\quad -6 \\; (\\text{négatif}), \\quad 0 \\; (\\text{ni positif, ni négatif})",
+            "explanation": "Les nombres décimaux précédés d'un signe + sont des décimaux relatifs positifs, ceux précédés d'un signe − sont négatifs. Zéro est unique : il n'est ni positif ni négatif, et s'écrit toujours 0 (jamais +0 ni −0)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Droite graduée et abscisse",
+            "rule": "Chaque point a une position appelée abscisse",
+            "latex": "O \\; (\\text{origine}), \\quad \\text{abscisse du point}",
+            "explanation": "Sur une droite graduée d'origine O, chaque point est repéré par un nombre relatif appelé son abscisse. Les nombres positifs sont placés d'un côté de O, les négatifs de l'autre."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Valeur absolue et nombres opposés",
+            "rule": "|x| est le nombre sans son signe",
+            "latex": "|+3| = 3, \\quad |-6| = 6, \\quad -6 \\text{ et } +6 \\text{ sont opposés}",
+            "explanation": "La valeur absolue d'un nombre relatif est ce nombre privé de son signe, notée entre deux barres. Deux nombres opposés ont la même valeur absolue mais des signes contraires."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Addition de deux relatifs",
+            "rule": "Même signe : on additionne ; signes contraires : on soustrait",
+            "latex": "(-4) + (-3) = -7 \\quad \\text{et} \\quad (+9) + (-5) = +4",
+            "explanation": "Si les deux nombres ont le même signe, on additionne leurs valeurs absolues et on garde le signe commun. S'ils ont des signes contraires, on soustrait la plus petite valeur absolue de la plus grande, et on garde le signe du nombre ayant la plus grande valeur absolue."
+          },
+          {
+            "stepNumber": 5,
+            "title": "Soustraire, c'est ajouter l'opposé",
+            "rule": "x − y = x + (opposé de y)",
+            "latex": "C = -15 - (7 - 18) + (14 - 16) = -15 + 11 - 2 = -6",
+            "explanation": "Pour soustraire deux nombres décimaux relatifs, on ajoute au premier l'opposé du second. Exemple complet : C = −15 − (7−18) + (14−16) = −15 − (−11) + (−2) = −15 + 11 − 2 = −6.",
+            "teacherTip": "Toujours calculer d'abord l'intérieur des parenthèses avant de transformer les soustractions en additions."
+          }
+        ],
+        "exercises": [
+          {
+            "difficulty": "facile",
+            "title": "Valeur absolue",
+            "question": "Donner la valeur absolue de −6 et de +3.",
+            "hint": "La valeur absolue est le nombre sans son signe.",
+            "answerLatex": "|-6| = 6, \\quad |+3| = 3",
+            "detailedSolution": ["1. |−6| = 6.", "2. |+3| = 3."]
+          },
+          {
+            "difficulty": "moyen",
+            "title": "Addition de signes contraires",
+            "question": "Calculer (+9) + (−5).",
+            "hint": "Signes contraires : on soustrait les valeurs absolues et on garde le signe du plus grand.",
+            "answerLatex": "(+9) + (-5) = +4",
+            "detailedSolution": ["1. |+9| = 9 et |−5| = 5.", "2. 9 − 5 = 4.", "3. Le plus grand (9) est positif, donc le résultat est +4."]
+          },
+          {
+            "difficulty": "difficile",
+            "title": "Calcul avec parenthèses",
+            "question": "Calculer C = −15 − (7 − 18) + (14 − 16).",
+            "hint": "Calculer d'abord chaque parenthèse.",
+            "answerLatex": "C = -6",
+            "detailedSolution": [
+              "1. (7 − 18) = −11 et (14 − 16) = −2.",
+              "2. C = −15 − (−11) + (−2) = −15 + 11 − 2.",
+              "3. C = −4 − 2 = −6."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "angles-6e",
+    "title": "Les angles 6e",
+    "shortTitle": "Les angles",
+    "category": "Activités géométriques",
+    "icon": "Triangle",
+    "description": "Vocabulaire de l'angle, mesure au rapporteur, types d'angles, angles complémentaires et supplémentaires.",
+    "demos": [
+      {
+        "id": "angles-definitions-types",
+        "title": "Vocabulaire, mesure et classification des angles",
+        "badge": "Géométrie",
+        "defaultLatex": "\\widehat{xOy}",
+        "ruleSummary": "Un angle est formé par deux demi-droites de même origine (le sommet). On le mesure en degrés avec un rapporteur : aigu (< 90°), droit (= 90°), obtus (> 90° et < 180°), plat (= 180°).",
+        "teacherGoal": "Savoir nommer, mesurer et classer un angle, puis définir complémentaire et supplémentaire.",
+        "interactiveType": "angles-6e",
+        "demoParams": { "defaultAngle": 60 },
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Définition et vocabulaire",
+            "rule": "Sommet et côtés d'un angle",
+            "latex": "\\widehat{xOy}",
+            "explanation": "Un angle est une partie du plan formée par deux demi-droites [Ox) et [Oy) ayant la même origine O, appelée sommet. Ces demi-droites sont les côtés de l'angle. On le note x̂Oy, avec le sommet entre les deux autres lettres."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Mesurer un angle avec le rapporteur",
+            "rule": "La mesure s'exprime en degrés (°)",
+            "latex": "\\text{mes } \\widehat{ABC} = 57°",
+            "explanation": "On mesure un angle en degrés à l'aide d'un rapporteur, de 0° à 180°. On note par exemple « mes ABC = 57° »."
+          },
+          {
+            "stepNumber": 3,
+            "title": "Classer un angle selon sa mesure",
+            "rule": "Aigu, droit, obtus ou plat",
+            "latex": "0° < \\text{aigu} < 90° = \\text{droit} < \\text{obtus} < 180° = \\text{plat}",
+            "explanation": "Un angle aigu mesure moins de 90°, un angle droit mesure exactement 90°, un angle obtus mesure plus de 90° (et moins de 180°), un angle plat mesure exactement 180°, un angle nul mesure 0°."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Angles complémentaires et supplémentaires",
+            "rule": "Complémentaires : somme 90° ; supplémentaires : somme 180°",
+            "latex": "\\widehat{a} + \\widehat{b} = 90° \\; (\\text{complémentaires}) \\quad \\text{ou} \\quad 180° \\; (\\text{supplémentaires})",
+            "explanation": "Deux angles sont complémentaires si la somme de leurs mesures vaut 90°. Ils sont supplémentaires si cette somme vaut 180°. Deux angles adjacents partagent le même sommet et un côté commun, de part et d'autre de ce côté."
+          },
+          {
+            "stepNumber": 5,
+            "title": "La bissectrice d'un angle",
+            "rule": "Elle partage l'angle en deux angles égaux",
+            "latex": "\\widehat{xOz} = \\widehat{zOy} = \\frac{\\widehat{xOy}}{2}",
+            "explanation": "La bissectrice d'un angle x̂Oy est la demi-droite [Oz) qui le partage en deux angles de même mesure : x̂Oz = ẑOy. On la construit au compas ou au rapporteur.",
+            "teacherTip": "90° = 100 grades (gr) est une unité alternative, rarement utilisée en pratique."
+          }
+        ],
+        "exercises": [
+          {
+            "difficulty": "facile",
+            "title": "Classer un angle",
+            "question": "Un angle mesure 132°. De quel type est-il ?",
+            "hint": "Comparer à 90° et à 180°.",
+            "answerLatex": "90° < 132° < 180° \\implies \\text{obtus}",
+            "detailedSolution": ["1. 132° est supérieur à 90°.", "2. 132° est inférieur à 180°.", "3. C'est donc un angle obtus."]
+          },
+          {
+            "difficulty": "moyen",
+            "title": "Angles complémentaires",
+            "question": "Un angle mesure 37°. Quelle est la mesure de son complémentaire ?",
+            "hint": "La somme des deux angles complémentaires vaut 90°.",
+            "answerLatex": "90 - 37 = 53°",
+            "detailedSolution": ["1. Complémentaire signifie somme = 90°.", "2. 90° − 37° = 53°."]
+          },
+          {
+            "difficulty": "difficile",
+            "title": "Bissectrice",
+            "question": "L'angle x̂Oy mesure 78°. [Oz) est sa bissectrice. Donner la mesure de x̂Oz.",
+            "hint": "La bissectrice partage l'angle en deux parts égales.",
+            "answerLatex": "\\widehat{xOz} = \\frac{78}{2} = 39°",
+            "detailedSolution": ["1. La bissectrice partage x̂Oy en deux angles égaux.", "2. x̂Oz = x̂Oy ÷ 2 = 78° ÷ 2 = 39°."]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "droites-perpendiculaires-paralleles-6e",
+    "title": "Droites perpendiculaires et droites parallèles - 6e",
+    "shortTitle": "Perpendiculaires et parallèles",
+    "category": "Activités géométriques",
+    "icon": "Grid2x2",
+    "description": "Définitions, notations, constructions à l'équerre et propriétés des droites perpendiculaires et parallèles.",
+    "demos": [
+      {
+        "id": "perpendiculaires-paralleles",
+        "title": "Perpendicularité, parallélisme et médiatrice",
+        "badge": "Géométrie",
+        "defaultLatex": "(D_1) \\perp (D_2)",
+        "ruleSummary": "Deux droites sont perpendiculaires si elles forment un angle droit. Deux droites sont parallèles si elles sont toutes deux perpendiculaires à une même troisième droite.",
+        "teacherGoal": "Construire à l'équerre, mémoriser les notations ⊥ et ∥, et retenir les trois propriétés d'unicité, transitivité et lien entre les deux notions.",
+        "interactiveType": "droites-perp-parall-6e",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "title": "Droites perpendiculaires",
+            "rule": "Deux droites sécantes formant un angle droit",
+            "latex": "(D_1) \\perp (D_2)",
+            "explanation": "Deux droites sont perpendiculaires si elles sont sécantes et forment un angle droit (90°). On le note (D₁) ⊥ (D₂)."
+          },
+          {
+            "stepNumber": 2,
+            "title": "Construire une perpendiculaire à l'équerre",
+            "rule": "On place l'angle droit de l'équerre sur la droite",
+            "latex": "(D_1) \\perp (D_2) \\text{ construite à l'équerre}",
+            "explanation": "On pose un côté de l'angle droit de l'équerre le long de la droite donnée, puis on trace le long de l'autre côté : la droite obtenue est perpendiculaire. Propriété : par un point donné, il ne passe qu'une seule perpendiculaire à une droite donnée."
+          },
+          {
+            "stepNumber": 3,
+            "title": "La médiatrice d'un segment",
+            "rule": "Perpendiculaire au milieu, points équidistants",
+            "latex": "(D) \\text{ médiatrice de } [AB] \\implies MA = MB \\; \\forall M \\in (D)",
+            "explanation": "La médiatrice d'un segment [AB] est la droite perpendiculaire à [AB] passant par son milieu. Tout point de la médiatrice est équidistant des extrémités A et B."
+          },
+          {
+            "stepNumber": 4,
+            "title": "Droites parallèles",
+            "rule": "Deux droites perpendiculaires à une même troisième",
+            "latex": "(L) \\parallel (\\Delta)",
+            "explanation": "Deux droites sont parallèles lorsqu'elles sont toutes les deux perpendiculaires à une même troisième droite (ou qu'elles ne se coupent jamais). On note (L) ∥ (Δ)."
+          },
+          {
+            "stepNumber": 5,
+            "title": "Propriétés du parallélisme",
+            "rule": "Unicité, transitivité, et lien avec la perpendicularité",
+            "latex": "(A) \\parallel (B) \\text{ et } (B) \\parallel (C) \\implies (A) \\parallel (C)",
+            "explanation": "Par un point donné, il ne passe qu'une seule parallèle à une droite donnée. Le parallélisme est transitif : si (A) ∥ (B) et (B) ∥ (C), alors (A) ∥ (C). Enfin, si deux droites sont parallèles, toute perpendiculaire à l'une est perpendiculaire à l'autre.",
+            "teacherTip": "Cette dernière propriété prépare directement le théorème de Thalès étudié en 4e/3e."
+          }
+        ],
+        "exercises": [
+          {
+            "difficulty": "facile",
+            "title": "Notation",
+            "question": "(D₁) et (D₂) forment un angle droit. Écrire la relation entre ces deux droites avec le symbole adéquat.",
+            "hint": "Angle droit ⟹ perpendiculaires.",
+            "answerLatex": "(D_1) \\perp (D_2)",
+            "detailedSolution": ["1. Un angle droit entre deux droites sécantes signifie qu'elles sont perpendiculaires.", "2. On note (D₁) ⊥ (D₂)."]
+          },
+          {
+            "difficulty": "moyen",
+            "title": "Médiatrice",
+            "question": "M appartient à la médiatrice de [AB]. Sachant que MA = 4,2 cm, donner MB.",
+            "hint": "Tout point de la médiatrice est équidistant de A et B.",
+            "answerLatex": "MB = MA = 4.2 \\text{ cm}",
+            "detailedSolution": ["1. Propriété de la médiatrice : MA = MB.", "2. Donc MB = 4,2 cm."]
+          },
+          {
+            "difficulty": "difficile",
+            "title": "Transitivité du parallélisme",
+            "question": "(A) ∥ (B) et (B) ∥ (C). Que peut-on dire de (A) et (C) ? Et si une droite (P) est perpendiculaire à (A), que peut-on dire de (P) et (C) ?",
+            "hint": "Utiliser la transitivité, puis le lien entre parallélisme et perpendicularité.",
+            "answerLatex": "(A) \\parallel (C) \\quad \\text{et} \\quad (P) \\perp (C)",
+            "detailedSolution": [
+              "1. Par transitivité, (A) ∥ (B) et (B) ∥ (C) donnent (A) ∥ (C).",
+              "2. Si (P) ⊥ (A) et (A) ∥ (C), alors (P) ⊥ (C) aussi (toute perpendiculaire à l'une est perpendiculaire à l'autre)."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

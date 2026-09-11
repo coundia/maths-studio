@@ -30,6 +30,47 @@ When modifying the algebra resolver (`server/resolve` endpoint), you must respec
 - **Micro-animations**: Interactive elements (buttons, cards) must have scale animations (`hover:scale-[1.01] active:scale-95 transition-all`).
 - **Dark Mode**: The app supports light and dark modes via a custom theme toggle. Always ensure components have `dark:` variants configured harmoniously.
 
+### 3bis. Colour Palette (configured from `.env`)
+The whole palette is generated from the `VITE_THEME_*` variables of the `.env` file
+(see `.env.example`). Source lives in `src/theme/`, and `scripts/vite-plugin-theme.ts`
+turns it into a stylesheet at dev/build time (virtual module `virtual:theme.css`).
+
+Rules to follow when writing UI:
+- **Never hardcode a hex colour in a component.** Use Tailwind utilities
+  (`bg-slate-800`, `text-emerald-400`, ...) or the semantic tokens
+  (`bg-canvas`, `bg-surface`, `text-ink`, `text-ink-muted`, `border-line`,
+  `bg-primary`, `text-on-primary`, `text-primary-ink`, `bg-primary-soft`, ...).
+  Every Tailwind colour family is re-mapped onto one of the seven configured
+  roles, so `slate` and `neutral` (or `emerald` and `green`) resolve to the very
+  same ramp.
+- **Every colour class needs its counterpart.** A class with no `dark:` variant
+  renders the same in both themes and will eventually become unreadable. The
+  convention used across the codebase is
+  `text-<family>-600 dark:text-<family>-400` for text,
+  `bg-white dark:bg-slate-900` for surfaces,
+  `border-slate-200 dark:border-slate-800` for hairlines.
+- **Shades carry a meaning.** 600/700 are the light-mode text shades, 300/400 the
+  dark-mode ones: they are automatically darkened or lightened until they reach
+  the WCAG threshold set in the `.env`. Shade 500 stays exactly the colour that
+  was configured (it is mostly a fill), except on the neutral ramp.
+- **Colours coming from data** (resolver steps, cached solutions) are not part of
+  the palette: pass them through the `useReadableColor()` hook
+  (`src/theme/useReadableColor.ts`) before rendering them.
+- Run `npm run theme:check` after touching the palette: it prints the generated
+  ramps and fails when a text/background pair falls below the threshold.
+
+### 3ter. Responsive Breakpoints
+- **< 640px (mobile)**: header wraps onto two rows, the tab group spans the full
+  width, the course sidebar is an overlay drawer.
+- **640px - 1023px (tablet)**: the sidebar stays an overlay drawer so the lesson
+  keeps the full width; the floating "Prérequis" tab is hidden (the same action
+  is available from the course card).
+- **>= 1024px (`lg`, desktop)**: the sidebar becomes a static column and the
+  brand wordmark appears.
+- No element may make the page scroll horizontally: wide content (formulas, chip
+  rows, tables) goes inside its own `overflow-x-auto` container, and pill rows
+  use `flex-wrap`.
+
 ### 4. Data Storage
 - There is no SQL/NoSQL database. All data (courses, exercises, caches, metrics) is stored in the `data/` directory as JSON files.
 - **Important**: Because Vite watches all files by default, the `data/` directory is explicitly ignored in `vite.config.ts` to prevent infinite HMR reload loops when the Express server updates JSON files.

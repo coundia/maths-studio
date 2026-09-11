@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ExpressionSolution, MathStep } from '../types';
 import { MathView } from './MathView';
+import { useReadableColor } from '../theme/useReadableColor';
 import {
   Play,
   Pause,
@@ -36,6 +37,10 @@ export const AlgebraStage: React.FC<AlgebraStageProps> = ({
   const [animationKey, setAnimationKey] = useState<number>(0);
   const playTimerRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Les couleurs des termes viennent des donnees resolues : on les rehausse
+  // pour qu'elles restent lisibles sur la pastille, dans les deux themes.
+  const readableColor = useReadableColor();
+
   const steps = solution.steps || [];
   const currentStep = steps[currentStepIndex];
   const isLastStep = currentStepIndex === steps.length - 1;
@@ -66,7 +71,7 @@ export const AlgebraStage: React.FC<AlgebraStageProps> = ({
   if (!currentStep) return null;
 
   return (
-    <div className="flex flex-col h-full bg-white/70 dark:bg-[#0B1120]/70 border border-slate-200 dark:border-slate-800/80 rounded-3xl p-4 lg:p-6 shadow-xl backdrop-blur-2xl transition-all">
+    <div className="flex flex-col h-full bg-surface/70 dark:bg-canvas/70 border border-slate-200 dark:border-slate-800/80 rounded-3xl p-4 lg:p-6 shadow-xl backdrop-blur-2xl transition-all">
       {/* Top Header & Controls */}
       <div className="flex flex-wrap items-center justify-between pb-3.5 border-b border-slate-200 dark:border-slate-800/90 gap-3">
         <div className="flex items-center space-x-2">
@@ -155,7 +160,7 @@ export const AlgebraStage: React.FC<AlgebraStageProps> = ({
             className="w-full flex flex-col items-center justify-center z-10 space-y-6"
           >
             {/* Step Subtitle */}
-            <div className="text-xs font-mono font-medium uppercase tracking-widest text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
+            <div className="text-xs font-mono font-medium uppercase tracking-widest text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
               {currentStep.title}
             </div>
 
@@ -245,7 +250,7 @@ export const AlgebraStage: React.FC<AlgebraStageProps> = ({
                       </svg>
                     </div>
 
-                    <div className="text-xs text-slate-400 text-center mb-2">
+                    <div className="text-xs text-slate-600 dark:text-slate-400 text-center mb-2">
                       Chaque terme du 1er groupe projette une flèche de multiplication vers le 2nd groupe
                     </div>
                   </div>
@@ -253,8 +258,8 @@ export const AlgebraStage: React.FC<AlgebraStageProps> = ({
 
                 {/* Factorization specific indicator and banner */}
                 {currentStep.algebraAnimation.commonFactorText && (
-                  <div className="flex items-center space-x-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-red-950/70 border border-red-500/40 text-red-300 mb-3 shadow-md">
-                    <Zap className="w-3.5 h-3.5 text-red-400 animate-pulse" />
+                  <div className="flex items-center space-x-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-red-50/70 dark:bg-red-950/70 border border-red-500/40 text-red-700 dark:text-red-300 mb-3 shadow-md">
+                    <Zap className="w-3.5 h-3.5 text-red-600 dark:text-red-400 animate-pulse" />
                     <span>Facteur commun extrait en ROUGE :</span>
                     <span className="font-mono font-black text-white bg-red-600 px-2.5 py-0.5 rounded shadow">
                       {currentStep.algebraAnimation.commonFactorText}
@@ -264,8 +269,8 @@ export const AlgebraStage: React.FC<AlgebraStageProps> = ({
 
                 {/* Development specific indicator for distributor in RED */}
                 {currentStep.algebraAnimation.distributingFactorText && (
-                  <div className="flex items-center space-x-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-red-950/70 border border-red-500/40 text-red-300 mb-3 shadow-md">
-                    <Zap className="w-3.5 h-3.5 text-red-400 animate-pulse" />
+                  <div className="flex items-center space-x-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-red-50/70 dark:bg-red-950/70 border border-red-500/40 text-red-700 dark:text-red-300 mb-3 shadow-md">
+                    <Zap className="w-3.5 h-3.5 text-red-600 dark:text-red-400 animate-pulse" />
                     <span>Élément distributeur en ROUGE (déplacement animé) :</span>
                     <span className="font-mono font-black text-white bg-red-600 px-2.5 py-0.5 rounded shadow">
                       {currentStep.algebraAnimation.distributingFactorText}
@@ -275,17 +280,17 @@ export const AlgebraStage: React.FC<AlgebraStageProps> = ({
 
                 {/* Development specific indicator for terms being replaced in RED */}
                 {currentStep.algebraAnimation.replacedTermsText && (
-                  <div className="flex items-center space-x-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-red-950/70 border border-red-500/40 text-red-300 mb-3 shadow-md">
+                  <div className="flex items-center space-x-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-red-50/70 dark:bg-red-950/70 border border-red-500/40 text-red-700 dark:text-red-300 mb-3 shadow-md">
                     <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
                     <span>Termes calculés & remplacés mis en ROUGE (aucune disparition) :</span>
-                    <span className="font-mono font-bold text-red-200">
+                    <span className="font-mono font-bold text-red-800 dark:text-red-200">
                       {currentStep.algebraAnimation.replacedTermsText}
                     </span>
                   </div>
                 )}
 
                 {/* Animated Tokens / Badges row with visible physical displacement */}
-                <div className="flex flex-wrap items-center justify-center gap-2 p-4 bg-slate-900/90 rounded-xl border border-slate-800 shadow-inner relative">
+                <div className="flex flex-wrap items-center justify-center gap-2 p-4 bg-white/90 dark:bg-slate-900/90 rounded-xl border border-slate-200 dark:border-slate-800 shadow-inner relative">
                   {currentStep.algebraAnimation.tokens?.map((token, idx) => {
                     const isRedFactor = token.isCommonFactor || token.isDistributor || token.isReplaced || token.color === '#ef4444';
                     const isReplacedBadge = token.isReplaced;
@@ -309,16 +314,16 @@ export const AlgebraStage: React.FC<AlgebraStageProps> = ({
                           isRedFactor
                             ? 'bg-red-600 text-white border-red-400 ring-4 ring-red-500/50 shadow-xl shadow-red-950 font-black scale-105'
                             : isResultBadge
-                            ? 'bg-emerald-900/80 text-emerald-200 border-emerald-500 ring-2 ring-emerald-500/40'
+                            ? 'bg-emerald-100/80 dark:bg-emerald-900/80 text-emerald-800 dark:text-emerald-200 border-emerald-500 ring-2 ring-emerald-500/40'
                             : token.type === 'operator'
-                            ? 'bg-transparent text-slate-400 border-transparent text-lg'
+                            ? 'bg-transparent text-slate-600 dark:text-slate-400 border-transparent text-lg'
                             : token.type === 'bracket'
-                            ? 'bg-slate-800/80 text-white border-slate-700 shadow-sm'
+                            ? 'bg-slate-100/80 dark:bg-slate-800/80 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700 shadow-sm'
                             : token.highlight
-                            ? 'bg-indigo-950/80 text-white border-indigo-500 ring-2 ring-indigo-500/40 shadow-lg'
-                            : 'bg-slate-800 text-slate-200 border-slate-700'
+                            ? 'bg-indigo-50/80 dark:bg-indigo-950/80 text-slate-900 dark:text-white border-indigo-500 ring-2 ring-indigo-500/40 shadow-lg'
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border-slate-300 dark:border-slate-700'
                         }`}
-                        style={{ color: !isRedFactor && token.color ? token.color : undefined }}
+                        style={{ color: isRedFactor ? undefined : readableColor(token.color) }}
                       >
                         {token.text}
                         {isRedFactor && (
@@ -328,7 +333,7 @@ export const AlgebraStage: React.FC<AlgebraStageProps> = ({
                           </span>
                         )}
                         {isReplacedBadge && (
-                          <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[9px] bg-red-950 text-red-300 px-1 rounded border border-red-500 uppercase font-sans whitespace-nowrap">
+                          <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[9px] bg-red-50 dark:bg-red-950 text-red-700 dark:text-red-300 px-1 rounded border border-red-500 uppercase font-sans whitespace-nowrap">
                             Remplacé
                           </span>
                         )}
@@ -338,7 +343,7 @@ export const AlgebraStage: React.FC<AlgebraStageProps> = ({
                 </div>
 
                 {currentStep.algebraAnimation.activeExplanation && (
-                  <div className="mt-2 text-xs text-slate-400 text-center italic">
+                  <div className="mt-2 text-xs text-slate-600 dark:text-slate-400 text-center italic">
                     {currentStep.algebraAnimation.activeExplanation}
                   </div>
                 )}
@@ -382,7 +387,7 @@ export const AlgebraStage: React.FC<AlgebraStageProps> = ({
                     ? 'bg-indigo-500 ring-2 ring-indigo-400/50 scale-y-125'
                     : isPast
                     ? 'bg-emerald-500/80'
-                    : 'bg-slate-800 hover:bg-slate-700'
+                    : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700'
                 }`}
                 title={`Étape ${idx + 1}: ${st.title}`}
               />
@@ -398,7 +403,7 @@ export const AlgebraStage: React.FC<AlgebraStageProps> = ({
             disabled={currentStepIndex === 0}
             className={`flex-1 flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl font-medium text-xs sm:text-sm transition-colors ${
               currentStepIndex === 0
-                ? 'bg-slate-100 dark:bg-slate-800/40 text-slate-400 dark:text-slate-600 cursor-not-allowed border border-slate-200 dark:border-slate-800/50'
+                ? 'bg-slate-100 dark:bg-slate-800/40 text-slate-500 dark:text-slate-400 cursor-not-allowed border border-slate-200 dark:border-slate-800/50'
                 : 'bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none'
             }`}
           >
@@ -412,7 +417,7 @@ export const AlgebraStage: React.FC<AlgebraStageProps> = ({
             disabled={isLastStep}
             className={`flex-1 flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl font-medium text-xs sm:text-sm transition-all shadow-md ${
               isLastStep
-                ? 'bg-emerald-700/60 text-emerald-200 border border-emerald-600/50'
+                ? 'bg-emerald-700/60 text-emerald-800 dark:text-emerald-200 border border-emerald-300/50 dark:border-emerald-600/50'
                 : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/30'
             }`}
           >

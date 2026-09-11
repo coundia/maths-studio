@@ -108,8 +108,8 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
       id: 'classic-slate',
       label: 'Ardoise Moderne',
       desc: 'Style sombre élégant neutre',
-      bg: 'bg-slate-900',
-      border: 'border-slate-700',
+      bg: 'bg-white dark:bg-slate-900',
+      border: 'border-slate-300 dark:border-slate-700',
     },
     {
       id: 'chalkboard-green',
@@ -123,7 +123,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
       label: 'Ardoise Noire d\'école',
       desc: 'Contraste maximal style tableau d\'école',
       bg: 'bg-[#0b0e14]',
-      border: 'border-slate-800',
+      border: 'border-slate-200 dark:border-slate-800',
     },
     {
       id: 'whiteboard-clean',
@@ -223,7 +223,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
               {/* SECTION 1: STYLE ET ARRIERE PLAN */}
               <div className="space-y-3">
                 <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  <Palette className="w-4 h-4 text-indigo-500" />
+                  <Palette className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
                   <span>Style & Arrière-plan du Tableau</span>
                 </div>
 
@@ -243,7 +243,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                         <div
                           className={`w-8 h-8 rounded-lg shrink-0 ${theme.bg} ${theme.border} border shadow-inner flex items-center justify-center`}
                         >
-                          {isSelected && <Check className="w-4 h-4 text-emerald-400" />}
+                          {isSelected && <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-bold text-slate-900 dark:text-slate-200 truncate">
@@ -263,10 +263,10 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
               <div className="space-y-3 pt-2 border-t border-slate-200 dark:border-slate-800">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                    <Grid className="w-4 h-4 text-emerald-500" />
+                    <Grid className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                     <span>Quadrillage de Fond</span>
                   </div>
-                  <span className="text-[11px] text-slate-500 font-medium">
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
                     Opacité: {Math.round(settings.gridOpacity * 100)}%
                   </span>
                 </div>
@@ -285,7 +285,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                         }`}
                       >
                         <span className="truncate">{grid.label}</span>
-                        {isSelected && <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 ml-1" />}
+                        {isSelected && <Check className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400 shrink-0 ml-1" />}
                       </button>
                     );
                   })}
@@ -293,7 +293,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
 
                 {settings.gridPattern !== 'none' && (
                   <div className="pt-2">
-                    <div className="flex justify-between text-xs text-slate-500 mb-1">
+                    <div className="flex justify-between text-xs text-slate-500 dark:text-slate-400 mb-1">
                       <span>Discret (5%)</span>
                       <span>Prononcé (35%)</span>
                     </div>
@@ -313,7 +313,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
               {/* SECTION 3: TYPOGRAPHIE ET ALIGNEMENT */}
               <div className="space-y-3 pt-2 border-t border-slate-200 dark:border-slate-800">
                 <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  <Type className="w-4 h-4 text-amber-500" />
+                  <Type className="w-4 h-4 text-amber-500 dark:text-amber-400" />
                   <span>Taille & Alignement des Formules</span>
                 </div>
 
@@ -372,7 +372,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                     onChange={(e) => update('zoomStep', parseFloat(e.target.value))}
                     className="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
                   />
-                  <p className="text-[10px] text-slate-400 mt-1">
+                  <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-1">
                     Ajustez la sensibilité des boutons de zoom en bas à gauche.
                   </p>
                 </div>
@@ -411,12 +411,12 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                 {/* Line Numbers Toggle */}
                 <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
                   <div className="flex items-center space-x-2.5">
-                    <Hash className="w-4 h-4 text-indigo-500" />
+                    <Hash className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
                     <div>
                       <p className="text-xs font-bold text-slate-800 dark:text-slate-200">
                         Numérotation des lignes
                       </p>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-400">
                         Affiche 1, 2, 3... à gauche des étapes
                       </p>
                     </div>
@@ -438,15 +438,15 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
 
               {/* SECTION 4: SAISIE INTELLIGENTE ET CLAVIER */}
               <div className="space-y-3 pt-2 border-t border-slate-200 dark:border-slate-800">
-                <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  <Sparkles className="w-4 h-4 text-indigo-500" />
+                <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 dark:text-slate-400">
+                  <Sparkles className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
                   <span>Saisie & Raccourcis Mathématiques</span>
                 </div>
 
                 {/* Auto Complete */}
                 <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
                   <div className="flex items-center space-x-2.5">
-                    <Sparkles className="w-4 h-4 text-emerald-500" />
+                    <Sparkles className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                     <div>
                       <p className="text-xs font-bold text-slate-800 dark:text-slate-200">
                         Auto-complétion intelligente
@@ -473,12 +473,12 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                 {/* Auto Keyboard on focus */}
                 <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
                   <div className="flex items-center space-x-2.5">
-                    <Keyboard className="w-4 h-4 text-indigo-500" />
+                    <Keyboard className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
                     <div>
                       <p className="text-xs font-bold text-slate-800 dark:text-slate-200">
                         Clavier virtuel automatique
                       </p>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-400">
                         Déploie le tiroir clavier au clic sur une équation
                       </p>
                     </div>
@@ -502,7 +502,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
               <div className="space-y-4 pt-2 border-t border-slate-200 dark:border-slate-800">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                    <Palette className="w-4 h-4 text-purple-500" />
+                    <Palette className="w-4 h-4 text-purple-500 dark:text-purple-400" />
                     <span>Palette & Nouvelles Couleurs</span>
                   </div>
                   <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
@@ -517,7 +517,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                     animate={{ opacity: 1, y: 0 }}
                     className="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800/60 text-indigo-700 dark:text-indigo-300 text-xs flex items-center gap-1.5"
                   >
-                    <Check className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400 shrink-0" />
                     <span>{colorFeedback}</span>
                   </motion.div>
                 )}
@@ -525,7 +525,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                 {/* Add a new custom color */}
                 <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5">
                   <label className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                    <Pipette className="w-3.5 h-3.5 text-indigo-500" />
+                    <Pipette className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />
                     Ajouter une nouvelle couleur :
                   </label>
 
@@ -592,8 +592,8 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                             disabled={isAdded}
                             className={`flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] border transition-all ${
                               isAdded
-                                ? 'opacity-40 bg-slate-100 dark:bg-slate-800 border-transparent text-slate-400 cursor-default'
-                                : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:scale-105 hover:border-indigo-400'
+                                ? 'opacity-40 bg-slate-100 dark:bg-slate-800 border-transparent text-slate-600 dark:text-slate-400 cursor-default'
+                                : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:scale-105 hover:border-indigo-400 dark:hover:border-indigo-700'
                             }`}
                             title={isAdded ? 'Déjà dans la palette' : `Ajouter ${sug.name}`}
                           >
@@ -628,7 +628,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                           <span className="text-slate-700 dark:text-slate-300">{c}</span>
                           <button
                             onClick={() => handleRemoveCustomColor(c)}
-                            className="p-0.5 text-slate-400 hover:text-rose-500 rounded hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
+                            className="p-0.5 text-slate-600 dark:text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 rounded hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
                             title={`Supprimer la couleur ${c}`}
                           >
                             <X className="w-3 h-3" />
@@ -642,7 +642,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                 {/* SECTION: OPTIONS MODE DESSIN */}
                 <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 space-y-3">
                   <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                    <PenTool className="w-4 h-4 text-rose-500" />
+                    <PenTool className="w-4 h-4 text-rose-500 dark:text-rose-400" />
                     <span>Mode Dessin & Tracé</span>
                   </div>
 
@@ -655,7 +655,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                         <button
                           key={c}
                           onClick={() => update('drawDefaultColor', c)}
-                          className={`w-7 h-7 rounded-full transition-transform border border-slate-700/30 shrink-0 ${
+                          className={`w-7 h-7 rounded-full transition-transform border border-slate-300/30 dark:border-slate-700/30 shrink-0 ${
                             settings.drawDefaultColor.toLowerCase() === c.toLowerCase()
                               ? 'scale-125 ring-2 ring-indigo-500 ring-offset-2 dark:ring-offset-slate-900 shadow-md'
                               : 'hover:scale-110'
@@ -692,8 +692,8 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
 
               {/* SECTION 6: INTELLIGENCE ARTIFICIELLE */}
               <div className="space-y-3">
-                <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  <Sparkles className="w-4 h-4 text-emerald-500" />
+                <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 dark:text-slate-400">
+                  <Sparkles className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                   <span>Intelligence Artificielle (Gemini)</span>
                 </div>
                 
@@ -705,7 +705,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                       value={settings.aiToken || ''}
                       onChange={(e) => update('aiToken', e.target.value)}
                       placeholder="Collez votre clé secrète ici..."
-                      className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm rounded-lg px-3 py-2 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
+                      className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm rounded-lg px-3 py-2 text-slate-900 dark:text-slate-100 placeholder:text-slate-600 dark:placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
                     />
                   </label>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -725,7 +725,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                             const newOps = settings.customOperations.filter((_, i) => i !== idx);
                             update('customOperations', newOps);
                           }}
-                          className="text-slate-400 hover:text-rose-500 transition-colors p-0.5 rounded"
+                          className="text-slate-600 dark:text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 transition-colors p-0.5 rounded"
                           title="Supprimer cette opération"
                         >
                           <X className="w-3.5 h-3.5" />
@@ -753,7 +753,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                   onClick={onResetSettings}
                   className="w-full py-2 px-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 text-xs font-semibold flex items-center justify-center space-x-2 transition-colors"
                 >
-                  <RotateCcw className="w-3.5 h-3.5 text-slate-500" />
+                  <RotateCcw className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   <span>Rétablir les réglages d'origine</span>
                 </button>
 
@@ -766,7 +766,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                     }}
                     className="w-full py-2 px-3 rounded-xl border border-rose-200 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-xs font-semibold flex items-center justify-center space-x-2 transition-colors"
                   >
-                    <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+                    <Trash2 className="w-3.5 h-3.5 text-rose-500 dark:text-rose-400" />
                     <span>Effacer tout le tableau</span>
                   </button>
                 )}
@@ -777,7 +777,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
             {/* Drawer Footer */}
             <div className="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400">
-                <CloudCheck className="w-4 h-4 text-emerald-500 shrink-0" />
+                <CloudCheck className="w-4 h-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
                 <span className="hidden sm:inline">Sauvegardé dans le stockage</span>
                 <span className="sm:hidden">Sauvegardé</span>
               </div>

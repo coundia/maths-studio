@@ -536,8 +536,8 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
           <span className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider font-mono">
             Étape {stepNumber} / {totalSteps}
           </span>
-          <span className="text-slate-500">•</span>
-          <span className="text-xs text-indigo-300 font-medium">{stepTitle}</span>
+          <span className="text-slate-500 dark:text-slate-400">•</span>
+          <span className="text-xs text-indigo-700 dark:text-indigo-300 font-medium">{stepTitle}</span>
         </div>
 
         {/* Right: Camera Presets & Unit Grid Toggle */}
@@ -601,12 +601,12 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
       <div className="relative z-10 p-4 m-3 bg-white/80 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800/90 rounded-xl shadow-2xl flex flex-col space-y-2.5">
         {/* Step description banner */}
         <div className="flex items-center justify-between text-xs">
-          <div className="flex items-center space-x-2 text-slate-300">
-            <Sparkles className="w-4 h-4 text-amber-400" />
+          <div className="flex items-center space-x-2 text-slate-700 dark:text-slate-300">
+            <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             <span className="font-semibold text-slate-900 dark:text-white">Mouvement 3D en cours :</span>
             <span className="text-slate-600 dark:text-slate-300 hidden sm:inline">{stepExplanation}</span>
           </div>
-          <span className="font-mono text-xs font-bold text-indigo-400">
+          <span className="font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400">
             {Math.round(animProgress * 100)}%
           </span>
         </div>
@@ -638,7 +638,7 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
 
           {/* Interactive Scrub Slider */}
           <div className="flex-1 flex items-center space-x-2">
-            <span className="text-[11px] text-slate-400 font-mono">0%</span>
+            <span className="text-[11px] text-slate-600 dark:text-slate-400 font-mono">0%</span>
             <input
               id="animation-progress-scrubber"
               type="range"
@@ -653,12 +653,12 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
               className="w-full h-2 bg-slate-300 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500 focus:outline-none"
               title="Glissez avec la souris ou le doigt pour animer manuellement la pièce en 3D !"
             />
-            <span className="text-[11px] text-slate-400 font-mono">100%</span>
+            <span className="text-[11px] text-slate-600 dark:text-slate-400 font-mono">100%</span>
           </div>
 
           {/* Quick Step Nav buttons right inside the stage */}
           {onPrevStep && onNextStep && (
-            <div className="flex items-center space-x-1.5 border-l border-slate-800 pl-3">
+            <div className="flex items-center space-x-1.5 border-l border-slate-200 dark:border-slate-800 pl-3">
               <button
                 onClick={onPrevStep}
                 disabled={stepNumber <= 1}

@@ -105,7 +105,7 @@ export const ExpressionInput: React.FC<ExpressionInputProps> = ({
       <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center gap-3">
         {/* Main Input Field */}
         <div className="relative flex-1 w-full">
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-600 dark:text-slate-400">
             <Search className="w-4 h-4" />
           </div>
           <input
@@ -115,12 +115,12 @@ export const ExpressionInput: React.FC<ExpressionInputProps> = ({
             value={inputVal}
             onChange={(e) => setInputVal(e.target.value)}
             placeholder="Exemple: (x+1)(x+2), (2x-3)^2, 4x^2 - 25, 3x+6..."
-            className="w-full pl-10 pr-10 py-3 bg-white/80 dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700/80 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 rounded-2xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 font-mono text-sm sm:text-base tracking-wide transition-all outline-none shadow-inner"
+            className="w-full pl-10 pr-10 py-3 bg-white/80 dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700/80 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 rounded-2xl text-slate-900 dark:text-slate-100 placeholder-slate-600 dark:placeholder-slate-500 font-mono text-sm sm:text-base tracking-wide transition-all outline-none shadow-inner"
           />
           <button
             type="button"
             onClick={() => setShowSyntaxHelp(!showSyntaxHelp)}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
             title="Aide syntaxique & guide de saisie"
           >
             <HelpCircle className="w-5 h-5" />
@@ -128,12 +128,12 @@ export const ExpressionInput: React.FC<ExpressionInputProps> = ({
         </div>
 
         {/* Operation Selector */}
-        <div className="flex items-center space-x-2 w-full md:w-auto">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto min-w-0">
           <select
             id="operation-type-select"
             value={opType}
             onChange={(e) => setOpType(e.target.value)}
-            className="bg-white/80 dark:bg-slate-950/90 border border-slate-300 dark:border-slate-700/80 text-slate-800 dark:text-slate-200 text-xs font-semibold py-3 px-3 rounded-2xl focus:border-indigo-500 outline-none transition-colors cursor-pointer"
+            className="w-full sm:w-auto min-w-0 truncate bg-white/80 dark:bg-slate-950/90 border border-slate-300 dark:border-slate-700/80 text-slate-800 dark:text-slate-200 text-xs font-semibold py-3 px-3 rounded-2xl focus:border-indigo-500 outline-none transition-colors cursor-pointer"
           >
             <option value="expansion">Développer (Distributivité & Puissances)</option>
             <option value="factorization">Factoriser (Facteur commun & Identités)</option>
@@ -145,7 +145,7 @@ export const ExpressionInput: React.FC<ExpressionInputProps> = ({
             id="resolve-submit-btn"
             type="submit"
             disabled={isLoading || !inputVal.trim()}
-            className="flex-1 md:flex-none flex items-center justify-center space-x-2 py-3 px-6 bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 disabled:from-slate-700 disabled:to-slate-800 disabled:text-slate-500 text-white font-semibold text-sm rounded-2xl transition-all shadow-md shadow-indigo-600/20 active:scale-[0.98] cursor-pointer"
+            className="w-full sm:w-auto md:flex-none flex items-center justify-center space-x-2 py-3 px-6 shrink-0 bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 disabled:from-slate-700 disabled:to-slate-200 dark:disabled:to-slate-800 disabled:text-slate-500 text-white font-semibold text-sm rounded-2xl transition-all shadow-md shadow-indigo-600/20 active:scale-[0.98] cursor-pointer"
           >
             {isLoading ? (
               <div className="flex items-center space-x-2">
@@ -165,7 +165,7 @@ export const ExpressionInput: React.FC<ExpressionInputProps> = ({
       {/* Quick Mathematical Pad (Symbols insertion) */}
       <div className="mt-3 flex items-center flex-wrap gap-1.5 pt-2 border-t border-slate-200 dark:border-slate-800/60">
         <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mr-1 flex items-center gap-1">
-          <Sparkles className="w-3 h-3 text-emerald-500" />
+          <Sparkles className="w-3 h-3 text-emerald-500 dark:text-emerald-400" />
           Saisie rapide :
         </span>
         {QUICK_MATH_SYMBOLS.map((sym) => (
@@ -190,27 +190,27 @@ export const ExpressionInput: React.FC<ExpressionInputProps> = ({
 
       {/* Syntax Helper Drawer */}
       {showSyntaxHelp && (
-        <div className="mt-3 p-3.5 rounded-2xl bg-slate-950 text-xs text-slate-300 space-y-2 border border-slate-800">
-          <div className="font-semibold text-indigo-400 flex items-center gap-1.5">
+        <div className="mt-3 p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-950 text-xs text-slate-700 dark:text-slate-300 space-y-2 border border-slate-200 dark:border-slate-800">
+          <div className="font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5">
             <HelpCircle className="w-4 h-4" />
             <span>Guide de notation algébrique :</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 font-mono text-[11px]">
-            <div className="p-2 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-slate-400 block text-[10px]">Double distributivité :</span>
-              <code className="text-emerald-300 font-bold">(x+1)(x+2)</code>
+            <div className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+              <span className="text-slate-600 dark:text-slate-400 block text-[10px]">Double distributivité :</span>
+              <code className="text-emerald-700 dark:text-emerald-300 font-bold">(x+1)(x+2)</code>
             </div>
-            <div className="p-2 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-slate-400 block text-[10px]">Signes négatifs :</span>
-              <code className="text-amber-300 font-bold">(x+1)(x-2)</code> ou <code className="text-amber-300 font-bold">(x-2)(x-3)</code>
+            <div className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+              <span className="text-slate-600 dark:text-slate-400 block text-[10px]">Signes négatifs :</span>
+              <code className="text-amber-700 dark:text-amber-300 font-bold">(x+1)(x-2)</code> ou <code className="text-amber-700 dark:text-amber-300 font-bold">(x-2)(x-3)</code>
             </div>
-            <div className="p-2 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-slate-400 block text-[10px]">Puissance / Carré :</span>
-              <code className="text-indigo-300 font-bold">(x+3)^2</code> ou <code className="text-indigo-300 font-bold">(2x-3)^2</code>
+            <div className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+              <span className="text-slate-600 dark:text-slate-400 block text-[10px]">Puissance / Carré :</span>
+              <code className="text-indigo-700 dark:text-indigo-300 font-bold">(x+3)^2</code> ou <code className="text-indigo-700 dark:text-indigo-300 font-bold">(2x-3)^2</code>
             </div>
-            <div className="p-2 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-slate-400 block text-[10px]">Différence de carrés :</span>
-              <code className="text-cyan-300 font-bold">x^2 - 9</code> ou <code className="text-cyan-300 font-bold">4x^2 - 25</code>
+            <div className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+              <span className="text-slate-600 dark:text-slate-400 block text-[10px]">Différence de carrés :</span>
+              <code className="text-cyan-700 dark:text-cyan-300 font-bold">x^2 - 9</code> ou <code className="text-cyan-700 dark:text-cyan-300 font-bold">4x^2 - 25</code>
             </div>
           </div>
         </div>
@@ -218,14 +218,14 @@ export const ExpressionInput: React.FC<ExpressionInputProps> = ({
 
       {/* Preset Category Filters */}
       <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800/80">
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
           <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-            <Layers className="w-3.5 h-3.5 text-indigo-500" />
+            <Layers className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />
             Exemples recommandés au programme :
           </span>
 
           {/* Filter Pills */}
-          <div className="flex items-center gap-1">
+          <div className="flex flex-wrap items-center gap-1">
             {(['all', 'distributivity', 'powers', 'signs', 'factorization'] as const).map((filterKey) => {
               const labels = {
                 all: 'Tous',
@@ -243,7 +243,7 @@ export const ExpressionInput: React.FC<ExpressionInputProps> = ({
                   className={`px-2 py-0.5 rounded-full text-[10px] font-semibold transition-all ${
                     isSelected
                       ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                      : 'bg-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                   }`}
                 >
                   {labels[filterKey]}
@@ -285,7 +285,7 @@ export const ExpressionInput: React.FC<ExpressionInputProps> = ({
             <span className="font-mono text-emerald-700 dark:text-emerald-300 font-bold bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-200 dark:border-emerald-500/20">
               {activeSolution.rawExpression}
             </span>
-            <span className="text-slate-400">→</span>
+            <span className="text-slate-600 dark:text-slate-400">→</span>
             <span className="font-mono text-indigo-700 dark:text-indigo-300 font-bold bg-indigo-50 dark:bg-indigo-500/10 px-2 py-0.5 rounded-lg border border-indigo-200 dark:border-indigo-500/20">
               {activeSolution.finalFormLatex}
             </span>

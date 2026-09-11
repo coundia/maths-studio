@@ -121,7 +121,7 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-neutral-200 dark:border-slate-800/80 relative z-10">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white dark:bg-gradient-to-br dark:from-indigo-500 dark:to-emerald-500 flex items-center justify-center shadow-xs dark:shadow-indigo-500/20 shrink-0">
-            <Zap className="w-5 h-5 text-amber-300 dark:text-white" />
+            <Zap className="w-5 h-5 text-amber-700 dark:text-white" />
           </div>
           <div>
             <div className="flex items-center space-x-2">
@@ -150,7 +150,7 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({
               className={`px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 transition-colors border ${
                 isTimedMode
                   ? 'bg-amber-50 text-amber-900 border-2 border-amber-500 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/40'
-                  : 'bg-white text-neutral-700 border-neutral-300 hover:bg-neutral-100 dark:bg-slate-800/80 dark:text-slate-400 dark:border-slate-700 dark:hover:text-slate-200'
+                  : 'bg-white text-neutral-700 border-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:bg-slate-800/80 dark:text-slate-400 dark:border-slate-700 dark:hover:text-slate-200'
               }`}
               title="Activer le chronomètre 30s par question"
             >
@@ -207,16 +207,16 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({
                 let stateClasses = 'bg-white dark:bg-slate-900/90 border-neutral-300 dark:border-slate-800 hover:border-sky-400 hover:bg-sky-50/40 dark:hover:border-indigo-500/50 dark:hover:bg-slate-800/60 text-neutral-800 dark:text-slate-200 cursor-pointer';
 
                 if (isSelected && !isSubmitted) {
-                  stateClasses = 'bg-sky-50 border-2 border-sky-600 text-sky-950 font-bold shadow-xs dark:bg-emerald-950/80 dark:border-emerald-500 dark:text-emerald-100 cursor-pointer';
+                  stateClasses = 'bg-sky-50 border-2 border-sky-300 text-sky-950 font-bold shadow-xs dark:bg-emerald-950/80 dark:border-emerald-500 dark:text-emerald-100 cursor-pointer';
                 }
 
                 if (isSubmitted) {
                   if (opt.isCorrect) {
-                    stateClasses = 'bg-emerald-50 border-2 border-emerald-600 text-emerald-950 font-bold dark:bg-emerald-950/80 dark:border-emerald-500/80 dark:text-emerald-100 cursor-default shadow-xs';
+                    stateClasses = 'bg-emerald-50 border-2 border-emerald-300 text-emerald-950 font-bold dark:bg-emerald-950/80 dark:border-emerald-500/80 dark:text-emerald-100 cursor-default shadow-xs';
                   } else if (isSelected && !opt.isCorrect) {
                     stateClasses = 'bg-rose-50 border-2 border-rose-500 text-rose-950 font-bold dark:bg-rose-950/80 dark:border-rose-500/80 dark:text-rose-100 cursor-default shadow-xs';
                   } else {
-                    stateClasses = 'bg-neutral-50/60 dark:bg-slate-900/40 border-neutral-200 dark:border-slate-800/60 text-neutral-400 dark:text-slate-500 opacity-50 cursor-default';
+                    stateClasses = 'bg-neutral-50/60 dark:bg-slate-900/40 border-neutral-200 dark:border-slate-800/60 text-neutral-600 dark:text-slate-400 opacity-50 cursor-default';
                   }
                 }
 
@@ -231,12 +231,12 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({
                       <span
                         className={`w-6 h-6 rounded-lg text-xs font-bold flex items-center justify-center shrink-0 border transition-colors ${
                           isSubmitted && opt.isCorrect
-                            ? 'bg-emerald-600 text-white border-emerald-600 font-bold dark:bg-emerald-500 dark:text-slate-950 dark:border-emerald-400'
+                            ? 'bg-emerald-600 text-white border-emerald-300 font-bold dark:bg-emerald-500 dark:text-slate-950 dark:border-emerald-400'
                             : isSubmitted && isSelected && !opt.isCorrect
-                            ? 'bg-rose-600 text-white border-rose-600 font-bold dark:bg-rose-500 dark:text-white dark:border-rose-400'
+                            ? 'bg-rose-600 text-white border-rose-300 font-bold dark:bg-rose-500 dark:text-white dark:border-rose-400'
                             : isSelected
-                            ? 'bg-sky-600 text-white border-sky-600 font-bold dark:bg-emerald-500 dark:text-slate-950'
-                            : 'bg-neutral-100 text-neutral-700 border-neutral-300 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700 group-hover:bg-sky-100 group-hover:text-sky-800 group-hover:border-sky-300 dark:group-hover:border-indigo-400 dark:group-hover:text-indigo-300'
+                            ? 'bg-sky-600 text-white border-sky-300 dark:border-sky-600 font-bold dark:bg-emerald-500 dark:text-slate-950'
+                            : 'bg-neutral-100 text-neutral-700 border-neutral-300 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700 group-hover:bg-sky-100 dark:group-hover:bg-sky-950 group-hover:text-sky-800 group-hover:border-sky-300 dark:group-hover:border-indigo-400 dark:group-hover:text-indigo-300'
                         }`}
                       >
                         {letter}
@@ -396,7 +396,7 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({
                 onClick={onScrollToExercises}
                 className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-all shadow-xs flex items-center justify-center space-x-2 cursor-pointer"
               >
-                <ArrowDown className="w-4 h-4 text-white" />
+                <ArrowDown className="w-4 h-4 text-slate-900 dark:text-white" />
                 <span>Passer aux Exercices (Facile, Moyen, Difficile)</span>
               </button>
             )}

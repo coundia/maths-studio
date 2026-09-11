@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { CourseChapter } from '../coursesData';
 import { CoursePrerequisite, getChapterPrerequisites } from '../data/coursePrerequisites';
+import { getGradeLevel, GRADE_BADGE } from '../data/gradeLevel';
 import { MathView } from './MathView';
 
 interface CoursePrerequisitesDrawerProps {
@@ -124,7 +125,7 @@ export const CoursePrerequisitesDrawer: React.FC<CoursePrerequisitesDrawerProps>
             <div className="p-4 sm:p-5 border-b border-neutral-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-10 flex flex-col space-y-3">
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center space-x-2.5">
-                  <div className="p-2 rounded-xl bg-red-600/10 border border-red-600/20 text-red-600 dark:bg-amber-500/20 dark:border-amber-500/30 dark:text-amber-400">
+                  <div className="p-2 rounded-xl bg-red-600/10 border border-red-300/20 text-red-600 dark:bg-amber-500/20 dark:border-amber-500/30 dark:text-amber-400">
                     <BookOpenCheck className="w-5 h-5" />
                   </div>
                   <div>
@@ -133,7 +134,7 @@ export const CoursePrerequisitesDrawer: React.FC<CoursePrerequisitesDrawerProps>
                         Rappel pédagogique
                       </span>
                       <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-slate-800 text-neutral-700 dark:text-slate-300 border border-neutral-200 dark:border-slate-700">
-                        {chapter.gradeLevel === '3e' || chapter.id.endsWith('-3e') ? '3e BFEM' : '4e'}
+                        {GRADE_BADGE[getGradeLevel(chapter)]}
                       </span>
                     </div>
                     <h2
@@ -215,7 +216,7 @@ export const CoursePrerequisitesDrawer: React.FC<CoursePrerequisitesDrawerProps>
                     {/* Top line: Level, Category and Mastery checkbox */}
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-red-600/10 text-red-600 border border-red-600/20 dark:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/30">
+                        <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-red-600/10 text-red-600 border border-red-300/20 dark:border-red-600/20 dark:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/30">
                           Vu en {prereq.sourceGrade}
                         </span>
                         <span className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-neutral-100 text-neutral-700 border border-neutral-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700">
@@ -228,8 +229,8 @@ export const CoursePrerequisitesDrawer: React.FC<CoursePrerequisitesDrawerProps>
                         onClick={() => toggleMastered(prereq.id)}
                         className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all border shrink-0 ${
                           isMastered
-                            ? 'bg-red-600 text-white border-red-600 dark:bg-emerald-600 dark:border-emerald-500'
-                            : 'bg-white text-neutral-700 hover:bg-neutral-100 border-neutral-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
+                            ? 'bg-red-600 text-white border-red-300 dark:bg-emerald-600 dark:border-emerald-500'
+                            : 'bg-white text-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 border-neutral-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
                         }`}
                         title={isMastered ? 'Marqué comme maîtrisé' : 'Cocher comme maîtrisé'}
                       >
@@ -241,7 +242,7 @@ export const CoursePrerequisitesDrawer: React.FC<CoursePrerequisitesDrawerProps>
                     {/* Prerequisite Title */}
                     <div>
                       <h3 className="text-sm sm:text-base font-bold text-black dark:text-white flex items-center gap-2">
-                        <span className="text-neutral-400 font-mono text-xs">#{index + 1}</span>
+                        <span className="text-neutral-600 dark:text-neutral-400 font-mono text-xs">#{index + 1}</span>
                         <span>{prereq.title}</span>
                       </h3>
                       <p className="text-xs text-neutral-600 dark:text-slate-300 mt-1 leading-relaxed">
@@ -355,7 +356,7 @@ export const CoursePrerequisitesDrawer: React.FC<CoursePrerequisitesDrawerProps>
                             onNavigateToChapter(prereq.relatedChapterId!);
                             onClose();
                           }}
-                          className="w-full flex items-center justify-center space-x-1.5 py-1.5 px-3 rounded-xl text-xs font-semibold text-red-600 dark:text-indigo-400 bg-red-50 dark:bg-indigo-950/40 hover:bg-red-100 border border-red-200 dark:border-indigo-800 transition-colors"
+                          className="w-full flex items-center justify-center space-x-1.5 py-1.5 px-3 rounded-xl text-xs font-semibold text-red-600 dark:text-indigo-400 bg-red-50 dark:bg-indigo-950/40 hover:bg-red-100 dark:hover:bg-red-950 border border-red-200 dark:border-indigo-800 transition-colors"
                         >
                           <span>Revoir le cours complet correspondant</span>
                           <ArrowRight className="w-3.5 h-3.5" />

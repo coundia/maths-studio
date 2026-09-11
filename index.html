@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr" class="dark">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,10 +13,35 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+      // Applique le theme avant le premier rendu pour eviter le clignotement
+      // clair/sombre au chargement. La logique est reprise dans ThemeContext.tsx.
+      (function () {
+        var envDefault = '%VITE_THEME_DEFAULT_MODE%';
+        if (envDefault !== 'light' && envDefault !== 'dark' && envDefault !== 'system') {
+          envDefault = 'dark';
+        }
+        var preference = envDefault;
+        try {
+          var saved = localStorage.getItem('maths_senegal_theme');
+          if (saved === 'light' || saved === 'dark' || saved === 'system') preference = saved;
+        } catch (error) {
+          // Stockage indisponible : on garde la valeur du .env.
+        }
+        var theme = preference;
+        if (preference === 'system') {
+          theme =
+            window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+        }
+        document.documentElement.classList.add(theme);
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
   </head>
-  <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-emerald-500 selection:text-white transition-colors duration-200">
+  <body class="bg-canvas text-ink font-sans antialiased overflow-x-hidden">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

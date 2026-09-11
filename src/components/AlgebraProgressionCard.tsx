@@ -21,14 +21,14 @@ export const AlgebraProgressionCard: React.FC<AlgebraProgressionCardProps> = ({
       {/* Title */}
       <div className="flex items-center justify-between pb-3.5 border-b border-slate-200 dark:border-slate-800 mb-4">
         <div className="flex items-center space-x-2">
-          <div className="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+          <div className="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
             <Layers className="w-4 h-4" />
           </div>
           <div>
             <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               Déroulé Algébrique Complet
             </h3>
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-slate-600 dark:text-slate-400">
               Lignes de calcul pas-à-pas (comme au tableau)
             </p>
           </div>
@@ -66,7 +66,7 @@ export const AlgebraProgressionCard: React.FC<AlgebraProgressionCardProps> = ({
                         ? 'bg-indigo-600 text-white'
                         : isPast
                         ? 'bg-emerald-600 text-white'
-                        : 'bg-slate-800 text-slate-400'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                     }`}
                   >
                     {isPast ? '' : idx + 1}
@@ -99,7 +99,7 @@ export const AlgebraProgressionCard: React.FC<AlgebraProgressionCardProps> = ({
               {/* Inline pedagogical explanation if active */}
               {isActive && (
                 <div className="mt-2.5 pt-2 border-t border-indigo-200 dark:border-indigo-500/20 text-xs text-indigo-700 dark:text-indigo-200/90 leading-relaxed flex items-start space-x-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
                   <span>{st.explanation}</span>
                 </div>
               )}
@@ -111,14 +111,14 @@ export const AlgebraProgressionCard: React.FC<AlgebraProgressionCardProps> = ({
       {/* Summary Box at the bottom */}
       <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs">
         <div className="flex items-center space-x-2 text-slate-600 dark:text-slate-400">
-          <BookOpen className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
+          <BookOpen className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
           <span>Résultat final :</span>
-          <span className="font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+          <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
             {solution.finalFormLatex}
           </span>
         </div>
 
-        <div className="text-[11px] text-slate-400 dark:text-slate-500 font-mono">
+        <div className="text-[11px] text-slate-600 dark:text-slate-400 font-mono">
           Double distributivité
         </div>
       </div>

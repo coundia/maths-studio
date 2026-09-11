@@ -50,11 +50,11 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
     return (
       <div className="w-full flex flex-col items-center space-y-3">
         {/* Solid toggle */}
-        <div className="flex items-center space-x-2 bg-slate-950 p-1.5 rounded-xl border border-slate-800 text-xs">
+        <div className="flex items-center space-x-2 bg-slate-100 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
           <button
             onClick={() => setSolidType('prisme')}
             className={`px-3 py-1.5 rounded-lg font-semibold transition-all flex items-center space-x-1.5 ${
-              !isCyl ? 'bg-emerald-600 text-slate-950 font-bold shadow' : 'text-slate-400 hover:text-white'
+              !isCyl ? 'bg-emerald-500 text-slate-950 font-bold shadow' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Box className="w-3.5 h-3.5" />
@@ -63,7 +63,7 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
           <button
             onClick={() => setSolidType('cylindre')}
             className={`px-3 py-1.5 rounded-lg font-semibold transition-all flex items-center space-x-1.5 ${
-              isCyl ? 'bg-emerald-600 text-slate-950 font-bold shadow' : 'text-slate-400 hover:text-white'
+              isCyl ? 'bg-emerald-500 text-slate-950 font-bold shadow' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <RefreshCw className="w-3.5 h-3.5" />
@@ -72,9 +72,9 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
         </div>
 
         {/* Sliders */}
-        <div className="flex flex-wrap items-center justify-center gap-3 text-xs bg-slate-950/80 px-3 py-2 rounded-xl border border-slate-800">
+        <div className="flex flex-wrap items-center justify-center gap-3 text-xs bg-slate-100/80 dark:bg-slate-950/80 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800">
           <div className="flex items-center space-x-2">
-            <span className="text-slate-400">Hauteur h = <b className="text-emerald-400">{solidHeight} cm</b></span>
+            <span className="text-slate-600 dark:text-slate-400">Hauteur h = <b className="text-emerald-600 dark:text-emerald-400">{solidHeight} cm</b></span>
             <input
               type="range"
               min="4"
@@ -86,7 +86,7 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
           </div>
           {isCyl && (
             <div className="flex items-center space-x-2">
-              <span className="text-slate-400">Rayon r = <b className="text-sky-400">{cylinderRadius} cm</b></span>
+              <span className="text-slate-600 dark:text-slate-400">Rayon r = <b className="text-sky-600 dark:text-sky-400">{cylinderRadius} cm</b></span>
               <input
                 type="range"
                 min="2"
@@ -171,15 +171,15 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
 
         {/* Real-time Formulas */}
         <div className="grid grid-cols-2 gap-2 w-full max-w-md text-xs font-mono">
-          <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center">
-            <span className="text-slate-400 block text-[11px] mb-1">Aire Latérale A_L</span>
-            <span className="text-emerald-400 font-bold text-sm">
+          <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center">
+            <span className="text-slate-600 dark:text-slate-400 block text-[11px] mb-1">Aire Latérale A_L</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-bold text-sm">
               {!isCyl ? `${prismAreaL} cm²` : `${cylAreaL} cm² (${2 * cylinderRadius * solidHeight}π)`}
             </span>
           </div>
-          <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center">
-            <span className="text-slate-400 block text-[11px] mb-1">Volume Total V</span>
-            <span className="text-sky-400 font-bold text-sm">
+          <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center">
+            <span className="text-slate-600 dark:text-slate-400 block text-[11px] mb-1">Volume Total V</span>
+            <span className="text-sky-600 dark:text-sky-400 font-bold text-sm">
               {!isCyl ? `${prismVol} cm³` : `${cylVolume} cm³ (${cylinderRadius * cylinderRadius * solidHeight}π)`}
             </span>
           </div>
@@ -231,8 +231,8 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
               onClick={() => setActiveQuadShape(shape)}
               className={`py-1.5 px-2 rounded-xl text-[11px] font-semibold capitalize transition-all ${
                 activeQuadShape === shape
-                  ? 'bg-emerald-600 text-slate-950 font-bold shadow'
-                  : 'bg-slate-950 text-slate-400 border border-slate-800 hover:text-white'
+                  ? 'bg-emerald-500 text-slate-950 font-bold shadow'
+                  : 'bg-slate-100 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               {shape === 'parallelogramme' ? 'Parallélogramme' : shape === 'carre' ? 'Carré' : shape}
@@ -280,9 +280,9 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
           )}
         </svg>
 
-        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center space-y-1">
-          <div className="text-xs text-emerald-400 font-bold">{quadConfig.rule}</div>
-          <div className="text-xs text-sky-300 font-mono">{quadConfig.formula}</div>
+        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center space-y-1">
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-bold">{quadConfig.rule}</div>
+          <div className="text-xs text-sky-700 dark:text-sky-300 font-mono">{quadConfig.formula}</div>
         </div>
       </div>
     );
@@ -295,14 +295,14 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
 
     return (
       <div className="w-full flex flex-col items-center space-y-3 max-w-md">
-        <div className="w-full p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 text-center">
-          <div className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">
+        <div className="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3 text-center">
+          <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
             Exemple : Prix des mangues au marché (500 FCFA / kg)
           </div>
 
           {/* Slider for kg */}
-          <div className="flex items-center justify-center space-x-3 text-xs text-slate-300">
-            <span>Quantité : <b className="text-emerald-400 text-sm">{propMangoKg} kg</b></span>
+          <div className="flex items-center justify-center space-x-3 text-xs text-slate-700 dark:text-slate-300">
+            <span>Quantité : <b className="text-emerald-600 dark:text-emerald-400 text-sm">{propMangoKg} kg</b></span>
             <input
               type="range"
               min="1"
@@ -317,19 +317,19 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
           <div className="overflow-x-auto">
             <table className="w-full text-xs font-mono text-center border-collapse">
               <thead>
-                <tr className="bg-slate-900 text-slate-300">
-                  <th className="p-2 border border-slate-800">Masse (kg)</th>
-                  <th className="p-2 border border-slate-800">1</th>
-                  <th className="p-2 border border-slate-800">3</th>
-                  <th className="p-2 border border-slate-800 bg-emerald-950 text-emerald-300">{propMangoKg}</th>
+                <tr className="bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300">
+                  <th className="p-2 border border-slate-200 dark:border-slate-800">Masse (kg)</th>
+                  <th className="p-2 border border-slate-200 dark:border-slate-800">1</th>
+                  <th className="p-2 border border-slate-200 dark:border-slate-800">3</th>
+                  <th className="p-2 border border-slate-200 dark:border-slate-800 bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">{propMangoKg}</th>
                 </tr>
               </thead>
               <tbody>
-                <tr className="text-white">
-                  <td className="p-2 border border-slate-800 font-bold text-slate-400">Prix (FCFA)</td>
-                  <td className="p-2 border border-slate-800">500</td>
-                  <td className="p-2 border border-slate-800">1 500</td>
-                  <td className="p-2 border border-slate-800 bg-emerald-950 text-emerald-400 font-bold">
+                <tr className="text-slate-900 dark:text-white">
+                  <td className="p-2 border border-slate-200 dark:border-slate-800 font-bold text-slate-600 dark:text-slate-400">Prix (FCFA)</td>
+                  <td className="p-2 border border-slate-200 dark:border-slate-800">500</td>
+                  <td className="p-2 border border-slate-200 dark:border-slate-800">1 500</td>
+                  <td className="p-2 border border-slate-200 dark:border-slate-800 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 font-bold">
                     {totalCost.toLocaleString()}
                   </td>
                 </tr>
@@ -337,10 +337,10 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
             </table>
           </div>
 
-          <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono text-center">
-            <span className="text-slate-400">Coefficient k = </span>
-            <span className="text-emerald-400 font-bold">500 FCFA/kg</span>
-            <div className="text-sky-300 mt-1">
+          <div className="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono text-center">
+            <span className="text-slate-600 dark:text-slate-400">Coefficient k = </span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-bold">500 FCFA/kg</span>
+            <div className="text-sky-700 dark:text-sky-300 mt-1">
               Produit en croix : x = ({propMangoKg} × 1500) / 3 = {totalCost.toLocaleString()} FCFA
             </div>
           </div>
@@ -356,15 +356,15 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
     return (
       <div className="w-full flex flex-col items-center space-y-3">
         {/* Toggle between sum of angles and special lines */}
-        <div className="flex flex-wrap items-center justify-center gap-1.5 text-xs bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 text-xs bg-slate-100 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800">
           {(['somme-angles', 'mediatrice', 'hauteur', 'mediane', 'bissectrice'] as const).map((mode) => (
             <button
               key={mode}
               onClick={() => setTriangleType(mode)}
               className={`px-2.5 py-1 rounded-lg font-semibold transition-all ${
                 triangleType === mode
-                  ? 'bg-emerald-600 text-slate-950 font-bold shadow'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-emerald-500 text-slate-950 font-bold shadow'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               {mode === 'somme-angles'
@@ -382,9 +382,9 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
 
         {/* Angle Sliders if in sum mode */}
         {triangleType === 'somme-angles' && (
-          <div className="flex items-center justify-center gap-4 text-xs bg-slate-950/80 px-3 py-1.5 rounded-xl border border-slate-800">
+          <div className="flex items-center justify-center gap-4 text-xs bg-slate-100/80 dark:bg-slate-950/80 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800">
             <div className="flex items-center space-x-1.5">
-              <span className="text-slate-400">Â = <b className="text-emerald-400">{angleAVal}°</b></span>
+              <span className="text-slate-600 dark:text-slate-400">Â = <b className="text-emerald-600 dark:text-emerald-400">{angleAVal}°</b></span>
               <input
                 type="range"
                 min="20"
@@ -398,7 +398,7 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
               />
             </div>
             <div className="flex items-center space-x-1.5">
-              <span className="text-slate-400">B̂ = <b className="text-sky-400">{angleBVal}°</b></span>
+              <span className="text-slate-600 dark:text-slate-400">B̂ = <b className="text-sky-600 dark:text-sky-400">{angleBVal}°</b></span>
               <input
                 type="range"
                 min="20"
@@ -481,13 +481,13 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
           )}
         </svg>
 
-        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center font-mono text-xs">
+        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center font-mono text-xs">
           {triangleType === 'somme-angles' ? (
-            <div className="text-emerald-400 font-bold">
+            <div className="text-emerald-600 dark:text-emerald-400 font-bold">
               Â + B̂ + Ĉ = {angleAVal}° + {angleBVal}° + {angleCVal}° = 180°
             </div>
           ) : (
-            <div className="text-sky-300">
+            <div className="text-sky-700 dark:text-sky-300">
               {triangleType === 'mediatrice' && 'Les 3 médiatrices se coupent au centre du cercle circonscrit (OA = OB = OC).'}
               {triangleType === 'hauteur' && 'Les 3 hauteurs se coupent en l\'orthocentre H.'}
               {triangleType === 'mediane' && 'Le centre de gravité G est situé aux 2/3 de chaque médiane à partir du sommet (AG = 2/3 AA\').'}
@@ -506,22 +506,22 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
 
     return (
       <div className="w-full flex flex-col items-center space-y-3 max-w-md">
-        <div className="w-full p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 text-center">
-          <div className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">
+        <div className="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3 text-center">
+          <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
             Invariance de la fraction : Simplification & Agrandissement
           </div>
 
           {/* Multiplier button toggle */}
           <div className="flex items-center justify-center space-x-2 text-xs">
-            <span className="text-slate-400">Multiplier numérateur & dénominateur par :</span>
+            <span className="text-slate-600 dark:text-slate-400">Multiplier numérateur & dénominateur par :</span>
             {[1, 2, 3, 4].map((k) => (
               <button
                 key={k}
                 onClick={() => setFractionMultiplier(k)}
                 className={`w-7 h-7 rounded-lg font-bold transition-all ${
                   fractionMultiplier === k
-                    ? 'bg-emerald-600 text-slate-950'
-                    : 'bg-slate-900 text-slate-300 border border-slate-800'
+                    ? 'bg-emerald-500 text-slate-950'
+                    : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800'
                 }`}
               >
                 {k}
@@ -530,25 +530,25 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
           </div>
 
           {/* Visual Fraction Bar */}
-          <div className="w-full h-9 bg-slate-900 rounded-xl overflow-hidden flex border border-slate-700">
+          <div className="w-full h-9 bg-white dark:bg-slate-900 rounded-xl overflow-hidden flex border border-slate-300 dark:border-slate-700">
             {Array.from({ length: den }).map((_, idx) => (
               <div
                 key={idx}
-                className={`h-full flex-1 border-r border-slate-800 transition-colors ${
-                  idx < num ? 'bg-emerald-500/80' : 'bg-slate-900'
+                className={`h-full flex-1 border-r border-slate-200 dark:border-slate-800 transition-colors ${
+                  idx < num ? 'bg-emerald-500/80' : 'bg-white dark:bg-slate-900'
                 }`}
               />
             ))}
           </div>
 
-          <div className="my-2 text-xl sm:text-2xl font-mono font-bold text-white">
+          <div className="my-2 text-xl sm:text-2xl font-mono font-bold text-slate-900 dark:text-white">
             <MathView
               latex={`\\frac{2}{3} = \\frac{2 \\times ${fractionMultiplier}}{3 \\times ${fractionMultiplier}} = \\frac{${num}}{${den}}`}
               display={true}
             />
           </div>
 
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-slate-600 dark:text-slate-400">
             Même proportion colorée ({((num / den) * 100).toFixed(0)}%), seule la finesse du découpage change.
           </p>
         </div>
@@ -561,8 +561,8 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
     return (
       <div className="w-full flex flex-col items-center space-y-3">
         {/* Slider for secant inclination */}
-        <div className="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 text-xs">
-          <span className="text-slate-400">Inclinaison de la sécante : <b className="text-emerald-400">{angleSecantAngle}°</b></span>
+        <div className="flex items-center space-x-2 bg-slate-100 dark:bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+          <span className="text-slate-600 dark:text-slate-400">Inclinaison de la sécante : <b className="text-emerald-600 dark:text-emerald-400">{angleSecantAngle}°</b></span>
           <input
             type="range"
             min="35"
@@ -618,9 +618,9 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
           })()}
         </svg>
 
-        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center text-xs font-mono">
-          <div className="text-emerald-400 font-bold">Théorème des angles alternes-internes :</div>
-          <span className="text-slate-300">
+        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center text-xs font-mono">
+          <div className="text-emerald-600 dark:text-emerald-400 font-bold">Théorème des angles alternes-internes :</div>
+          <span className="text-slate-700 dark:text-slate-300">
             Puisque (d1) // (d2), les deux angles en forme de Z sont rigoureusement égaux ({angleSecantAngle}°).
           </span>
         </div>
@@ -633,8 +633,8 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
     return (
       <div className="w-full flex flex-col items-center space-y-3">
         {/* Toggle rotation / slider */}
-        <div className="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 text-xs">
-          <span className="text-slate-400">Rotation du demi-tour : <b className="text-emerald-400">{symRotateAngle}°</b></span>
+        <div className="flex items-center space-x-2 bg-slate-100 dark:bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+          <span className="text-slate-600 dark:text-slate-400">Rotation du demi-tour : <b className="text-emerald-600 dark:text-emerald-400">{symRotateAngle}°</b></span>
           <input
             type="range"
             min="0"
@@ -694,9 +694,9 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
           })()}
         </svg>
 
-        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center text-xs font-mono">
-          <span className="text-emerald-400 font-bold">Propriété de l'isométrie : </span>
-          <span className="text-white">O est le milieu de [AA'] et [BB'] • AB = A'B' • (AB) // (A'B')</span>
+        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center text-xs font-mono">
+          <span className="text-emerald-600 dark:text-emerald-400 font-bold">Propriété de l'isométrie : </span>
+          <span className="text-slate-900 dark:text-white">O est le milieu de [AA'] et [BB'] • AB = A'B' • (AB) // (A'B')</span>
         </div>
       </div>
     );
@@ -706,28 +706,28 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
   if (interactiveType === 'multiples-diviseurs-5e') {
     return (
       <div className="w-full flex flex-col items-center space-y-3 max-w-md">
-        <div className="w-full p-4 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-3">
-          <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
+        <div className="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center space-y-3">
+          <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
             Égalité euclidienne fondamentale
           </span>
-          <div className="text-xl sm:text-2xl font-mono font-bold text-white">
+          <div className="text-xl sm:text-2xl font-mono font-bold text-slate-900 dark:text-white">
             <MathView latex="89 = 7 \\times 12 + 5 \\quad (0 \\le 5 < 7)" display={true} />
           </div>
-          <div className="grid grid-cols-4 gap-2 pt-2 border-t border-slate-900 text-xs font-mono">
-            <div className="p-2 rounded-lg bg-slate-900 text-slate-300">
-              <span className="block text-[10px] text-slate-500">Dividende</span>
+          <div className="grid grid-cols-4 gap-2 pt-2 border-t border-slate-200 dark:border-slate-900 text-xs font-mono">
+            <div className="p-2 rounded-lg bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300">
+              <span className="block text-[10px] text-slate-500 dark:text-slate-400">Dividende</span>
               <b>89</b>
             </div>
-            <div className="p-2 rounded-lg bg-slate-900 text-slate-300">
-              <span className="block text-[10px] text-slate-500">Diviseur</span>
+            <div className="p-2 rounded-lg bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300">
+              <span className="block text-[10px] text-slate-500 dark:text-slate-400">Diviseur</span>
               <b>7</b>
             </div>
-            <div className="p-2 rounded-lg bg-slate-900 text-slate-300">
-              <span className="block text-[10px] text-slate-500">Quotient</span>
+            <div className="p-2 rounded-lg bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300">
+              <span className="block text-[10px] text-slate-500 dark:text-slate-400">Quotient</span>
               <b>12</b>
             </div>
-            <div className="p-2 rounded-lg bg-emerald-950 text-emerald-300 font-bold border border-emerald-500/40">
-              <span className="block text-[10px] text-emerald-500">Reste</span>
+            <div className="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-500/40">
+              <span className="block text-[10px] text-emerald-500 dark:text-emerald-400">Reste</span>
               <b>5</b>
             </div>
           </div>
@@ -740,17 +740,17 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
   if (interactiveType === 'calcul-dans-d-5e') {
     return (
       <div className="w-full flex flex-col items-center space-y-3 max-w-md">
-        <div className="w-full p-4 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-3">
-          <span className="text-xs font-bold text-sky-400 uppercase tracking-wider">
+        <div className="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center space-y-3">
+          <span className="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider">
             Distributivité de la multiplication
           </span>
-          <div className="text-lg sm:text-2xl font-mono font-bold text-white">
+          <div className="text-lg sm:text-2xl font-mono font-bold text-slate-900 dark:text-white">
             <MathView latex="k \\times (a + b) = k \\times a + k \\times b" display={true} />
           </div>
-          <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono space-y-1.5">
-            <div className="text-emerald-400 font-bold">Exemple de calcul mental réfléchi :</div>
-            <div className="text-white">
-              7 × 102 = 7 × (100 + 2) = 700 + 14 = <b className="text-amber-300">714</b>
+          <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono space-y-1.5">
+            <div className="text-emerald-600 dark:text-emerald-400 font-bold">Exemple de calcul mental réfléchi :</div>
+            <div className="text-slate-900 dark:text-white">
+              7 × 102 = 7 × (100 + 2) = 700 + 14 = <b className="text-amber-700 dark:text-amber-300">714</b>
             </div>
           </div>
         </div>
@@ -763,8 +763,8 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
     return (
       <div className="w-full flex flex-col items-center space-y-3">
         {/* Slider for point coordinate */}
-        <div className="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 text-xs">
-          <span className="text-slate-400">Position du point A : <b className="text-emerald-400">{relPointVal}</b></span>
+        <div className="flex items-center space-x-2 bg-slate-100 dark:bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+          <span className="text-slate-600 dark:text-slate-400">Position du point A : <b className="text-emerald-600 dark:text-emerald-400">{relPointVal}</b></span>
           <input
             type="range"
             min="-6"
@@ -816,11 +816,11 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
           </text>
         </svg>
 
-        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center text-xs font-mono">
-          <span className="text-slate-400">Distance à zéro de A = </span>
-          <span className="text-emerald-400 font-bold">{Math.abs(relPointVal)} unités</span>
-          <span className="text-slate-400 ml-3">Opposé = </span>
-          <span className="text-sky-300 font-bold">{-relPointVal > 0 ? `+${-relPointVal}` : -relPointVal}</span>
+        <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center text-xs font-mono">
+          <span className="text-slate-600 dark:text-slate-400">Distance à zéro de A = </span>
+          <span className="text-emerald-600 dark:text-emerald-400 font-bold">{Math.abs(relPointVal)} unités</span>
+          <span className="text-slate-600 dark:text-slate-400 ml-3">Opposé = </span>
+          <span className="text-sky-700 dark:text-sky-300 font-bold">{-relPointVal > 0 ? `+${-relPointVal}` : -relPointVal}</span>
         </div>
       </div>
     );
@@ -828,8 +828,8 @@ export const GeometryVisualizers5e: React.FC<GeometryVisualizers5eProps> = ({
 
   // Fallback default formula card
   return (
-    <div className="p-4 sm:p-6 rounded-2xl bg-slate-950 border border-slate-800 text-center max-w-lg w-full">
-      <div className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2">
+    <div className="p-4 sm:p-6 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center max-w-lg w-full">
+      <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-2">
         {currentStep.rule}
       </div>
       <div className="my-3 text-lg sm:text-2xl font-mono font-bold text-black dark:text-white">

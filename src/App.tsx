@@ -15,21 +15,25 @@ import {
   SENEGAL_COURSES_3E,
   SENEGAL_COURSES_4E,
   SENEGAL_COURSES_5E,
+  SENEGAL_COURSES_6E,
   CourseChapter,
 } from './coursesData';
 import { Sparkles, BookOpen, GraduationCap, ArrowRight } from 'lucide-react';
 import { apiClient } from './api/apiClient';
+import { getGradeLevel, GRADE_LABEL } from './data/gradeLevel';
+
+export type SelectedGrade = 'all' | '6e' | '5e' | '4e' | '3e';
 
 export default function App() {
-  // Grade Level Filter ('3e' | '4e' | '5e' | 'all') - Defaults to 3e per user request
-  const [selectedGrade, setSelectedGrade] = useState<'all' | '3e' | '4e' | '5e'>('3e');
+  // Grade Level Filter ('6e' | '5e' | '4e' | '3e' | 'all') - Defaults to 3e per user request
+  const [selectedGrade, setSelectedGrade] = useState<SelectedGrade>('3e');
 
   // Navigation State
   const [activeTab, setActiveTab] = useState<'courses' | 'algebra-sandbox'>('courses');
   const [activeChapterId, setActiveChapterId] = useState<string>('racine-carree-3e');
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
-      return window.innerWidth >= 768;
+      return window.innerWidth >= 1024;
     }
     return true;
   });
@@ -37,7 +41,7 @@ export default function App() {
   // Responsive sidebar handling on resize
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
+      if (window.innerWidth >= 1024) {
         setIsSidebarOpen(true);
       }
     };
@@ -46,9 +50,11 @@ export default function App() {
   }, []);
 
   // Handle changing grade level
-  const handleSelectGrade = (grade: 'all' | '3e' | '4e' | '5e') => {
+  const handleSelectGrade = (grade: SelectedGrade) => {
     setSelectedGrade(grade);
-    if (grade === '5e') {
+    if (grade === '6e') {
+      setActiveChapterId(SENEGAL_COURSES_6E[0].id);
+    } else if (grade === '5e') {
       setActiveChapterId(SENEGAL_COURSES_5E[0].id);
     } else if (grade === '4e') {
       setActiveChapterId(SENEGAL_COURSES_4E[0].id);
@@ -111,7 +117,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white transition-colors duration-200 relative z-0">
+    <div className="min-h-screen bg-canvas text-ink flex flex-col transition-colors duration-200 relative z-0">
       {/* Decorative Glow */}
       <div className="absolute top-0 inset-x-0 h-96 bg-gradient-to-b from-indigo-500/10 via-emerald-500/5 to-transparent dark:from-indigo-500/10 dark:via-emerald-500/5 pointer-events-none -z-10" />
 
@@ -133,19 +139,20 @@ export default function App() {
 
       {/* Main Body with Sidebar and Content */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Course Menu Sidebar */}
-        {activeTab === 'courses' && (
-          <CourseSidebar
-            activeChapterId={activeChapterId}
-            onSelectChapter={(id) => {
-              setActiveChapterId(id);
-            }}
-            isOpen={isSidebarOpen}
-            onCloseMobile={() => setIsSidebarOpen(false)}
-            selectedGrade={selectedGrade}
-            onSelectGrade={handleSelectGrade}
-          />
-        )}
+        {/* Course Menu Sidebar : reste monte et a la meme place quel que soit
+            l'onglet actif (Cours / Calcul Libre), pour qu'il ne bouge jamais
+            tant qu'il est ouvert. Choisir un chapitre ramene sur l'onglet Cours. */}
+        <CourseSidebar
+          activeChapterId={activeChapterId}
+          onSelectChapter={(id) => {
+            setActiveChapterId(id);
+            setActiveTab('courses');
+          }}
+          isOpen={isSidebarOpen}
+          onCloseMobile={() => setIsSidebarOpen(false)}
+          selectedGrade={selectedGrade}
+          onSelectGrade={handleSelectGrade}
+        />
 
         {/* Central Stage / Content Area */}
         <main className="flex-1 overflow-y-auto p-2 sm:p-4 lg:p-6 flex flex-col space-y-4 max-w-full min-w-0">
@@ -156,12 +163,12 @@ export default function App() {
                 <GraduationCap className="w-4 h-4 text-red-600 dark:text-emerald-400 shrink-0" />
                 <span className="font-bold text-black dark:text-white">Espace Démo Professeur :</span>
                 <span>
-                  Programme officiel de Mathématiques Collège Sénégal (3ème BFEM & 4ème) — fiches, vidéos et démos interactives heuristiques.
+                  Programme officiel de Mathématiques Collège Sénégal (6ème à 3ème BFEM) — fiches, vidéos et démos interactives heuristiques.
                 </span>
               </div>
               <div className="flex items-center space-x-2 text-[11px]">
                 <span className="bg-neutral-100 text-black dark:bg-amber-500/20 dark:text-amber-300 font-mono px-2 py-0.5 rounded border border-neutral-300 dark:border-amber-500/30 font-bold">
-                  {currentChapter.gradeLevel === '3e' || currentChapter.id.endsWith('-3e') ? '3ème BFEM' : '4ème'}
+                  {GRADE_LABEL[getGradeLevel(currentChapter)]}
                 </span>
                 <span className="bg-neutral-100 text-black dark:bg-emerald-500/20 dark:text-emerald-300 font-mono px-2 py-0.5 rounded border border-neutral-300 dark:border-emerald-500/30">
                   {currentChapter.shortTitle}
@@ -214,11 +221,11 @@ export default function App() {
               />
 
               {errorMsg && (
-                <div className="p-4 rounded-xl bg-rose-950/50 border border-rose-800 text-rose-300 text-sm flex items-center justify-between">
+                <div className="p-4 rounded-xl bg-rose-50/50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-sm flex items-center justify-between">
                   <span>{errorMsg}</span>
                   <button
                     onClick={() => setErrorMsg(null)}
-                    className="text-rose-400 hover:text-rose-200 text-xs underline font-medium"
+                    className="text-rose-600 dark:text-rose-400 hover:text-rose-800 dark:hover:text-rose-200 text-xs underline font-medium"
                   >
                     Fermer
                   </button>
