@@ -673,7 +673,7 @@ export const Math3DViewer: React.FC<Math3DViewerProps> = ({
                 className="px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 disabled:opacity-30 text-slate-700 dark:text-slate-200 text-xs rounded transition-colors"
                 title="Étape suivante"
               >
-                ▶
+                
               </button>
             </div>
           )}

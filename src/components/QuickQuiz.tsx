@@ -349,10 +349,10 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({
 
             <p className="text-xs sm:text-sm text-neutral-700 dark:text-slate-300 max-w-md mt-1.5">
               {scorePercentage === 100
-                ? '🌟 Excellent travail ! Les notions clés de cette leçon sont parfaitement acquises pour les devoirs et le BFEM.'
+                ? ' Excellent travail ! Les notions clés de cette leçon sont parfaitement acquises pour les devoirs et le BFEM.'
                 : scorePercentage >= 60
-                ? '👍 Bien joué ! Tu as compris les principes essentiels, quelques détails méritent d’être revus.'
-                : '💪 Bon début ! Revois les étapes animées de la leçon ci-dessus et retente le quiz pour valider tes acquis.'}
+                ? ' Bien joué ! Tu as compris les principes essentiels, quelques détails méritent d’être revus.'
+                : ' Bon début ! Revois les étapes animées de la leçon ci-dessus et retente le quiz pour valider tes acquis.'}
             </p>
           </div>
 

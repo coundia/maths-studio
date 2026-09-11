@@ -39,7 +39,7 @@ const REMINDER_CATEGORIES: ReminderCategory[] = [
   {
     id: 'powers',
     label: 'Calculs de Puissances',
-    icon: '⚡',
+    icon: '',
     badge: '4ème & 3ème',
     description: 'Propriétés fondamentales des puissances, monômes et pièges de signes',
     rules: [
@@ -92,7 +92,7 @@ const REMINDER_CATEGORIES: ReminderCategory[] = [
   {
     id: 'signs',
     label: 'Règles de Signes dans ℤ',
-    icon: '⚖️',
+    icon: '️',
     badge: 'Base 4ème/3ème',
     description: 'La règle des signes, soustractions d\'entiers relatifs et parenthèses précédées de -',
     rules: [
@@ -123,7 +123,7 @@ const REMINDER_CATEGORIES: ReminderCategory[] = [
   {
     id: 'distributivity',
     label: 'Développement & Distributivité',
-    icon: '🔄',
+    icon: '',
     badge: '4ème & 3ème',
     description: 'Simple et double distributivité, gestion des monômes et réductions',
     rules: [
@@ -154,7 +154,7 @@ const REMINDER_CATEGORIES: ReminderCategory[] = [
   {
     id: 'identities',
     label: 'Identités Remarquables',
-    icon: '⭐',
+    icon: '',
     badge: '3ème BFEM',
     description: 'Les 3 formules incontournables du brevet sénégalais',
     rules: [
@@ -196,7 +196,7 @@ const REMINDER_CATEGORIES: ReminderCategory[] = [
   {
     id: 'factorization',
     label: 'Techniques de Factorisation',
-    icon: '🧩',
+    icon: '',
     badge: '3ème BFEM',
     description: 'Recherche du facteur commun et factorisation par identités remarquables',
     rules: [

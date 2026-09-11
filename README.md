@@ -1,4 +1,4 @@
-# 📐 Math3D Studio
+# Math3D Studio
 
 > **Plateforme interactive et animée d'apprentissage des Mathématiques pour les classes de 4ème et 3ème (Programme Sénégal / Préparation BFEM).**
 
@@ -6,28 +6,28 @@ Math3D Studio combine des visualisations géométriques 3D dynamiques (Three.js)
 
 ---
 
-## ✨ Fonctionnalités Principales
+## Fonctionnalités Principales
 
-- **🎓 Cours & Programmes Découplés (3ème & 4ème)** :
+- **Cours & Programmes Découplés (3ème & 4ème)** :
   - *3ème (BFEM)* : Racine carrée, Théorème de Thalès & Réciproque, Angles inscrits & Polygones réguliers, Propriété de Pythagore, Calcul algébrique, Équations et Inéquations à une inconnue, etc.
   - *4ème* : Nombres rationnels, Géométrie dans l'espace, Triangles et parallèles, etc.
-- **🧊 Visualisations 3D & 2D Interactives** :
+- **Visualisations 3D & 2D Interactives** :
   - Animations pas-à-pas avec Three.js et KaTeX.
   - Manipulation en temps réel des figures géométriques et des blocs algébriques.
-- **⚡ Moteur de Résolution Algébrique à 3 Niveaux** :
+- **Moteur de Résolution Algébrique à 3 Niveaux** :
   1. **Tier 1 (Cache SHA-256)** : Réponse instantanée (< 50 ms) pour les expressions déjà résolues.
   2. **Tier 2 (Heuristiques Déterministes)** : Factorisation et développement instantanés (< 15 ms, 0 appel IA).
   3. **Tier 3 (Fallback Gemini AI)** : Génération intelligente des étapes et visualisations pour les expressions complexes avec persistance atomique.
-- **📝 Exercices & Quiz Interactifs** :
+- **Exercices & Quiz Interactifs** :
   - Banques d'exercices structurés avec indices et corrections détaillées.
   - Quiz rapides pour tester la compréhension après chaque notion.
-- **📊 Métriques & KPI de Performance** :
+- **Métriques & KPI de Performance** :
   - Suivi des taux d'utilisation du cache, heuristiques et IA.
   - Taux de complétion des étapes par les apprenants.
 
 ---
 
-## 🛠️ Stack Technologique
+## Stack Technologique
 
 - **Frontend** :
   - [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
@@ -43,7 +43,7 @@ Math3D Studio combine des visualisations géométriques 3D dynamiques (Three.js)
 
 ---
 
-## 🚀 Démarrage Rapide
+## Démarrage Rapide
 
 ### 1. Prérequis
 - [Node.js](https://nodejs.org/) (version 18+ recommandée)
@@ -66,37 +66,54 @@ APP_URL="http://localhost:3000"
 
 ---
 
-## 💻 Lancement de l'Application
+## Lancement de l'Application
 
-### Option A : Via le script automatisé `start.sh` (Recommandé)
+Math3D Studio dispose d'une **Architecture Multi-Modes**. Vous pouvez le lancer avec son serveur backend complet (Node.js) ou en mode 100% statique (sans backend, idéal pour GitHub Pages).
 
+### Option A : Via Go Task (Recommandé si installé)
+Si vous avez [`task`](https://taskfile.dev/) installé, vous pouvez utiliser ces commandes simples :
 ```bash
-# Mode Développement (avec hot-reload)
-./start.sh
-
-# Mode Production (build automatique + démarrage serveur)
-./start.sh prod
+task dev          # Mode Développement complet (Frontend + Backend Node)
+task dev:static   # Mode Statique local (Frontend uniquement, sans backend)
+task build        # Compilation pour production (Frontend + Backend)
+task build:static # Compilation pour GitHub Pages (Mode Statique)
+task start        # Lancement du serveur de production
 ```
 
-### Option B : Via les commandes `npm`
+### Option B : Via les scripts automatisés `sh`
+
+```bash
+# Serveur Complet (Frontend + Backend)
+./start.sh         # Mode Développement
+./start.sh prod    # Mode Production
+
+# Mode Statique (Sans Backend)
+./scripts/start-static.sh  # Mode Développement statique
+./scripts/build-static.sh  # Compiler pour GitHub Pages
+```
+
+### Option C : Via les commandes `npm`
 
 ```bash
 # 1. Installation des dépendances
 npm install
 
 # 2. Mode Développement
-npm run dev
+npm run dev           # Complet
+npm run dev:static    # Statique
 
 # 3. Mode Production
-npm run build
+npm run build         # Complet
 npm start
+
+npm run build:ghpages # Statique
 ```
 
-L'application est disponible sur : **`http://localhost:3000`**
+L'application est disponible sur : **`http://localhost:3000`** (ou `http://localhost:5173` en mode statique).
 
 ---
 
-## 📁 Structure du Projet
+## Structure du Projet
 
 ```text
 maths-studio/
@@ -131,7 +148,9 @@ maths-studio/
 
 ---
 
-## 📡 Endpoints de l'API
+## Endpoints de l'API
+
+*(Disponibles uniquement en mode Serveur complet)*
 
 | Méthode | Route | Description |
 |---|---|---|
@@ -147,6 +166,13 @@ maths-studio/
 
 ---
 
-## 📜 Licence
+## Déploiement sur GitHub Pages (CI/CD)
+
+Le projet est configuré avec un **Workflow GitHub Actions** (`.github/workflows/deploy.yml`) qui déploie automatiquement l'application sur GitHub Pages en mode 100% statique à chaque push sur la branche principale (`main`).
+En mode statique, l'IA Gemini et les heuristiques de calcul s'exécutent entièrement côté client via le navigateur.
+
+---
+
+## Licence
 
 Projet développé pour l'éducation et l'apprentissage interactif des mathématiques au Sénégal.

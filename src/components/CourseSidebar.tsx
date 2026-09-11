@@ -86,7 +86,7 @@ export const CourseSidebar: React.FC<CourseSidebarProps> = ({
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 rounded-xl bg-neutral-100 border border-neutral-300 dark:bg-gradient-to-tr dark:from-amber-500/30 dark:to-emerald-500/30 dark:border-amber-500/40 flex items-center justify-center text-xs">
-                🇸🇳
+                
               </div>
               <div>
                 <h2 className="text-sm font-bold text-black dark:text-slate-100 flex items-center gap-1.5">

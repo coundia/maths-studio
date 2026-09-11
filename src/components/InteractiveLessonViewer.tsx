@@ -156,7 +156,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                   ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
                   : 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
               }`}>
-                {chapter.gradeLevel === '3e' || chapter.id.endsWith('-3e') ? '🇸🇳 Classe de 3e (BFEM)' : '🇸🇳 Classe de 4e'}
+                {chapter.gradeLevel === '3e' || chapter.id.endsWith('-3e') ? ' Classe de 3e (BFEM)' : ' Classe de 4e'}
               </span>
               <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                 {chapter.category}
@@ -1056,7 +1056,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
                           <div className="w-8 h-0.5 bg-slate-500 my-0.5" />
                           <span className="text-amber-400">{d}</span>
                         </div>
-                        <span className="text-slate-400">➔</span>
+                        <span className="text-slate-400"></span>
                         <div className="flex flex-col items-center">
                           <span className="text-sky-400">{a}</span>
                           <div className="w-8 h-0.5 bg-slate-500 my-0.5" />

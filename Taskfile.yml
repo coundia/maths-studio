@@ -1,0 +1,32 @@
+version: '3'
+
+tasks:
+  dev:
+    desc: Start the development server (with Node backend)
+    cmds:
+      - npm run dev
+
+  build:
+    desc: Build the project for production (Frontend + Node backend)
+    cmds:
+      - npm run build
+
+  start:
+    desc: Start the production server (Node backend)
+    cmds:
+      - npm start
+
+  dev:static:
+    desc: Start the static development server (no backend, browser only)
+    cmds:
+      - ./scripts/start-static.sh
+
+  build:static:
+    desc: Build the project for GitHub Pages (Static Mode)
+    cmds:
+      - ./scripts/build-static.sh
+
+  install:
+    desc: Install dependencies
+    cmds:
+      - npm install

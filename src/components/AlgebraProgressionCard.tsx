@@ -69,7 +69,7 @@ export const AlgebraProgressionCard: React.FC<AlgebraProgressionCardProps> = ({
                         : 'bg-slate-800 text-slate-400'
                     }`}
                   >
-                    {isPast ? '✓' : idx + 1}
+                    {isPast ? '' : idx + 1}
                   </span>
                   <span
                     className={`text-xs font-semibold ${

@@ -1,3 +1,5 @@
+import { apiClient } from '../../api/apiClient';
+
 export type BoardThemeStyle = 
   | 'classic-slate'
   | 'chalkboard-green'
@@ -118,27 +120,24 @@ export function loadBoardSettings(): BoardSettings {
 
 export async function fetchServerBoardSettings(): Promise<BoardSettings | null> {
   try {
-    const res = await fetch('/api/board/settings');
-    if (res.ok) {
-      const data = await res.json();
-      if (data.settings) {
-        let fontSize = data.settings.fontSize;
-        if (typeof fontSize === 'string') {
-          if (fontSize === 'compact') fontSize = 1.8;
-          else if (fontSize === 'normal') fontSize = 2.2;
-          else if (fontSize === 'huge') fontSize = 3.4;
-          else fontSize = 2.6;
-        }
-        return {
-          ...DEFAULT_BOARD_SETTINGS,
-          ...data.settings,
-          fontSize: fontSize || 2.6,
-          zoomStep: data.settings.zoomStep !== undefined ? data.settings.zoomStep : 0.2,
-          customColors: Array.isArray(data.settings.customColors) && data.settings.customColors.length > 0
-            ? data.settings.customColors
-            : DEFAULT_CUSTOM_COLORS,
-        };
+    const data = await apiClient.getBoardSettings();
+    if (data && data.settings) {
+      let fontSize = data.settings.fontSize;
+      if (typeof fontSize === 'string') {
+        if (fontSize === 'compact') fontSize = 1.8;
+        else if (fontSize === 'normal') fontSize = 2.2;
+        else if (fontSize === 'huge') fontSize = 3.4;
+        else fontSize = 2.6;
       }
+      return {
+        ...DEFAULT_BOARD_SETTINGS,
+        ...data.settings,
+        fontSize: fontSize || 2.6,
+        zoomStep: data.settings.zoomStep !== undefined ? data.settings.zoomStep : 0.2,
+        customColors: Array.isArray(data.settings.customColors) && data.settings.customColors.length > 0
+          ? data.settings.customColors
+          : DEFAULT_CUSTOM_COLORS,
+      };
     }
   } catch (err) {
     console.warn('Could not fetch server board settings:', err);
@@ -155,11 +154,7 @@ export function saveBoardSettings(settings: BoardSettings): void {
   }
 
   // 2. Persist to server backend storage (data/board_settings.json)
-  fetch('/api/board/settings', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(settings),
-  }).catch((err) => {
+  apiClient.saveBoardSettings(settings).catch((err) => {
     console.warn('Could not sync board settings with server storage:', err);
   });
 }

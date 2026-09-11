@@ -18,6 +18,7 @@ import {
   CourseChapter,
 } from './coursesData';
 import { Sparkles, BookOpen, GraduationCap, ArrowRight } from 'lucide-react';
+import { apiClient } from './api/apiClient';
 
 export default function App() {
   // Grade Level Filter ('3e' | '4e' | '5e' | 'all') - Defaults to 3e per user request
@@ -79,18 +80,7 @@ export default function App() {
       setIsCompleted(false);
 
       try {
-        const response = await fetch('/api/resolve', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ expression: expr, operationType: opType }),
-        });
-
-        if (!response.ok) {
-          const errData = await response.json();
-          throw new Error(errData.error || 'Erreur de résolution.');
-        }
-
-        const solution: ExpressionSolution = await response.json();
+        const solution: ExpressionSolution = await apiClient.resolveExpression(expr, opType);
         setActiveSolution(solution);
         setCurrentStepIndex(0);
       } catch (err: any) {

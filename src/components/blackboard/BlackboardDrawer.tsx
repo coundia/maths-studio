@@ -20,6 +20,7 @@ import {
   getFontSizeRem 
 } from './boardSettings';
 import { BoardSettingsDrawer } from './BoardSettingsDrawer';
+import { apiClient } from '../../api/apiClient';
 import 'mathlive';
 import { initVirtualKeyboardInCurrentBrowsingContext } from 'mathlive';
 
@@ -444,22 +445,12 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
     setRefreshingLineId(lineId); // Démarre l'animation de chargement
     
     try {
-      const response = await fetch('/api/resolve', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          expression: latex,
-          operationType: action,
-          aiToken: boardSettings.aiToken,
-          aiIncludeComments: boardSettings.aiIncludeComments
-        })
-      });
-      
-      const data = await response.json();
-      
-      if (!response.ok || data.error) {
-        throw new Error(data.error || "Erreur de l'API");
-      }
+      const data = await apiClient.resolveExpression(
+        latex,
+        action,
+        boardSettings.aiToken,
+        boardSettings.aiIncludeComments
+      );
 
       if (!data.steps || data.steps.length === 0) {
         throw new Error("L'IA n'a retourné aucune étape.");
@@ -1465,7 +1456,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                             className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-slate-300 dark:border-slate-600 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 shrink-0 cursor-pointer"
                             title="Enlever la couleur"
                           >
-                            ✕
+                            
                           </button>
                           
                           <div className="w-px h-5 bg-slate-200 dark:bg-slate-700" />

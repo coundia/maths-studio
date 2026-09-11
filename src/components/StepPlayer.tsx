@@ -28,27 +28,27 @@ function getTerreATerreNote(rawExpr: string, stepIndex: number): { title: string
 
     if (stepIndex === 0) {
       return {
-        title: `🧱 Exemple très concret avec x = ${xEx} :`,
+        title: ` Exemple très concret avec x = ${xEx} :`,
         text: `Imaginez un plateau de jeu de ${xEx} par ${xEx} briques de Lego, soit ${totalCubes} briques au total (c'est x²).`,
       };
     } else if (stepIndex === 1) {
       return {
-        title: `🧱 Retrait physique du coin :`,
+        title: ` Retrait physique du coin :`,
         text: `On retire un carré de ${a}×${a} = ${removedCubes} briques. Il reste exactement ${totalCubes} - ${removedCubes} = ${remainingCubes} briques en forme de « L ».`,
       };
     } else if (stepIndex === 2) {
       return {
-        title: `🧱 Coup de scie dans le « L » :`,
+        title: ` Coup de scie dans le « L » :`,
         text: `Pour réorganiser ces ${remainingCubes} briques, on coupe le « L » en deux rectangles : un bleu de ${width}×${xEx} (${width * xEx} briques) et un violet de ${width}×${a} (${width * a} briques). Total : ${width * xEx + width * a} briques.`,
       };
     } else if (stepIndex === 3) {
       return {
-        title: `🧱 La pièce violette tourne et voyage en 3D :`,
+        title: ` La pièce violette tourne et voyage en 3D :`,
         text: `La pièce violette pivote de 90° dans l'espace. Comme elle a la même épaisseur (${width} briques), elle s'emboîte au bout de la pièce bleue sans dépasser.`,
       };
     } else {
       return {
-        title: `🧱 Résultat magique : un rectangle parfait !`,
+        title: ` Résultat magique : un rectangle parfait !`,
         text: `On a formé un rectangle de largeur (${xEx} - ${a}) = ${width} et de longueur (${xEx} + ${a}) = ${length}. Son aire est ${width} × ${length} = ${remainingCubes} briques ! La preuve est faite.`,
       };
     }
@@ -62,19 +62,19 @@ function getTerreATerreNote(rawExpr: string, stepIndex: number): { title: string
     const perGroup = b / k;
     if (stepIndex === 0) {
       return {
-        title: `🧱 Paquets de bonbons concrets :`,
+        title: ` Paquets de bonbons concrets :`,
         text: `Vous avez ${k} sachets de bonbons (chacun contient x bonbons) et ${b} bonbons en vrac sur la table.`,
       };
     } else {
       return {
-        title: `🧱 Répartition équitable :`,
+        title: ` Répartition équitable :`,
         text: `Vous distribuez les ${b} bonbons en vrac : chacun des ${k} sachets reçoit ${perGroup} bonbons. Résultat : ${k} groupes identiques de (x + ${perGroup}) bonbons !`,
       };
     }
   }
 
   return {
-    title: `🧱 Démarche concrète pas-à-pas :`,
+    title: ` Démarche concrète pas-à-pas :`,
     text: `Chaque bloc 3D ci-contre correspond à une quantité réelle. En observant les déplacements et les découpes, vous visualisez pourquoi la formule mathématique fonctionne toujours.`,
   };
 }

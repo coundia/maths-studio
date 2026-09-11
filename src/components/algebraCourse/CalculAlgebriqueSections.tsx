@@ -565,7 +565,7 @@ export const CalculAlgebriqueSections: React.FC<CalculAlgebriqueSectionsProps> =
                     <MathView latex="A = 2^3 \times 2^4 = 2^{3+4} = 2^7 = 128" display={false} />
                   </div>
                   <div className="text-[11px] font-sans text-emerald-900/80 dark:text-slate-400">
-                    ⚠️ Erreur à éviter : ne jamais multiplier les bases (<MathView latex="2^3 \times 2^4 \neq 4^7" display={false} />).
+                    ️ Erreur à éviter : ne jamais multiplier les bases (<MathView latex="2^3 \times 2^4 \neq 4^7" display={false} />).
                   </div>
                 </div>
 
@@ -702,7 +702,7 @@ export const CalculAlgebriqueSections: React.FC<CalculAlgebriqueSectionsProps> =
                       </span>
                     </div>
                     <div className="text-[11px] text-sky-800 dark:text-sky-300 font-sans">
-                      💡 <strong>Règle :</strong> {isPowerNegBase
+                       <strong>Règle :</strong> {isPowerNegBase
                         ? isPowerEvenExp
                           ? 'Exposant PAIR => résultat strictement POSITIF (+)'
                           : 'Exposant IMPAIR => résultat strictement NÉGATIF (-)'
@@ -723,7 +723,7 @@ export const CalculAlgebriqueSections: React.FC<CalculAlgebriqueSectionsProps> =
                       </span>
                     </div>
                     <div className="text-[11px] text-rose-700 dark:text-rose-300 font-sans">
-                      ⚠️ <strong>Attention piège :</strong> Sans parenthèses, le signe « - » est en dehors de la puissance ! Le résultat est TOUJOURS négatif.
+                      ️ <strong>Attention piège :</strong> Sans parenthèses, le signe « - » est en dehors de la puissance ! Le résultat est TOUJOURS négatif.
                     </div>
                   </div>
                 )}
@@ -998,17 +998,17 @@ export const CalculAlgebriqueSections: React.FC<CalculAlgebriqueSectionsProps> =
                     <div className="text-[11px] font-sans">
                       {zBothNeg && (
                         <span className="text-emerald-700 dark:text-emerald-400 font-semibold">
-                          ✨ Règle : Les deux nombres sont négatifs : <strong>(-) × (-) = (+)</strong>. Le résultat est donc strictement positif (+{zProd}) !
+                           Règle : Les deux nombres sont négatifs : <strong>(-) × (-) = (+)</strong>. Le résultat est donc strictement positif (+{zProd}) !
                         </span>
                       )}
                       {zDiffSigns && (
                         <span className="text-rose-700 dark:text-rose-400 font-semibold">
-                          ⚠️ Règle : Nombres de signes contraires : <strong>(-) × (+) = (-)</strong>. Le résultat est strictement négatif ({zProd}) !
+                          ️ Règle : Nombres de signes contraires : <strong>(-) × (+) = (-)</strong>. Le résultat est strictement négatif ({zProd}) !
                         </span>
                       )}
                       {!zBothNeg && !zDiffSigns && (
                         <span className="text-sky-700 dark:text-sky-400 font-semibold">
-                          ✨ Règle : Les deux nombres sont positifs : <strong>(+) × (+) = (+)</strong>.
+                           Règle : Les deux nombres sont positifs : <strong>(+) × (+) = (+)</strong>.
                         </span>
                       )}
                     </div>
@@ -1024,7 +1024,7 @@ export const CalculAlgebriqueSections: React.FC<CalculAlgebriqueSectionsProps> =
                     <div className="text-[11px] font-sans">
                       {zIsBMinus ? (
                         <span className="text-emerald-700 dark:text-emerald-400 font-semibold">
-                          💡 <strong>Règle :</strong> On soustrait un nombre négatif (<MathView latex={zBOppositeLatex} display={false} />) : cela équivaut à <strong>ajouter son opposé positif (+{Math.abs(zNumB)})</strong> !
+                           <strong>Règle :</strong> On soustrait un nombre négatif (<MathView latex={zBOppositeLatex} display={false} />) : cela équivaut à <strong>ajouter son opposé positif (+{Math.abs(zNumB)})</strong> !
                         </span>
                       ) : (
                         <span className="text-neutral-700 dark:text-slate-300">

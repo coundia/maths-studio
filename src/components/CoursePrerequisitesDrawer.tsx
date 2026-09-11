@@ -184,7 +184,7 @@ export const CoursePrerequisitesDrawer: React.FC<CoursePrerequisitesDrawerProps>
                 <div className="flex items-center justify-between pt-1">
                   <span className="text-[11px] text-neutral-500 dark:text-slate-400">
                     {progressPercent === 100
-                      ? '🎉 Bravo, vous êtes 100% prêt pour ce cours !'
+                      ? ' Bravo, vous êtes 100% prêt pour ce cours !'
                       : 'Cochez chaque notion après relecture.'}
                   </span>
                   <button
@@ -234,7 +234,7 @@ export const CoursePrerequisitesDrawer: React.FC<CoursePrerequisitesDrawerProps>
                         title={isMastered ? 'Marqué comme maîtrisé' : 'Cocher comme maîtrisé'}
                       >
                         <CheckCircle2 className="w-3.5 h-3.5" />
-                        <span>{isMastered ? 'Acquis ✓' : 'À revoir'}</span>
+                        <span>{isMastered ? 'Acquis ' : 'À revoir'}</span>
                       </button>
                     </div>
 
@@ -331,7 +331,7 @@ export const CoursePrerequisitesDrawer: React.FC<CoursePrerequisitesDrawerProps>
                                 <span>{opt.text}</span>
                                 {showFeedback && opt.isCorrect && (
                                   <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
-                                    Correct ✓
+                                    Correct 
                                   </span>
                                 )}
                               </button>
@@ -341,7 +341,7 @@ export const CoursePrerequisitesDrawer: React.FC<CoursePrerequisitesDrawerProps>
 
                         {selectedAnswerIdx !== undefined && (
                           <div className="p-2 rounded-lg bg-neutral-50 dark:bg-slate-900 text-[11px] text-neutral-600 dark:text-slate-400">
-                            💡 {prereq.quickCheck.options[selectedAnswerIdx].explanation}
+                             {prereq.quickCheck.options[selectedAnswerIdx].explanation}
                           </div>
                         )}
                       </div>
