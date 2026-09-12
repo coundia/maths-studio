@@ -73,7 +73,7 @@ export default function App() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
   const [activeMode, setActiveMode] = useState<'algebra' | 'geometry'>('algebra');
-  const [isBlackboardOpen, setIsBlackboardOpen] = useState<boolean>(false);
+  const [isBlackboardOpen, setIsBlackboardOpen] = useState<boolean>(true);
 
   const currentChapter: CourseChapter =
     ALL_SENEGAL_COURSES.find((c) => c.id === activeChapterId) || ALL_SENEGAL_COURSES[0];

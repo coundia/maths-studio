@@ -163,7 +163,9 @@ npm run lint          # Vérification TypeScript
 npm run theme:check   # Audit de contraste de la palette
 ```
 
-L'application est disponible sur : **`http://localhost:3000`** (ou `http://localhost:5173` en mode statique).
+L'application locale est disponible sur : **`http://localhost:3000`** (ou `http://localhost:5173` en mode statique).
+
+**Version en ligne (GitHub Pages)** : [https://coundia.github.io/maths-studio/](https://coundia.github.io/maths-studio/)
 
 ---
 
