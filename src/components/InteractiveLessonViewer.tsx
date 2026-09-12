@@ -33,6 +33,8 @@ import {
   Award,
   Layers,
   ClipboardList,
+  X,
+  Target,
 } from 'lucide-react';
 import { CourseSheetViewer } from './CourseSheetViewer';
 
@@ -70,6 +72,7 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
   const [isProjectorMode, setIsProjectorMode] = useState<boolean>(false);
   const [isPrerequisitesOpen, setIsPrerequisitesOpen] = useState<boolean>(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState<boolean>(false);
+  const [isQuizOpen, setIsQuizOpen] = useState<boolean>(false);
 
   // Dynamic state for interactive demos
   const [pythagoreSides, setPythagoreSides] = useState<{ ab: number; ac: number }>({
@@ -228,6 +231,31 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
               <ClipboardList className="w-3.5 h-3.5 text-indigo-600 dark:text-sky-400" />
               <span>Synthèse</span>
             </button>
+
+            {currentDemo.interactiveType !== 'video-lesson' && (
+              <button
+                onClick={() => setIsQuizOpen(true)}
+                title="Ouvrir le Quiz rapide en plein écran"
+                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border border-emerald-300/50 hover:border-emerald-300 dark:hover:border-emerald-600 bg-white hover:bg-neutral-100 text-black shadow-xs dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-emerald-300 dark:border-emerald-500/40"
+              >
+                <Zap className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                <span>Quiz Rapide</span>
+              </button>
+            )}
+
+            {currentDemo.interactiveType !== 'video-lesson' && (
+              <button
+                onClick={() => {
+                  const el = document.getElementById('student-exercises-section');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                title="Aller directement aux exercices gradués (Facile, Moyen, Difficile)"
+                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border border-rose-300/50 hover:border-rose-300 dark:hover:border-rose-600 bg-white hover:bg-neutral-100 text-black shadow-xs dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-rose-300 dark:border-rose-500/40"
+              >
+                <Target className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
+                <span>Exercices (Facile, Moyen, Difficile)</span>
+              </button>
+            )}
 
             <button
               onClick={() => setHideSolutionForClass(!hideSolutionForClass)}
@@ -1659,18 +1687,32 @@ export const InteractiveLessonViewer: React.FC<InteractiveLessonViewerProps> = (
         </div>
       </div>
 
-      {/* Quiz Rapide à la fin de la leçon interactive pour tester les acquis des élèves de 3e et 4e */}
-      {currentDemo.interactiveType !== 'video-lesson' && (
-        <QuickQuiz
-          chapter={chapter}
-          demo={currentDemo}
-          onScrollToExercises={() => {
-            const el = document.getElementById('student-exercises-section');
-            if (el) {
-              el.scrollIntoView({ behavior: 'smooth' });
-            }
-          }}
-        />
+      {/* Quiz Plein Écran (Modal) */}
+      {isQuizOpen && currentDemo.interactiveType !== 'video-lesson' && (
+        <div className="fixed inset-0 z-[100] bg-slate-50 dark:bg-slate-950 overflow-y-auto">
+          <div className="max-w-4xl mx-auto p-4 sm:p-8 min-h-screen relative">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold dark:text-white text-slate-900">Quiz Rapide : {chapter.title}</h2>
+              <button 
+                onClick={() => setIsQuizOpen(false)}
+                className="p-2 bg-white dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white rounded-full shadow-md"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <QuickQuiz
+              chapter={chapter}
+              demo={currentDemo}
+              onScrollToExercises={() => {
+                setIsQuizOpen(false);
+                const el = document.getElementById('student-exercises-section');
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            />
+          </div>
+        </div>
       )}
 
       {/* 3 Graded Exercises (Facile, Moyen, Difficile) for the Student */}

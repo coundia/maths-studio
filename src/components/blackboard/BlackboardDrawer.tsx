@@ -2110,7 +2110,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                       if (zoomedLineId !== null) setZoomedLineId(null);
                     }
                   }}
-                  className="fixed bottom-24 left-6 sm:left-12 z-[150] w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 text-white rounded-full shadow-lg shadow-emerald-500/40 flex items-center justify-center cursor-grab active:cursor-grabbing border-2 border-white/20 backdrop-blur-md print:hidden"
+                  className="fixed bottom-24 left-6 sm:left-12 z-[150] w-14 h-14 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full shadow-lg shadow-emerald-500/40 flex items-center justify-center cursor-grab active:cursor-grabbing border-2 border-white/20 backdrop-blur-md print:hidden"
                   title="Loupe magique : Glissez-moi sur une ligne pour la zoomer !"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}

@@ -30,6 +30,7 @@ import {
   Bookmark,
   BookOpenCheck,
   X,
+  Target,
 } from 'lucide-react';
 
 interface CalculAlgebriqueCourseProps {
@@ -61,6 +62,7 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
   const [arrowC, setArrowC] = useState<number>(2); // cx
   const [arrowD, setArrowD] = useState<number>(-4); // +d
   const [arrowStep, setArrowStep] = useState<number>(4);
+  const [isQuizOpen, setIsQuizOpen] = useState<boolean>(false);
 
   // Exercises state
   const [openExerciseSolution, setOpenExerciseSolution] = useState<Record<number, boolean>>({});
@@ -99,16 +101,32 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
             </p>
           </div>
 
-          {/* Quick link to free sandbox */}
-          {onOpenAlgebraSolver && (
+          {/* Quick link to free sandbox & Quiz */}
+          <div className="flex flex-wrap items-center gap-2">
+            {onOpenAlgebraSolver && (
+              <button
+                onClick={() => onOpenAlgebraSolver('(x+3)(2x-5)')}
+                className="flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-black hover:bg-neutral-100 text-white font-bold text-xs transition-all shadow-xs shrink-0 dark:bg-indigo-600 dark:hover:bg-indigo-500"
+              >
+                <Sparkles className="w-4 h-4 text-red-500 dark:text-amber-300" />
+                <span>Tester le Calculateur Libre</span>
+              </button>
+            )}
             <button
-              onClick={() => onOpenAlgebraSolver('(x+3)(2x-5)')}
-              className="flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-black hover:bg-neutral-100 text-white font-bold text-xs transition-all shadow-xs shrink-0 dark:bg-indigo-600 dark:hover:bg-indigo-500"
+              onClick={() => setIsQuizOpen(true)}
+              className="flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 dark:bg-emerald-900/30 dark:hover:bg-emerald-800/40 dark:text-emerald-300 dark:border-emerald-700/50 font-bold text-xs transition-all shadow-xs shrink-0"
             >
-              <Sparkles className="w-4 h-4 text-red-500 dark:text-amber-300" />
-              <span>Tester le Calculateur Libre</span>
+              <Zap className="w-4 h-4" />
+              <span>Quiz Rapide</span>
             </button>
-          )}
+            <button
+              onClick={() => setActiveSubTab('exercices')}
+              className="flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 dark:bg-rose-900/30 dark:hover:bg-rose-800/40 dark:text-rose-300 dark:border-rose-700/50 font-bold text-xs transition-all shadow-xs shrink-0"
+            >
+              <Target className="w-4 h-4" />
+              <span>Exercices (Facile, Moyen, Difficile)</span>
+            </button>
+          </div>
         </div>
 
         {/* Sub-Navigation Tabs */}
@@ -1243,19 +1261,37 @@ export const CalculAlgebriqueCourse: React.FC<CalculAlgebriqueCourseProps> = ({
         </div>
       )}
 
-      {/* Quiz Rapide d'assimilation des acquis - Calcul Algébrique */}
-      <QuickQuiz
-        chapter={{
-          id: 'calcul-algebrique',
-          title: 'Calcul algébrique & Identités remarquables - 4e',
-          shortTitle: 'Calcul algébrique',
-          gradeLevel: '4e',
-          category: 'Activités numériques',
-          icon: 'Calculator',
-          description: 'Développement, factorisation et identités remarquables.',
-          demos: []
-        }}
-      />
+      {/* Quiz Plein Écran (Modal) */}
+      {isQuizOpen && (
+        <div className="fixed inset-0 z-[100] bg-slate-50 dark:bg-slate-950 overflow-y-auto">
+          <div className="max-w-4xl mx-auto p-4 sm:p-8 min-h-screen relative">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold dark:text-white text-slate-900">Quiz Rapide : Calcul algébrique</h2>
+              <button 
+                onClick={() => setIsQuizOpen(false)}
+                className="p-2 bg-white dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white rounded-full shadow-md"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <QuickQuiz
+              chapter={{
+                id: 'calcul-algebrique',
+                title: 'Calcul algébrique & Identités remarquables - 4e',
+                shortTitle: 'Calcul algébrique',
+                gradeLevel: '4e',
+                category: 'Activités numériques',
+                icon: 'Calculator',
+                description: 'Développement, factorisation et identités remarquables.',
+                demos: []
+              }}
+              onScrollToExercises={() => {
+                setIsQuizOpen(false);
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

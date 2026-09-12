@@ -145,7 +145,7 @@ export const ExpressionInput: React.FC<ExpressionInputProps> = ({
             id="resolve-submit-btn"
             type="submit"
             disabled={isLoading || !inputVal.trim()}
-            className="w-full sm:w-auto md:flex-none flex items-center justify-center space-x-2 py-3 px-6 shrink-0 bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 disabled:from-slate-700 disabled:to-slate-200 dark:disabled:to-slate-800 disabled:text-slate-500 text-white font-semibold text-sm rounded-2xl transition-all shadow-md shadow-indigo-600/20 active:scale-[0.98] cursor-pointer"
+            className="w-full sm:w-auto md:flex-none flex items-center justify-center space-x-2 py-3 px-6 shrink-0 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-200 dark:disabled:bg-slate-800 disabled:text-slate-500 text-white font-semibold text-sm rounded-2xl transition-all shadow-md shadow-indigo-600/20 active:scale-[0.98] cursor-pointer"
           >
             {isLoading ? (
               <div className="flex items-center space-x-2">

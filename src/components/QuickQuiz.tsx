@@ -32,6 +32,7 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({
   const quizData: QuickQuizData = getQuickQuizForChapter(chapter, demo);
   const questions: QuickQuizQuestion[] = quizData.questions;
 
+  const [shuffledQuestions, setShuffledQuestions] = useState<QuickQuizQuestion[]>([]);
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [selectedOptionIdx, setSelectedOptionIdx] = useState<number | null>(null);
   const [answers, setAnswers] = useState<Record<number, number>>({});
@@ -41,8 +42,23 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({
   const [isTimedMode, setIsTimedMode] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState<number>(30);
 
-  // Reset state when chapter changes
-  useEffect(() => {
+  // Helper to shuffle an array
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  };
+
+  const initQuiz = () => {
+    // Shuffle options for each question
+    const shuffled = questions.map(q => ({
+      ...q,
+      options: shuffleArray(q.options)
+    }));
+    setShuffledQuestions(shuffled);
     setCurrentIdx(0);
     setSelectedOptionIdx(null);
     setAnswers({});
@@ -50,6 +66,11 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({
     setIsCompleted(false);
     setScore(0);
     setTimeLeft(30);
+  };
+
+  // Reset state when chapter changes
+  useEffect(() => {
+    initQuiz();
   }, [chapter.id]);
 
   // Timer countdown if enabled
@@ -70,8 +91,9 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({
     return () => clearInterval(timer);
   }, [isTimedMode, isCompleted, isSubmitted, timeLeft]);
 
-  const currentQ = questions[currentIdx] || questions[0];
-  const progressPercent = Math.round(((currentIdx + 1) / questions.length) * 100);
+  const activeQuestions = shuffledQuestions.length > 0 ? shuffledQuestions : questions;
+  const currentQ = activeQuestions[currentIdx] || activeQuestions[0];
+  const progressPercent = Math.round(((currentIdx + 1) / activeQuestions.length) * 100);
 
   const handleOptionSelect = (idx: number) => {
     if (isSubmitted) return; // Prevent changing after submission
@@ -86,7 +108,7 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({
   };
 
   const handleNext = () => {
-    if (currentIdx < questions.length - 1) {
+    if (currentIdx < activeQuestions.length - 1) {
       setCurrentIdx((prev) => prev + 1);
       setSelectedOptionIdx(null);
       setIsSubmitted(false);
@@ -97,16 +119,10 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({
   };
 
   const handleRestart = () => {
-    setCurrentIdx(0);
-    setSelectedOptionIdx(null);
-    setAnswers({});
-    setIsSubmitted(false);
-    setIsCompleted(false);
-    setScore(0);
-    setTimeLeft(30);
+    initQuiz();
   };
 
-  const scorePercentage = Math.round((score / questions.length) * 100);
+  const scorePercentage = Math.round((score / activeQuestions.length) * 100);
 
   return (
     <div
@@ -317,7 +333,7 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({
             <div className="flex justify-end pt-1">
               <button
                 onClick={handleNext}
-                className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm transition-all shadow-xs dark:bg-gradient-to-r dark:from-indigo-500 dark:to-indigo-600 dark:hover:from-indigo-400 dark:hover:to-indigo-500 flex items-center space-x-2 cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm transition-all shadow-xs dark:bg-indigo-600 dark:hover:bg-indigo-500 flex items-center space-x-2 cursor-pointer"
               >
                 <span>
                   {currentIdx < questions.length - 1 ? 'Question suivante' : 'Voir mes résultats'}
