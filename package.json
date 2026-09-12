@@ -7,7 +7,7 @@
     "dev": "tsx server.ts",
     "dev:static": "VITE_STATIC_MODE=true vite",
     "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
-    "build:ghpages": "VITE_STATIC_MODE=true vite build --base=./",
+    "build:ghpages": "cp -r data/* public/data/ 2>/dev/null || true && VITE_STATIC_MODE=true vite build --base=./",
     "build:static": "VITE_STATIC_MODE=true vite build",
     "start": "node dist/server.cjs",
     "preview": "vite preview",

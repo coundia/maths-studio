@@ -5,7 +5,7 @@ import {
   PenTool, Keyboard, Highlighter, Palette, Underline, CheckSquare, Square, Code,
   History, Clock, Eye, Sun, Moon, Settings, Sliders, Pipette,
   GripHorizontal, Minimize2, Maximize2, MoreHorizontal, ChevronDown, ChevronUp, Maximize,
-  Calculator, Sparkles, RefreshCw, Type, ZoomIn, ZoomOut, Search
+  Calculator, Sparkles, RefreshCw, Type, ZoomIn, ZoomOut, Search, BookOpen
 } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { WhiteboardCanvas } from './WhiteboardCanvas';
@@ -1215,6 +1215,16 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                 title={theme === 'dark' ? "Passer au mode clair" : "Passer au mode sombre"}
               >
                 {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+
+              {/* Course Link Button */}
+              <button
+                onClick={onClose}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl transition-all shadow-sm cursor-pointer ml-1"
+                title="Aller vers les cours"
+              >
+                <BookOpen className="w-4 h-4" />
+                <span className="hidden sm:inline">Cours</span>
               </button>
 
               {/* Close Button */}

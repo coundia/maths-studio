@@ -1,0 +1,33 @@
+{
+  "themeStyle": "classic-slate",
+  "gridPattern": "grid-small",
+  "gridOpacity": 0.15,
+  "fontSize": 2,
+  "zoomStep": 0.2,
+  "alignment": "center",
+  "showLineNumbers": true,
+  "autoCompleteEnabled": true,
+  "autoOpenKeyboardOnFocus": false,
+  "enterCreatesNewLine": true,
+  "drawDefaultColor": "#38bdf8",
+  "drawDefaultWidth": 3,
+  "customColors": [
+    "#ec4899",
+    "#8b5cf6",
+    "#06b6d4",
+    "#84cc16",
+    "#f97316"
+  ],
+  "aiToken": "AQ.Ab8RN6IQhIl7XHq_vbzERfjf2o7TEIj94kCaIExUug_TEjDPCw",
+  "aiIncludeComments": true,
+  "customOperations": [
+    "Factorisation",
+    "Développement",
+    "Réduction",
+    "Résolution",
+    "Mise au même dénominateur",
+    "Dérivation",
+    "Intégration",
+    "Calcul"
+  ]
+}

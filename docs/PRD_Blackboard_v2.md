@@ -1,7 +1,7 @@
 # Product Requirements Document (PRD) : Tableau Interactif V2 (Blackboard)
 
 ## 1. Vue d'ensemble (Executive Summary)
-Le Tableau Interactif (Blackboard) de Math3D Studio est actuellement un outil robuste permettant la saisie d'équations (MathLive) et le dessin libre. L'objectif de cette version 2 (V2) est de transformer cet espace de brouillon passif en un **tuteur intelligent et collaboratif**, tout en respectant le programme sénégalais (4ème/3ème).
+Le Tableau Interactif (Blackboard) de Math3D Studio est actuellement un outil robuste permettant la saisie d'équations (MathLive) et le dessin libre. L'objectif de cette version 2 (V2) est de transformer cet espace de brouillon passif en un **tuteur intelligent et collaboratif**, tout en respectant le programme sénégalais (4ème/3ème), et de l'étendre vers une **application mobile native grâce à Flutter**.
 
 ## 2. Problèmes Actuels & Limites
 - **Isolé & Passif** : Le tableau ne comprend pas les mathématiques saisies. Un élève peut écrire une erreur entre la ligne 1 et la ligne 2 sans être corrigé.
@@ -47,11 +47,16 @@ Le Tableau Interactif (Blackboard) de Math3D Studio est actuellement un outil ro
 
 ## 4. Architecture & Contraintes Techniques
 
-- **Frontend** : 
+- **Frontend Web** : 
   - Garder React 19 et TailwindCSS v4. 
   - Conserver le design en *Glassmorphism* et les animations `motion/react`.
+- **Version Mobile (Flutter)** :
+  - Portage du tableau noir en application mobile/tablette native en utilisant Flutter.
+  - Utilisation de `flutter_math_fork` (pour LaTeX) et `perfect_freehand` (pour le dessin).
+  - Voir le document d'architecture détaillé : `flutter_blackboard_architecture.md`.
 - **Backend (Express)** : 
   - Création de nouveaux endpoints pour la gestion des fichiers JSON : `POST /api/boards/save`, `GET /api/boards/:id`.
+  - API Rest agnostique, pouvant servir aussi bien le client React Web que le client Flutter Mobile.
   - Attention : Ignorer le dossier `data/boards/` dans `vite.config.ts` pour éviter les rechargements HMR intempestifs.
 - **Sécurité & IA** :
   - Minimiser les appels Gemini (Tier 3) en utilisant le cache par hachage SHA-256 pour la validation des étapes (Tier 1).

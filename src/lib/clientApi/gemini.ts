@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type } from '@google/genai';
-import { ExpressionSolution, MathStep } from '../src/types.js';
+import { ExpressionSolution, MathStep } from '../../types.js';
 import { computeExpressionHash } from './heuristics.js';
 
 let aiClient: GoogleGenAI | null = null;

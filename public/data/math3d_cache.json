@@ -1,0 +1,2082 @@
+{
+  "solutions": {
+    "2683852a91226b4add2c181d9051f88047307cbdfe4f565517d023b5f24a6c22": {
+      "id": "2683852a91226b4add2c181d9051f88047307cbdfe4f565517d023b5f24a6c22",
+      "rawExpression": "x^2 - 9",
+      "normalizedExpression": "x^2-9",
+      "operationType": "factorization",
+      "finalFormLatex": "(x - 3)(x + 3)",
+      "summary": "Factorisation de la différence de deux carrés par réagencement géométrique d'aires.",
+      "source": "heuristic",
+      "cachedAt": "2026-09-06T11:01:24.042Z",
+      "latencyMs": 2,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Identification de la forme a² - b²",
+          "explanation": "L'expression est une différence de deux carrés parfaits : (x)² et 3² car 3² = 9. En géométrie 3D, cela représente un grand pavé d'aire (x)² auquel on souhaite retrancher un coin carré de côté 3.",
+          "appliedRule": "Identité remarquable : a² - b² = (a - b)(a + b)",
+          "latex": "x^2 - 9 = x^2 - 3^2",
+          "visualState": {
+            "type": "difference_of_squares_3d",
+            "dimensions": {
+              "x": 5,
+              "a": 2.5,
+              "depth": 0.8
+            },
+            "action": "initial_state",
+            "cutoutProgress": 0,
+            "slideProgress": 0,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "x",
+                "position": [
+                  0,
+                  -2.8,
+                  0
+                ],
+                "color": "#38bdf8"
+              },
+              {
+                "text": "x",
+                "position": [
+                  -2.8,
+                  0,
+                  0
+                ],
+                "color": "#38bdf8"
+              },
+              {
+                "text": "Aire = x²",
+                "position": [
+                  0,
+                  0,
+                  0.6
+                ],
+                "color": "#818cf8"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Découpe du bloc coin de taille 3 × 3",
+          "explanation": "On découpe et extrait le bloc d'aire 3² situé au coin supérieur droit. L'espace restant forme une surface en « L » d'aire exactement égale à (x)² - 3².",
+          "appliedRule": "Soustraction géométrique de volumes",
+          "latex": "\\text{Aire restante} = x^2 - 3^2",
+          "visualState": {
+            "type": "difference_of_squares_3d",
+            "dimensions": {
+              "x": 5,
+              "a": 2.5,
+              "depth": 0.8
+            },
+            "action": "slice_cut",
+            "cutoutProgress": 0.6,
+            "slideProgress": 0,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "Retrait -3²",
+                "position": [
+                  1.8,
+                  1.8,
+                  1.2
+                ],
+                "color": "#f43f5e"
+              },
+              {
+                "text": "3",
+                "position": [
+                  2.8,
+                  1.8,
+                  0
+                ],
+                "color": "#fb7185"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Partition en deux sous-rectangles R₁ et R₂",
+          "explanation": "Pour factoriser la surface en « L », on la scinde en deux rectangles contigus : le rectangle R₁ de dimensions (x - 3) × (x) et le rectangle R₂ de dimensions (x - 3) × 3.",
+          "appliedRule": "Décomposition polygonale",
+          "latex": "R_1 = (x - 3) \\times x \\quad \\text{et} \\quad R_2 = (x - 3) \\times 3",
+          "visualState": {
+            "type": "difference_of_squares_3d",
+            "dimensions": {
+              "x": 5,
+              "a": 2.5,
+              "depth": 0.8
+            },
+            "action": "separate",
+            "cutoutProgress": 1,
+            "slideProgress": 0.25,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "R₁",
+                "position": [
+                  -0.8,
+                  0,
+                  0.6
+                ],
+                "color": "#38bdf8"
+              },
+              {
+                "text": "R₂",
+                "position": [
+                  1.8,
+                  -0.8,
+                  0.6
+                ],
+                "color": "#a855f7"
+              },
+              {
+                "text": "x - 3",
+                "position": [
+                  -2.8,
+                  -0.5,
+                  0
+                ],
+                "color": "#e2e8f0"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 4,
+          "title": "Rotation et translation de R₂ vers R₁",
+          "explanation": "Le rectangle R₂ pivote à 90° et vient s'aligner parfaitement le long de R₁ car ils partagent la même dimension commune (x - 3).",
+          "appliedRule": "Isométrie & Transformation géométrique",
+          "latex": "\\text{Aire} = (x - 3) \\times x + (x - 3) \\times 3 = (x - 3)(x + 3)",
+          "visualState": {
+            "type": "difference_of_squares_3d",
+            "dimensions": {
+              "x": 5,
+              "a": 2.5,
+              "depth": 0.8
+            },
+            "action": "rearrange",
+            "cutoutProgress": 1,
+            "slideProgress": 0.75,
+            "rotationAngle": 1.5707963267948966,
+            "labels": [
+              {
+                "text": "Alignement R₁ + R₂",
+                "position": [
+                  0,
+                  1.2,
+                  0.8
+                ],
+                "color": "#10b981"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 5,
+          "title": "Forme factorisée finale : un unique rectangle",
+          "explanation": "Les deux rectangles fusionnent pour créer un unique grand rectangle de longueur (x + 3) et de largeur (x - 3). L'aire totale vaut le produit des dimensions !",
+          "appliedRule": "Identité remarquable validée",
+          "latex": "x^2 - 9 = (x - 3)(x + 3)",
+          "visualState": {
+            "type": "difference_of_squares_3d",
+            "dimensions": {
+              "x": 5,
+              "a": 2.5,
+              "depth": 0.8
+            },
+            "action": "final_factored",
+            "cutoutProgress": 1,
+            "slideProgress": 1,
+            "rotationAngle": 1.5707963267948966,
+            "labels": [
+              {
+                "text": "Longueur = x + 3",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#10b981"
+              },
+              {
+                "text": "Largeur = x - 3",
+                "position": [
+                  -3.4,
+                  0,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "7c5993d6d7bf3ab1bf669a19f64c6b26cc9b1be466290c5bf0c84ffa39338c8b": {
+      "id": "7c5993d6d7bf3ab1bf669a19f64c6b26cc9b1be466290c5bf0c84ffa39338c8b",
+      "rawExpression": "3x + 6",
+      "normalizedExpression": "3x+6",
+      "operationType": "factorization",
+      "finalFormLatex": "3(x + 2)",
+      "summary": "Mise en facteur commun de 3 par factorisation géométrique.",
+      "source": "heuristic",
+      "cachedAt": "2026-09-06T11:01:39.531Z",
+      "latencyMs": 0,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Recherche du plus grand facteur commun (PGCD = 3)",
+          "explanation": "Dans l'expression 3x + 6, on remarque que 3 = 3 × 1 et 6 = 3 × 2. 3 est donc un diviseur commun aux deux termes.",
+          "appliedRule": "Distributivité simple : k × u + k × v = k(u + v)",
+          "latex": "3x + 6 = (3 \\times x) + (3 \\times 2)",
+          "visualState": {
+            "type": "common_factor_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": 2,
+              "depth": 1
+            },
+            "action": "initial_state",
+            "labels": [
+              {
+                "text": "3x",
+                "position": [
+                  -1.5,
+                  0,
+                  0.6
+                ],
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+6",
+                "position": [
+                  1.8,
+                  0,
+                  0.6
+                ],
+                "color": "#f59e0b"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Représentation spatiale par blocs de hauteur commune 3",
+          "explanation": "Chaque terme est modélisé par un pavé 3D ayant la même hauteur/profondeur 3. Le premier bloc mesure x de large et le second bloc mesure 2 de large.",
+          "appliedRule": "Interprétation volumique / surfacique",
+          "latex": "\\text{Hauteur commune } h = 3, \\quad L_1 = x, \\quad L_2 = 2",
+          "visualState": {
+            "type": "common_factor_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": 2,
+              "depth": 1
+            },
+            "action": "highlight",
+            "highlightColor": "#a855f7",
+            "labels": [
+              {
+                "text": "Hauteur commune = 3",
+                "position": [
+                  -3.2,
+                  0,
+                  0
+                ],
+                "color": "#a855f7"
+              },
+              {
+                "text": "x",
+                "position": [
+                  -1.5,
+                  -2,
+                  0
+                ],
+                "color": "#38bdf8"
+              },
+              {
+                "text": "2",
+                "position": [
+                  1.8,
+                  -2,
+                  0
+                ],
+                "color": "#f59e0b"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Mise en facteur et regroupement des largeurs",
+          "explanation": "On extrait la dimension commune 3. Les blocs s'associent pour former un seul rectangle continu de largeur totale (x + 2) et de hauteur 3.",
+          "appliedRule": "Factorisation par distributivité",
+          "latex": "3x + 6 = 3(x + 2)",
+          "visualState": {
+            "type": "common_factor_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": 2,
+              "depth": 1
+            },
+            "action": "final_factored",
+            "labels": [
+              {
+                "text": "Facteur 3",
+                "position": [
+                  -3.2,
+                  0,
+                  0
+                ],
+                "color": "#a855f7"
+              },
+              {
+                "text": "(x + 2)",
+                "position": [
+                  0,
+                  -2,
+                  0
+                ],
+                "color": "#10b981"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "dbcf2cae5f63cbe097f42d62e59354e4fe85cbbc5f3e6f9988895fcc3a8f7d9b": {
+      "id": "dbcf2cae5f63cbe097f42d62e59354e4fe85cbbc5f3e6f9988895fcc3a8f7d9b",
+      "rawExpression": "x^2 + 6x + 9",
+      "normalizedExpression": "x^2+6x+9",
+      "operationType": "factorization",
+      "finalFormLatex": "(x + 3)^2",
+      "summary": "Factorisation sous la forme d'un carré parfait (x + 3)².",
+      "source": "heuristic",
+      "cachedAt": "2026-09-06T11:01:41.786Z",
+      "latencyMs": 0,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Reconnaissance du carré parfait (a + b)²",
+          "explanation": "Dans x² + 6x + 9, on constate que 9 = 3² et 6x = 2 × 3 × x. Cela correspond à l'identité remarquable d'un carré parfait.",
+          "appliedRule": "(a + b)² = a² + 2ab + b²",
+          "latex": "x^2 + 2(3)x + 3^2 = (x + 3)^2",
+          "visualState": {
+            "type": "perfect_square_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 2.4000000000000004,
+              "depth": 0.8
+            },
+            "action": "initial_state",
+            "labels": [
+              {
+                "text": "x²",
+                "position": [
+                  -1,
+                  -1,
+                  0.6
+                ],
+                "color": "#38bdf8"
+              },
+              {
+                "text": "3x",
+                "position": [
+                  -1,
+                  1.8,
+                  0.6
+                ],
+                "color": "#818cf8"
+              },
+              {
+                "text": "3x",
+                "position": [
+                  1.8,
+                  -1,
+                  0.6
+                ],
+                "color": "#818cf8"
+              },
+              {
+                "text": "3² = 9",
+                "position": [
+                  1.8,
+                  1.8,
+                  0.6
+                ],
+                "color": "#f59e0b"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Décomposition géométrique spatiale",
+          "explanation": "Le grand carré est formé de 4 pièces distinctes : un carré central x², deux bandes rectangulaires d'aire 3x chacune, et un petit coin carré d'aire 3² = 9.",
+          "appliedRule": "Partition d'aire",
+          "latex": "\\text{Aire totale} = x^2 + 3x + 3x + 3^2 = x^2 + 6x + 9",
+          "visualState": {
+            "type": "perfect_square_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 2.4000000000000004,
+              "depth": 0.8
+            },
+            "action": "separate",
+            "cutoutProgress": 0.5,
+            "labels": [
+              {
+                "text": "Carré x²",
+                "position": [
+                  -1.5,
+                  -1.5,
+                  0.8
+                ],
+                "color": "#38bdf8"
+              },
+              {
+                "text": "Bande 3×x",
+                "position": [
+                  -1.5,
+                  2.2,
+                  0.8
+                ],
+                "color": "#818cf8"
+              },
+              {
+                "text": "Bande x×3",
+                "position": [
+                  2.2,
+                  -1.5,
+                  0.8
+                ],
+                "color": "#818cf8"
+              },
+              {
+                "text": "Coin 3²",
+                "position": [
+                  2.2,
+                  2.2,
+                  0.8
+                ],
+                "color": "#f59e0b"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Assemblage en un carré parfait de côté (x + 3)",
+          "explanation": "En assemblant les 4 éléments, ils s'emboîtent sans aucun interstice pour constituer un carré parfait de dimensions (x + 3) × (x + 3).",
+          "appliedRule": "Synthèse géométrique",
+          "latex": "x^2 + 6x + 9 = (x + 3)^2",
+          "visualState": {
+            "type": "perfect_square_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 2.4000000000000004,
+              "depth": 0.8
+            },
+            "action": "final_factored",
+            "labels": [
+              {
+                "text": "Côté = x + 3",
+                "position": [
+                  0,
+                  -2.8,
+                  0
+                ],
+                "color": "#10b981"
+              },
+              {
+                "text": "Côté = x + 3",
+                "position": [
+                  -3.2,
+                  0,
+                  0
+                ],
+                "color": "#10b981"
+              },
+              {
+                "text": "Aire = (x + 3)²",
+                "position": [
+                  0,
+                  0,
+                  0.8
+                ],
+                "color": "#34d399"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "a9ff87385ddc127f5625769ad2774779bbce8ffa9f1697add871d0a023812cc0": {
+      "id": "a9ff87385ddc127f5625769ad2774779bbce8ffa9f1697add871d0a023812cc0",
+      "rawExpression": "x^2 - 16",
+      "normalizedExpression": "x^2-16",
+      "operationType": "factorization",
+      "finalFormLatex": "(x - 4)(x + 4)",
+      "summary": "Factorisation de la différence de deux carrés par réagencement géométrique d'aires.",
+      "source": "heuristic",
+      "cachedAt": "2026-09-06T11:01:43.977Z",
+      "latencyMs": 0,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Identification de la forme a² - b²",
+          "explanation": "L'expression est une différence de deux carrés parfaits : (x)² et 4² car 4² = 16. En géométrie 3D, cela représente un grand pavé d'aire (x)² auquel on souhaite retrancher un coin carré de côté 4.",
+          "appliedRule": "Identité remarquable : a² - b² = (a - b)(a + b)",
+          "latex": "x^2 - 16 = x^2 - 4^2",
+          "visualState": {
+            "type": "difference_of_squares_3d",
+            "dimensions": {
+              "x": 5,
+              "a": 2.5,
+              "depth": 0.8
+            },
+            "action": "initial_state",
+            "cutoutProgress": 0,
+            "slideProgress": 0,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "x",
+                "position": [
+                  0,
+                  -2.8,
+                  0
+                ],
+                "color": "#38bdf8"
+              },
+              {
+                "text": "x",
+                "position": [
+                  -2.8,
+                  0,
+                  0
+                ],
+                "color": "#38bdf8"
+              },
+              {
+                "text": "Aire = x²",
+                "position": [
+                  0,
+                  0,
+                  0.6
+                ],
+                "color": "#818cf8"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Découpe du bloc coin de taille 4 × 4",
+          "explanation": "On découpe et extrait le bloc d'aire 4² situé au coin supérieur droit. L'espace restant forme une surface en « L » d'aire exactement égale à (x)² - 4².",
+          "appliedRule": "Soustraction géométrique de volumes",
+          "latex": "\\text{Aire restante} = x^2 - 4^2",
+          "visualState": {
+            "type": "difference_of_squares_3d",
+            "dimensions": {
+              "x": 5,
+              "a": 2.5,
+              "depth": 0.8
+            },
+            "action": "slice_cut",
+            "cutoutProgress": 0.6,
+            "slideProgress": 0,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "Retrait -4²",
+                "position": [
+                  1.8,
+                  1.8,
+                  1.2
+                ],
+                "color": "#f43f5e"
+              },
+              {
+                "text": "4",
+                "position": [
+                  2.8,
+                  1.8,
+                  0
+                ],
+                "color": "#fb7185"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Partition en deux sous-rectangles R₁ et R₂",
+          "explanation": "Pour factoriser la surface en « L », on la scinde en deux rectangles contigus : le rectangle R₁ de dimensions (x - 4) × (x) et le rectangle R₂ de dimensions (x - 4) × 4.",
+          "appliedRule": "Décomposition polygonale",
+          "latex": "R_1 = (x - 4) \\times x \\quad \\text{et} \\quad R_2 = (x - 4) \\times 4",
+          "visualState": {
+            "type": "difference_of_squares_3d",
+            "dimensions": {
+              "x": 5,
+              "a": 2.5,
+              "depth": 0.8
+            },
+            "action": "separate",
+            "cutoutProgress": 1,
+            "slideProgress": 0.25,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "R₁",
+                "position": [
+                  -0.8,
+                  0,
+                  0.6
+                ],
+                "color": "#38bdf8"
+              },
+              {
+                "text": "R₂",
+                "position": [
+                  1.8,
+                  -0.8,
+                  0.6
+                ],
+                "color": "#a855f7"
+              },
+              {
+                "text": "x - 4",
+                "position": [
+                  -2.8,
+                  -0.5,
+                  0
+                ],
+                "color": "#e2e8f0"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 4,
+          "title": "Rotation et translation de R₂ vers R₁",
+          "explanation": "Le rectangle R₂ pivote à 90° et vient s'aligner parfaitement le long de R₁ car ils partagent la même dimension commune (x - 4).",
+          "appliedRule": "Isométrie & Transformation géométrique",
+          "latex": "\\text{Aire} = (x - 4) \\times x + (x - 4) \\times 4 = (x - 4)(x + 4)",
+          "visualState": {
+            "type": "difference_of_squares_3d",
+            "dimensions": {
+              "x": 5,
+              "a": 2.5,
+              "depth": 0.8
+            },
+            "action": "rearrange",
+            "cutoutProgress": 1,
+            "slideProgress": 0.75,
+            "rotationAngle": 1.5707963267948966,
+            "labels": [
+              {
+                "text": "Alignement R₁ + R₂",
+                "position": [
+                  0,
+                  1.2,
+                  0.8
+                ],
+                "color": "#10b981"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 5,
+          "title": "Forme factorisée finale : un unique rectangle",
+          "explanation": "Les deux rectangles fusionnent pour créer un unique grand rectangle de longueur (x + 4) et de largeur (x - 4). L'aire totale vaut le produit des dimensions !",
+          "appliedRule": "Identité remarquable validée",
+          "latex": "x^2 - 16 = (x - 4)(x + 4)",
+          "visualState": {
+            "type": "difference_of_squares_3d",
+            "dimensions": {
+              "x": 5,
+              "a": 2.5,
+              "depth": 0.8
+            },
+            "action": "final_factored",
+            "cutoutProgress": 1,
+            "slideProgress": 1,
+            "rotationAngle": 1.5707963267948966,
+            "labels": [
+              {
+                "text": "Longueur = x + 4",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#10b981"
+              },
+              {
+                "text": "Largeur = x - 4",
+                "position": [
+                  -3.4,
+                  0,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "fa84feac86bd74770c8b6d48b52fcdf2b3e01ffcb6b97ee24085c77629206788": {
+      "id": "fa84feac86bd74770c8b6d48b52fcdf2b3e01ffcb6b97ee24085c77629206788",
+      "rawExpression": "(x+1)(x+2)",
+      "normalizedExpression": "(x+1)(x+2)",
+      "operationType": "expansion",
+      "finalFormLatex": "x^2 + 3x + 2",
+      "summary": "Développement par double distributivité : (x+1)(x+2) = x^2 + 3x + 2.",
+      "source": "heuristic",
+      "cachedAt": "2026-09-06T11:18:25.538Z",
+      "latencyMs": 2,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Expression initiale & Règle de double distributivité",
+          "explanation": "Pour développer (x + 1)(x + 2), chaque terme de la première parenthèse doit être multiplié par chacun des termes de la deuxième parenthèse.",
+          "appliedRule": "Double distributivité : (a + b)(c + d) = a×c + a×d + b×c + b×d",
+          "latex": "(x + 1)(x + 2)",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 2,
+              "depth": 0.5
+            },
+            "action": "initial_state"
+          },
+          "algebraAnimation": {
+            "type": "initial",
+            "tokens": [
+              {
+                "text": "(x",
+                "type": "bracket",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 1)",
+                "type": "bracket",
+                "color": "#f59e0b"
+              },
+              {
+                "text": "(x",
+                "type": "bracket",
+                "color": "#818cf8"
+              },
+              {
+                "text": "+ 2)",
+                "type": "bracket",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "On prépare les deux facteurs avant de distribuer chaque terme."
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Distribution des 4 flèches de multiplication",
+          "explanation": "On trace les 4 multiplications : (x) × (x), puis (x) × (2), puis (1) × (x), et enfin (1) × (2).",
+          "appliedRule": "Développement terme à terme",
+          "latex": "= x \\times x + x \\times (2) + (1) \\times x + (1) \\times (2)",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 2,
+              "depth": 0.5
+            },
+            "action": "separate"
+          },
+          "algebraAnimation": {
+            "type": "distribution",
+            "arrows": [
+              {
+                "fromIndex": 0,
+                "toIndex": 2,
+                "label": "x × x",
+                "color": "#38bdf8"
+              },
+              {
+                "fromIndex": 0,
+                "toIndex": 3,
+                "label": "x × (2)",
+                "color": "#818cf8"
+              },
+              {
+                "fromIndex": 1,
+                "toIndex": 2,
+                "label": "(1) × x",
+                "color": "#f59e0b"
+              },
+              {
+                "fromIndex": 1,
+                "toIndex": 3,
+                "label": "(1) × (2)",
+                "color": "#ec4899"
+              }
+            ],
+            "tokens": [
+              {
+                "text": "x · x",
+                "type": "product",
+                "color": "#38bdf8",
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "x · (2)",
+                "type": "product",
+                "color": "#818cf8",
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "(1) · x",
+                "type": "product",
+                "color": "#f59e0b",
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "(1) · (2)",
+                "type": "product",
+                "color": "#ec4899",
+                "highlight": true
+              }
+            ],
+            "activeExplanation": "Les 4 flèches relient chaque terme du 1er facteur au 2nd facteur."
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Calcul des 4 produits individuels",
+          "explanation": "On effectue chaque multiplication : x × x = x^2 ; x × (2) = +2x ; (1) × x = +1x ; (1) × (2) = +2.",
+          "appliedRule": "Multiplication des coefficients et puissances",
+          "latex": "= x^2 + 2x + 1x + 2",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 2,
+              "depth": 0.5
+            },
+            "action": "rearrange"
+          },
+          "algebraAnimation": {
+            "type": "products",
+            "tokens": [
+              {
+                "text": "x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 2x",
+                "type": "variable",
+                "color": "#818cf8"
+              },
+              {
+                "text": "+ 1x",
+                "type": "variable",
+                "color": "#f59e0b"
+              },
+              {
+                "text": "+ 2",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "Chaque produit partiel est calculé avec son signe respectif."
+          }
+        },
+        {
+          "stepNumber": 4,
+          "title": "Regroupement des termes semblables en x",
+          "explanation": "Les deux termes du milieu (2x et 1x) ont la même partie littérale x. On les additionne : (2) + (1) = 3.",
+          "appliedRule": "Réduction des termes semblables (même puissance)",
+          "latex": "= x^2 + \\mathbf{[(2)x + (1)x]} + 2",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 2,
+              "depth": 0.5
+            },
+            "action": "highlight"
+          },
+          "algebraAnimation": {
+            "type": "combine",
+            "highlightPairs": [
+              [
+                1,
+                2
+              ]
+            ],
+            "tokens": [
+              {
+                "text": "x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "[+ 2x + 1x]",
+                "type": "variable",
+                "color": "#a855f7",
+                "highlight": true
+              },
+              {
+                "text": "+ 2",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "On regroupe les termes en x ensemble : ils vont fusionner !"
+          }
+        },
+        {
+          "stepNumber": 5,
+          "title": "Forme finale développée et ordonnée",
+          "explanation": "L'expression est désormais sous sa forme développée, réduite et ordonnée par puissances décroissantes de x : x^2 + 3x + 2.",
+          "appliedRule": "Forme canonique polynômiale",
+          "latex": "= x^2 + 3x + 2",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 2,
+              "depth": 0.5
+            },
+            "action": "final_factored"
+          },
+          "algebraAnimation": {
+            "type": "final",
+            "tokens": [
+              {
+                "text": "x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 3x",
+                "type": "variable",
+                "color": "#10b981",
+                "highlight": true
+              },
+              {
+                "text": "+ 2",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "Résultat final développé et réduit !"
+          }
+        }
+      ]
+    },
+    "6c208facfdd7d246feab9d8c57b90c4e4b7ae0b592b28484e1ed90742bf0da9c": {
+      "id": "6c208facfdd7d246feab9d8c57b90c4e4b7ae0b592b28484e1ed90742bf0da9c",
+      "rawExpression": "(x+1)(x-2)",
+      "normalizedExpression": "(x+1)(x-2)",
+      "operationType": "expansion",
+      "finalFormLatex": "x^2 - x - 2",
+      "summary": "Développement par double distributivité : (x+1)(x-2) = x^2 - x - 2.",
+      "source": "heuristic",
+      "cachedAt": "2026-09-06T11:18:28.848Z",
+      "latencyMs": 0,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Expression initiale & Règle de double distributivité",
+          "explanation": "Pour développer (x + 1)(x - 2), chaque terme de la première parenthèse doit être multiplié par chacun des termes de la deuxième parenthèse.",
+          "appliedRule": "Double distributivité : (a + b)(c + d) = a×c + a×d + b×c + b×d",
+          "latex": "(x + 1)(x - 2)",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 2,
+              "depth": 0.5
+            },
+            "action": "initial_state"
+          },
+          "algebraAnimation": {
+            "type": "initial",
+            "tokens": [
+              {
+                "text": "(x",
+                "type": "bracket",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 1)",
+                "type": "bracket",
+                "color": "#f59e0b"
+              },
+              {
+                "text": "(x",
+                "type": "bracket",
+                "color": "#818cf8"
+              },
+              {
+                "text": "- 2)",
+                "type": "bracket",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "On prépare les deux facteurs avant de distribuer chaque terme."
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Distribution des 4 flèches de multiplication",
+          "explanation": "On trace les 4 multiplications : (x) × (x), puis (x) × (-2), puis (1) × (x), et enfin (1) × (-2).",
+          "appliedRule": "Développement terme à terme",
+          "latex": "= x \\times x + x \\times (-2) + (1) \\times x + (1) \\times (-2)",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 2,
+              "depth": 0.5
+            },
+            "action": "separate"
+          },
+          "algebraAnimation": {
+            "type": "distribution",
+            "arrows": [
+              {
+                "fromIndex": 0,
+                "toIndex": 2,
+                "label": "x × x",
+                "color": "#38bdf8"
+              },
+              {
+                "fromIndex": 0,
+                "toIndex": 3,
+                "label": "x × (-2)",
+                "color": "#818cf8"
+              },
+              {
+                "fromIndex": 1,
+                "toIndex": 2,
+                "label": "(1) × x",
+                "color": "#f59e0b"
+              },
+              {
+                "fromIndex": 1,
+                "toIndex": 3,
+                "label": "(1) × (-2)",
+                "color": "#ec4899"
+              }
+            ],
+            "tokens": [
+              {
+                "text": "x · x",
+                "type": "product",
+                "color": "#38bdf8",
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "x · (-2)",
+                "type": "product",
+                "color": "#818cf8",
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "(1) · x",
+                "type": "product",
+                "color": "#f59e0b",
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "(1) · (-2)",
+                "type": "product",
+                "color": "#ec4899",
+                "highlight": true
+              }
+            ],
+            "activeExplanation": "Les 4 flèches relient chaque terme du 1er facteur au 2nd facteur."
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Calcul des 4 produits individuels",
+          "explanation": "On effectue chaque multiplication : x × x = x^2 ; x × (-2) = -2x ; (1) × x = +1x ; (1) × (-2) = -2.",
+          "appliedRule": "Multiplication des coefficients et puissances",
+          "latex": "= x^2 - 2x + 1x - 2",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 2,
+              "depth": 0.5
+            },
+            "action": "rearrange"
+          },
+          "algebraAnimation": {
+            "type": "products",
+            "tokens": [
+              {
+                "text": "x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "- 2x",
+                "type": "variable",
+                "color": "#818cf8"
+              },
+              {
+                "text": "+ 1x",
+                "type": "variable",
+                "color": "#f59e0b"
+              },
+              {
+                "text": "- 2",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "Chaque produit partiel est calculé avec son signe respectif."
+          }
+        },
+        {
+          "stepNumber": 4,
+          "title": "Regroupement des termes semblables en x",
+          "explanation": "Les deux termes du milieu ((-2x) et 1x) ont la même partie littérale x. On les additionne : (-2) + (1) = -1.",
+          "appliedRule": "Réduction des termes semblables (même puissance)",
+          "latex": "= x^2 + \\mathbf{[(-2)x + (1)x]} - 2",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 2,
+              "depth": 0.5
+            },
+            "action": "highlight"
+          },
+          "algebraAnimation": {
+            "type": "combine",
+            "highlightPairs": [
+              [
+                1,
+                2
+              ]
+            ],
+            "tokens": [
+              {
+                "text": "x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "[- 2x + 1x]",
+                "type": "variable",
+                "color": "#a855f7",
+                "highlight": true
+              },
+              {
+                "text": "- 2",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "On regroupe les termes en x ensemble : ils vont fusionner !"
+          }
+        },
+        {
+          "stepNumber": 5,
+          "title": "Forme finale développée et ordonnée",
+          "explanation": "L'expression est désormais sous sa forme développée, réduite et ordonnée par puissances décroissantes de x : x^2 - x - 2.",
+          "appliedRule": "Forme canonique polynômiale",
+          "latex": "= x^2 - x - 2",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 2,
+              "depth": 0.5
+            },
+            "action": "final_factored"
+          },
+          "algebraAnimation": {
+            "type": "final",
+            "tokens": [
+              {
+                "text": "x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "- x",
+                "type": "variable",
+                "color": "#10b981",
+                "highlight": true
+              },
+              {
+                "text": "- 2",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "Résultat final développé et réduit !"
+          }
+        }
+      ]
+    },
+    "70bc607a197d1b025431102527e363c0f44ac97f47f2a8dfbb69acd0311c9ecf": {
+      "id": "70bc607a197d1b025431102527e363c0f44ac97f47f2a8dfbb69acd0311c9ecf",
+      "rawExpression": "(x+3)(x+4)",
+      "normalizedExpression": "(x+3)(x+4)",
+      "operationType": "expansion",
+      "finalFormLatex": "x^2 + 7x + 12",
+      "summary": "Développement par double distributivité : (x+3)(x+4) = x^2 + 7x + 12.",
+      "source": "heuristic",
+      "cachedAt": "2026-09-07T22:15:01.614Z",
+      "latencyMs": 8,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Expression initiale & Règle de double distributivité",
+          "explanation": "Pour développer (x + 3)(x + 4), chaque terme de la première parenthèse doit être multiplié par chacun des termes de la deuxième parenthèse.",
+          "appliedRule": "Double distributivité : (a + b)(c + d) = a×c + a×d + b×c + b×d",
+          "latex": "(x + 3)(x + 4)",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": 4,
+              "depth": 0.5
+            },
+            "action": "initial_state"
+          },
+          "algebraAnimation": {
+            "type": "initial",
+            "tokens": [
+              {
+                "text": "(x",
+                "type": "bracket",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 3)",
+                "type": "bracket",
+                "color": "#f59e0b"
+              },
+              {
+                "text": "(x",
+                "type": "bracket",
+                "color": "#818cf8"
+              },
+              {
+                "text": "+ 4)",
+                "type": "bracket",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "On prépare les deux facteurs avant de distribuer chaque terme."
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Distribution des 4 flèches de multiplication",
+          "explanation": "On trace les 4 multiplications : (x) × (x), puis (x) × (4), puis (3) × (x), et enfin (3) × (4).",
+          "appliedRule": "Développement terme à terme",
+          "latex": "= x \\times x + x \\times (4) + (3) \\times x + (3) \\times (4)",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": 4,
+              "depth": 0.5
+            },
+            "action": "separate"
+          },
+          "algebraAnimation": {
+            "type": "distribution",
+            "distributingFactorText": "x puis +3",
+            "arrows": [
+              {
+                "fromIndex": 0,
+                "toIndex": 2,
+                "label": "x × x",
+                "color": "#ef4444"
+              },
+              {
+                "fromIndex": 0,
+                "toIndex": 3,
+                "label": "x × (4)",
+                "color": "#ef4444"
+              },
+              {
+                "fromIndex": 1,
+                "toIndex": 2,
+                "label": "(3) × x",
+                "color": "#ef4444"
+              },
+              {
+                "fromIndex": 1,
+                "toIndex": 3,
+                "label": "(3) × (4)",
+                "color": "#ef4444"
+              }
+            ],
+            "tokens": [
+              {
+                "text": "x · x",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "x · (4)",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "(3) · x",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "(3) · (4)",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              }
+            ],
+            "activeExplanation": "L'élément distributeur est en ROUGE et se déplace vers chaque terme du second facteur."
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Calcul des 4 produits individuels (zéro disparition)",
+          "explanation": "On effectue chaque multiplication : x × x = x^2 ; x × (4) = +4x ; (3) × x = +3x ; (3) × (4) = +12.",
+          "appliedRule": "Multiplication des coefficients et puissances",
+          "latex": "= x^2 + 4x + 3x + 12",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": 4,
+              "depth": 0.5
+            },
+            "action": "rearrange"
+          },
+          "algebraAnimation": {
+            "type": "products",
+            "replacedTermsText": "Produits intermédiaires remplacés par leurs valeurs calculées",
+            "tokens": [
+              {
+                "text": "x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 4x",
+                "type": "variable",
+                "color": "#818cf8"
+              },
+              {
+                "text": "+ 3x",
+                "type": "variable",
+                "color": "#f59e0b"
+              },
+              {
+                "text": "+ 12",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "Chaque produit partiel est calculé avec son signe respectif."
+          }
+        },
+        {
+          "stepNumber": 4,
+          "title": "Regroupement des termes semblables en x mis en ROUGE",
+          "explanation": "Les deux termes du milieu (4x et 3x) ont la même partie littérale x. On les additionne : (4) + (3) = 7.",
+          "appliedRule": "Réduction des termes semblables (même puissance)",
+          "latex": "= x^2 + \\mathbf{[(4)x + (3)x]} + 12",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": 4,
+              "depth": 0.5
+            },
+            "action": "highlight"
+          },
+          "algebraAnimation": {
+            "type": "combine",
+            "replacedTermsText": "+ 4x + 3x remplacés par + 7x",
+            "highlightPairs": [
+              [
+                1,
+                2
+              ]
+            ],
+            "tokens": [
+              {
+                "text": "x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "[+ 4x + 3x]",
+                "type": "variable",
+                "color": "#ef4444",
+                "isReplaced": true,
+                "highlight": true
+              },
+              {
+                "text": "+ 12",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "On met en ROUGE les termes en x à remplacer par leur somme !"
+          }
+        },
+        {
+          "stepNumber": 5,
+          "title": "Forme finale développée et ordonnée",
+          "explanation": "L'expression est désormais sous sa forme développée, réduite et ordonnée par puissances décroissantes de x : x^2 + 7x + 12.",
+          "appliedRule": "Forme canonique polynômiale",
+          "latex": "= x^2 + 7x + 12",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": 4,
+              "depth": 0.5
+            },
+            "action": "final_factored"
+          },
+          "algebraAnimation": {
+            "type": "final",
+            "tokens": [
+              {
+                "text": "x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 7x",
+                "type": "variable",
+                "color": "#10b981",
+                "highlight": true
+              },
+              {
+                "text": "+ 12",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "Résultat final développé et réduit !"
+          }
+        }
+      ]
+    },
+    "31c6b682fe3a3ab124ac72f501426dea534febdf7c2c32a410c915fa89effb58": {
+      "id": "31c6b682fe3a3ab124ac72f501426dea534febdf7c2c32a410c915fa89effb58",
+      "rawExpression": "(2x+1)(x+3)",
+      "normalizedExpression": "(2x+1)(x+3)",
+      "operationType": "expansion",
+      "finalFormLatex": "2x^2 + 7x + 3",
+      "summary": "Développement par double distributivité : (2x+1)(x+3) = 2x^2 + 7x + 3.",
+      "source": "heuristic",
+      "cachedAt": "2026-09-07T22:15:02.256Z",
+      "latencyMs": 0,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Expression initiale & Règle de double distributivité",
+          "explanation": "Pour développer (2x + 1)(x + 3), chaque terme de la première parenthèse doit être multiplié par chacun des termes de la deuxième parenthèse.",
+          "appliedRule": "Double distributivité : (a + b)(c + d) = a×c + a×d + b×c + b×d",
+          "latex": "(2x + 1)(x + 3)",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 3,
+              "depth": 0.5
+            },
+            "action": "initial_state"
+          },
+          "algebraAnimation": {
+            "type": "initial",
+            "tokens": [
+              {
+                "text": "(2x",
+                "type": "bracket",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 1)",
+                "type": "bracket",
+                "color": "#f59e0b"
+              },
+              {
+                "text": "(x",
+                "type": "bracket",
+                "color": "#818cf8"
+              },
+              {
+                "text": "+ 3)",
+                "type": "bracket",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "On prépare les deux facteurs avant de distribuer chaque terme."
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Distribution des 4 flèches de multiplication",
+          "explanation": "On trace les 4 multiplications : (2x) × (x), puis (2x) × (3), puis (1) × (x), et enfin (1) × (3).",
+          "appliedRule": "Développement terme à terme",
+          "latex": "= 2x \\times x + 2x \\times (3) + (1) \\times x + (1) \\times (3)",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 3,
+              "depth": 0.5
+            },
+            "action": "separate"
+          },
+          "algebraAnimation": {
+            "type": "distribution",
+            "distributingFactorText": "2x puis +1",
+            "arrows": [
+              {
+                "fromIndex": 0,
+                "toIndex": 2,
+                "label": "2x × x",
+                "color": "#ef4444"
+              },
+              {
+                "fromIndex": 0,
+                "toIndex": 3,
+                "label": "2x × (3)",
+                "color": "#ef4444"
+              },
+              {
+                "fromIndex": 1,
+                "toIndex": 2,
+                "label": "(1) × x",
+                "color": "#ef4444"
+              },
+              {
+                "fromIndex": 1,
+                "toIndex": 3,
+                "label": "(1) × (3)",
+                "color": "#ef4444"
+              }
+            ],
+            "tokens": [
+              {
+                "text": "2x · x",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "2x · (3)",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "(1) · x",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              },
+              {
+                "text": "+",
+                "type": "operator"
+              },
+              {
+                "text": "(1) · (3)",
+                "type": "product",
+                "color": "#ef4444",
+                "isDistributor": true,
+                "highlight": true
+              }
+            ],
+            "activeExplanation": "L'élément distributeur est en ROUGE et se déplace vers chaque terme du second facteur."
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Calcul des 4 produits individuels (zéro disparition)",
+          "explanation": "On effectue chaque multiplication : 2x × x = 2x^2 ; 2x × (3) = +6x ; (1) × x = +1x ; (1) × (3) = +3.",
+          "appliedRule": "Multiplication des coefficients et puissances",
+          "latex": "= 2x^2 + 6x + 1x + 3",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 3,
+              "depth": 0.5
+            },
+            "action": "rearrange"
+          },
+          "algebraAnimation": {
+            "type": "products",
+            "replacedTermsText": "Produits intermédiaires remplacés par leurs valeurs calculées",
+            "tokens": [
+              {
+                "text": "2x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 6x",
+                "type": "variable",
+                "color": "#818cf8"
+              },
+              {
+                "text": "+ 1x",
+                "type": "variable",
+                "color": "#f59e0b"
+              },
+              {
+                "text": "+ 3",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "Chaque produit partiel est calculé avec son signe respectif."
+          }
+        },
+        {
+          "stepNumber": 4,
+          "title": "Regroupement des termes semblables en x mis en ROUGE",
+          "explanation": "Les deux termes du milieu (6x et 1x) ont la même partie littérale x. On les additionne : (6) + (1) = 7.",
+          "appliedRule": "Réduction des termes semblables (même puissance)",
+          "latex": "= 2x^2 + \\mathbf{[(6)x + (1)x]} + 3",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 3,
+              "depth": 0.5
+            },
+            "action": "highlight"
+          },
+          "algebraAnimation": {
+            "type": "combine",
+            "replacedTermsText": "+ 6x + 1x remplacés par + 7x",
+            "highlightPairs": [
+              [
+                1,
+                2
+              ]
+            ],
+            "tokens": [
+              {
+                "text": "2x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "[+ 6x + 1x]",
+                "type": "variable",
+                "color": "#ef4444",
+                "isReplaced": true,
+                "highlight": true
+              },
+              {
+                "text": "+ 3",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "On met en ROUGE les termes en x à remplacer par leur somme !"
+          }
+        },
+        {
+          "stepNumber": 5,
+          "title": "Forme finale développée et ordonnée",
+          "explanation": "L'expression est désormais sous sa forme développée, réduite et ordonnée par puissances décroissantes de x : 2x^2 + 7x + 3.",
+          "appliedRule": "Forme canonique polynômiale",
+          "latex": "= 2x^2 + 7x + 3",
+          "visualState": {
+            "type": "generic_algebra_3d",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 3,
+              "depth": 0.5
+            },
+            "action": "final_factored"
+          },
+          "algebraAnimation": {
+            "type": "final",
+            "tokens": [
+              {
+                "text": "2x^2",
+                "type": "variable",
+                "color": "#38bdf8"
+              },
+              {
+                "text": "+ 7x",
+                "type": "variable",
+                "color": "#10b981",
+                "highlight": true
+              },
+              {
+                "text": "+ 3",
+                "type": "constant",
+                "color": "#ec4899"
+              }
+            ],
+            "activeExplanation": "Résultat final développé et réduit !"
+          }
+        }
+      ]
+    },
+    "49641e38ac6a942913f488ba84fc59ddf15d77e7df219fdf1ef93705eb245cb5": {
+      "id": "49641e38ac6a942913f488ba84fc59ddf15d77e7df219fdf1ef93705eb245cb5",
+      "rawExpression": "A=^{}left(x^{}-1right)^2",
+      "normalizedExpression": "a=^{}left(x^{}-1right)^2",
+      "operationType": "Développement",
+      "finalFormLatex": "x^2 - 2 \\times x + 1",
+      "summary": "Développement pas-à-pas de l'identité remarquable (x - 1)^2 par soustraction d'aires et réajustement géométrique en 3D.",
+      "source": "ai",
+      "cachedAt": "2026-09-10T17:40:43.937Z",
+      "latencyMs": 16940,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Identification du carré d'une différence",
+          "explanation": "L'expression donnée est (x - 1)^2. Sur le plan géométrique, elle représente l'aire d'un carré de côté (x - 1), modélisée en 3D par un prisme droit d'épaisseur unitaire.",
+          "appliedRule": "Définition de l'élévation au carré : A^2 = A \\times A",
+          "latex": "(x - 1)^2",
+          "visualState": {
+            "type": "perfect_square_3d",
+            "action": "initial_state",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 1,
+              "depth": 1
+            },
+            "cutoutProgress": 0,
+            "slideProgress": 0,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "Étape 1",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Inclusion dans le grand carré initial",
+          "explanation": "Pour développer, on part d'un grand pavé de base x \\times x de surface x^2. On identifie la zone réduite obtenue en retranchant 1 sur chaque dimension principale.",
+          "appliedRule": "Identité remarquable : (A - B)^2 = A^2 - 2 \\times A \\times B + B^2",
+          "latex": "x^2 - 2 \\times (x \\times 1) + 1^2",
+          "visualState": {
+            "type": "perfect_square_3d",
+            "action": "slice_cut",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 1,
+              "depth": 1
+            },
+            "cutoutProgress": 0.25,
+            "slideProgress": 0.25,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "Étape 2",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Soustraction des bandes et compensation du coin",
+          "explanation": "En retirant deux bandes rectangulaires de dimensions x \\times 1, le petit carré d'angle 1 \\times 1 est retranché deux fois. Il faut donc rajouter une fois 1^2 pour compenser ce double retrait.",
+          "appliedRule": "Compensation géométrique d'intersection : Aire = Grand Carré - 2 Rectangles + Coin",
+          "latex": "x^2 - 2 \\times x + 1",
+          "visualState": {
+            "type": "perfect_square_3d",
+            "action": "rearrange",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 1,
+              "depth": 1
+            },
+            "cutoutProgress": 0.5,
+            "slideProgress": 0.5,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "Étape 3",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 4,
+          "title": "Forme développée et réduite",
+          "explanation": "L'expression est désormais totalement développée et réduite sous sa forme canonique polynômiale standard.",
+          "appliedRule": "Réduction polynomiale",
+          "latex": "x^2 - 2 \\times x + 1",
+          "visualState": {
+            "type": "perfect_square_3d",
+            "action": "final_factored",
+            "dimensions": {
+              "x": 4,
+              "a": 1,
+              "b": 1,
+              "depth": 1
+            },
+            "cutoutProgress": 1,
+            "slideProgress": 1,
+            "rotationAngle": 1.5707963267948966,
+            "labels": [
+              {
+                "text": "Étape 4",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "110f107d56e340bc3e3811e2c778ab8c92dafa966ca8aabdfeeb13e2121863c5": {
+      "id": "110f107d56e340bc3e3811e2c778ab8c92dafa966ca8aabdfeeb13e2121863c5",
+      "rawExpression": "A=frac34+frac{5}{-4}",
+      "normalizedExpression": "a=frac34+frac{5}{-4}",
+      "operationType": "Calcul",
+      "finalFormLatex": "a = -\\frac{1}{2}",
+      "summary": "Pour additionner deux fractions ayant le même dénominateur en valeur absolue, on commence par gérer le signe négatif au dénominateur, puis on soustrait directement les numérateurs avant de simplifier la fraction obtenue.",
+      "source": "ai",
+      "cachedAt": "2026-09-10T17:56:19.606Z",
+      "latencyMs": 18479,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Normalisation du signe négatif",
+          "explanation": "On applique la règle des signes pour les fractions : diviser un nombre positif par un nombre négatif donne un quotient négatif. Ainsi, 5 divisé par -4 devient -5/4.",
+          "appliedRule": "\\frac{A}{-B} = -\\frac{A}{B}",
+          "latex": "a = \\frac{3}{4} - \\frac{5}{4}",
+          "visualState": {
+            "type": "grouped_blocks_3d",
+            "action": "initial_state",
+            "dimensions": {
+              "x": 4,
+              "a": 3,
+              "b": -5,
+              "depth": 1
+            },
+            "cutoutProgress": 0,
+            "slideProgress": 0,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "Étape 1",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 2,
+          "title": "Soustraction sous un dénominateur commun",
+          "explanation": "Les deux termes possèdent le même dénominateur 4. On réunit l'expression sous une seule barre de fraction en conservant ce dénominateur commun et en calculant la différence des numérateurs.",
+          "appliedRule": "\\frac{A}{C} - \\frac{B}{C} = \\frac{A - B}{C}",
+          "latex": "a = \\frac{3 - 5}{4} = \\frac{-2}{4}",
+          "visualState": {
+            "type": "grouped_blocks_3d",
+            "action": "rearrange",
+            "dimensions": {
+              "x": 4,
+              "a": -2,
+              "b": 1,
+              "depth": 1
+            },
+            "cutoutProgress": 0.3333333333333333,
+            "slideProgress": 0.3333333333333333,
+            "rotationAngle": 0,
+            "labels": [
+              {
+                "text": "Étape 2",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        },
+        {
+          "stepNumber": 3,
+          "title": "Simplification de la fraction",
+          "explanation": "On simplifie la fraction en divisant le numérateur et le dénominateur par leur plus grand commun diviseur, qui est 2. On obtient la forme irréductible finale.",
+          "appliedRule": "\\frac{k \\times A}{k \\times B} = \\frac{A}{B}",
+          "latex": "a = -\\frac{1}{2}",
+          "visualState": {
+            "type": "grouped_blocks_3d",
+            "action": "final_factored",
+            "dimensions": {
+              "x": 2,
+              "a": -1,
+              "b": 1,
+              "depth": 1
+            },
+            "cutoutProgress": 1,
+            "slideProgress": 1,
+            "rotationAngle": 1.5707963267948966,
+            "labels": [
+              {
+                "text": "Étape 3",
+                "position": [
+                  0,
+                  -2.4,
+                  0
+                ],
+                "color": "#38bdf8"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "accessCount": {
+    "2683852a91226b4add2c181d9051f88047307cbdfe4f565517d023b5f24a6c22": 2,
+    "7c5993d6d7bf3ab1bf669a19f64c6b26cc9b1be466290c5bf0c84ffa39338c8b": 1,
+    "dbcf2cae5f63cbe097f42d62e59354e4fe85cbbc5f3e6f9988895fcc3a8f7d9b": 1,
+    "a9ff87385ddc127f5625769ad2774779bbce8ffa9f1697add871d0a023812cc0": 1,
+    "fa84feac86bd74770c8b6d48b52fcdf2b3e01ffcb6b97ee24085c77629206788": 311,
+    "6c208facfdd7d246feab9d8c57b90c4e4b7ae0b592b28484e1ed90742bf0da9c": 2,
+    "70bc607a197d1b025431102527e363c0f44ac97f47f2a8dfbb69acd0311c9ecf": 1,
+    "31c6b682fe3a3ab124ac72f501426dea534febdf7c2c32a410c915fa89effb58": 1,
+    "49641e38ac6a942913f488ba84fc59ddf15d77e7df219fdf1ef93705eb245cb5": 1,
+    "110f107d56e340bc3e3811e2c778ab8c92dafa966ca8aabdfeeb13e2121863c5": 1
+  }
+}

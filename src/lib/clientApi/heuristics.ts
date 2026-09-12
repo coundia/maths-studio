@@ -1,5 +1,5 @@
 
-import { ExpressionSolution, MathStep } from '../src/types.js';
+import { ExpressionSolution, MathStep } from '../../types.js';
 
 /**
  * FR-02: Syntactic normalization before hashing

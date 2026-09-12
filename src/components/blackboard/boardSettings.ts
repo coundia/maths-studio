@@ -14,7 +14,7 @@ export type BoardGridPattern =
   | 'ruled'
   | 'dots';
 
-export type BoardFontSize = number; // in rem
+export type BoardFontSize = number | 'compact' | 'normal' | 'large' | 'huge'; // in rem or preset scale
 
 export type BoardAlignment = 'center' | 'left';
 

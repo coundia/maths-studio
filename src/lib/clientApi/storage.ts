@@ -40,8 +40,9 @@ try {
     memoryCache = JSON.parse(cachedData);
   } else {
     // Optionally fetch initial cache from public/data/math3d_cache.json if needed
-    // This could be done asynchronously in a real initialization step.
-    fetch('/data/math3d_cache.json')
+    const baseUrl = import.meta.env.BASE_URL || '/';
+    const normalizedBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+    fetch(`${normalizedBase}data/math3d_cache.json`)
       .then((res) => res.json())
       .then((data) => {
         if (data && data.solutions) {

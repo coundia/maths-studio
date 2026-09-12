@@ -8,6 +8,11 @@ import { getMetrics as getClientMetrics, getStoredBoardSettings, saveBoardSettin
  */
 const isStaticMode = () => import.meta.env.VITE_STATIC_MODE === 'true';
 
+const getBaseUrl = () => {
+  const base = import.meta.env.BASE_URL || '/';
+  return base.endsWith('/') ? base : `${base}/`;
+};
+
 export const apiClient = {
   // --- Resolver ---
   async resolveExpression(
@@ -77,16 +82,19 @@ export const apiClient = {
   // --- Data Fetching (Courses, Exercises) ---
   async getCourses(): Promise<any[]> {
     if (isStaticMode()) {
-        const [c5, c4, c3] = await Promise.all([
-          fetch('/data/courses-5e.json').then(r => r.json()).catch(() => []),
-          fetch('/data/courses-4e.json').then(r => r.json()).catch(() => []),
-          fetch('/data/courses-3e.json').then(r => r.json()).catch(() => [])
-        ]);
-        return [
-          ...c3.map((c: any) => ({ ...c, gradeLevel: '3e' })),
-          ...c4.map((c: any) => ({ ...c, gradeLevel: '4e' })),
-          ...c5.map((c: any) => ({ ...c, gradeLevel: '5e' }))
-        ];
+      const base = getBaseUrl();
+      const [c6, c5, c4, c3] = await Promise.all([
+        fetch(`${base}data/courses-6e.json`).then(r => r.json()).catch(() => []),
+        fetch(`${base}data/courses-5e.json`).then(r => r.json()).catch(() => []),
+        fetch(`${base}data/courses-4e.json`).then(r => r.json()).catch(() => []),
+        fetch(`${base}data/courses-3e.json`).then(r => r.json()).catch(() => [])
+      ]);
+      return [
+        ...c3.map((c: any) => ({ ...c, gradeLevel: '3e' })),
+        ...c4.map((c: any) => ({ ...c, gradeLevel: '4e' })),
+        ...c5.map((c: any) => ({ ...c, gradeLevel: '5e' })),
+        ...c6.map((c: any) => ({ ...c, gradeLevel: '6e' }))
+      ];
     }
     const res = await fetch('/api/courses');
     return res.json();
@@ -94,14 +102,16 @@ export const apiClient = {
 
   async getExercises(): Promise<any> {
     if (isStaticMode()) {
-        const [e5, e4, e3] = await Promise.all([
-          fetch('/data/exercises-5e.json').then(r => r.json()).catch(() => ({})),
-          fetch('/data/exercises-4e.json').then(r => r.json()).catch(() => ({})),
-          fetch('/data/exercises-3e.json').then(r => r.json()).catch(() => ({}))
-        ]);
-        return { ...e5, ...e4, ...e3 };
+      const base = getBaseUrl();
+      const [e5, e4, e3] = await Promise.all([
+        fetch(`${base}data/exercises-5e.json`).then(r => r.json()).catch(() => ({})),
+        fetch(`${base}data/exercises-4e.json`).then(r => r.json()).catch(() => ({})),
+        fetch(`${base}data/exercises-3e.json`).then(r => r.json()).catch(() => ({}))
+      ]);
+      return { ...e5, ...e4, ...e3 };
     }
     const res = await fetch('/api/exercises');
     return res.json();
   }
 };
+

@@ -18,7 +18,7 @@ import {
   SENEGAL_COURSES_6E,
   CourseChapter,
 } from './coursesData';
-import { Sparkles, BookOpen, GraduationCap, ArrowRight } from 'lucide-react';
+import { Sparkles, BookOpen, GraduationCap, ArrowRight, Edit3 } from 'lucide-react';
 import { apiClient } from './api/apiClient';
 import { getGradeLevel, GRADE_LABEL } from './data/gradeLevel';
 
@@ -290,6 +290,18 @@ export default function App() {
       </div>
 
       <BlackboardDrawer isOpen={isBlackboardOpen} onClose={() => setIsBlackboardOpen(false)} />
+      
+      {/* Bouton flottant pour retourner au tableau facilement */}
+      {!isBlackboardOpen && (
+        <button
+          onClick={() => setIsBlackboardOpen(true)}
+          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-lg shadow-indigo-500/30 transition-transform hover:scale-105 active:scale-95"
+          title="Ouvrir le Tableau Math3D"
+        >
+          <Edit3 className="w-5 h-5" />
+          <span className="font-bold hidden sm:inline">Ouvrir le Tableau</span>
+        </button>
+      )}
     </div>
   );
 }
