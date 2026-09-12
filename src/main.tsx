@@ -6,10 +6,14 @@ import './index.css';
 // Palette generee depuis le .env (voir scripts/vite-plugin-theme.ts).
 import 'virtual:theme.css';
 
+import { DialogProvider } from './components/ui/DialogProvider';
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-      <App />
+      <DialogProvider>
+        <App />
+      </DialogProvider>
     </ThemeProvider>
   </StrictMode>,
 );

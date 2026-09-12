@@ -109,6 +109,32 @@ export const LessonSummaryDrawer: React.FC<LessonSummaryDrawerProps> = ({
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden flex justify-end print:relative print:z-auto">
+          <style>{`
+            @media print {
+              body {
+                background: white;
+                margin: 0;
+                padding: 0;
+              }
+              /* Masquer l'en-tête de l'application */
+              #root > div > header {
+                display: none !important;
+              }
+              /* Masquer la barre latérale des cours */
+              #senegal-courses-sidebar {
+                display: none !important;
+              }
+              /* Masquer le contenu du cours principal et ne garder que les modales fixes */
+              #interactive-lesson-viewer > :not(.fixed) {
+                display: none !important;
+              }
+              /* Pour éviter que le bouton retour imprimable ne s'affiche s'il existe ailleurs */
+              .print\\:hidden {
+                display: none !important;
+              }
+            }
+          `}</style>
+
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}

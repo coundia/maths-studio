@@ -20,6 +20,7 @@ import {
   getFontSizeRem 
 } from './boardSettings';
 import { BoardSettingsDrawer } from './BoardSettingsDrawer';
+import { useDialog } from '../ui/DialogProvider';
 import { apiClient } from '../../api/apiClient';
 import 'mathlive';
 import { initVirtualKeyboardInCurrentBrowsingContext } from 'mathlive';
@@ -253,6 +254,7 @@ interface BlackboardDrawerProps {
 }
 
 export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onClose }) => {
+  const dialog = useDialog();
   const [activeMode, setActiveMode] = useState<'draw' | 'type'>('type');
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [isKeyboardMinimized, setIsKeyboardMinimized] = useState(false);
@@ -438,7 +440,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
     if (!latex) return;
     
     if (!boardSettings.aiToken) {
-      alert("Veuillez configurer votre clé API Gemini dans les paramètres du tableau (icône engrenage) pour utiliser l'IA.");
+      await dialog.alert("Veuillez configurer votre clé API Gemini dans les paramètres du tableau (icône engrenage) pour utiliser l'IA.");
       return;
     }
 
@@ -495,7 +497,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
       }, 100);
       
     } catch (err: any) {
-      alert(`Erreur IA : ${err.message}`);
+      await dialog.alert(`Erreur IA : ${err.message}`);
     } finally {
       setRefreshingLineId(null);
     }
@@ -764,7 +766,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
     return () => clearTimeout(t);
   }, [lines]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     saveToLocalStorageSilently();
     
     // Also create a snapshot in the history (Left Sidebar)
@@ -782,7 +784,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
     localStorage.setItem('math3d_board_saves', JSON.stringify(updatedSaves));
     
     // Quick visual feedback
-    alert("Nouveau brouillon sauvegardé dans l'historique !");
+    await dialog.alert("Nouveau brouillon sauvegardé dans l'historique !");
   };
 
   const loadSave = (save: SavedBoard) => {
@@ -804,8 +806,8 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
     localStorage.setItem('math3d_board_saves', JSON.stringify(updated));
   };
 
-  const renameSave = (id: number, currentName: string) => {
-    const newName = window.prompt("Nom de la sauvegarde :", currentName);
+  const renameSave = async (id: number, currentName: string) => {
+    const newName = await dialog.prompt("Nom de la sauvegarde :", currentName);
     if (newName !== null && newName.trim() !== "") {
       const updated = savedBoards.map(s => s.id === id ? { ...s, name: newName.trim() } : s);
       setSavedBoards(updated);
@@ -833,7 +835,7 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
     if (!file) return;
     
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       try {
         const parsed = JSON.parse(event.target?.result as string);
         if (Array.isArray(parsed)) {
@@ -850,10 +852,10 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
             };
           }));
         } else {
-          alert("Format de fichier invalide. Veuillez importer un fichier JSON valide.");
+          await dialog.alert("Format de fichier invalide. Veuillez importer un fichier JSON valide.");
         }
       } catch (err) {
-        alert("Erreur lors de la lecture du fichier. Le format JSON est peut-être corrompu.");
+        await dialog.alert("Erreur lors de la lecture du fichier. Le format JSON est peut-être corrompu.");
         console.error(err);
       }
     };
@@ -882,19 +884,18 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
               display: none !important;
             }
             @media print {
-              body * {
-                visibility: hidden;
+              body {
+                margin: 0;
+                padding: 0;
+                background: white;
               }
-              #printable-blackboard, #printable-blackboard * {
-                visibility: visible;
-              }
+              
+              /* Reset the blackboard to act as the main document */
               #printable-blackboard {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
+                width: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
+                box-shadow: none !important;
               }
             }
           `}</style>
@@ -1170,8 +1171,8 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
 
               {/* Save & Clear Board Button */}
               <button
-                onClick={() => {
-                  if (window.confirm('Voulez-vous sauvegarder puis effacer ce tableau ?')) {
+                onClick={async () => {
+                  if (await dialog.confirm('Voulez-vous sauvegarder puis effacer ce tableau ?')) {
                     handleSaveAndClearBoard();
                   }
                 }}
@@ -1183,8 +1184,8 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
 
               {/* Clear Board Button */}
               <button
-                onClick={() => {
-                  if (window.confirm('Voulez-vous vraiment effacer tout le tableau ?')) {
+                onClick={async () => {
+                  if (await dialog.confirm('Voulez-vous vraiment effacer tout le tableau ?')) {
                     handleClearBoard();
                   }
                 }}
@@ -1927,8 +1928,8 @@ export const BlackboardDrawer: React.FC<BlackboardDrawerProps> = ({ isOpen, onCl
                                           ))}
                                           <div className="my-1 border-t border-slate-200 dark:border-slate-700"></div>
                                           <button 
-                                            onClick={() => {
-                                              const customOp = window.prompt("Quelle opération souhaitez-vous effectuer ? (ex: Trouver la limite en +l'infini)");
+                                            onClick={async () => {
+                                              const customOp = await dialog.prompt("Quelle opération souhaitez-vous effectuer ? (ex: Trouver la limite en +l'infini)");
                                               if (customOp && customOp.trim()) {
                                                 handleHeuristicAction(line.id, customOp.trim());
                                               }

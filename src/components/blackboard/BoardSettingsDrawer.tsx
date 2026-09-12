@@ -28,6 +28,8 @@ import {
   isValidHexColor,
   normalizeHexColor
 } from './boardSettings';
+import { useDialog } from '../ui/DialogProvider';
+
 
 interface BoardSettingsDrawerProps {
   isOpen: boolean;
@@ -49,6 +51,7 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
   const [colorInput, setColorInput] = useState('#ec4899');
   const [colorInputText, setColorInputText] = useState('#ec4899');
   const [colorFeedback, setColorFeedback] = useState<string | null>(null);
+  const dialog = useDialog();
 
   const update = <K extends keyof BoardSettings>(key: K, value: BoardSettings[K]) => {
     onUpdateSettings({
@@ -733,8 +736,8 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
                       </div>
                     ))}
                     <button 
-                      onClick={() => {
-                        const newOp = window.prompt('Ajouter un bouton rapide (ex: Factorisation) :');
+                      onClick={async () => {
+                        const newOp = await dialog.prompt('Ajouter un bouton rapide (ex: Factorisation) :');
                         if (newOp && newOp.trim()) {
                           update('customOperations', [...(settings.customOperations || []), newOp.trim()]);
                         }
@@ -759,8 +762,8 @@ export const BoardSettingsDrawer: React.FC<BoardSettingsDrawerProps> = ({
 
                 {onClearBoard && (
                   <button
-                    onClick={() => {
-                      if (window.confirm('Voulez-vous réinitialiser et vider toutes les lignes du tableau ?')) {
+                    onClick={async () => {
+                      if (await dialog.confirm('Voulez-vous réinitialiser et vider toutes les lignes du tableau ?')) {
                         onClearBoard();
                       }
                     }}

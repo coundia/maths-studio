@@ -122,23 +122,25 @@ export default function App() {
       <div className="absolute top-0 inset-x-0 h-96 bg-gradient-to-b from-indigo-500/10 via-emerald-500/5 to-transparent dark:from-indigo-500/10 dark:via-emerald-500/5 pointer-events-none -z-10" />
 
       {/* Top Header */}
-      <Header
-        onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
-        activeTab={activeTab}
-        onSelectTab={setActiveTab}
-        activeChapterId={activeChapterId}
-        onSelectChapter={setActiveChapterId}
-        isClassroomMode={isClassroomMode}
-        onToggleClassroomMode={() => setIsClassroomMode((prev) => !prev)}
-        activeMode={activeMode}
-        onSelectMode={setActiveMode}
-        selectedGrade={selectedGrade}
-        onSelectGrade={handleSelectGrade}
-        onOpenBlackboard={() => setIsBlackboardOpen(true)}
-      />
+      <div className={isBlackboardOpen ? 'print:hidden' : ''}>
+        <Header
+          onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
+          activeTab={activeTab}
+          onSelectTab={setActiveTab}
+          activeChapterId={activeChapterId}
+          onSelectChapter={setActiveChapterId}
+          isClassroomMode={isClassroomMode}
+          onToggleClassroomMode={() => setIsClassroomMode((prev) => !prev)}
+          activeMode={activeMode}
+          onSelectMode={setActiveMode}
+          selectedGrade={selectedGrade}
+          onSelectGrade={handleSelectGrade}
+          onOpenBlackboard={() => setIsBlackboardOpen(true)}
+        />
+      </div>
 
       {/* Main Body with Sidebar and Content */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className={`flex-1 flex overflow-hidden ${isBlackboardOpen ? 'print:hidden' : ''}`}>
         {/* Course Menu Sidebar : reste monte et a la meme place quel que soit
             l'onglet actif (Cours / Calcul Libre), pour qu'il ne bouge jamais
             tant qu'il est ouvert. Choisir un chapitre ramene sur l'onglet Cours. */}
